@@ -1,0 +1,36 @@
+{
+    "name": "redhat/viewfinder-assessment",
+    "description": "Viewfinder Maturity Assessment Tool - Enterprise-grade refactored version",
+    "type": "project",
+    "license": "proprietary",
+    "version": "2.0.0",
+    "require": {
+        "php": "^8.1",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "squizlabs/php_codesniffer": "^3.7",
+        "phpstan/phpstan": "^1.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Viewfinder\\": "includes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Viewfinder\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "cs-check": "phpcs --standard=PSR12 includes/",
+        "cs-fix": "phpcbf --standard=PSR12 includes/",
+        "analyse": "phpstan analyse includes/ --level=5"
+    },
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true
+    }
+}

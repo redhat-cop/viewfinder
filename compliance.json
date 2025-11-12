@@ -1,0 +1,34 @@
+{
+ "NIST 800-53" : {
+   "name" : "NIST 800-53",
+   "link" : "compliance/nist-800-53.html"
+ },
+  "ISO 27001" : {
+    "name" : "ISO 27001",
+    "link" : ""
+  },
+  "PCI DSS" : {
+    "name" : "PCI DSS",
+    "link" : "compliance/pci-dss.html"
+  },
+  "FedRAMP" : {
+    "name" : "FedRAMP",
+    "link" : ""
+  },
+  "Common Criteria" : {
+    "name" : "Common Criteria",
+    "link" : ""
+  },
+  "NIS2" : {
+    "name" : "NIS2",
+    "link" : "compliance/nis2.html"
+  },
+  "DORA" : {
+    "name" : "DORA",
+    "link" : "compliance/dora.html"
+  },
+  "DISA STIG" : {
+    "name" : "DISA STIG",
+    "link" : "compliance/disa-stig.html"
+  }  
+}

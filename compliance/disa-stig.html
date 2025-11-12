@@ -1,0 +1,40 @@
+<h3 class='frameworkHeader'>DISA STIG</h3>
+<p>Hardening Red Hat Enterprise Linux (RHEL) for DISA STIG (Security Technical Implementation Guide) compliance is essential for U.S. federal and DoD environments, reducing vulnerabilities and ensuring a strong security posture.</p>
+<br>
+<h3>Understanding DISA STIGs for RHEL:</h3>
+<div class="frameworkText">
+<ul>
+<li>Purpose: Detailed technical standards to secure systems, mitigating risks. Derived from NIST 800-53.</li>
+<li>Scope: Covers user management, file permissions, network security, logging, crypto settings, patching, kernel, and SELinux.</li>
+<li>Severity: Findings are High, Medium, or Low impact.</li>
+<li>ATO: Crucial for obtaining/retaining Authority to Operate in federal/defence systems.</li>
+
+</ul>
+</div>
+<br>
+<h3>Key Hardening Areas:</h3>
+<div class="frameworkText">
+    <ul>
+<li>Initial Installation: Secure partitioning (e.g., separate /var, /home), minimal installation, and early firewall configuration.</li>
+<li>User/Account Management: Strong passwords, sudo for root, least privilege, disabling unused accounts.</li>
+<li>System Configuration: Enable SELinux (enforcing mode), disable unnecessary services (e.g., telnet), harden SSH, enable FIPS mode, and enforce strong cryptographic policies.</li>
+<li>Auditing & Logging: Configure auditd for comprehensive logging, protect logs, and send them to a central server.</li>
+<li>Software & Patch Management: Regular patching (using dnf), GPG verification for packages, and file integrity checks (e.g., AIDE).</li>
+<li>Network Security: Strict firewall configuration (firewalld), only allowing essential traffic.</li>
+</ul>
+</div>
+<br>
+<h3>Continuous Monitoring & Maintenance</h3>
+<div class="frameworkText">
+<ul>
+<li>Regular Scans: Periodically use OpenSCAP to check for deviations.</li>
+<li>Prompt Remediation: Quickly address non-compliant findings.</li>
+<li>Patching: Keep RHEL systems updated with the latest security fixes.</li>
+<li>Documentation: Maintain records of hardening actions and approved exceptions.</li>
+<li>Stay Current: Adapt to new STIG releases from DISA.</li>
+</ul>
+</div>
+<br>
+<p>Achieving and maintaining STIG compliance requires a blend of technical controls, automation, and ongoing vigilance.</p>
+    <br>
+</div>
