@@ -101,8 +101,8 @@ $totalScore = 0;
                            <a href="index.php"><img src="images/viewfinder-logo.png" alt="#" /></a>
                                  
                         <div class="text-bg">
-                           <h1><?php  
-                           if ($_REQUEST['profile'] == "Core") {
+                           <h1><?php
+                           if ($_REQUEST['profile'] == "Security") {
                               $assessment = "Security Maturity Assessment";
                               }else {
                               $assessment = "Digital Sovereignty Readiness Assessment";
@@ -127,8 +127,8 @@ $totalScore = 0;
                      <div class="col-md-4">
 
 
-                           <?php if ($profile == "Core") {
-                              print '   
+                           <?php if ($profile == "Security") {
+                              print '
                            <h3> How does this radar chart help me?</h3>
                            <ul>
                               <li><b>Identify Weaknesses</b> Pinpoint vulnerabilities and weaknesses in your security infrastructure.</li>
@@ -148,7 +148,7 @@ $totalScore = 0;
                         </div>
 </div>
 <div class="overviewBlock">
-<?php if ($profile == "DigSov") {
+<?php if ($profile == "DigitalSovereignty") {
                               print '   
 <h1>Digital Sovereignty Maturity Assessment: Introduction</h1>
     <p>Digital sovereignty is a complex strategic imperative that seeks to maximize an organization\'s <strong>control over its own digital destiny</strong>—its data, technology, and operations. This maturity assessment provides a clear, actionable framework for evaluating your current level of control and independence. Understanding the trade-offs between global efficiency and self-determination is critical for charting a successful digital future.</p>
@@ -172,7 +172,7 @@ $totalScore = 0;
       <!-- end banner -->
       <!-- business -->
       <div class="business">
-                                       <?php if ($profile == "DigSov") {
+                                       <?php if ($profile == "DigitalSovereignty") {
                               print '   
                               <div class="overviewBlock">
                               <div class="titlepage">

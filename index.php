@@ -73,9 +73,9 @@
                       die('Error: Unable to load assessment controls. Please contact support.');
                   }
                   ?>
-              <a href="index.php?profile=Core"><button>Core</button></a>&nbsp
+              <a href="index.php?profile=Security"><button>Security</button></a>&nbsp
 <!--              <a href="index.php?profile=AI"><button>AI Readiness (WiP)</button></a>&nbsp -->
-              <a href="index.php?profile=DigSov"><button>Digital Sovereignty</button></a>&nbsp
+              <a href="index.php?profile=DigitalSovereignty"><button>Digital Sovereignty</button></a>&nbsp
 <!--              <a href="index.php?profile=OpenShift"><button>OpenShift</button></a>&nbsp
               <a href="index.php?profile=AI"><button>AI</button></a>&nbsp -->
             </div>
@@ -116,7 +116,7 @@ print "</ul>";
 ?>
 <div class="tab">
   <div id="centerDivLine">
-<h2>Profile: <?php echo Security::escape($profile);?> </h2>
+<h2>Profile: <?php echo Security::escape(Config::getProfileDisplayName($profile));?> </h2>
 
 </div>
 <?php

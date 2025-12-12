@@ -83,7 +83,7 @@ This document summarizes the enterprise-grade refactoring performed on the Viewf
 
 **Configuration Areas:**
 - ✅ **Application Settings:** Name, version
-- ✅ **Assessment Profiles:** Core, DigSov, AI, OpenShift (with enable/disable flags)
+- ✅ **Assessment Profiles:** Security, DigitalSovereignty, AI, OpenShift (with enable/disable flags)
 - ✅ **Line of Business Options:** Finance, Government, Manufacturing, etc.
 - ✅ **Maturity Thresholds:** Foundation (0-9), Strategic (10-27), Advanced (28-36)
 - ✅ **Total Rating Thresholds:** Foundation (0-84), Strategic (85-168), Advanced (169-252)

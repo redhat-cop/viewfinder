@@ -109,7 +109,7 @@ $totalScore = 0;
 </div>
 
 <div class="bigtableLeft">
-<h1 class="profileHeader">Profile: <?php print Security::escape($data['profile']);?> </h1>
+<h1 class="profileHeader">Profile: <?php print Security::escape(Config::getProfileDisplayName($data['profile']));?> </h1>
 
 <table class="spacedTable">
 	<thead>
@@ -369,8 +369,8 @@ if (isset($_REQUEST['lob'])) {
     if ($lob !== null) {
         print '<div id="LineOfBusiness" class="tabcontent"><p class="category-large">Advice for ' . Security::escape($lob) . ' industries</p>';
         // Safely get LOB file path
-#        if ($profile === "DigSov") {
-#        $safeFilePath = Security::getLOBFilePath("DigSov", $profile);
+#        if ($profile === "DigitalSovereignty") {
+#        $safeFilePath = Security::getLOBFilePath("DigitalSovereignty", $profile);
 #        } else {
         $safeFilePath = Security::getLOBFilePath($lob, $profile);
         #        }  

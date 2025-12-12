@@ -15,13 +15,13 @@ class Config {
      * Available assessment profiles
      */
     const PROFILES = [
-        'Core' => [
-            'name' => 'Core',
-            'display_name' => 'Core',
+        'Security' => [
+            'name' => 'Security',
+            'display_name' => 'Security',
             'enabled' => true
         ],
-        'DigSov' => [
-            'name' => 'DigSov',
+        'DigitalSovereignty' => [
+            'name' => 'DigitalSovereignty',
             'display_name' => 'Digital Sovereignty',
             'enabled' => true
         ],

@@ -6,7 +6,7 @@ Viewfinder is a comprehensive web-based Maturity Assessment tool designed to hel
 
 ### Key Features
 
-- **Multi-Profile Assessments**: Support for Core Security and Digital Sovereignty assessments
+- **Multi-Profile Assessments**: Support for Security and Digital Sovereignty assessments
 - **Industry-Specific Guidance**: Tailored recommendations for Finance, Government, Healthcare, Manufacturing, Telecommunications, and other industries (currently only for the Security profile)
 - **Compliance Framework Mapping**: Integration with NIST 800-53, PCI DSS, ISO 27001, FedRAMP, NIS2, DORA, and DISA STIG
 - **Interactive Visualizations**: Radar charts and maturity tables for easy interpretation of results
@@ -73,7 +73,7 @@ Once running, open your browser and navigate to:
 
 #### Assessment Engine
 - **Config**: Centralised configuration management
-- **Assessment**: Core assessment logic and control processing
+- **Assessment**: Security assessment logic and control processing
 - **ResultsProcessor**: Results calculation and recommendation generation
 - **TemplateRenderer**: Consistent HTML template rendering
 
@@ -83,7 +83,7 @@ Once running, open your browser and navigate to:
 ### Conducting an Assessment
 
 1. **Select Assessment Profile**:
-   - **Core**: Comprehensive security maturity assessment
+   - **Security**: Comprehensive security maturity assessment
    - **Digital Sovereignty**: Digital Sovereignty readiness considerations
 
 2. **Choose Line of Business**:

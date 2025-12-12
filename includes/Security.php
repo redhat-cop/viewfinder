@@ -11,11 +11,11 @@ class Security {
      * Validate and sanitize profile parameter
      *
      * @param string $profile User-provided profile value
-     * @return string Validated profile or default 'Core'
+     * @return string Validated profile or default 'Security'
      */
     public static function validateProfile($profile) {
         if (empty($profile) || !Config::isValidProfile($profile)) {
-            return 'Core'; // Safe default
+            return 'Security'; // Safe default
         }
         return $profile;
     }
@@ -80,7 +80,7 @@ class Security {
         // Build safe path using Config
         $baseDir = Config::getLOBContentPath();
 
-        if ($profile == "Core") {
+        if ($profile == "Security") {
         $fileName = "lob-{$lob}.html";
         } else {
         $fileName = "lob-{$lob}-{$profile}.html";
