@@ -60,17 +60,46 @@
                 </div>
                 <div class="widget">
                   <?php
+                  require_once __DIR__ . '/vendor/autoload.php';
+                  require_once __DIR__ . '/error-pages/error-handler.php';
                   require_once __DIR__ . '/includes/Security.php';
+                  require_once __DIR__ . '/includes/Logger.php';
+                  require_once __DIR__ . '/includes/Config.php';
 
-                  // Validate and sanitize profile input
-                  $profile = Security::validateProfile($_REQUEST['profile'] ?? '');
+                  // Register error handlers
+                  ErrorHandler::register();
 
-                  // Safely load controls JSON
-                  $controlsFile = Security::getControlsFilePath($profile);
-                  $json = Security::loadJSON($controlsFile);
+                  // Configure logger
+                  Logger::configure(Config::LOG_PATH, Config::LOG_LEVEL);
 
-                  if ($json === null) {
-                      die('Error: Unable to load assessment controls. Please contact support.');
+                  try {
+                      Logger::info('Index page loaded', ['page' => 'index.php']);
+
+                      // Validate and sanitize profile input
+                      $profile = Security::validateProfile($_REQUEST['profile'] ?? '');
+                      Logger::info('Profile selected', ['profile' => $profile]);
+
+                      // Safely load controls JSON
+                      $controlsFile = Security::getControlsFilePath($profile);
+                      $json = Security::loadJSON($controlsFile);
+
+                  } catch (ViewfinderException $e) {
+                      Logger::logException($e);
+                      throw $e; // Re-throw for error handler to display error page
+                  } catch (\Throwable $e) {
+                      Logger::error('Unexpected error in index.php', [
+                          'exception' => get_class($e),
+                          'message' => $e->getMessage(),
+                          'file' => $e->getFile(),
+                          'line' => $e->getLine()
+                      ]);
+                      throw new ViewfinderException(
+                          'Unexpected error: ' . $e->getMessage(),
+                          'An unexpected error occurred. Please contact support.',
+                          ['original_exception' => get_class($e)],
+                          0,
+                          $e
+                      );
                   }
                   ?>
               <a href="index.php?profile=Security"><button>Security</button></a>&nbsp
@@ -176,9 +205,12 @@ print '</div>';
   <div id="centerDivLine">
   <?php
 ## Compliance Frameworks
-$jsonFrameworks = Security::loadJSON(__DIR__ . '/compliance.json');
-if ($jsonFrameworks === null) {
-    die('Error: Unable to load compliance frameworks. Please contact support.');
+try {
+    $jsonFrameworks = Security::loadJSON(__DIR__ . '/compliance.json');
+    Logger::debug('Compliance frameworks loaded', ['count' => count($jsonFrameworks)]);
+} catch (ViewfinderException $e) {
+    Logger::logException($e);
+    throw $e;
 }
 
 ## Add checklist for compliance frameworks
