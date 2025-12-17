@@ -36,26 +36,55 @@
                 </div>
 </header>
 <?php
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/error-pages/error-handler.php';
 require_once __DIR__ . '/includes/Security.php';
 require_once __DIR__ . '/includes/MaturityRating.php';
+require_once __DIR__ . '/includes/Logger.php';
+require_once __DIR__ . '/includes/Config.php';
 
-// Parse and validate input data
-parse_str($_SERVER["QUERY_STRING"] ?? '', $data);
+// Register error handlers
+ErrorHandler::register();
 
-// Validate profile parameter
-$profile = Security::validateProfile($data['profile'] ?? '');
-$data['profile'] = $profile; // Update with validated value
+// Configure logger
+Logger::configure(Config::LOG_PATH, Config::LOG_LEVEL);
 
-// Safely load controls JSON
-$controlsFile = Security::getControlsFilePath($profile);
-$json = Security::loadJSON($controlsFile);
+try {
+    Logger::info('Results page loaded', ['page' => 'results.php']);
 
-if ($json === null) {
-    die('Error: Unable to load assessment controls. Please contact support.');
+    // Parse and validate input data
+    parse_str($_SERVER["QUERY_STRING"] ?? '', $data);
+
+    // Validate profile parameter
+    $profile = Security::validateProfile($data['profile'] ?? '');
+    $data['profile'] = $profile; // Update with validated value
+    Logger::info('Profile selected', ['profile' => $profile]);
+
+    // Safely load controls JSON
+    $controlsFile = Security::getControlsFilePath($profile);
+    $json = Security::loadJSON($controlsFile);
+
+    // Build safe URL for detailed output
+    $urlData = "./report/index.php?" . http_build_query($data);
+
+} catch (ViewfinderException $e) {
+    Logger::logException($e);
+    throw $e; // Re-throw for error handler to display error page
+} catch (\Throwable $e) {
+    Logger::error('Unexpected error in results.php', [
+        'exception' => get_class($e),
+        'message' => $e->getMessage(),
+        'file' => $e->getFile(),
+        'line' => $e->getLine()
+    ]);
+    throw new ViewfinderException(
+        'Unexpected error: ' . $e->getMessage(),
+        'An unexpected error occurred. Please contact support.',
+        ['original_exception' => get_class($e)],
+        0,
+        $e
+    );
 }
-
-// Build safe URL for detailed output
-$urlData = "./report/index.php?" . http_build_query($data);
 $nextSteps = array();
 $nextStepsHow = array();
 $nextDomain = array();
