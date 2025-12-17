@@ -1,9 +1,9 @@
 # Multi-stage build for production-ready container
-FROM registry.access.redhat.com/ubi9/php-81:latest
+FROM registry.access.redhat.com/ubi10/php-83:latest
 
 # Metadata
 LABEL maintainer="Chris Jenkins <chrisj@redhat.com>" \
-      version="2.0.0" \
+      version="2.1.0" \
       description="Viewfinder Maturity Assessment Tool - Production Ready"
 
 # Set working directory
