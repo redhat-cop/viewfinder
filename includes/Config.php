@@ -230,6 +230,14 @@ class Config {
     const DISPLAY_ERRORS = false; // Set to true only in development
 
     /**
+     * Logging configuration
+     */
+    const LOG_LEVEL = 'INFO'; // DEBUG, INFO, WARNING, ERROR, CRITICAL
+    const LOG_PATH = '/opt/app-root/src/logs/';
+    const LOG_FILE = 'viewfinder.log';
+    const LOG_MAX_FILES = 30; // Keep 30 days of logs
+
+    /**
      * Security configuration
      */
     const ENABLE_CSRF_PROTECTION = true;
