@@ -31,6 +31,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Copy composer files first for better layer caching
 COPY --chown=1001:0 composer.json ./
 COPY --chown=1001:0 composer.lock* ./
+RUN composer update
 
 # Install PHP dependencies as root
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
