@@ -233,7 +233,7 @@ class Config {
      * Logging configuration
      */
     const LOG_LEVEL = 'INFO'; // DEBUG, INFO, WARNING, ERROR, CRITICAL
-    const LOG_PATH = '/opt/app-root/src/logs/';
+    const LOG_PATH = 'logs/';
     const LOG_FILE = 'viewfinder.log';
     const LOG_MAX_FILES = 30; // Keep 30 days of logs
 

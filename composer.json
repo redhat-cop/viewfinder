@@ -2,11 +2,12 @@
     "name": "redhat/viewfinder-assessment",
     "description": "Viewfinder Maturity Assessment Tool - Enterprise-grade refactored version",
     "type": "project",
-    "license": "Apache-2.0",
-    "version": "2.1.0",
+    "license": "proprietary",
+    "version": "2.0.0",
     "require": {
         "php": "^8.1",
         "ext-json": "*",
+        "endroid/qr-code": "^6.1",
         "monolog/monolog": "^3.5"
     },
     "require-dev": {

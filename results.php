@@ -43,6 +43,12 @@ require_once __DIR__ . '/includes/MaturityRating.php';
 require_once __DIR__ . '/includes/Logger.php';
 require_once __DIR__ . '/includes/Config.php';
 
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\RoundBlockSizeMode;
+use Endroid\QrCode\Writer\PngWriter;
+
 // Register error handlers
 ErrorHandler::register();
 
@@ -66,6 +72,26 @@ try {
 
     // Build safe URL for detailed output
     $urlData = "./report/index.php?" . http_build_query($data);
+
+    // Generate QR code for current page URL
+    // Get the full current page URL with query string
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+    $currentPageUrl = $protocol . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+    // Build the QR code
+    $qrCodeResult = (new Builder(
+        writer: new PngWriter(),
+        validateResult: false,
+        data: $currentPageUrl,
+        encoding: new Encoding('UTF-8'),
+        errorCorrectionLevel: ErrorCorrectionLevel::High,
+        size: 300,
+        margin: 10,
+        roundBlockSizeMode: RoundBlockSizeMode::Margin,
+    ))->build();
+
+    // Convert to base64 for inline display
+    $qrCodeDataUri = $qrCodeResult->getDataUri();
 
 } catch (ViewfinderException $e) {
     Logger::logException($e);
@@ -126,8 +152,9 @@ $totalScore = 0;
   if ($lob !== null && $lob !== 'Other') {
       print '<button class="tablinks" onclick="openTab(event, \'LineOfBusiness\')">' . Security::escape($lob) . ' Specifics</button>';
   }
-  ?>  
-  <button class="tablinks""><a href="<?php print $urlData; ?>" target= _blank>Detailed Output</a>&nbsp; <i class='fas fa-external-link-alt'></i></button> 
+  ?>
+  <button class="tablinks" onclick="openTab(event, 'Share')">Results QR Code</button>
+  <button class="tablinks""><a href="<?php print $urlData; ?>" target= _blank>Detailed Output</a>&nbsp; <i class='fas fa-external-link-alt'></i></button>
 
 </div>
 
@@ -412,6 +439,20 @@ if (isset($_REQUEST['lob'])) {
 }
 ?>
 
+</div>
+
+<!-- Start of Share QR Code -->
+<div id="Share" class="tabcontent">
+<div style="text-align: center; padding: 20px;">
+    <h2>Share Your Results</h2>
+    <p>Scan this QR code to access these results on any device</p>
+    <div style="margin: 20px auto; display: inline-block;">
+        <img src="<?php echo $qrCodeDataUri; ?>" alt="QR Code for Results Page" style="border: 2px solid #ccc; padding: 10px; background: white;" />
+    </div>
+
+</div>
+</div>
+<!-- End of Share QR Code -->
 
 </div>
 

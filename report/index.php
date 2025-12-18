@@ -53,11 +53,17 @@ require_once __DIR__ . '/../includes/MaturityRating.php';
 require_once __DIR__ . '/../includes/Logger.php';
 require_once __DIR__ . '/../includes/Config.php';
 
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\RoundBlockSizeMode;
+use Endroid\QrCode\Writer\PngWriter;
+
 // Register error handlers
 ErrorHandler::register();
 
-// Configure logger
-Logger::configure(Config::LOG_PATH, Config::LOG_LEVEL);
+// Configure logger with absolute path to main logs directory
+Logger::configure(dirname(__DIR__) . '/logs/', Config::LOG_LEVEL);
 
 try {
     Logger::info('Report page loaded', ['page' => 'report/index.php']);
@@ -73,6 +79,26 @@ try {
     // Safely load controls JSON
     $controlsFile = dirname(__DIR__) . "/controls-{$profile}.json";
     $json = Security::loadJSON($controlsFile);
+
+    // Generate QR code for current page URL
+    // Get the full current page URL with query string
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+    $currentPageUrl = $protocol . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+    // Build the QR code
+    $qrCodeResult = (new Builder(
+        writer: new PngWriter(),
+        validateResult: false,
+        data: $currentPageUrl,
+        encoding: new Encoding('UTF-8'),
+        errorCorrectionLevel: ErrorCorrectionLevel::High,
+        size: 300,
+        margin: 10,
+        roundBlockSizeMode: RoundBlockSizeMode::Margin,
+    ))->build();
+
+    // Convert to base64 for inline display
+    $qrCodeDataUri = $qrCodeResult->getDataUri();
 
 } catch (ViewfinderException $e) {
     Logger::logException($e);
@@ -574,7 +600,7 @@ foreach ($controls as $control) {
                   </div>
                   <div class="col-md-9">
                      <div class="Testimonial_box">
-                        <p>Don't wait until it's too late. Take proactive steps and empower yourselves with Project Viewfinder and enable proactive digital sovereignty within your customer’s organisation with the Viewfinder Maturity Assessment. Contact your Red Hat account team for more information and take the first step towards a more autonomous future. 
+                        <p>Don't wait until it's too late. Take proactive steps and empower yourselves with Project Viewfinder and enable proactive digital sovereignty within your customer's organisation with the Viewfinder Maturity Assessment. Contact your Red Hat account team for more information and take the first step towards a more autonomous future.
                         </p>
                      </div>
                   </div>
@@ -582,8 +608,32 @@ foreach ($controls as $control) {
             </div>
          </div>
       </div>
-     
+
       <!-- end Testimonial -->
+
+      <!-- QR Code Section -->
+      <div class="section">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="titlepage">
+                     <h2>Share This Report</h2>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="Testimonial_box" style="text-align: center;">
+                     <div style="display: flex; justify-content: center; margin: 20px 0;">
+                        <img src="<?php echo $qrCodeDataUri; ?>" alt="QR Code for Report Page" style="border: 2px solid #ccc; padding: 10px; background: white; display: block;" />
+                     </div>
+ 
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- end QR Code Section -->
       
       <!--  footer -->
       <footer>
