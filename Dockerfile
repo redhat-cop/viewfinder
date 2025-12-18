@@ -1,9 +1,9 @@
 # Multi-stage build for production-ready container
-FROM registry.access.redhat.com/ubi10/php-83:latest
+FROM registry.access.redhat.com/ubi9/php-81:latest
 
 # Metadata
 LABEL maintainer="Chris Jenkins <chrisj@redhat.com>" \
-      version="2.1.0" \
+      version="2.0.0" \
       description="Viewfinder Maturity Assessment Tool - Production Ready"
 
 # Set working directory
@@ -29,7 +29,8 @@ RUN sed -i 's/^ServerTokens .*/ServerTokens Prod/' /etc/httpd/conf/httpd.conf &&
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Copy composer files first for better layer caching
-COPY --chown=1001:0 composer.json composer.lock ./
+COPY --chown=1001:0 composer.json ./
+COPY --chown=1001:0 composer.lock* ./
 
 # Install PHP dependencies as root
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
