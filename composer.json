@@ -7,7 +7,7 @@
     "require": {
         "php": "^8.1",
         "ext-json": "*",
-        "endroid/qr-code": "^6.1",
+        "endroid/qr-code": "^5.0",
         "monolog/monolog": "^3.5"
     },
     "require-dev": {
