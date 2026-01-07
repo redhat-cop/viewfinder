@@ -74,7 +74,7 @@ try {
     Logger::info('Profile selected', ['profile' => $profile]);
 
     // Safely load controls JSON
-    $controlsFile = dirname(__DIR__) . "/controls-{$profile}.json";
+    $controlsFile = Security::getControlsFilePath($profile);
     $json = Security::loadJSON($controlsFile);
 
     // Generate QR code for current page URL
@@ -82,17 +82,17 @@ try {
     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
     $currentPageUrl = $protocol . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-    // Build the QR code
-    $qrCodeResult = (new Builder(
-        writer: new PngWriter(),
-        validateResult: false,
-        data: $currentPageUrl,
-        encoding: new Encoding('UTF-8'),
-        errorCorrectionLevel: ErrorCorrectionLevel::High,
-        size: 300,
-        margin: 10,
-        roundBlockSizeMode: RoundBlockSizeMode::Margin,
-    ))->build();
+    // Build the QR code using fluent builder pattern (v5.x API)
+    $qrCodeResult = Builder::create()
+        ->writer(new PngWriter())
+        ->data($currentPageUrl)
+        ->encoding(new Encoding('UTF-8'))
+        ->errorCorrectionLevel(ErrorCorrectionLevel::High)
+        ->size(300)
+        ->margin(10)
+        ->roundBlockSizeMode(RoundBlockSizeMode::Margin)
+        ->validateResult(false)
+        ->build();
 
     // Convert to base64 for inline display
     $qrCodeDataUri = $qrCodeResult->getDataUri();

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a7482653383534e40a258adf0cf4b6f6",
+    "content-hash": "a11c53f8193129f2ccd0c73c22422516",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -113,26 +113,26 @@
         },
         {
             "name": "endroid/qr-code",
-            "version": "6.1.0",
+            "version": "5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/endroid/qr-code.git",
-                "reference": "5a74873ba8873ddcc557d22755c914ac899563ae"
+                "reference": "393fec6c4cbdc1bd65570ac9d245704428010122"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/endroid/qr-code/zipball/5a74873ba8873ddcc557d22755c914ac899563ae",
-                "reference": "5a74873ba8873ddcc557d22755c914ac899563ae",
+                "url": "https://api.github.com/repos/endroid/qr-code/zipball/393fec6c4cbdc1bd65570ac9d245704428010122",
+                "reference": "393fec6c4cbdc1bd65570ac9d245704428010122",
                 "shasum": ""
             },
             "require": {
                 "bacon/bacon-qr-code": "^3.0",
-                "php": "^8.4"
+                "php": "^8.1"
             },
             "require-dev": {
                 "endroid/quality": "dev-main",
                 "ext-gd": "*",
-                "khanamiryan/qrcode-detector-decoder": "^2.0.3",
+                "khanamiryan/qrcode-detector-decoder": "^2.0.2",
                 "setasign/fpdf": "^1.8.2"
             },
             "suggest": {
@@ -144,7 +144,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "6.x-dev"
+                    "dev-main": "5.x-dev"
                 }
             },
             "autoload": {
@@ -173,7 +173,7 @@
             ],
             "support": {
                 "issues": "https://github.com/endroid/qr-code/issues",
-                "source": "https://github.com/endroid/qr-code/tree/6.1.0"
+                "source": "https://github.com/endroid/qr-code/tree/5.1.0"
             },
             "funding": [
                 {
@@ -181,7 +181,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-11-25T10:47:45+00:00"
+            "time": "2024-09-08T08:52:55+00:00"
         },
         {
             "name": "monolog/monolog",
