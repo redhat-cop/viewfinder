@@ -62,9 +62,6 @@ use Endroid\QrCode\Writer\PngWriter;
 // Register error handlers
 ErrorHandler::register();
 
-// Configure logger with absolute path to main logs directory
-Logger::configure(dirname(__DIR__) . '/logs/', Config::LOG_LEVEL);
-
 try {
     Logger::info('Report page loaded', ['page' => 'report/index.php']);
 

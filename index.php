@@ -69,9 +69,6 @@
                   // Register error handlers
                   ErrorHandler::register();
 
-                  // Configure logger
-                  Logger::configure(Config::LOG_PATH, Config::LOG_LEVEL);
-
                   try {
                       Logger::info('Index page loaded', ['page' => 'index.php']);
 

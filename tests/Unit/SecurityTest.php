@@ -17,7 +17,7 @@ class SecurityTest extends TestCase {
 
     protected function setUp(): void {
         // Configure logger to suppress output during tests
-        Logger::configure('/tmp/test-viewfinder/', 'ERROR');
+        Logger::configure('', 'ERROR');
     }
 
     // ========================================

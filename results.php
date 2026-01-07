@@ -52,9 +52,6 @@ use Endroid\QrCode\Writer\PngWriter;
 // Register error handlers
 ErrorHandler::register();
 
-// Configure logger
-Logger::configure(Config::LOG_PATH, Config::LOG_LEVEL);
-
 try {
     Logger::info('Results page loaded', ['page' => 'results.php']);
 
@@ -78,17 +75,17 @@ try {
     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
     $currentPageUrl = $protocol . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-    // Build the QR code
-    $qrCodeResult = (new Builder(
-        writer: new PngWriter(),
-        validateResult: false,
-        data: $currentPageUrl,
-        encoding: new Encoding('UTF-8'),
-        errorCorrectionLevel: ErrorCorrectionLevel::High,
-        size: 300,
-        margin: 10,
-        roundBlockSizeMode: RoundBlockSizeMode::Margin,
-    ))->build();
+    // Build the QR code using fluent builder pattern (v5.x API)
+    $qrCodeResult = Builder::create()
+        ->writer(new PngWriter())
+        ->data($currentPageUrl)
+        ->encoding(new Encoding('UTF-8'))
+        ->errorCorrectionLevel(ErrorCorrectionLevel::High)
+        ->size(300)
+        ->margin(10)
+        ->roundBlockSizeMode(RoundBlockSizeMode::Margin)
+        ->validateResult(false)
+        ->build();
 
     // Convert to base64 for inline display
     $qrCodeDataUri = $qrCodeResult->getDataUri();
