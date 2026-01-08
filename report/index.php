@@ -150,7 +150,6 @@ $totalScore = 0;
                         <div class="full">
                            <div class="center-desk">
                               <div class="logo">
-                           <a href="index.php"><img src="images/viewfinder-logo.png" alt="#" /></a>
                                  
                         <div class="text-bg">
                            <h1><?php
@@ -644,7 +643,7 @@ foreach ($controls as $control) {
                <div class="container">
                   <div class="row">
                      <div class="col-md-12">
-                        <p>Copyright 2025 All Right Reserved </p>
+                        <p>Copyright 2026 All Right Reserved </p>
                      </div>
                   </div>
                </div>
