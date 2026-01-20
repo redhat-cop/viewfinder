@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/consent.css" />
       <link rel="stylesheet" href="css/style.css" />
       <link rel="stylesheet" href="css/tab.css" />
+      <link rel="stylesheet" href="css/tab-dark.css" />
       <link rel="stylesheet" href="css/patternfly.css" />
       <link rel="stylesheet" href="css/patternfly-addons.css" />
       
@@ -18,7 +19,19 @@
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <script src="https://kit.fontawesome.com/8a8c57f9cf.js" crossorigin="anonymous"></script>
   <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
-  <script src="js/consent.js" defer></script>    
+
+<style>
+  /* Dark Theme Body */
+  body {
+    background-color: #151515 !important;
+    color: #ccc !important;
+  }
+
+  /* Header Button Spacing */
+  .pf-c-page__header-tools button {
+    margin-right: 1rem;
+  }
+</style>
 
 <script>
 	//style all the dialogue
@@ -58,52 +71,61 @@
                   <img class="pf-c-brand" src="images/viewfinder-logo.png" alt="Viewfinder logo" />
                   </a>
                 </div>
+                <?php
+                require_once __DIR__ . '/vendor/autoload.php';
+                require_once __DIR__ . '/error-pages/error-handler.php';
+                require_once __DIR__ . '/includes/Security.php';
+                require_once __DIR__ . '/includes/Logger.php';
+                require_once __DIR__ . '/includes/Config.php';
+
+                // Register error handlers
+                ErrorHandler::register();
+
+                try {
+                    Logger::info('Index page loaded', ['page' => 'index.php']);
+
+                    // Validate and sanitize profile input
+                    $profile = Security::validateProfile($_REQUEST['profile'] ?? '');
+                    Logger::info('Profile selected', ['profile' => $profile]);
+
+                    // Safely load controls JSON
+                    $controlsFile = Security::getControlsFilePath($profile);
+                    $json = Security::loadJSON($controlsFile);
+
+                } catch (ViewfinderException $e) {
+                    Logger::logException($e);
+                    throw $e; // Re-throw for error handler to display error page
+                } catch (\Throwable $e) {
+                    Logger::error('Unexpected error in index.php', [
+                        'exception' => get_class($e),
+                        'message' => $e->getMessage(),
+                        'file' => $e->getFile(),
+                        'line' => $e->getLine()
+                    ]);
+                    throw new ViewfinderException(
+                        'Unexpected error: ' . $e->getMessage(),
+                        'An unexpected error occurred. Please contact support.',
+                        ['original_exception' => get_class($e)],
+                        0,
+                        $e
+                    );
+                }
+                ?>
                 <div class="widget">
-                  <?php
-                  require_once __DIR__ . '/vendor/autoload.php';
-                  require_once __DIR__ . '/error-pages/error-handler.php';
-                  require_once __DIR__ . '/includes/Security.php';
-                  require_once __DIR__ . '/includes/Logger.php';
-                  require_once __DIR__ . '/includes/Config.php';
-
-                  // Register error handlers
-                  ErrorHandler::register();
-
-                  try {
-                      Logger::info('Index page loaded', ['page' => 'index.php']);
-
-                      // Validate and sanitize profile input
-                      $profile = Security::validateProfile($_REQUEST['profile'] ?? '');
-                      Logger::info('Profile selected', ['profile' => $profile]);
-
-                      // Safely load controls JSON
-                      $controlsFile = Security::getControlsFilePath($profile);
-                      $json = Security::loadJSON($controlsFile);
-
-                  } catch (ViewfinderException $e) {
-                      Logger::logException($e);
-                      throw $e; // Re-throw for error handler to display error page
-                  } catch (\Throwable $e) {
-                      Logger::error('Unexpected error in index.php', [
-                          'exception' => get_class($e),
-                          'message' => $e->getMessage(),
-                          'file' => $e->getFile(),
-                          'line' => $e->getLine()
-                      ]);
-                      throw new ViewfinderException(
-                          'Unexpected error: ' . $e->getMessage(),
-                          'An unexpected error occurred. Please contact support.',
-                          ['original_exception' => get_class($e)],
-                          0,
-                          $e
-                      );
-                  }
-                  ?>
-              <a href="index.php?profile=Security"><button>Security</button></a>&nbsp
-<!--              <a href="index.php?profile=AI"><button>AI Readiness (WiP)</button></a>&nbsp -->
-              <a href="index.php?profile=DigitalSovereignty"><button>Digital Sovereignty</button></a>&nbsp
-<!--              <a href="index.php?profile=OpenShift"><button>OpenShift</button></a>&nbsp
-              <a href="index.php?profile=AI"><button>AI</button></a>&nbsp -->
+              <?php
+              // Dynamically generate navigation buttons for enabled profiles
+              $enabledProfiles = Config::getEnabledProfiles();
+              foreach ($enabledProfiles as $profileKey => $profileData) {
+                  $profileName = htmlspecialchars($profileKey, ENT_QUOTES, 'UTF-8');
+                  $displayName = htmlspecialchars($profileData['display_name'], ENT_QUOTES, 'UTF-8');
+                  echo '<a href="index.php?profile=' . $profileName . '"><button>' . $displayName . '</button></a>&nbsp;' . "\n              ";
+              }
+              ?>
+            </div>
+            <div class="pf-c-page__header-tools">
+              <div class="widget">
+                <a href="profile-admin.php"><button>Manage Profiles</button></a>
+              </div>
             </div>
 </header>
 <div class="container">
@@ -142,7 +164,7 @@ print "</ul>";
 ?>
 <div class="tab">
   <div id="centerDivLine">
-<h2>Profile: <?php echo Security::escape(Config::getProfileDisplayName($profile));?> </h2>
+<h2><?php echo Security::escape(Config::getProfileDisplayName($profile));?> Profile</h2>
 
 </div>
 <?php
@@ -252,19 +274,9 @@ document.getElementById("defaultOpen").click();
 </script>
 
 
-<div class="bannerWrapper">
-      <header>
-      <h2>Red Hat Disclaimer</h2>
-      </header>
-
-      <div class="data">
-        <p>This application is provided for informational purposes only. The information is provided “as is” with no guarantee or warranty of accuracy, completeness, or fitness for a particular purpose.</p>
-      </div>
-
-      <div class="buttons">
-        <button class="button" id="acceptBtn">Accept</button>
-      </div>
-</div>
+<footer class="disclaimer-footer">
+  <p><strong>Red Hat Disclaimer:</strong> This application is provided for informational purposes only. The information is provided "as is" with no guarantee or warranty of accuracy, completeness, or fitness for a particular purpose.</p>
+</footer>
 
 </body>
 </html>

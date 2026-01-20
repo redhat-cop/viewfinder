@@ -12,10 +12,41 @@
 <link rel="stylesheet" href="css/patternfly-addons.css" />
 <link rel="stylesheet" href="css/tab.css">
 <link rel="stylesheet" href="css/table2.css">
+<link rel="stylesheet" href="css/results-dark.css">
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
 <script src="https://kit.fontawesome.com/8a8c57f9cf.js" crossorigin="anonymous"></script>
+
+<style>
+  /* Dark Theme Body */
+  body {
+    background-color: #151515 !important;
+    color: #ccc !important;
+  }
+
+  /* Header Button Spacing */
+  .pf-c-page__header-tools button {
+    margin-right: 1rem;
+  }
+
+  /* Override jQuery UI default styles */
+  .ui-widget {
+    font-family: inherit !important;
+  }
+
+  .ui-widget-content {
+    background: transparent !important;
+    border: none !important;
+    color: #ccc !important;
+  }
+
+  .ui-state-default {
+    background: transparent !important;
+    border: none !important;
+  }
+</style>
+
 <script>
   $( function() {
     $( "#accordion" ).accordion({
@@ -33,6 +64,11 @@
                   <a class="pf-c-page__header-brand-link" href="index.php">
                   <img class="pf-c-brand" src="images/viewfinder-logo.png" alt="Viewfinder logo" />
                   </a>
+                </div>
+                <div class="pf-c-page__header-tools">
+                  <div class="widget">
+                    <a href="index.php"><button><i class="fa fa-home"></i> Home</button></a>
+                  </div>
                 </div>
 </header>
 <?php
@@ -476,7 +512,7 @@ if (isset($_REQUEST['lob'])) {
 			////////////////////////////////////////////////////////////// 
 
 			var color = d3.scale.ordinal()
-				.range(["#CC333F","#CC333F","#00A0B0"]);
+				.range(["#0d60f8","#0d60f8","#12bbd4"]);
 				
 			var radarChartOptions = {
 			  w: width,

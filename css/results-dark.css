@@ -1,0 +1,516 @@
+/**
+ * Results Page Dark Theme
+ * Matches the modern dark styling from tab-dark.css
+ */
+
+/* Body and Container */
+body {
+  background-color: #151515 !important;
+  color: #ccc !important;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 1rem auto;
+  padding: 0 1.5rem;
+}
+
+/* Header Navigation Buttons */
+.pf-c-page__header-tools button {
+  margin-right: 1rem;
+  background: #0d60f8;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.pf-c-page__header-tools button:hover {
+  background: #0a4fc5;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(13, 96, 248, 0.4);
+}
+
+/* Tab Navigation - Matching index.php */
+.tab {
+  background-color: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 0.5rem;
+  width: 100%;
+  margin: 1rem auto 0;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.tab button {
+  background-color: transparent;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+  color: #ccc;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 6px;
+  margin: 0.25rem;
+}
+
+.tab button:hover {
+  background-color: rgba(13, 96, 248, 0.1);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.tab button.active {
+  background: #0d60f8;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(13, 96, 248, 0.4);
+}
+
+.tab button a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Tab Content */
+.tabcontent {
+  display: none;
+  padding: 1rem 1.5rem;
+  border: 1px solid #444;
+  border-top: none;
+  background-color: #1f1f1f;
+  border-radius: 0 0 8px 8px;
+  width: 100%;
+  margin: 0 auto;
+  animation: fadeEffect 0.5s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Clear floats in Radar tab */
+#Radar::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@keyframes fadeEffect {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+  color: #fff;
+}
+
+.profileHeader {
+  display: none;
+}
+
+.title-text {
+  color: #9ec7fc;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.why-what {
+  color: #0d60f8;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.frameworkHeader {
+  color: #9ec7fc;
+  font-weight: bold;
+  margin: 1rem 0 0.5rem;
+}
+
+.category-large {
+  color: #9ec7fc;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+/* Text */
+p {
+  color: #ccc;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+th {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  border: 1px solid #444;
+}
+
+td {
+  padding: 1rem;
+  border: 1px solid #444;
+  color: #ccc;
+}
+
+tr:hover {
+  background-color: rgba(13, 96, 248, 0.05);
+}
+
+.table-header {
+  background-color: #1a1a1a;
+  color: #9ec7fc;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid #444;
+}
+
+/* Maturity Table Specific */
+.tableMaturity {
+  background-color: #2a2a2a;
+  border: 1px solid #444;
+}
+
+.tableMaturity th,
+.tableMaturity td {
+  border: 1px solid #444;
+  padding: 0.75rem;
+  text-align: center;
+}
+
+/* Maturity Table Row Colors - Override table2.css light theme */
+.foundation {
+  background-color: #9ec7fc !important;
+  color: #070707 !important;
+  border-right: 2px solid #444 !important;
+  font-weight: bold;
+}
+
+.strategic {
+  background-color: #0d60f8 !important;
+  color: #ffffff !important;
+  border-right: 2px solid #444 !important;
+  font-weight: bold;
+}
+
+.advanced {
+  background-color: #2aaa04 !important;
+  color: #faf7f7 !important;
+  border-right: 2px solid #444 !important;
+  font-weight: bold;
+}
+
+.completed {
+  color: #000000 !important;
+  font-size: 0.85rem !important;
+}
+
+.notcompleted {
+  color: #000000 !important;
+  font-size: 0.85rem !important;
+}
+
+/* Table Layouts */
+.bigtable {
+  width: 100%;
+  margin: 1rem auto;
+  padding: 1rem;
+  background-color: #1f1f1f;
+  border-radius: 8px;
+}
+
+.bigtableLeft {
+  overflow: hidden;
+  padding: 0;
+  background-color: transparent;
+  margin-top: 0;
+  margin-left: 10%;
+  top: auto;
+  max-width: 70%;
+}
+
+.spacedTable {
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  table-layout: auto;
+}
+
+/* Maturity Level Cell Colors - Matching tab-dark.css */
+.cellFoundation,
+.cellPartial {
+  background-color: #9ec7fc !important;
+  color: #070707 !important;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+}
+
+.cellStrategic,
+.cellRisk-Informed {
+  background-color: #0d60f8 !important;
+  color: #ffffff !important;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+}
+
+.cellAdvanced {
+  background-color: #2aaa04 !important;
+  color: #faf7f7 !important;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+}
+
+/* Header cells for maturity levels */
+.cellHeaderFoundation {
+  color: #4291f8 !important;
+  text-align: center;
+  font-weight: bold;
+  background-color: transparent;
+}
+
+.cellHeaderStrategic {
+  color: #0d60f8 !important;
+  text-align: center;
+  font-weight: bold;
+  background-color: transparent;
+}
+
+.cellHeaderAdvanced {
+  color: #2aaa04 !important;
+  text-align: center;
+  font-weight: bold;
+  background-color: transparent;
+}
+
+/* Accordion (jQuery UI) */
+#accordion {
+  background-color: #1f1f1f;
+  border: none;
+  margin: 0.5rem 0;
+}
+
+#accordion h3 {
+  background-color: #2a2a2a !important;
+  border: 1px solid #444 !important;
+  color: #fff !important;
+  padding: 0.75rem !important;
+  margin: 0.35rem 0 !important;
+  border-radius: 6px !important;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#accordion h3:hover {
+  background-color: #333 !important;
+  border-color: #0d60f8 !important;
+}
+
+#accordion h3.ui-state-active {
+  background-color: #0d60f8 !important;
+  color: #fff !important;
+  border-color: #0d60f8 !important;
+}
+
+#accordion .ui-accordion-content {
+  background-color: #1f1f1f !important;
+  border: 1px solid #444 !important;
+  border-top: none !important;
+  color: #ccc !important;
+  padding: 1rem !important;
+  border-radius: 0 0 6px 6px !important;
+}
+
+#accordion .ui-accordion-content p {
+  line-height: normal;
+  margin-bottom: 0;
+}
+
+#accordion .ui-icon {
+  background-image: none !important;
+}
+
+#accordion .ui-icon:before {
+  content: "▼";
+  color: #ccc;
+  font-size: 0.8rem;
+  position: absolute;
+  left: 0.5rem;
+}
+
+#accordion .ui-state-active .ui-icon:before {
+  content: "▲";
+  color: #fff;
+}
+
+/* Radar Chart Container */
+.htmlChart {
+  padding: 1.5rem;
+  margin: 0;
+  text-align: center;
+  width: 50%;
+  float: left;
+}
+
+.radarChart {
+  margin: 0 auto;
+}
+
+/* Radar Chart SVG Elements - Override inline styles */
+.radarChart .gridCircle {
+  fill: #444 !important;
+  stroke: #555 !important;
+  fill-opacity: 0.2 !important;
+}
+
+.radarChart .axisLabel {
+  fill: #9ec7fc !important;
+  font-size: 12px !important;
+}
+
+.radarChart .legend {
+  fill: #fff !important;
+  font-size: 13px !important;
+  font-weight: 600;
+}
+
+.radarChart .line {
+  stroke: #666 !important;
+  stroke-width: 1px !important;
+}
+
+.radarChart .radarArea {
+  fill: #0d60f8 !important;
+  fill-opacity: 0.3 !important;
+}
+
+.radarChart .radarStroke {
+  stroke: #0d60f8 !important;
+  stroke-width: 2px !important;
+}
+
+.radarChart .radarCircle {
+  fill: #0d60f8 !important;
+}
+
+/* Lists */
+ul, ol {
+  color: #ccc;
+  line-height: 1.8;
+  margin: 1rem 0;
+  padding-left: 2rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+/* Links */
+a {
+  color: #12bbd4;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: #0d60f8;
+}
+
+/* Framework and LOB Content */
+.tabcontent ul {
+  padding-left: 1.5rem;
+}
+
+.tabcontent li {
+  color: #ccc;
+  margin-bottom: 0.75rem;
+}
+
+.tabcontent strong,
+.tabcontent b {
+  color: #fff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .tab {
+    padding: 0.25rem;
+  }
+
+  .tab button {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    float: none;
+    display: block;
+    width: 100%;
+    margin: 0.25rem 0;
+  }
+
+  .tabcontent {
+    padding: 1rem;
+  }
+
+  .bigtable {
+    padding: 0.75rem;
+  }
+
+  .bigtableLeft {
+    float: none;
+    width: 100%;
+    margin: 1rem 0;
+  }
+
+  .htmlChart {
+    float: none;
+    width: 100%;
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+
+  table {
+    font-size: 0.9rem;
+  }
+
+  th, td {
+    padding: 0.5rem;
+  }
+}

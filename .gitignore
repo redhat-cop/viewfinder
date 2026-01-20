@@ -1,0 +1,27 @@
+# Logs
+logs/
+*.log
+
+# Composer
+vendor/
+composer.phar
+
+# Backups
+*.backup.*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# PHPUnit
+.phpunit.result.cache
+
+# Claude
+.claude

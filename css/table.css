@@ -53,7 +53,6 @@ th {
 thead {
 	th {
 		padding-left: 10px;
-		color:darkslategrey;
 	}
 }
 
@@ -62,7 +61,6 @@ tbody {
 		position: relative;
 		padding-left: 10px;
 		font-weight: bold;
-		font-size: large;
 		padding-right: 20px;
 	}
 }

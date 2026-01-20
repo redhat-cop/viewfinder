@@ -27,15 +27,14 @@ class Config {
         ],
         'AI' => [
             'name' => 'AI',
-            'display_name' => 'AI Readiness',
+            'display_name' => 'AI Readiness Assessment',
             'enabled' => false // Work in Progress
         ],
         'OpenShift' => [
             'name' => 'OpenShift',
             'display_name' => 'OpenShift',
             'enabled' => false
-        ]
-    ];
+        ],];
 
     /**
      * Line of Business options
@@ -47,7 +46,7 @@ class Config {
         'Telecommunications' => 'Telecommunications',
         'Healthcare' => 'Healthcare',
         'Other' => 'Other'
-    ];
+,];
 
     /**
      * Maturity level thresholds for individual controls
