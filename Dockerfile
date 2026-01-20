@@ -4,7 +4,7 @@ FROM registry.access.redhat.com/ubi10/php-83:latest
 # Metadata
 LABEL maintainer="Chris Jenkins <chrisj@redhat.com>" \
       version="2.0.0" \
-      description="Viewfinder Maturity Assessment Tool - Production Ready"
+      description="Viewfinder Maturity Assessment Tool - Production Ready with Profile Export/Import"
 
 # Set working directory
 WORKDIR /opt/app-root/src
@@ -36,6 +36,7 @@ COPY --chown=1001:0 composer.lock* ./
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
 # Copy application files (exclude unnecessary files)
+# Includes all profile management features: Create, Edit, Delete, Export, Import
 COPY --chown=1001:0 *.php ./
 COPY --chown=1001:0 includes/ ./includes/
 COPY --chown=1001:0 css/ ./css/
@@ -46,6 +47,7 @@ COPY --chown=1001:0 compliance/ ./compliance/
 COPY --chown=1001:0 report/ ./report/
 COPY --chown=1001:0 *.json ./
 COPY --chown=1001:0 error-pages/ ./error-pages/
+COPY --chown=1001:0 README.md ./
 
 # Create logs directory
 RUN mkdir -p /opt/app-root/src/logs
