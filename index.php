@@ -124,6 +124,7 @@
             </div>
             <div class="pf-c-page__header-tools">
               <div class="widget">
+                <a href="ds-qualifier/"><button>DS Sales Qualifier</button></a>
                 <a href="profile-admin.php"><button>Manage Profiles</button></a>
               </div>
             </div>

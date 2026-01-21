@@ -42,6 +42,21 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 - **Framework-Specific Views**: Detailed compliance guidance per selected framework
 - **Industry-Specific Views**: Sector-specific recommendations
 
+### Digital Sovereignty Sales Qualifier ✨ NEW
+- **Quick Sales Qualification**: Lightweight 10-15 minute assessment for sales teams
+- **Paginated Navigation**: Section-by-section wizard with Next/Previous buttons and keyboard shortcuts
+- **21 Key Questions**: 2-3 critical questions per domain (Data, Technical, Operational, Assurance, Open Source, Executive, Managed Services)
+- **Progress Tracking**: Visual section indicator (Section X of 7) with progress bar
+- **Opportunity Scoring**: 0-21 point scale with High/Medium/Low priority classification (lower scores = higher opportunity)
+- **Gap-Based Prioritization**: Identifies customers lacking DS capabilities as prime opportunities
+- **Sales-Friendly Results**: Actionable recommendations and next steps
+- **Domain Analysis**: Gap analysis showing opportunity level across all DS domains
+- **Automatic Recommendations**: Tailored product positioning and sales actions based on score
+- **Print & Share**: Print-optimized results for customer conversations
+- **Auto-Save Progress**: Automatically saves form progress and current section in browser
+- **Keyboard Navigation**: Arrow keys to navigate between sections, Ctrl+S to save
+- **Full Assessment Link**: Easy transition to complete Viewfinder DS assessment
+
 ### Profile Management System
 - **Create Custom Profiles**: Build tailored assessment profiles via intuitive 4-step wizard
 - **Edit Existing Profiles**: Modify profile content, domains, and capabilities
@@ -253,6 +268,63 @@ Once running, open your browser and navigate to:
 - **Compliance Frameworks**: Framework-specific guidance (if frameworks selected)
 - **Industry Specifics**: Line-of-business recommendations (if LOB selected)
 
+### Using the Digital Sovereignty Sales Qualifier
+
+The DS Sales Qualifier is a lightweight tool designed for sales teams to quickly identify Digital Sovereignty opportunities. Access it via the **DS Sales Qualifier** button in the main navigation.
+
+#### Quick Start
+1. **Answer Domain Questions**:
+   - Navigate through 7 DS domains using Next/Previous buttons
+   - Review 2-3 yes/no questions per domain (21 questions total)
+   - Check boxes for any capabilities the customer currently has or requires
+   - Track your progress with the live score counter and section indicator
+   - Form auto-saves to browser storage (including your current section)
+   - Use keyboard arrow keys for quick navigation
+
+2. **Submit & Review Results**:
+   - Click "Generate Qualification Report" on the final section
+   - Review opportunity priority (High/Medium/Low)
+   - Examine domain-by-domain breakdown
+   - Follow recommended next steps
+
+#### Understanding DS Qualifier Results
+
+**Priority Levels (Inverted Scoring):**
+
+*Note: Lower scores indicate HIGHER sales opportunity because the customer lacks DS capabilities and needs Red Hat solutions.*
+
+- **High Priority (0-7 points)**: Strong DS opportunity - Customer has significant gaps
+  - Engage DS specialists immediately
+  - Position OpenShift, RHEL sovereign solutions
+  - Schedule technical deep-dive
+  - Discuss compliance frameworks (GDPR, NIS2, etc.)
+  - Excellent opportunity to provide value across multiple domains
+
+- **Medium Priority (8-14 points)**: Moderate DS opportunity - Customer has some capabilities
+  - Conduct full Viewfinder assessment
+  - Schedule discovery call on data residency
+  - Share DS resources and whitepapers
+  - Validate budget and timeline
+  - Good opportunity to strengthen their sovereignty posture
+
+- **Low Priority (15-21 points)**: Limited DS opportunity - Customer already compliant
+  - Customer already has strong DS capabilities
+  - Limited opportunity for new DS solutions
+  - Consider maintenance, upgrades, or other Red Hat value propositions
+  - Monitor for future expansion opportunities
+
+**Results Include:**
+- **Score Card**: Visual priority indicator with total score
+- **Domain Breakdown**: Gap analysis and opportunity level across 7 domains (Data, Technical, Operational, Assurance, Open Source, Executive, Managed Services)
+- **Sales Actions**: Recommended next steps based on priority level
+- **Domain Insights**: Detailed view of identified gaps and opportunities
+- **Printable Report**: Print-optimized format for customer meetings
+
+**Next Steps:**
+- **Print Results**: Use print button for customer conversations
+- **New Assessment**: Start another qualification
+- **Full Assessment**: Run complete Viewfinder DS assessment for technical details
+
 ### Managing Profiles
 
 #### Access Profile Administration
@@ -404,6 +476,15 @@ viewfinder/
 ├── profile-deleter.php                # Profile deletion interface
 ├── profile-deleter-handler.php        # AJAX handler for deletion
 ├── clear-cache.php                    # Opcode cache clearing utility
+│
+├── ds-qualifier/                      # ✨ Digital Sovereignty Sales Qualifier
+│   ├── index.php                      # Qualification questionnaire interface
+│   ├── results.php                    # Sales-friendly results page
+│   ├── config.php                     # Questions configuration
+│   ├── css/
+│   │   └── ds-qualifier.css           # Tool-specific styling
+│   └── js/
+│       └── ds-qualifier.js            # Interactive features & auto-save
 │
 ├── includes/
 │   ├── Config.php                     # Application configuration & constants
@@ -669,6 +750,19 @@ Extend `includes/ProfileExporter.php` with new export methods
 - Update UI to include new framework option
 
 ## Version History
+
+### Version 2.1.0 (January 2026)
+- ✨ **NEW**: Digital Sovereignty Sales Qualifier tool for quick opportunity assessment
+- ✨ **NEW**: Paginated section navigation with Next/Previous buttons (wizard-style UX)
+- ✨ **NEW**: Visual progress tracking (Section X of 7 with progress bar)
+- ✨ **NEW**: 21-question lightweight qualification for sales teams
+- ✨ **NEW**: Gap-based inverted scoring (low score = high opportunity)
+- ✨ **NEW**: Opportunity scoring with High/Medium/Low priority classification
+- ✨ **NEW**: Sales-friendly results with actionable recommendations
+- ✨ **NEW**: Auto-save functionality preserving current section and answers
+- ✨ **NEW**: Print-optimized results for customer conversations
+- ✨ **NEW**: Domain-by-domain gap analysis and opportunity breakdown
+- ✨ **NEW**: Keyboard navigation (Arrow keys to navigate, Ctrl+S to save)
 
 ### Version 2.0.0 (January 2026)
 - ✨ **NEW**: Complete Export/Import functionality for profiles

@@ -3,8 +3,8 @@ FROM registry.access.redhat.com/ubi10/php-83:latest
 
 # Metadata
 LABEL maintainer="Chris Jenkins <chrisj@redhat.com>" \
-      version="2.0.0" \
-      description="Viewfinder Maturity Assessment Tool - Production Ready with Profile Export/Import"
+      version="2.1.0" \
+      description="Viewfinder Maturity Assessment Tool - Production Ready with Profile Management and DS Sales Qualifier"
 
 # Set working directory
 WORKDIR /opt/app-root/src
@@ -37,6 +37,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-di
 
 # Copy application files (exclude unnecessary files)
 # Includes all profile management features: Create, Edit, Delete, Export, Import
+# Includes Digital Sovereignty Sales Qualifier tool
 COPY --chown=1001:0 *.php ./
 COPY --chown=1001:0 includes/ ./includes/
 COPY --chown=1001:0 css/ ./css/
@@ -45,6 +46,7 @@ COPY --chown=1001:0 images/ ./images/
 COPY --chown=1001:0 lob/ ./lob/
 COPY --chown=1001:0 compliance/ ./compliance/
 COPY --chown=1001:0 report/ ./report/
+COPY --chown=1001:0 ds-qualifier/ ./ds-qualifier/
 COPY --chown=1001:0 *.json ./
 COPY --chown=1001:0 error-pages/ ./error-pages/
 COPY --chown=1001:0 README.md ./
