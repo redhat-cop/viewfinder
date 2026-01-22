@@ -30,12 +30,32 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 - **Framework-Specific Views**: Detailed compliance guidance per selected framework
 - **Industry-Specific Views**: Sector-specific recommendations
 
+### Landing Page Dashboard ✨ NEW
+- **Unified Entry Point**: Clean, professional landing page at root URL
+- **Card-Based Navigation**: Three main sections with intuitive card design
+  - **Full Maturity Assessments**: Dynamically generated buttons for all enabled profiles
+  - **DS Sales Qualifier**: Quick access to sales qualification tool
+  - **Profile Management**: Administrative access
+- **Dynamic Profile Discovery**: Automatically displays new profiles when added via Profile Admin
+- **Automatic Updates**: Add/remove profiles and landing page updates automatically
+- **Responsive Design**: Mobile-friendly card grid layout
+- **Sticky Footer**: Footer properly positioned at bottom of page
+- **Consistent Theming**: PatternFly dark theme throughout
+
 ### Digital Sovereignty Sales Qualifier ✨ NEW
 - **Quick Sales Qualification**: Lightweight 10-15 minute assessment for sales teams
 - **Paginated Navigation**: Section-by-section wizard with Next/Previous buttons and keyboard shortcuts
 - **21 Key Questions**: 2-3 critical questions per domain (Data, Technical, Operational, Assurance, Open Source, Executive, Managed Services)
+- **Answer Validation**: Required field validation - must answer all questions before proceeding to next section
 - **Progress Tracking**: Visual section indicator (Section X of 7) with progress bar
+- **Contextual Help Tooltips**: Info icons with detailed explanations for each question
+  - Regulatory frameworks (GDPR, NIS2, SecNumCloud, etc.)
+  - Technical concepts (BYOK, vendor lock-in, etc.)
+  - Real-world examples and use cases
 - **Opportunity Scoring**: 0-21 point scale with High/Medium/Low priority classification (lower scores = higher opportunity)
+- **Visual Score Display**: Circular progress chart showing percentage and points
+  - Color-coded by priority (green=high opportunity, yellow=medium, red=low)
+  - Animated ring visualization
 - **Gap-Based Prioritization**: Identifies customers lacking DS capabilities as prime opportunities
 - **Sales-Friendly Results**: Actionable recommendations and next steps
 - **Domain Analysis**: Gap analysis showing opportunity level across all DS domains
@@ -158,6 +178,11 @@ Once running, open your browser and navigate to:
 - **Container**: [http://localhost:8080](http://localhost:8080)
 - **Direct Installation**: [http://your-server/](http://your-server/)
 
+You'll see the **Landing Page Dashboard** with three main sections:
+1. **Full Maturity Assessments** - Click any profile to start a comprehensive assessment
+2. **DS Sales Qualifier** - Quick 10-15 minute sales qualification tool
+3. **Profile Management** - Configure and manage assessment profiles
+
 ## Architecture
 
 ### Technology Stack
@@ -213,9 +238,26 @@ Once running, open your browser and navigate to:
 
 ## Usage Guide
 
+### Navigating the Landing Page
+
+1. **Start from the Landing Page**:
+   - Visit the root URL to access the main dashboard
+   - Choose from three main options
+
+2. **Select Full Maturity Assessment**:
+   - Click any enabled profile button (Security, Digital Sovereignty, AI, etc.)
+   - Dynamically updated as new profiles are added
+
+3. **Quick Sales Qualification**:
+   - Click "Start Sales Qualifier" for the lightweight DS assessment tool
+
+4. **Profile Management**:
+   - Click "Manage Profiles" to configure assessments (admin)
+
 ### Conducting an Assessment
 
 1. **Select Assessment Profile**:
+   - From the landing page or navigation header
    - Security, Digital Sovereignty, AI Readiness, OpenShift, RHEL, or custom profiles
    - Each profile evaluates 7 distinct domains
 
@@ -453,7 +495,7 @@ Profiles follow a standardized JSON structure with 7 domains and 8 capabilities 
 
 ```
 viewfinder/
-├── index.php                          # Main assessment interface
+├── index.php                          # Landing page dashboard & assessment interface (dual mode)
 ├── results.php                        # Results dashboard with visualizations
 ├── profile-creator.php                # Profile creation wizard UI
 ├── profile-creator-handler.php        # AJAX handler for profile creation
@@ -738,6 +780,17 @@ Extend `includes/ProfileExporter.php` with new export methods
 - Update UI to include new framework option
 
 ## Version History
+
+### Version 2.4.1 (January 2026)
+- ✨ **NEW**: Landing page dashboard with card-based navigation
+- ✨ **NEW**: Dynamic profile discovery on landing page
+- ✨ **NEW**: Contextual help tooltips for all DS Qualifier questions
+- ✨ **NEW**: Answer validation (required fields) for DS Qualifier
+- ✨ **NEW**: Circular progress chart visualization for DS Qualifier results
+- ✨ **NEW**: Home button navigation from all tools
+- 🔧 **IMPROVED**: Button spacing in DS Qualifier navigation
+- 🔧 **IMPROVED**: Footer positioning on landing page (sticky footer)
+- 🔧 **IMPROVED**: Tooltip content refined (removed sales-oriented language)
 
 ### Version 2.1.0 (January 2026)
 - ✨ **NEW**: Digital Sovereignty Sales Qualifier tool for quick opportunity assessment

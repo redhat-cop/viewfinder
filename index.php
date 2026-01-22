@@ -81,36 +81,43 @@
                 // Register error handlers
                 ErrorHandler::register();
 
-                try {
-                    Logger::info('Index page loaded', ['page' => 'index.php']);
+                // Check if this is the landing page (no profile parameter) or an assessment
+                $isLandingPage = empty($_REQUEST['profile']);
 
-                    // Validate and sanitize profile input
-                    $profile = Security::validateProfile($_REQUEST['profile'] ?? '');
-                    Logger::info('Profile selected', ['profile' => $profile]);
+                if (!$isLandingPage) {
+                    // Assessment mode - load profile data
+                    try {
+                        Logger::info('Index page loaded', ['page' => 'index.php']);
 
-                    // Safely load controls JSON
-                    $controlsFile = Security::getControlsFilePath($profile);
-                    $json = Security::loadJSON($controlsFile);
+                        // Validate and sanitize profile input
+                        $profile = Security::validateProfile($_REQUEST['profile'] ?? '');
+                        Logger::info('Profile selected', ['profile' => $profile]);
 
-                } catch (ViewfinderException $e) {
-                    Logger::logException($e);
-                    throw $e; // Re-throw for error handler to display error page
-                } catch (\Throwable $e) {
-                    Logger::error('Unexpected error in index.php', [
-                        'exception' => get_class($e),
-                        'message' => $e->getMessage(),
-                        'file' => $e->getFile(),
-                        'line' => $e->getLine()
-                    ]);
-                    throw new ViewfinderException(
-                        'Unexpected error: ' . $e->getMessage(),
-                        'An unexpected error occurred. Please contact support.',
-                        ['original_exception' => get_class($e)],
-                        0,
-                        $e
-                    );
+                        // Safely load controls JSON
+                        $controlsFile = Security::getControlsFilePath($profile);
+                        $json = Security::loadJSON($controlsFile);
+
+                    } catch (ViewfinderException $e) {
+                        Logger::logException($e);
+                        throw $e; // Re-throw for error handler to display error page
+                    } catch (\Throwable $e) {
+                        Logger::error('Unexpected error in index.php', [
+                            'exception' => get_class($e),
+                            'message' => $e->getMessage(),
+                            'file' => $e->getFile(),
+                            'line' => $e->getLine()
+                        ]);
+                        throw new ViewfinderException(
+                            'Unexpected error: ' . $e->getMessage(),
+                            'An unexpected error occurred. Please contact support.',
+                            ['original_exception' => get_class($e)],
+                            0,
+                            $e
+                        );
+                    }
                 }
                 ?>
+                <?php if (!$isLandingPage): ?>
                 <div class="widget">
               <?php
               // Dynamically generate navigation buttons for enabled profiles
@@ -128,7 +135,204 @@
                 <a href="profile-admin.php"><button>Manage Profiles</button></a>
               </div>
             </div>
+            <?php endif; ?>
 </header>
+
+<?php if ($isLandingPage): ?>
+<!-- ========================================
+     LANDING PAGE
+     ======================================== -->
+<div class="landing-page-wrapper">
+  <div class="container" style="max-width: 1200px; margin: 3rem auto;">
+    <div style="text-align: center; margin-bottom: 3rem;">
+      <h1 style="color: #9ec7fc; font-size: 2.5rem; margin-bottom: 1rem;">
+        <i class="fa-solid fa-compass"></i> Viewfinder Assessment Tools
+      </h1>
+      <p style="color: #ccc; font-size: 1.2rem; max-width: 800px; margin: 0 auto;">
+        Red Hat technology maturity assessments and digital sovereignty qualification tools
+      </p>
+    </div>
+
+  <div class="landing-cards-grid">
+    <!-- Full Maturity Assessments Card -->
+    <div class="landing-card">
+      <div class="landing-card-header">
+        <i class="fa-solid fa-chart-line"></i>
+        <h2>Full Maturity Assessments</h2>
+      </div>
+      <p class="landing-card-description">
+        Comprehensive technical assessments to evaluate your organization's maturity across multiple technology domains
+      </p>
+      <div class="landing-card-buttons">
+        <?php
+        $enabledProfiles = Config::getEnabledProfiles();
+        foreach ($enabledProfiles as $profileKey => $profileData) {
+            $profileName = htmlspecialchars($profileKey, ENT_QUOTES, 'UTF-8');
+            $displayName = htmlspecialchars($profileData['display_name'], ENT_QUOTES, 'UTF-8');
+            echo '<a href="index.php?profile=' . $profileName . '" class="landing-button landing-button-primary">';
+            echo '<i class="fa-solid fa-clipboard-check"></i> ' . $displayName . ' Assessment';
+            echo '</a>' . "\n        ";
+        }
+        ?>
+      </div>
+    </div>
+
+    <!-- DS Sales Qualifier Card -->
+    <div class="landing-card">
+      <div class="landing-card-header">
+        <i class="fa-solid fa-gauge-high"></i>
+        <h2>Digital Sovereignty Sales Qualifier</h2>
+      </div>
+      <p class="landing-card-description">
+        Quick 10-15 minute sales qualification tool to identify Digital Sovereignty opportunities and gaps
+      </p>
+      <div class="landing-card-buttons">
+        <a href="ds-qualifier/" class="landing-button landing-button-success">
+          <i class="fa-solid fa-rocket"></i> Start Sales Qualifier
+        </a>
+      </div>
+    </div>
+
+    <!-- Profile Management Card -->
+    <div class="landing-card">
+      <div class="landing-card-header">
+        <i class="fa-solid fa-gears"></i>
+        <h2>Profile Management</h2>
+      </div>
+      <p class="landing-card-description">
+        Configure and manage assessment profiles, customize domains, and control which assessments are available
+      </p>
+      <div class="landing-card-buttons">
+        <a href="profile-admin.php" class="landing-button landing-button-secondary">
+          <i class="fa-solid fa-sliders"></i> Manage Profiles
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<style>
+/* Landing Page Styles */
+.landing-page-wrapper {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+}
+
+.landing-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.landing-card {
+  background: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.landing-card:hover {
+  border-color: #0d60f8;
+  box-shadow: 0 4px 16px rgba(13, 96, 248, 0.3);
+  transform: translateY(-4px);
+}
+
+.landing-card-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #444;
+}
+
+.landing-card-header i {
+  font-size: 3rem;
+  color: #12bbd4;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.landing-card-header h2 {
+  color: #9ec7fc;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.landing-card-description {
+  color: #ccc;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  min-height: 60px;
+}
+
+.landing-card-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.landing-button {
+  display: inline-block;
+  padding: 1rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.landing-button i {
+  margin-right: 0.5rem;
+}
+
+.landing-button-primary {
+  background: linear-gradient(135deg, #0d60f8 0%, #004cbf 100%);
+  color: #fff;
+}
+
+.landing-button-primary:hover {
+  background: linear-gradient(135deg, #4d90fe 0%, #0d60f8 100%);
+  box-shadow: 0 4px 12px rgba(13, 96, 248, 0.4);
+}
+
+.landing-button-success {
+  background: linear-gradient(135deg, #2aaa04 0%, #1b7003 100%);
+  color: #fff;
+}
+
+.landing-button-success:hover {
+  background: linear-gradient(135deg, #3fcc00 0%, #2aaa04 100%);
+  box-shadow: 0 4px 12px rgba(42, 170, 4, 0.4);
+}
+
+.landing-button-secondary {
+  background: #444;
+  color: #ccc;
+}
+
+.landing-button-secondary:hover {
+  background: #555;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .landing-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<?php else: ?>
+<!-- ========================================
+     ASSESSMENT MODE
+     ======================================== -->
 <div class="container">
 <?php
 $controls = array();
@@ -273,7 +477,7 @@ function openCity(evt, cityName) {
 <script type="text/javascript" >
 document.getElementById("defaultOpen").click();
 </script>
-
+<?php endif; ?>
 
 <footer class="disclaimer-footer">
   <p><strong>Red Hat Disclaimer:</strong> This application is provided for informational purposes only. The information is provided "as is" with no guarantee or warranty of accuracy, completeness, or fitness for a particular purpose.</p>

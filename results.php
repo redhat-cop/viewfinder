@@ -1,556 +1,345 @@
 <!doctype html>
 <html lang="en-us" class="pf-theme-dark">
-  <head>
-  <title>Viewfinder - Results</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sales Qualification Results - Digital Sovereignty Sales Opportunity Qualifier</title>
+
+  <!-- Reuse existing CSS from parent directory -->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/brands.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/tab-dark.css" />
+  <link rel="stylesheet" href="../css/patternfly.css" />
+  <link rel="stylesheet" href="../css/patternfly-addons.css" />
+
+  <!-- DS Qualifier specific styles -->
+  <link rel="stylesheet" href="css/ds-qualifier.css" />
+
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-<link rel="stylesheet" href="css/table.css">
-<link rel="stylesheet" href="css/style.css">
+  <script src="https://kit.fontawesome.com/8a8c57f9cf.js" crossorigin="anonymous"></script>
 
-<link rel="stylesheet" href="css/patternfly.css" />
-<link rel="stylesheet" href="css/patternfly-addons.css" />
-<link rel="stylesheet" href="css/tab.css">
-<link rel="stylesheet" href="css/table2.css">
-<link rel="stylesheet" href="css/results-dark.css">
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
-<script src="https://kit.fontawesome.com/8a8c57f9cf.js" crossorigin="anonymous"></script>
-
-<style>
-  /* Dark Theme Body */
-  body {
-    background-color: #151515 !important;
-    color: #ccc !important;
-  }
-
-  /* Header Button Spacing */
-  .pf-c-page__header-tools button {
-    margin-right: 1rem;
-  }
-
-  /* Override jQuery UI default styles */
-  .ui-widget {
-    font-family: inherit !important;
-  }
-
-  .ui-widget-content {
-    background: transparent !important;
-    border: none !important;
-    color: #ccc !important;
-  }
-
-  .ui-state-default {
-    background: transparent !important;
-    border: none !important;
-  }
-</style>
-
-<script>
-  $( function() {
-    $( "#accordion" ).accordion({
-      heightStyle: "content",
-      collapsible: true,
-      active : 'none'
-    });
-  } );
-  </script>
-
+  <style>
+    body {
+      background-color: #151515 !important;
+      color: #ccc !important;
+    }
+    .pf-c-page__header-tools button {
+      margin-right: 1rem;
+    }
+    @media print {
+      .no-print { display: none; }
+      .score-card { page-break-after: avoid; }
+    }
+  </style>
 </head>
+
 <body>
-  <header class="pf-c-page__header">
-                <div class="pf-c-page__header-brand">
-                  <a class="pf-c-page__header-brand-link" href="index.php">
-                  <img class="pf-c-brand" src="images/viewfinder-logo.png" alt="Viewfinder logo" />
-                  </a>
-                </div>
-                <div class="pf-c-page__header-tools">
-                  <div class="widget">
-                    <a href="index.php"><button><i class="fa fa-home"></i> Home</button></a>
-                  </div>
-                </div>
-</header>
-<?php
-require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/error-pages/error-handler.php';
-require_once __DIR__ . '/includes/Security.php';
-require_once __DIR__ . '/includes/MaturityRating.php';
-require_once __DIR__ . '/includes/Logger.php';
-require_once __DIR__ . '/includes/Config.php';
+  <header class="pf-c-page__header no-print">
+    <div class="pf-c-page__header-brand">
+      <div class="pf-c-page__header-brand-toggle"></div>
+      <a class="pf-c-page__header-brand-link" href="../index.php">
+        <img class="pf-c-brand" src="../images/viewfinder-logo.png" alt="Viewfinder logo" />
+      </a>
+    </div>
 
-use Endroid\QrCode\Builder\Builder;
-use Endroid\QrCode\Encoding\Encoding;
-use Endroid\QrCode\ErrorCorrectionLevel;
-use Endroid\QrCode\RoundBlockSizeMode;
-use Endroid\QrCode\Writer\PngWriter;
+    <div class="widget">
+      <a href="../index.php"><button><i class="fa-solid fa-home"></i> Home</button></a>
+      <a href="index.php"><button style="margin-left: 1rem;">New Sales Qualification</button></a>
+      <a href="../index.php?profile=DigitalSovereignty"><button style="margin-left: 1rem;">Full Assessment</button></a>
+    </div>
+  </header>
 
-// Register error handlers
-ErrorHandler::register();
+  <div class="container">
+    <?php
+    // Load questions configuration for domain mapping
+    $questions = require_once 'config.php';
 
-try {
-    Logger::info('Results page loaded', ['page' => 'results.php']);
+    // Initialize scoring arrays
+    $totalScore = 0;
+    $maxScore = 21;
+    $domainScores = [];
+    $domainResponses = [];
 
-    // Parse and validate input data
-    parse_str($_SERVER["QUERY_STRING"] ?? '', $data);
-
-    // Validate profile parameter
-    $profile = Security::validateProfile($data['profile'] ?? '');
-    $data['profile'] = $profile; // Update with validated value
-    Logger::info('Profile selected', ['profile' => $profile]);
-
-    // Safely load controls JSON
-    $controlsFile = Security::getControlsFilePath($profile);
-    $json = Security::loadJSON($controlsFile);
-
-    // Build safe URL for detailed output
-    $urlData = "./report/index.php?" . http_build_query($data);
-
-    // Generate QR code for current page URL
-    // Get the full current page URL with query string
-    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
-    $currentPageUrl = $protocol . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-    // Build the QR code using fluent builder pattern (v5.x API)
-    $qrCodeResult = Builder::create()
-        ->writer(new PngWriter())
-        ->data($currentPageUrl)
-        ->encoding(new Encoding('UTF-8'))
-        ->errorCorrectionLevel(ErrorCorrectionLevel::High)
-        ->size(300)
-        ->margin(10)
-        ->roundBlockSizeMode(RoundBlockSizeMode::Margin)
-        ->validateResult(false)
-        ->build();
-
-    // Convert to base64 for inline display
-    $qrCodeDataUri = $qrCodeResult->getDataUri();
-
-} catch (ViewfinderException $e) {
-    Logger::logException($e);
-    throw $e; // Re-throw for error handler to display error page
-} catch (\Throwable $e) {
-    Logger::error('Unexpected error in results.php', [
-        'exception' => get_class($e),
-        'message' => $e->getMessage(),
-        'file' => $e->getFile(),
-        'line' => $e->getLine()
-    ]);
-    throw new ViewfinderException(
-        'Unexpected error: ' . $e->getMessage(),
-        'An unexpected error occurred. Please contact support.',
-        ['original_exception' => get_class($e)],
-        0,
-        $e
-    );
-}
-$nextSteps = array();
-$nextStepsHow = array();
-$nextDomain = array();
-$controls = array();
-foreach($json as $key => $value) {
-	array_push($controls,$key);
-	}
-$controlTotal = array_fill(0,8,0);
-$controlDetails = array(array_fill(0,8,0));
-
-foreach($data as $field=>$value){
-	if (strpos($field,"control") !== false){
-    $controlNumber = substr($field,7,1);
-	$controlTotal[$controlNumber] += $value;
-}
-}
-
-// Functions moved to MaturityRating class
-
-$totalScore = 0;
-
-?>
-
-
-<div class="container">
-
-<div class="tab">
-  <button class="tablinks" onclick="openTab(event, 'Radar')" id="defaultOpen">Radar Chart & Maturity Levels</button>
-  <button class="tablinks" onclick="openTab(event, 'Recommendations')">Recommendations</button>
-  <button class="tablinks" onclick="openTab(event, 'TableOutput')">Maturity Table</button> 
-  <?php
-  if (isset($_REQUEST['framework'])) {
-	print '<button class="tablinks" onclick="openTab(event, \'Frameworks\')">Security Frameworks</button>';
-}
-  ?>
-  <?php
-  // Validate and display LOB tab
-  $lob = Security::validateLOB($_REQUEST['lob'] ?? '');
-  if ($lob !== null && $lob !== 'Other') {
-      print '<button class="tablinks" onclick="openTab(event, \'LineOfBusiness\')">' . Security::escape($lob) . ' Specifics</button>';
-  }
-  ?>
-  <button class="tablinks""><a href="<?php print $urlData; ?>" target= _blank>Detailed Output</a>&nbsp; <i class='fas fa-external-link-alt'></i></button>
-
-</div>
-
-<div id="Radar" class="tabcontent">
-
-<div class="htmlChart">
-<div class="radarChart"></div>
-</div>
-
-<div class="bigtableLeft">
-<h1 class="profileHeader">Profile: <?php print Security::escape(Config::getProfileDisplayName($data['profile']));?> </h1>
-
-<table class="spacedTable">
-	<thead>
-		<tr>
-			<th>Control</th>
-			<th>Rating</th>
-			</tr>
-		</tr>
-</thead>
-
-
-<?php
-$totalScore = 0;
-## Work out all the stuff for the table
-foreach ($controls as $control) {
-	print "<tr>";
-	$title = $json[$control]['title'];
-	$qnum = $json[$control]['qnum'];
-	$score = $controlTotal[$qnum];
-	$totalScore += $score;
-	#print "<td><i class='fa-regular fa-" . $qnum . "'>&nbsp; &nbsp; </i>" . $title . "</td>";
-	print "<td>" . $title . "</td>";
-	$rating = MaturityRating::getRating($score);
-	print "<td class='cell" . $rating . "'>" . $rating . " ($score out of 36)</td>";
-	print "</tr>";
-}
-print '</table>';
-$overallRating = MaturityRating::getTotalRating($totalScore);
-print "<br><table><td class='cell" . $overallRating . "'>Overall rating: " . $overallRating . " ($totalScore out of 252)</td></tr></table>";
-
-?>
-</div>
-</div>
-<!-- Detailed Output -->
-<div id="Recommendations" class="tabcontent">
-<div id="accordion">
-<?php
-foreach ($controls as $control) {
-    $highest=0;
-    $qnum = $json[$control]['qnum'];
-	$score = $controlTotal[$qnum];
-	$title = $json[$control]['title'];
-	array_push($nextDomain, $title);
-	$rating = MaturityRating::getRating($score);
-    print "<h3>$title <span class='cellHeader" . $rating . "'>". $rating . "</span></h3><div>";
-
-    
-    $qnum = $json[$control]['qnum'];
-    $levelArray = array();
-    ## Get the highest score per capability & keep the results
-    foreach ($data as $key => $value) {
-    if (preg_match("/^control$qnum-[0-9]*/", $key)) {
-        array_push($levelArray, substr($key, -1));
-        $highest++;
-          }
+    // Map domain keys to display names
+    $domainKeyMap = [];
+    foreach ($questions as $domainName => $domainData) {
+        $domainKeyMap[$domainData['domain_key']] = $domainName;
+        $domainScores[$domainName] = 0;
+        $domainResponses[$domainName] = [];
     }
-    $nextLevel = $highest + 1;
-    if ($nextLevel < 9) {
-        ## Check if there is a recommendation for the next level
-        $nextRecommendation = $nextLevel . '-recommendation';
-        $nextSummary = $nextLevel . '-summary';
-        print "<h4 class=title-text>Recommendation</h4>"; 
-        print "<p>Start to work on preparing for actions concerning " . $json[$control][$nextLevel] . " (Level $nextLevel)<p>";
-        print "<br><p class=why-what>What is " . $json[$control][$nextLevel] . " ?</p><p>" . $json[$control][$nextSummary] . "</p>";
 
-        if ($json[$control][$nextRecommendation] != "") {
-            print "<br>";
-            print "<p>" . $json[$control][$nextRecommendation] . "<p>";
-			array_push($nextSteps,$json[$control][$nextLevel]);
-			array_push($nextStepsHow,$json[$control][$nextSummary]);
-        } else {
-        print "<p>You're doing great as you are!</p>";
-    }
-}
+    // Calculate scores
+    foreach ($_POST as $key => $value) {
+        // Match question IDs (ds1, ts1, os1, etc.)
+        if (preg_match('/^(ds|ts|os|as|oss|eo|ms)\d+$/', $key)) {
+            $intValue = intval($value);
+            $totalScore += $intValue;
 
-
-## Check for any gaps
-if ($levelArray) {
-	#print "Max: " . max($levelArray) . "<br>";
-	$allLevels = range(1,max($levelArray));
-	$missing = array_diff($allLevels,$levelArray);
-	if ($missing) {
-		print "<br><br><h4 class=why-what>Skipped Level(s)</h4>";
-		foreach ($missing as $notthere) {
-			$skippedRecommendation = $notthere . '-recommendation';
-			print "Level $notthere - ";
-			if ($json[$control][$skippedRecommendation] != "") {
-			print $json[$control][$skippedRecommendation] . ". ";
-			} else {
-                $notthereComment = $notthere . "-summary";
-#				print_r($json[$control][$notthere]);
-                print $json[$control][$notthereComment];
-			}
-			print "<br>";
-		}
-	}
-	}
-    
-    print "</div>";
-
-}
-?>
-
-</div>
-<!-- End of Detailed Output -->
-
-</div>
-
-<!-- Start of table output  -->
-
-<div id="TableOutput" class="tabcontent">
-
-<?php
-  // Functions moved to MaturityRating class
-
-  $controlDetail = array_fill(1,8,0);
-  $controlDetails = array_fill(1,8,$controlDetail);
-  
-  foreach($data as $field=>$value){
-	  if (strpos($field,"control") !== false){
-	  $controlNumber = substr($field,7,1);
-	  $controlDetails[$controlNumber][$value] = 1;
-  }
-  }   
-?>
-
-<div class="bigtable">
-
-<table class="tableMaturity"><thead><tr>
-<th class="table-header">Rating</th>
-
-<?php
-foreach ($controls as $control) {
-	$title = $json[$control]['title'];
-print '<th class="table-header">' . $title .'</th>';
-}
-
-?>
-
-</tr></thead>
-<tr>
-<td class="advanced"></td>
-<?php
-MaturityRating::putDomainStatus("8",$controlDetails,$json);
-?>
-</tr>
-
-<tr>
-<td class="advanced">Advanced</td>
-
-<?php
-MaturityRating::putDomainStatus("7",$controlDetails,$json);
-?>
-</tr>
-
-<tr>
-<td class="advanced"></td>
-<?php
-MaturityRating::putDomainStatus("6",$controlDetails,$json);
-?>
-</tr>
-
-<tr>
-<td class="strategic"></td>
-<?php
-MaturityRating::putDomainStatus("5",$controlDetails,$json);
-?>
-</tr>
-
-<tr>
-<td class="strategic">Strategic</td>
-<?php
-MaturityRating::putDomainStatus("4",$controlDetails,$json);
-?>
-</tr>
-
-<tr>
-<td class="strategic"></td>
-<?php
-MaturityRating::putDomainStatus("3",$controlDetails,$json);
-?>
-</tr>
-
-<tr>
-<td class="foundation"></td>
-<?php
-MaturityRating::putDomainStatus("2",$controlDetails,$json);
-?>
-</tr>
-
-<tr>
-<td class="foundation">Foundation</td>
-<?php
-MaturityRating::putDomainStatus("1",$controlDetails,$json);
-?>
-  
-</tr>
-
-</table>
-
-</div>
-
-
-</div>
-<!-- End of table output  -->
-
-
-
-
-<!-- Start of Security Frameworks -->
-<div id="Frameworks" class="tabcontent">
-
-
-<?php
-if (isset($_REQUEST['framework'])) {
-    // Safely load compliance frameworks
-    $jsonFrameworks = Security::loadJSON(__DIR__ . '/compliance.json');
-
-    if ($jsonFrameworks !== null) {
-        // Build list of valid framework names
-        $validFrameworks = array_column($jsonFrameworks, 'name');
-
-        // Validate user-provided frameworks
-        $userFrameworks = Security::validateFrameworks($_REQUEST['framework'], $validFrameworks);
-
-        foreach ($userFrameworks as $selectedFramework) {
-            foreach ($jsonFrameworks as $framework) {
-                if ($framework['name'] === $selectedFramework) {
-                    $linkFile = $framework['link'];
-                    print "<br><div class='niceList'>";
-                    print "<ul>";
-
-                    // Safely get framework file path
-                    $safeFilePath = Security::getFrameworkFilePath($linkFile);
-
-                    if ($safeFilePath !== null) {
-                        include $safeFilePath;
-                    } else {
-                        print "<h3 class='frameworkHeader'>No current information for " . Security::escape($framework['name']) . "</h3>";
+            // Find which domain this question belongs to
+            foreach ($questions as $domainName => $domainData) {
+                foreach ($domainData['questions'] as $question) {
+                    if ($question['id'] === $key) {
+                        $domainScores[$domainName] += $intValue;
+                        // Only add to responses if answer was "Yes" (value > 0)
+                        if ($intValue > 0) {
+                            $domainResponses[$domainName][] = $question['text'];
+                        }
+                        break 2;
                     }
-                    print "</ul></div>";
                 }
             }
         }
     }
-}
-?>
-</div>
 
-
-<!-- Start of LOB -->
-<?php
-if (isset($_REQUEST['lob'])) {
-    // Validate LOB parameter
-    $lob = Security::validateLOB($_REQUEST['lob']);
-
-    if ($lob !== null) {
-        print '<div id="LineOfBusiness" class="tabcontent"><p class="category-large">Advice for ' . Security::escape($lob) . ' industries</p>';
-        // Safely get LOB file path
-#        if ($profile === "DigitalSovereignty") {
-#        $safeFilePath = Security::getLOBFilePath("DigitalSovereignty", $profile);
-#        } else {
-        $safeFilePath = Security::getLOBFilePath($lob, $profile);
-        #        }  
-        if ($safeFilePath !== null) {
-            include $safeFilePath;
-        } else {
-            print '<p>No current information available for this industry.</p>';
-        }
+    // Determine priority level (INVERTED: Low score = High opportunity because customer lacks DS capabilities)
+    if ($totalScore <= 7) {
+        $priority = 'High';
+        $priorityClass = 'priority-high';
+        $priorityIcon = 'fa-circle-check';
+        $recommendation = 'Strong Digital Sovereignty Opportunity';
+        $recommendationDetail = 'This customer has significant gaps in Digital Sovereignty capabilities. Excellent opportunity to position Red Hat sovereign solutions across multiple domains.';
+    } elseif ($totalScore <= 14) {
+        $priority = 'Medium';
+        $priorityClass = 'priority-medium';
+        $priorityIcon = 'fa-circle-exclamation';
+        $recommendation = 'Moderate Digital Sovereignty Opportunity';
+        $recommendationDetail = 'This customer has some DS capabilities but notable gaps remain. Good opportunity to strengthen their sovereignty posture with Red Hat solutions.';
+    } else {
+        $priority = 'Low';
+        $priorityClass = 'priority-low';
+        $priorityIcon = 'fa-circle-xmark';
+        $recommendation = 'Limited Digital Sovereignty Opportunity';
+        $recommendationDetail = 'This customer already has strong DS capabilities in place. Limited opportunity for new DS solutions, but consider maintenance, upgrades, or other Red Hat value propositions.';
     }
-}
-?>
 
-</div>
+    $assessmentDate = date('F j, Y \a\t g:i A');
+    ?>
 
+    <!-- Results Header -->
+    <div class="results-header">
+      <h1><i class="fa-solid fa-chart-bar"></i> Digital Sovereignty Sales Qualification Results</h1>
+      <p class="assessment-date"><strong>Assessment Date:</strong> <?php echo $assessmentDate; ?></p>
+    </div>
 
-</div>
+    <!-- Score Card -->
+    <div class="score-card <?php echo $priorityClass; ?>">
+      <div class="score-icon">
+        <i class="fa-solid <?php echo $priorityIcon; ?>"></i>
+      </div>
+      <h2><?php echo $priority; ?> Priority Opportunity</h2>
 
+      <?php
+      // Calculate percentage for visual display
+      $scorePercentage = round(($totalScore / $maxScore) * 100);
+      ?>
 
-<script src="js/radarChart.js"></script>	
-		<script>
-      
-      /* Radar chart design created by Nadieh Bremer - VisualCinnamon.com */
-      
-			////////////////////////////////////////////////////////////// 
-			//////////////////////// Set-Up ////////////////////////////// 
-			////////////////////////////////////////////////////////////// 
+      <div class="score-visual-container">
+        <div class="circular-progress" data-percentage="<?php echo $scorePercentage; ?>">
+          <svg class="progress-ring" width="200" height="200">
+            <circle class="progress-ring-circle-bg" cx="100" cy="100" r="90" />
+            <circle class="progress-ring-circle"
+                    cx="100"
+                    cy="100"
+                    r="90"
+                    style="stroke-dasharray: <?php echo 2 * 3.14159 * 90; ?>; stroke-dashoffset: <?php echo 2 * 3.14159 * 90 * (1 - $scorePercentage / 100); ?>;" />
+          </svg>
+          <div class="progress-text">
+            <div class="percentage-display"><?php echo $scorePercentage; ?>%</div>
+            <div class="score-detail"><?php echo $totalScore; ?> of <?php echo $maxScore; ?> points</div>
+          </div>
+        </div>
+      </div>
 
-			var margin = {top: 100, right: 100, bottom: 100, left: 100},
-				width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
-				height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
-					
-			////////////////////////////////////////////////////////////// 
-			////////////////////////// Data ////////////////////////////// 
-			////////////////////////////////////////////////////////////// 
+      <h3 class="recommendation-title"><?php echo $recommendation; ?></h3>
+      <p class="recommendation-detail"><?php echo $recommendationDetail; ?></p>
+    </div>
 
-			var data = [
-					  [
-						<?php
-						$numControls = 1;
-						foreach ($controls as $control) {
-							$title = $json[$control]['title'];
-							print '{axis:"' . $title . '",value: ' . $controlTotal[$numControls]. '},';		
-							$numControls++;
-						}
-						?>
+    <!-- Domain Breakdown -->
+    <div class="domain-breakdown">
+      <h2><i class="fa-solid fa-table"></i> Domain Analysis</h2>
+      <p class="section-intro">Breakdown of qualification scores across the 7 Digital Sovereignty domains:</p>
 
-					  ]
-					];
-			////////////////////////////////////////////////////////////// 
-			//////////////////// Draw the Chart ////////////////////////// 
-			////////////////////////////////////////////////////////////// 
+      <div class="domain-table-wrapper">
+        <table class="domain-table">
+          <thead>
+            <tr>
+              <th>Domain</th>
+              <th style="text-align: center;">Current Capabilities</th>
+              <th style="text-align: center;">Gap Analysis</th>
+              <th>Opportunity Level</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            foreach ($questions as $domainName => $domainData):
+                $score = $domainScores[$domainName] ?? 0;
+                $maxDomainScore = count($domainData['questions']);
+                $percentage = ($score / $maxDomainScore) * 100;
 
-			var color = d3.scale.ordinal()
-				.range(["#0d60f8","#0d60f8","#12bbd4"]);
-				
-			var radarChartOptions = {
-			  w: width,
-			  h: height,
-			  margin: margin,
-			  maxValue: 0.5,
-			  roundStrokes: true,
-			  color: color,
-			};
-			//Call function to draw the Radar chart
-			RadarChart(".radarChart", data, radarChartOptions);
-</script>
+                // INVERTED: Low score = High opportunity (customer lacks capabilities)
+                if ($percentage <= 33) {
+                    $strengthClass = 'strength-high';
+                    $strengthIcon = 'fa-circle-check';
+                    $strengthText = 'High Opportunity';
+                } elseif ($percentage <= 66) {
+                    $strengthClass = 'strength-medium';
+                    $strengthIcon = 'fa-circle-exclamation';
+                    $strengthText = 'Medium Opportunity';
+                } else {
+                    $strengthClass = 'strength-low';
+                    $strengthIcon = 'fa-circle-xmark';
+                    $strengthText = 'Low Opportunity';
+                }
+            ?>
+              <tr>
+                <td><strong><?php echo htmlspecialchars($domainName); ?></strong></td>
+                <td style="text-align: center;">
+                  <span class="domain-score-cell"><?php echo $score; ?>/<?php echo $maxDomainScore; ?></span>
+                </td>
+                <td style="text-align: center;">
+                  <span class="progress-bar-wrapper">
+                    <div class="progress-bar">
+                      <div class="progress-fill <?php echo $strengthClass; ?>" style="width: <?php echo $percentage; ?>%;"></div>
+                    </div>
+                  </span>
+                </td>
+                <td>
+                  <span class="strength-badge <?php echo $strengthClass; ?>">
+                    <i class="fa-solid <?php echo $strengthIcon; ?>"></i> <?php echo $strengthText; ?>
+                  </span>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
+    <!-- Sales Actions -->
+    <div class="sales-actions">
+      <h2><i class="fa-solid fa-bullseye"></i> Recommended Next Steps</h2>
 
-<script type="text/javascript" >
-function openTab(evt, cityName) {
-  // Declare all variables
-  var i, tabcontent, tablinks;
+      <?php if ($priority === 'High'): ?>
+        <div class="action-priority priority-high">
+          <h3><i class="fa-solid fa-rocket"></i> Immediate Actions for High-Priority Opportunity</h3>
+          <ul>
+            <li><strong>Schedule Technical Deep-Dive:</strong> Arrange detailed discovery session on DS requirements, compliance needs, and technical architecture</li>
+            <li><strong>Engage Specialists:</strong> Involve Red Hat Digital Sovereignty specialists and solution architects</li>
+            <li><strong>Position Solutions:</strong> Present OpenShift, RHEL sovereign cloud, and compliance-focused offerings</li>
+            <li><strong>Compliance Discussion:</strong> Discuss relevant frameworks (GDPR, NIS2, SecNumCloud, DSGVO, etc.)</li>
+            <li><strong>Executive Alignment:</strong> Seek executive sponsor engagement on sovereignty strategy and budget</li>
+            <li><strong>Reference Stories:</strong> Share case studies from similar sovereign deployments in public sector/regulated industries</li>
+          </ul>
 
-  // Get all elements with class="tabcontent" and hide them
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
+          <div class="recommended-products">
+            <h4>Recommended Red Hat Solutions:</h4>
+            <ul>
+              <li>Red Hat OpenShift or Red Hat OpenShift AI</li>
+              <li>Red Hat Enterprise Linux (sovereign OS)</li>
+              <li>Red Hat Advanced Cluster Security</li>
+              <li>Red Hat Ansible Automation Platform</li>
+            </ul>
+          </div>
+        </div>
 
-  // Get all elements with class="tablinks" and remove the class "active"
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
+      <?php elseif ($priority === 'Medium'): ?>
+        <div class="action-priority priority-medium">
+          <h3><i class="fa-solid fa-magnifying-glass"></i> Discovery Actions for Medium-Priority Opportunity</h3>
+          <ul>
+            <li><strong>Full Assessment:</strong> Conduct complete <a href="../index.php?profile=DigitalSovereignty">Viewfinder Digital Sovereignty assessment</a> to identify specific gaps and requirements</li>
+            <li><strong>Discovery Call:</strong> Schedule focused call on data residency, compliance, and sovereignty drivers</li>
+            <li><strong>Education:</strong> Share Digital Sovereignty resources, whitepapers, and regulatory guidance</li>
+            <li><strong>Stakeholder Mapping:</strong> Identify who owns compliance, security, and infrastructure decisions</li>
+            <li><strong>Budget Validation:</strong> Confirm budget allocation and timeline for sovereignty initiatives</li>
+            <li><strong>Competition Analysis:</strong> Understand competing vendors and their DS positioning</li>
+          </ul>
 
-  // Show the current tab, and add an "active" class to the button that opened the tab
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " active";
-}
-</script>
-<script type="text/javascript" >
-document.getElementById("defaultOpen").click();
-</script>
+          <div class="recommended-resources">
+            <h4>Recommended Resources:</h4>
+            <ul>
+              <li>Digital Sovereignty whitepaper</li>
+              <li>NIS2 compliance guide</li>
+              <li>OpenShift sovereign deployment reference architectures</li>
+              <li>Customer success stories in regulated industries</li>
+            </ul>
+          </div>
+        </div>
+
+      <?php else: ?>
+        <div class="action-priority priority-low">
+          <h3><i class="fa-solid fa-circle-info"></i> Positioning for Low-Priority Opportunity</h3>
+          <ul>
+            <li><strong>Alternative Value Props:</strong> Focus on other Red Hat strengths (automation, modernization, hybrid cloud, security)</li>
+            <li><strong>Awareness Building:</strong> Keep DS messaging in background for future consideration</li>
+            <li><strong>Monitor Changes:</strong> Track regulatory changes or M&A activity that could increase DS priority</li>
+            <li><strong>Stakeholder Education:</strong> Provide educational content on emerging DS requirements in their industry</li>
+            <li><strong>Revisit Quarterly:</strong> Reassess DS relevance as customer strategy evolves</li>
+          </ul>
+
+          <p class="note"><strong>Note:</strong> Even if DS is not primary today, regulations and market dynamics change. Position Red Hat as the sovereign-ready platform for future needs.</p>
+        </div>
+      <?php endif; ?>
+    </div>
+
+    <!-- Detailed Domain Insights -->
+    <div class="domain-insights">
+      <h2><i class="fa-solid fa-list-check"></i> Detailed Domain Insights</h2>
+      <p class="section-intro">Review the specific areas where the customer showed DS requirements:</p>
+
+      <?php foreach ($questions as $domainName => $domainData):
+          $score = $domainScores[$domainName] ?? 0;
+          $responses = $domainResponses[$domainName] ?? [];
+
+          if ($score > 0):
+      ?>
+        <div class="domain-insight-card">
+          <div class="domain-insight-header">
+            <h3><?php echo htmlspecialchars($domainName); ?></h3>
+            <span class="insight-score"><?php echo $score; ?>/<?php echo count($domainData['questions']); ?></span>
+          </div>
+          <p class="domain-insight-description"><?php echo htmlspecialchars($domainData['description']); ?></p>
+
+          <div class="requirements-found">
+            <h4>Requirements Identified:</h4>
+            <ul>
+              <?php foreach ($responses as $response): ?>
+                <li><i class="fa-solid fa-check"></i> <?php echo htmlspecialchars($response); ?></li>
+              <?php endforeach; ?>
+            </ul>
+          </div>
+        </div>
+      <?php
+          endif;
+        endforeach;
+      ?>
+
+      <?php if ($totalScore === 0): ?>
+        <div class="no-requirements">
+          <p><i class="fa-solid fa-info-circle"></i> No Digital Sovereignty requirements were identified in this assessment. Consider focusing on other Red Hat value propositions.</p>
+        </div>
+      <?php endif; ?>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="form-actions no-print">
+      <button onclick="window.print()" class="btn-primary">
+        <i class="fa-solid fa-print"></i> Print Results
+      </button>
+      <a href="index.php" class="btn-secondary">
+        <i class="fa-solid fa-rotate-left"></i> New Assessment
+      </a>
+      <a href="../index.php?profile=DigitalSovereignty" class="btn-success">
+        <i class="fa-solid fa-arrow-right"></i> Run Full Viewfinder Assessment
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <div class="results-footer">
+      <p><small>Generated by Viewfinder Digital Sovereignty Sales Qualifier on <?php echo $assessmentDate; ?></small></p>
+      <p><small>For technical assessments and detailed capability mapping, use the full <a href="../index.php?profile=DigitalSovereignty">Viewfinder Assessment Tool</a></small></p>
+    </div>
+  </div>
 </body>
-  </html>
+</html>
