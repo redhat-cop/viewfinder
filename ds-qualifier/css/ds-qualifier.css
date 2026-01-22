@@ -124,39 +124,6 @@
     color: #888;
 }
 
-/* Score Preview */
-.score-preview {
-    position: sticky;
-    top: 20px;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    border: 2px solid #0d60f8;
-    border-radius: 8px;
-    padding: 1rem 1.5rem;
-    margin: 2rem 0;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    z-index: 100;
-}
-
-.score-preview-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.score-label {
-    color: #9ec7fc;
-    font-size: 1.2rem;
-    font-weight: 500;
-}
-
-.score-value {
-    color: #12bbd4;
-    font-size: 2rem;
-    font-weight: bold;
-}
-
 /* Section Progress Indicator */
 .section-progress {
     background: #2a2a2a;
@@ -224,25 +191,6 @@
     margin-bottom: 1rem;
 }
 
-.domain-score {
-    display: inline-block;
-    background: #1a1a1a;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    border: 1px solid #555;
-}
-
-.domain-score-label {
-    color: #ccc;
-    margin-right: 0.5rem;
-}
-
-.domain-score-value {
-    color: #12bbd4;
-    font-weight: bold;
-    font-size: 1.1rem;
-}
-
 /* Questions */
 .questions-list {
     margin-top: 1rem;
@@ -250,48 +198,105 @@
 
 .question-item {
     margin: 1rem 0;
-    padding: 1rem;
+    padding: 1.25rem;
     background: #1a1a1a;
-    border-radius: 4px;
+    border-radius: 6px;
     transition: all 0.2s ease;
+    border: 1px solid #2a2a2a;
 }
 
 .question-item:hover {
     background: #252525;
-    transform: translateX(5px);
+    border-color: #444;
 }
 
-.checkbox-wrapper {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
+.question-item.answered {
+    border-color: #0d60f8;
 }
 
-.question-checkbox {
-    width: 22px;
-    height: 22px;
-    min-width: 22px;
-    accent-color: #0d60f8;
-    cursor: pointer;
-    margin-top: 2px;
+.question-header {
+    margin-bottom: 1rem;
 }
 
-.question-item label {
+.question-text {
     color: #ccc;
     font-size: 1rem;
+    line-height: 1.6;
+    display: block;
+}
+
+/* Radio Button Groups */
+.button-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+/* Hide actual radio inputs */
+.question-radio {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Style labels as buttons */
+.btn-option {
+    min-width: 120px;
+    padding: 0.75rem 2rem;
+    border-radius: 6px;
     cursor: pointer;
-    line-height: 1.5;
-    margin: 0;
-    flex: 1;
+    transition: all 0.2s ease;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+    border: 2px solid;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    white-space: nowrap;
 }
 
-.question-item label:hover .question-text {
-    color: #9ec7fc;
+.btn-yes {
+    background: #1a1a1a;
+    border-color: #2aaa04;
+    color: #2aaa04;
 }
 
-.question-checkbox:checked + label .question-text {
-    color: #12bbd4;
-    font-weight: 500;
+.btn-yes:hover {
+    background: rgba(42, 170, 4, 0.1);
+    border-color: #3fcc00;
+    color: #3fcc00;
+}
+
+.btn-no {
+    background: #1a1a1a;
+    border-color: #c9190b;
+    color: #c9190b;
+}
+
+.btn-no:hover {
+    background: rgba(201, 25, 11, 0.1);
+    border-color: #e01000;
+    color: #e01000;
+}
+
+/* Selected state */
+.question-radio:checked + .btn-yes {
+    background: linear-gradient(135deg, #2aaa04 0%, #1b7003 100%);
+    border-color: #2aaa04;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(42, 170, 4, 0.3);
+}
+
+.question-radio:checked + .btn-no {
+    background: linear-gradient(135deg, #c9190b 0%, #a30000 100%);
+    border-color: #c9190b;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(201, 25, 11, 0.3);
 }
 
 /* Navigation Buttons */
@@ -450,22 +455,71 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.score-display {
+/* Circular Progress Chart */
+.score-visual-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5rem 0;
+}
+
+.circular-progress {
+    position: relative;
+    display: inline-block;
+}
+
+.progress-ring {
+    transform: rotate(-90deg);
+}
+
+.progress-ring-circle-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 12;
+}
+
+.progress-ring-circle {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 12;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s ease;
+}
+
+/* Color the ring based on priority */
+.priority-high .progress-ring-circle {
+    stroke: #3fcc00;
+}
+
+.priority-medium .progress-ring-circle {
+    stroke: #ffc425;
+}
+
+.priority-low .progress-ring-circle {
+    stroke: #e01000;
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.percentage-display {
     font-size: 3rem;
     font-weight: bold;
     color: #fff;
-    margin: 1rem 0;
+    line-height: 1;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.score-separator {
-    margin: 0 0.5rem;
-    opacity: 0.7;
-}
-
-.score-max {
-    font-size: 2rem;
-    opacity: 0.9;
+.score-detail {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 0.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .recommendation-title {
@@ -801,8 +855,22 @@
         font-size: 1.8rem;
     }
 
-    .score-display {
+    .progress-ring {
+        width: 150px !important;
+        height: 150px !important;
+    }
+
+    .progress-ring-circle-bg,
+    .progress-ring-circle {
+        r: 65;
+    }
+
+    .percentage-display {
         font-size: 2.5rem;
+    }
+
+    .score-detail {
+        font-size: 0.8rem;
     }
 
     .score-card {
@@ -813,14 +881,13 @@
         overflow-x: scroll;
     }
 
-    .checkbox-wrapper {
-        gap: 0.5rem;
+    .button-group {
+        flex-direction: column;
+        gap: 0.75rem;
     }
 
-    .question-checkbox {
-        width: 20px;
-        height: 20px;
-        min-width: 20px;
+    .btn-option {
+        width: 100%;
     }
 
     .form-navigation {

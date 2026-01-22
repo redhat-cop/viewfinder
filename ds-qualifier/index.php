@@ -70,14 +70,6 @@
     </div>
 
     <form action="results.php" method="POST" id="qualifier-form">
-      <!-- Score Preview -->
-      <div class="score-preview">
-        <div class="score-preview-content">
-          <span class="score-label">Current Score:</span>
-          <span id="score-counter" class="score-value">0/21</span>
-        </div>
-      </div>
-
       <!-- Progress Indicator -->
       <div class="section-progress">
         <span class="progress-text">Section <span id="current-section">1</span> of 7</span>
@@ -99,24 +91,31 @@
           <div class="domain-header">
             <h2><i class="fa-solid fa-shield-halved"></i> <?php echo htmlspecialchars($domainName); ?></h2>
             <p class="domain-description"><?php echo htmlspecialchars($domainData['description']); ?></p>
-            <div class="domain-score">
-              <span class="domain-score-label">Domain Score:</span>
-              <span class="domain-score-value" id="score-<?php echo $domainData['domain_key']; ?>">0/<?php echo count($domainData['questions']); ?></span>
-            </div>
           </div>
 
           <div class="questions-list">
             <?php foreach ($domainData['questions'] as $question): ?>
               <div class="question-item">
-                <div class="checkbox-wrapper">
-                  <input type="checkbox"
-                         id="<?php echo $question['id']; ?>"
+                <div class="question-header">
+                  <span class="question-text"><?php echo htmlspecialchars($question['text']); ?></span>
+                </div>
+                <div class="button-group" data-domain="<?php echo $domainData['domain_key']; ?>">
+                  <input type="radio"
+                         id="<?php echo $question['id']; ?>-yes"
                          name="<?php echo $question['id']; ?>"
                          value="<?php echo $question['weight']; ?>"
-                         data-domain="<?php echo $domainData['domain_key']; ?>"
-                         class="question-checkbox">
-                  <label for="<?php echo $question['id']; ?>">
-                    <span class="question-text"><?php echo htmlspecialchars($question['text']); ?></span>
+                         class="question-radio">
+                  <label for="<?php echo $question['id']; ?>-yes" class="btn-option btn-yes">
+                    <i class="fa-solid fa-check"></i> Yes
+                  </label>
+
+                  <input type="radio"
+                         id="<?php echo $question['id']; ?>-no"
+                         name="<?php echo $question['id']; ?>"
+                         value="0"
+                         class="question-radio">
+                  <label for="<?php echo $question['id']; ?>-no" class="btn-option btn-no">
+                    <i class="fa-solid fa-xmark"></i> No
                   </label>
                 </div>
               </div>

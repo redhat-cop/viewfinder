@@ -73,14 +73,18 @@
     foreach ($_POST as $key => $value) {
         // Match question IDs (ds1, ts1, os1, etc.)
         if (preg_match('/^(ds|ts|os|as|oss|eo|ms)\d+$/', $key)) {
-            $totalScore += intval($value);
+            $intValue = intval($value);
+            $totalScore += $intValue;
 
             // Find which domain this question belongs to
             foreach ($questions as $domainName => $domainData) {
                 foreach ($domainData['questions'] as $question) {
                     if ($question['id'] === $key) {
-                        $domainScores[$domainName] += intval($value);
-                        $domainResponses[$domainName][] = $question['text'];
+                        $domainScores[$domainName] += $intValue;
+                        // Only add to responses if answer was "Yes" (value > 0)
+                        if ($intValue > 0) {
+                            $domainResponses[$domainName][] = $question['text'];
+                        }
                         break 2;
                     }
                 }
@@ -124,11 +128,29 @@
         <i class="fa-solid <?php echo $priorityIcon; ?>"></i>
       </div>
       <h2><?php echo $priority; ?> Priority Opportunity</h2>
-      <div class="score-display">
-        <span class="score-number"><?php echo $totalScore; ?></span>
-        <span class="score-separator">/</span>
-        <span class="score-max"><?php echo $maxScore; ?></span>
+
+      <?php
+      // Calculate percentage for visual display
+      $scorePercentage = round(($totalScore / $maxScore) * 100);
+      ?>
+
+      <div class="score-visual-container">
+        <div class="circular-progress" data-percentage="<?php echo $scorePercentage; ?>">
+          <svg class="progress-ring" width="200" height="200">
+            <circle class="progress-ring-circle-bg" cx="100" cy="100" r="90" />
+            <circle class="progress-ring-circle"
+                    cx="100"
+                    cy="100"
+                    r="90"
+                    style="stroke-dasharray: <?php echo 2 * 3.14159 * 90; ?>; stroke-dashoffset: <?php echo 2 * 3.14159 * 90 * (1 - $scorePercentage / 100); ?>;" />
+          </svg>
+          <div class="progress-text">
+            <div class="percentage-display"><?php echo $scorePercentage; ?>%</div>
+            <div class="score-detail"><?php echo $totalScore; ?> of <?php echo $maxScore; ?> points</div>
+          </div>
+        </div>
       </div>
+
       <h3 class="recommendation-title"><?php echo $recommendation; ?></h3>
       <p class="recommendation-detail"><?php echo $recommendationDetail; ?></p>
     </div>

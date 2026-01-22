@@ -13,7 +13,7 @@ return [
         'questions' => [
             [
                 'id' => 'ds1',
-                'text' => 'Do you have formal data residency requirements or regulations to comply with?',
+                'text' => 'Do you currently comply with all data residency requirements or regulations relevant to your country/region/vertical?',
                 'weight' => 1
             ],
             [
@@ -35,7 +35,7 @@ return [
         'questions' => [
             [
                 'id' => 'ts1',
-                'text' => 'Are you concerned about vendor lock-in risks with your current technology stack?',
+                'text' => 'Can you mitigate vendor lock-in risks with your current technology stack?',
                 'weight' => 1
             ],
             [

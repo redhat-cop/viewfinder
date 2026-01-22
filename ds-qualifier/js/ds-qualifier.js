@@ -68,9 +68,31 @@ $(document).ready(function() {
     }
 
     /**
+     * Validate current section has all questions answered
+     */
+    function validateCurrentSection() {
+        const currentPane = $('.section-pane[data-section="' + currentSection + '"]');
+        const totalQuestions = currentPane.find('.button-group').length;
+        const answeredQuestions = currentPane.find('input[type="radio"]:checked').length;
+
+        if (answeredQuestions < totalQuestions) {
+            const unanswered = totalQuestions - answeredQuestions;
+            alert('Please answer all questions before proceeding.\n\n' +
+                  'You have ' + unanswered + ' unanswered question(s) in this section.');
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Navigate to next section
      */
     function nextSection() {
+        // Validate all questions are answered
+        if (!validateCurrentSection()) {
+            return;
+        }
+
         if (currentSection < totalSections) {
             showSection(currentSection + 1);
             saveProgress(); // Auto-save when navigating
@@ -116,7 +138,7 @@ $(document).ready(function() {
     // ==========================================
 
     /**
-     * Save form progress to localStorage on any checkbox change
+     * Save form progress to localStorage on any radio button change
      */
     function saveProgress() {
         const formData = {};
@@ -124,9 +146,9 @@ $(document).ready(function() {
         // Save current section
         formData.currentSection = currentSection;
 
-        // Save checkbox states
-        $('.question-checkbox').each(function() {
-            formData[this.id] = this.checked;
+        // Save radio button selections
+        $('input[type="radio"]:checked').each(function() {
+            formData[this.name] = this.value;
         });
 
         localStorage.setItem('ds-qualifier-progress', JSON.stringify(formData));
@@ -143,12 +165,13 @@ $(document).ready(function() {
             try {
                 const formData = JSON.parse(saved);
 
-                // Restore checkbox states
-                $('.question-checkbox').each(function() {
-                    if (formData[this.id]) {
-                        this.checked = true;
+                // Restore radio button selections
+                for (const name in formData) {
+                    if (name !== 'currentSection') {
+                        const value = formData[name];
+                        $('input[name="' + name + '"][value="' + value + '"]').prop('checked', true);
                     }
-                });
+                }
 
                 // Restore current section
                 if (formData.currentSection && formData.currentSection >= 1 && formData.currentSection <= totalSections) {
@@ -181,43 +204,11 @@ $(document).ready(function() {
     // ==========================================
 
     /**
-     * Update running score counters
+     * Update running score counters (scores now calculated on results page)
      */
     function updateScores() {
-        let totalScore = 0;
-        const domainScores = {};
-
-        // Calculate total and domain scores
-        $('.question-checkbox:checked').each(function() {
-            const weight = parseInt($(this).val());
-            const domain = $(this).data('domain');
-
-            totalScore += weight;
-
-            if (domain) {
-                domainScores[domain] = (domainScores[domain] || 0) + weight;
-            }
-        });
-
-        // Update total score display
-        $('#score-counter').text(totalScore + '/21');
-
-        // Update individual domain scores
-        for (const domain in domainScores) {
-            $('#score-' + domain).text(domainScores[domain] + '/3');
-        }
-
-        // Add visual feedback for score ranges
-        const scoreCounter = $('#score-counter');
-        scoreCounter.removeClass('score-low score-medium score-high');
-
-        if (totalScore >= 15) {
-            scoreCounter.addClass('score-high');
-        } else if (totalScore >= 8) {
-            scoreCounter.addClass('score-medium');
-        } else if (totalScore > 0) {
-            scoreCounter.addClass('score-low');
-        }
+        // Score display removed - scores are now calculated only on results page
+        // This function is kept to avoid breaking existing calls
     }
 
 
@@ -261,11 +252,11 @@ $(document).ready(function() {
      * Enhanced form validation before submit
      */
     function validateForm() {
-        const checkedCount = $('.question-checkbox:checked').length;
+        const answeredCount = $('input[type="radio"]:checked').length;
 
-        if (checkedCount === 0) {
+        if (answeredCount === 0) {
             const confirmed = confirm(
-                'You haven\'t selected any questions. This will result in a score of 0.\n\n' +
+                'You haven\'t answered any questions. This will result in a score of 0.\n\n' +
                 'Are you sure you want to continue?'
             );
             return confirmed;
@@ -331,8 +322,10 @@ $(document).ready(function() {
      * Show completion percentage
      */
     function updateProgressIndicator() {
-        const totalQuestions = $('.question-checkbox').length;
-        const answeredQuestions = $('.question-checkbox:checked').length;
+        const totalQuestions = $('.button-group').length;
+        const answeredQuestions = $('.button-group').filter(function() {
+            return $(this).find('input[type="radio"]:checked').length > 0;
+        }).length;
         const percentage = Math.round((answeredQuestions / totalQuestions) * 100);
 
         // Create or update progress indicator
@@ -353,18 +346,20 @@ $(document).ready(function() {
     // EVENT LISTENERS
     // ==========================================
 
-    // Listen for checkbox changes
-    $('.question-checkbox').on('change', function() {
+    // Listen for radio button changes
+    $('.question-radio').on('change', function() {
         updateScores();
         updateProgressIndicator();
         saveProgress();
 
         // Visual feedback on parent container
         const questionItem = $(this).closest('.question-item');
-        if (this.checked) {
-            questionItem.addClass('checked');
+        const hasAnswer = questionItem.find('input[type="radio"]:checked').length > 0;
+
+        if (hasAnswer) {
+            questionItem.addClass('answered');
         } else {
-            questionItem.removeClass('checked');
+            questionItem.removeClass('answered');
         }
     });
 
@@ -452,9 +447,8 @@ $(document).ready(function() {
                     .ds-notification-info {
                         border-left: 4px solid #0d60f8;
                     }
-                    .question-item.checked {
+                    .question-item.answered {
                         background: #252525;
-                        border-left: 3px solid #0d60f8;
                     }
                     #progress-indicator {
                         margin-top: 1rem;
@@ -470,15 +464,6 @@ $(document).ready(function() {
                         background: #0d60f8;
                         border-radius: 3px;
                         transition: width 0.3s ease;
-                    }
-                    .score-value.score-high {
-                        color: #2aaa04;
-                    }
-                    .score-value.score-medium {
-                        color: #f0ab00;
-                    }
-                    .score-value.score-low {
-                        color: #c9190b;
                     }
                 </style>
             `;
