@@ -225,6 +225,72 @@
     display: block;
 }
 
+/* Contextual Help Tooltips */
+.tooltip-icon {
+    display: inline-block;
+    margin-left: 0.5rem;
+    cursor: help;
+    position: relative;
+    color: #0d60f8;
+    transition: color 0.2s ease;
+}
+
+.tooltip-icon:hover {
+    color: #4d90fe;
+}
+
+.tooltip-icon i {
+    font-size: 0.9rem;
+}
+
+/* Tooltip bubble */
+.tooltip-icon::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: #2a2a2a;
+    color: #fff;
+    border: 1px solid #0d60f8;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    white-space: normal;
+    width: 350px;
+    max-width: 90vw;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
+}
+
+/* Tooltip arrow */
+.tooltip-icon::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #0d60f8;
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Show tooltip on hover */
+.tooltip-icon:hover::after,
+.tooltip-icon:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
 /* Radio Button Groups */
 .button-group {
     display: flex;
@@ -888,6 +954,21 @@
 
     .btn-option {
         width: 100%;
+    }
+
+    /* Adjust tooltips for mobile */
+    .tooltip-icon::after {
+        width: 280px;
+        left: auto;
+        right: 0;
+        transform: none;
+        font-size: 0.8rem;
+    }
+
+    .tooltip-icon::before {
+        left: auto;
+        right: 1rem;
+        transform: none;
     }
 
     .form-navigation {

@@ -97,7 +97,14 @@
             <?php foreach ($domainData['questions'] as $question): ?>
               <div class="question-item">
                 <div class="question-header">
-                  <span class="question-text"><?php echo htmlspecialchars($question['text']); ?></span>
+                  <span class="question-text">
+                    <?php echo htmlspecialchars($question['text']); ?>
+                    <?php if (!empty($question['tooltip'])): ?>
+                      <span class="tooltip-icon" data-tooltip="<?php echo htmlspecialchars($question['tooltip']); ?>">
+                        <i class="fa-solid fa-circle-info"></i>
+                      </span>
+                    <?php endif; ?>
+                  </span>
                 </div>
                 <div class="button-group" data-domain="<?php echo $domainData['domain_key']; ?>">
                   <input type="radio"

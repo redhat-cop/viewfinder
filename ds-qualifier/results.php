@@ -235,11 +235,10 @@
           <div class="recommended-products">
             <h4>Recommended Red Hat Solutions:</h4>
             <ul>
-              <li>Red Hat OpenShift (sovereign cloud platform)</li>
+              <li>Red Hat OpenShift or Red Hat OpenShift AI</li>
               <li>Red Hat Enterprise Linux (sovereign OS)</li>
               <li>Red Hat Advanced Cluster Security</li>
               <li>Red Hat Ansible Automation Platform</li>
-              <li>Red Hat OpenShift Data Foundation</li>
             </ul>
           </div>
         </div>

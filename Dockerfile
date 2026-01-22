@@ -3,8 +3,8 @@ FROM registry.access.redhat.com/ubi10/php-83:latest
 
 # Metadata
 LABEL maintainer="Chris Jenkins <chrisj@redhat.com>" \
-      version="2.2.0" \
-      description="Viewfinder Maturity Assessment Tool - Production Ready with Profile Management, Enhanced DS Sales Qualifier (validation + visual scoring)"
+      version="2.3.1" \
+      description="Viewfinder Maturity Assessment Tool - Production Ready with Profile Management, Enhanced DS Sales Qualifier (validation + visual scoring + contextual help tooltips)"
 
 # Set working directory
 WORKDIR /opt/app-root/src
