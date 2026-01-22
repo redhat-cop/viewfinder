@@ -11,18 +11,6 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 ### Main Assessment Interface
 ![Main Page](./images/main-page.png)
 
-### Results Dashboard with Radar Chart
-![Results Page](./images/results-page.png)
-
-### Profile Administration Dashboard
-![Profile Admin](./images/profile-admin.png)
-
-### Recommendations View
-![Recommendations](./images/recommendations-page.png)
-
-### Maturity Analysis
-![Maturity Table](./images/maturity-table.png)
-
 ## Key Features
 
 ### Assessment Capabilities
