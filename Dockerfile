@@ -3,8 +3,8 @@ FROM registry.access.redhat.com/ubi9/php-83:latest
 
 # Metadata
 LABEL maintainer="Chris Jenkins <chrisj@redhat.com>" \
-      version="2.5.0" \
-      description="Viewfinder Maturity Assessment Tool - Production Ready with Landing Page, Profile Management, Enhanced DS Sales Qualifier, Operation Sovereign Shield Escape Room"
+      version="2.6.0" \
+      description="Viewfinder Maturity Assessment Tool - Production Ready with Landing Page, Profile Management, Enhanced DS Sales Qualifier, Operation Sovereign Shield Escape Room, Digital Sovereignty Quiz"
 
 # Set working directory
 WORKDIR /opt/app-root/src
@@ -38,6 +38,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-di
 # Copy application files (exclude unnecessary files)
 # Includes all profile management features: Create, Edit, Delete, Export, Import
 # Includes Digital Sovereignty Sales Qualifier tool
+# Includes Digital Sovereignty Quiz with certificates and leaderboard
 COPY --chown=1001:0 *.php ./
 COPY --chown=1001:0 includes/ ./includes/
 COPY --chown=1001:0 css/ ./css/
@@ -47,12 +48,13 @@ COPY --chown=1001:0 lob/ ./lob/
 COPY --chown=1001:0 compliance/ ./compliance/
 COPY --chown=1001:0 report/ ./report/
 COPY --chown=1001:0 ds-qualifier/ ./ds-qualifier/
+COPY --chown=1001:0 quiz/ ./quiz/
 COPY --chown=1001:0 *.json ./
 COPY --chown=1001:0 error-pages/ ./error-pages/
 COPY --chown=1001:0 README.md ./
 
-# Create logs directory
-RUN mkdir -p /opt/app-root/src/logs
+# Create logs and quiz data directories
+RUN mkdir -p /opt/app-root/src/logs /opt/app-root/src/quiz/data
 
 # Set proper permissions
 RUN chown -R 1001:0 /opt/app-root/src && \

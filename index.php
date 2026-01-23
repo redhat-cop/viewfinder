@@ -209,6 +209,22 @@
       </div>
     </div>
 
+    <!-- Digital Sovereignty Quiz Card -->
+    <div class="landing-card">
+      <div class="landing-card-header">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <h2>Digital Sovereignty Quiz</h2>
+      </div>
+      <p class="landing-card-description">
+        Interactive knowledge assessment with 7 domains, instant results, certificates, and leaderboard rankings
+      </p>
+      <div class="landing-card-buttons">
+        <a href="quiz/" class="landing-button landing-button-primary">
+          <i class="fa-solid fa-brain"></i> Take the Quiz
+        </a>
+      </div>
+    </div>
+
     <!-- Profile Management Card -->
     <div class="landing-card">
       <div class="landing-card-header">
@@ -238,8 +254,8 @@
 
 .landing-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
   margin: 2rem 0;
 }
 
@@ -247,7 +263,7 @@
   background: #2a2a2a;
   border: 1px solid #444;
   border-radius: 8px;
-  padding: 2rem;
+  padding: 1.5rem;
   transition: all 0.3s ease;
 }
 

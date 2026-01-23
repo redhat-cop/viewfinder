@@ -1,0 +1,58 @@
+{
+  "data": {
+    "title": "Data Sovereignty",
+    "questions": {
+      "d1": { "s": "A foreign cloud provider's home government can legally demand access to your data, even if it is stored locally.", "a": "true", "h": "Consider extraterritorial laws like the US CLOUD Act.", "e": "Laws like the US CLOUD Act allow governments to compel access to data held by their companies regardless of where the server sits." },
+      "d2": { "s": "Provider-managed keys guarantee 100% data sovereignty.", "a": "false", "h": "Who really holds the master key in this scenario?", "e": "Sole key-tenancy is required; if they have the keys, they have the power." },
+      "d3": { "s": "Metadata (usage patterns, timestamps) is less sensitive than the data content itself.", "a": "false", "h": "Can someone reconstruct your behaviour just from timestamps?", "e": "Metadata can reveal as much about an organisation's operations as the content." }
+    }
+  },
+  "tech": {
+    "title": "Technical Sovereignty",
+    "questions": {
+      "t1": { "s": "Open standards can help reduce vendor lock-in.", "a": "true", "h": "Think about how easily you could move this data to another host.", "e": "Standards enable easier workload and data portability between providers." },
+      "t2": { "s": "Proprietary 'Serverless' functions are easily portable.", "a": "false", "h": "Do these functions exist outside of the provider's specific ecosystem?", "e": "These functions usually rely on provider-specific APIs that don't exist elsewhere." },
+      "t3": { "s": "Using a 'Single-Pane-of-Glass' tool from a vendor reduces technical lock-in.", "a": "false", "h": "Does this tool make it easier or harder to leave the ecosystem?", "e": "Proprietary management layers often become the most difficult thing to replace." }
+    }
+  },
+  "ops": {
+    "title": "Operational Sovereignty",
+    "questions": {
+      "o1": { "s": "Sovereignty exists even if a vendor can unilaterally cancel your account.", "a": "false", "h": "If someone else holds the kill-switch, do you have autonomy?", "e": "You must have control over your own service availability and kill-switches." },
+      "o2": { "s": "Local support staff are a requirement for many sovereign clouds.", "a": "true", "h": "Consider whose laws the actual human workers must follow.", "e": "This ensures the operators are subject to local, rather than foreign, laws." },
+      "o3": { "s": "Remote 'Emergency Access' by a vendor is acceptable in a sovereign environment.", "a": "false", "h": "Could this access be used without your supervision?", "e": "Unsupervised remote access creates a massive 'backdoor' risk to sovereignty." }
+    }
+  },
+  "assu": {
+    "title": "Assurance Sovereignty",
+    "questions": {
+      "a1": { "s": "Third-party audits are more reliable than vendor claims.", "a" : "true", "h": "Is it better to take their word or see independent proof?", "e": "Independent verification is the gold standard for verifying security promises." },
+      "a2": { "s": "You can verify integrity without source code access.", "a": "false", "h": "Can you be 100% sure what is 'under the bonnet' if you can't see it?", "e": "True assurance requires code-level transparency or reproducible binary builds." },
+      "a3": { "s": "Regular penetration testing by an independent firm is a form of assurance sovereignty.", "a": "true", "h": "Does this provide neutral evidence of security?", "e": "It provides neutral proof that the sovereignty controls actually work." }
+    }
+  },
+  "oss": {
+    "title": "Open Source",
+    "questions": {
+      "os1": { "s": "OSS can be 'forked' if a vendor disappears.", "a": "true", "h": "Can you take the code and run it yourself if the company dies?", "e": "This is the ultimate safety net; you can maintain the code yourself if needed." },
+      "os2": { "s": "OSS software is 100% secure by default.", "a": "false", "h": "Does having the code mean it was written perfectly?", "e": "OSS provides the tools for security, but you must still patch and audit it." },
+      "os3": { "s": "The ability to audit the source code is the primary sovereignty benefit of OSS.", "a": "true", "h": "Think about finding hidden 'backdoors'.", "e": "Transparency prevents hidden 'telemetry' or backdoors from being installed." }
+    }
+  },
+  "exec": {
+    "title": "Executive Oversight",
+    "questions": {
+      "e1": { "s": "Sovereignty risk belongs on the Corporate Risk Register.", "a": "true", "h": "Is this a technical problem or a business continuity problem?", "e": "It is a strategic business continuity and legal compliance risk." },
+      "e2": { "s": "CEOs should worry about single-provider concentration.", "a": "true", "h": "What happens if your only provider has a major outage?", "e": "Over-dependence on one vendor is a critical board-level vulnerability." },
+      "e3": { "s": "Digital Sovereignty is primarily a 'cost-saving' initiative.", "a": "false", "h": "Is the goal spending less money or having more control?", "e": "It is about risk management and autonomy; it may sometimes even increase costs." }
+    }
+  },
+  "mng": {
+    "title": "Managed Services",
+    "questions": {
+      "m1": { "s": "Total outsourcing increases internal expertise.", "a": "false", "h": "If you pay others to do the work, do your staff learn how to do it?", "e": "It usually leads to 'brain drain,' making it harder to migrate later." },
+      "m2": { "s": "Managed services can be used sovereignly.", "a": "true", "h": "Can a managed service be sovereign if the contract is right?", "e": "Requires strong exit strategies, data escrow, and localised contracts." },
+      "m3": { "s": "Managed services often obscure the 'Supply Chain' risk of underlying components.", "a": "true", "h": "Do you always know which 'sub-providers' your vendor uses?", "e": "Sovereignty requires knowing which sub-processors are being used by your provider." }
+    }
+  }
+}

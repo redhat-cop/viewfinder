@@ -32,10 +32,11 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 
 ### Landing Page Dashboard ✨ NEW
 - **Unified Entry Point**: Clean, professional landing page at root URL
-- **Card-Based Navigation**: Four main sections with intuitive card design
+- **Card-Based Navigation**: Five main sections with intuitive card design
   - **Full Maturity Assessments**: Dynamically generated buttons for all enabled profiles
   - **DS Sales Qualifier**: Quick access to sales qualification tool
   - **Operation Sovereign Shield**: Digital Sovereignty Escape Room for executives
+  - **Digital Sovereignty Quiz**: Interactive knowledge assessment with certificates
   - **Profile Management**: Administrative access
 - **Dynamic Profile Discovery**: Automatically displays new profiles when added via Profile Admin
 - **Automatic Updates**: Add/remove profiles and landing page updates automatically
@@ -89,6 +90,32 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 - **Auto-Save Progress**: Automatically saves form progress and current section in browser
 - **Keyboard Navigation**: Arrow keys to navigate between sections, Ctrl+S to save
 - **Full Assessment Link**: Easy transition to complete Viewfinder DS assessment
+
+### Digital Sovereignty Quiz ✨ NEW
+- **Interactive Knowledge Assessment**: Engaging True/False quiz format testing Digital Sovereignty understanding
+- **7 Domain Coverage**: Questions spanning all critical DS domains
+  - Data Sovereignty (encryption, residency, metadata)
+  - Technical Sovereignty (vendor lock-in, open standards, portability)
+  - Operational Sovereignty (service independence, expertise, disaster recovery)
+  - Assurance Sovereignty (audits, verification, security standards)
+  - Open Source (forking, security, transparency)
+  - Executive Oversight (risk management, strategic commitment)
+  - Managed Services (outsourcing, contracts, supply chain)
+- **Randomized Question Order**: Each quiz session randomizes both domain and question order for varied experience
+- **Sticky Session Management**: Maintains consistent question order during active quiz session
+- **Progressive Navigation**: Step-by-step progression through domains with visual progress indicators
+- **Contextual Hints**: Hover hints for each question to guide thinking
+- **Instant Feedback**: Immediate scoring and detailed explanations for all answers
+- **Maturity Scoring**: Three-tier readiness levels (Foundation, Strategic, Advanced)
+- **Domain Breakdown**: Per-domain performance analysis showing strengths and gaps
+- **Certificate Generation**: Professional PDF certificates with verification IDs
+- **Leaderboard System**: Public leaderboard with opt-in privacy controls
+  - Sort by score or date
+  - Top 5 rankings displayed
+  - Privacy-first design (opt-in only)
+- **Local Data Processing**: All quiz data processed locally, no external tracking
+- **PatternFly Dark Theme**: Consistent styling with main Viewfinder application
+- **Responsive Design**: Mobile-friendly interface for all devices
 
 ### Profile Management System
 - **Create Custom Profiles**: Build tailored assessment profiles via intuitive 4-step wizard
@@ -805,6 +832,19 @@ Extend `includes/ProfileExporter.php` with new export methods
 - Update UI to include new framework option
 
 ## Version History
+
+### Version 2.6.0 (January 2026)
+- ✨ **NEW**: Digital Sovereignty Quiz - Interactive knowledge assessment tool
+- ✨ **NEW**: 7-domain True/False quiz format with randomized questions
+- ✨ **NEW**: Professional certificate generation with verification IDs
+- ✨ **NEW**: Leaderboard system with opt-in privacy controls
+- ✨ **NEW**: Contextual hints for each quiz question
+- ✨ **NEW**: Three-tier maturity scoring (Foundation, Strategic, Advanced)
+- ✨ **NEW**: Per-domain performance breakdown and analysis
+- ✨ **NEW**: Quiz card added to landing page dashboard
+- 🔧 **IMPROVED**: Landing page now features five main sections
+- 🔧 **IMPROVED**: Consistent PatternFly dark theme across all tools
+- 📖 **DOCS**: Updated README with quiz features and benefits
 
 ### Version 2.5.0 (January 2026)
 - ✨ **NEW**: Operation Sovereign Shield - Digital Sovereignty Escape Room
