@@ -125,23 +125,20 @@ if (isset($_POST['quiz_submit'])) {
 
         /* View Transitions */
         .view-content {
-            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            transition: opacity 0.3s ease-in-out;
         }
 
         .hidden-view {
             display: none;
             opacity: 0;
-            transform: translateX(50px);
         }
 
         .slide-left-out {
             opacity: 0;
-            transform: translateX(-100px);
         }
 
         .slide-right-out {
             opacity: 0;
-            transform: translateX(100px);
         }
 
         /* Headers */
@@ -902,7 +899,7 @@ if (isset($_POST['quiz_submit'])) {
             nextStep.classList.add('active');
             nextStep.style.opacity = '1';
             document.getElementById('dot_' + s).classList.add('active');
-        }, 300);
+        }, 200);
     }
     </script>
 </body>

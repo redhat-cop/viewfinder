@@ -60,7 +60,8 @@ RUN mkdir -p /opt/app-root/src/logs /opt/app-root/src/quiz/data
 RUN chown -R 1001:0 /opt/app-root/src && \
     chmod -R g=u /opt/app-root/src && \
     chmod 755 /opt/app-root/src && \
-    chmod 775 /opt/app-root/src/logs
+    chmod 775 /opt/app-root/src/logs && \
+    chmod 775 /opt/app-root/src/quiz/data
 
 # Switch back to non-root user
 USER 1001
