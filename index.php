@@ -263,7 +263,7 @@
   background: #2a2a2a;
   border: 1px solid #444;
   border-radius: 8px;
-  padding: 1.5rem;
+  padding: 1.1rem;
   transition: all 0.3s ease;
 }
 
@@ -309,7 +309,7 @@
 
 .landing-button {
   display: inline-block;
-  padding: 1rem 1.5rem;
+  padding: 1rem 1.0rem;
   border-radius: 4px;
   text-decoration: none;
   font-weight: 600;
