@@ -1,10 +1,10 @@
 # Multi-stage build for production-ready container
-FROM registry.access.redhat.com/ubi9/php-83:latest
+FROM registry.access.redhat.com/ubi10/php-83:latest
 
 # Metadata
 LABEL maintainer="Chris Jenkins <chrisj@redhat.com>" \
-      version="2.4.1" \
-      description="Viewfinder Maturity Assessment Tool - Production Ready with Landing Page, Profile Management, Enhanced DS Sales Qualifier (validation + visual scoring + contextual help tooltips)"
+      version="2.5.0" \
+      description="Viewfinder Maturity Assessment Tool - Production Ready with Landing Page, Profile Management, Enhanced DS Sales Qualifier, Operation Sovereign Shield Escape Room"
 
 # Set working directory
 WORKDIR /opt/app-root/src

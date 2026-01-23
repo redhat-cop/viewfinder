@@ -42,7 +42,8 @@
     </div>
 
     <div class="widget">
-      <a href="../index.php?profile=DigitalSovereignty"><button>Full Assessment</button></a>
+      <a href="../index.php"><button><i class="fa-solid fa-home"></i> Home</button></a>
+      <a href="../index.php?profile=DigitalSovereignty"><button style="margin-left: 1rem;">Full Assessment</button></a>
     </div>
   </header>
 

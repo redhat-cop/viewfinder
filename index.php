@@ -193,6 +193,22 @@
       </div>
     </div>
 
+    <!-- Escape Room Card -->
+    <div class="landing-card">
+      <div class="landing-card-header">
+        <i class="fa-solid fa-shield-halved"></i>
+        <h2>Operation Sovereign Shield</h2>
+      </div>
+      <p class="landing-card-description">
+        Immersive Digital Sovereignty Escape Room - An executive challenge for strategic decision-making under pressure
+      </p>
+      <div class="landing-card-buttons">
+        <a href="escape-room.php" class="landing-button landing-button-warning">
+          <i class="fa-solid fa-puzzle-piece"></i> View Escape Room Overview
+        </a>
+      </div>
+    </div>
+
     <!-- Profile Management Card -->
     <div class="landing-card">
       <div class="landing-card-header">
@@ -222,7 +238,7 @@
 
 .landing-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   margin: 2rem 0;
 }
@@ -310,6 +326,16 @@
 .landing-button-success:hover {
   background: linear-gradient(135deg, #3fcc00 0%, #2aaa04 100%);
   box-shadow: 0 4px 12px rgba(42, 170, 4, 0.4);
+}
+
+.landing-button-warning {
+  background: linear-gradient(135deg, #f0ab00 0%, #c58c00 100%);
+  color: #fff;
+}
+
+.landing-button-warning:hover {
+  background: linear-gradient(135deg, #ffc425 0%, #f0ab00 100%);
+  box-shadow: 0 4px 12px rgba(240, 171, 0, 0.4);
 }
 
 .landing-button-secondary {

@@ -32,15 +32,40 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 
 ### Landing Page Dashboard ✨ NEW
 - **Unified Entry Point**: Clean, professional landing page at root URL
-- **Card-Based Navigation**: Three main sections with intuitive card design
+- **Card-Based Navigation**: Four main sections with intuitive card design
   - **Full Maturity Assessments**: Dynamically generated buttons for all enabled profiles
   - **DS Sales Qualifier**: Quick access to sales qualification tool
+  - **Operation Sovereign Shield**: Digital Sovereignty Escape Room for executives
   - **Profile Management**: Administrative access
 - **Dynamic Profile Discovery**: Automatically displays new profiles when added via Profile Admin
 - **Automatic Updates**: Add/remove profiles and landing page updates automatically
 - **Responsive Design**: Mobile-friendly card grid layout
 - **Sticky Footer**: Footer properly positioned at bottom of page
 - **Consistent Theming**: PatternFly dark theme throughout
+
+### Operation Sovereign Shield - Digital Sovereignty Escape Room ✨ NEW
+- **Executive Challenge**: Immersive 2-hour experience designed for leadership teams (4-8 executives)
+- **Fast-Paced Decision Making**: Time-bound activity testing rapid strategic decisions under pressure
+- **Varied Complexity Puzzles**: Multiple challenges covering critical digital sovereignty topics
+  - Data residency requirements and compliance
+  - Vendor lock-in mitigation strategies
+  - Supply chain dependency management
+  - Regulatory navigation (GDPR, NIS2, etc.)
+  - Open source principles for digital independence
+- **Facilitated Experience**: Guided by Red Hat Subject Matter Experts with optional hints
+- **Three-Phase Structure**:
+  - Pre-briefing and mission objectives
+  - 45-minute Executive Challenge (hands-on problem solving)
+  - Debrief and action planning session
+- **Key Benefits**:
+  - Accelerated strategic alignment among leadership
+  - Risk mitigation through experiential learning in safe environment
+  - Enhanced decision-making skills under pressure
+  - Future-proofing organization with resilient digital foundations
+  - Demystifies complex sovereignty concepts for executives
+  - Team building through collaborative problem-solving
+- **Engaging Presentation**: Professional page design with challenge topics, benefits, and timeline
+- **Home Navigation**: Easy return to main landing page
 
 ### Digital Sovereignty Sales Qualifier ✨ NEW
 - **Quick Sales Qualification**: Lightweight 10-15 minute assessment for sales teams
@@ -780,6 +805,14 @@ Extend `includes/ProfileExporter.php` with new export methods
 - Update UI to include new framework option
 
 ## Version History
+
+### Version 2.5.0 (January 2026)
+- ✨ **NEW**: Operation Sovereign Shield - Digital Sovereignty Escape Room
+- ✨ **NEW**: Immersive executive challenge page with comprehensive information
+- ✨ **NEW**: Escape room card added to landing page dashboard
+- ✨ **NEW**: Warning button style (orange/yellow gradient) for escape room
+- 🔧 **IMPROVED**: Landing page now features four main sections
+- 📖 **DOCS**: Updated README with escape room details and benefits
 
 ### Version 2.4.1 (January 2026)
 - ✨ **NEW**: Landing page dashboard with card-based navigation
