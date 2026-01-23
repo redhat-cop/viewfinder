@@ -153,14 +153,12 @@ $totalScore = 0;
                                  
                         <div class="text-bg">
                            <h1><?php
-                           if ($_REQUEST['profile'] == "Security") {
-                              $assessment = "Security Maturity Assessment";
-                              }else {
-                              $assessment = "Digital Sovereignty Readiness Assessment";
-                              }
-                              print $assessment
+                           // Dynamically get the profile display name from Config
+                           $profileDisplayName = Config::getProfileDisplayName($profile);
+                           $assessment = Security::escape($profileDisplayName) . " Maturity Assessment";
+                           print $assessment;
                               ?> </h1>
-   
+
 </div>
                               
                            </div>
@@ -334,8 +332,13 @@ foreach ($controls as $control) {
 print '</table>';
 $overallRating = MaturityRating::getTotalRating($totalScore);
 print "<br><table><td class='cell" . $overallRating . "'>Overall rating: " . $overallRating . " ($totalScore out of 252)</td></tr></table>";
+
+// Check if profile-specific maturity assessment image exists
+$imagePath = "images/" . Security::escape($profile) . "-Maturity-Assessment.png";
+if (file_exists(__DIR__ . '/' . $imagePath)) {
+    echo '<img src="' . $imagePath . '" alt="' . Security::escape($profileDisplayName) . ' Maturity Assessment" />';
+}
 ?>
-   <img src='<?php print "images/" . Security::escape($profile) . "-Maturity-Assessment.png" ?>' alt="#"/>
                         </div>
                      </div>
                   </div>

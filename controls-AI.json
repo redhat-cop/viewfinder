@@ -1,5 +1,5 @@
 {
-  "Domain1": {
+  "Domain-1": {
     "overview": "A clear AI strategy, driven by strong leadership, is crucial for AI readiness. This involves identifying high-value AI opportunities aligned with business goals and establishing measurable targets. Effective leaders cultivate an innovative culture, promote cross-departmental collaboration, and prioritize ethical considerations. They must understand AI's potential and guide the workforce through the resulting changes. Ultimately, AI readiness demands strategic vision and committed leadership.",
     "qnum": "1",
     "title": "Strategy & Leadership",
@@ -44,7 +44,7 @@
     "8-points": "8",
     "8-recommendation": "Start by establishing strong authentication mechanisms such as multi-factor authentication (MFA) and single sign-on (SSO). Utilise identity and access management (IAM) solutions to enforce granular access controls based on user identities. Implement continuous monitoring and behavior analytics to detect and respond to suspicious activities. Regularly review and update access policies to adapt to evolving security threats and changes in your infrastructure."
   },
-  "Domain2": {
+  "Domain-2": {
     "overview": "Data readiness forms the bedrock of any successful AI implementation. It encompasses the processes, infrastructure, and governance required to effectively collect, store, manage, and utilize data for AI applications. This includes ensuring data quality, accuracy, consistency, and accessibility across the organization. Establishing robust data pipelines, implementing appropriate data security and privacy measures, and developing clear data governance policies are essential components. ",
     "qnum": "2",
     "title": "Data Readiness",
@@ -89,7 +89,7 @@
     "8-points": "8",
     "8-recommendation": "Start by establishing baseline behavior for normal system operation. Utilise machine learning algorithms to identify deviations from this baseline. Implement real-time monitoring and alerting to promptly identify and respond to anomalous behavior. Regularly review and update anomaly detection models to adapt to evolving threats and changes in your IT environment."
   },
-  "Domain3": {
+  "Domain-3": {
     "overview": "Technology and infrastructure constitute the essential engine for AI readiness. This involves having the appropriate hardware, software, and network capabilities to support the development, deployment, and scaling of AI applications. Access to sufficient computing power, including GPUs and specialized AI accelerators, is often necessary for training complex models. A robust and scalable cloud infrastructure can provide the flexibility and resources needed to manage large datasets and fluctuating computational demands.",
     "qnum": "3",
     "title": "Tech & Infra",
@@ -134,7 +134,7 @@
     "8-points": "8",
     "8-recommendation": "Focus on dynamically adjusting access permissions based on the level of risk associated with the user and the context of their access request. Utilise risk assessment techniques to evaluate factors such as user behavior, device posture, location, and the sensitivity of the resource being accessed. Implement policies that automatically adjust access privileges in real-time based on the assessed risk level. "
   },
-  "Domain4": {
+  "Domain-4": {
     "overview": "Skills and talent represent the human capital essential for navigating the AI landscape. AI readiness necessitates a workforce equipped with the diverse skills required to develop, deploy, manage, and utilize AI technologies effectively. This includes data scientists, machine learning engineers, AI ethicists, and individuals with expertise in data engineering, cloud computing, and specific AI application domains. Beyond technical skills, fostering AI literacy across the organization is crucial, enabling employees in various roles to understand the potential and implications of AI.",
     "qnum": "4",
     "title": "Skills & Talent",
@@ -179,7 +179,7 @@
     "8-points": "8",
     "8-recommendation": "Integrate security testing tools directly into your application runtime environment to identify vulnerabilities in real-time. IAST solutions monitor application behavior during runtime and automatically detect security vulnerabilities, such as SQL injection, cross-site scripting (XSS), and other common web application attacks. By analyzing application behavior in real-time, IAST provides more accurate results compared to traditional static or dynamic analysis tools. Integrate IAST into your continuous integration and continuous deployment (CI/CD) pipeline to ensure that security vulnerabilities are identified and remediated early in the development lifecycle. "
   },
-  "Domain5": {
+  "Domain-5": {
     "overview": "Processes and automation are key enablers of AI readiness, focusing on how AI is integrated into existing workflows and used to streamline operations. This involves identifying manual, repetitive tasks and processes that can be augmented or fully automated using AI technologies. It requires analyzing current processes, re-engineering them for AI integration, and establishing clear protocols for human-AI collaboration. Developing robust deployment pipelines, monitoring AI-powered processes for performance and reliability, and establishing feedback loops for continuous improvement are crucial. ",
     "qnum": "5",
     "title": "Processes & Automation",
@@ -224,7 +224,7 @@
     "8-points": "8",
     "8-recommendation": "Adopt a strict access control model that verifies each user and device attempting to connect to the network, regardless of whether they are inside or outside the network perimeter. Utilise identity and device authentication, as well as continuous monitoring, to ensure only authorised users and devices can access network resources. Implement granular access controls based on user identity, device security posture, and contextual factors."
   },
-  "Domain6": {
+  "Domain-6": {
     "overview": "Ethical and regulatory compliance forms a critical dimension of AI readiness, ensuring that the development and deployment of AI systems adhere to legal frameworks and societal values. This involves proactively addressing potential ethical risks such as bias, fairness, transparency, and accountability in AI algorithms and their applications. Establishing clear ethical guidelines, implementing robust auditing mechanisms, and ensuring compliance with relevant data privacy regulations are essential.",
     "qnum": "6",
     "title": "Ethical & Regulatory Compliance",
@@ -269,7 +269,7 @@
     "8-points": "8",
     "8-recommendation": "Utilise data analytics and machine learning algorithms to proactively identify and mitigate potential data loss risks. Analyse historical data and user behaviour patterns to predict and prevent data loss incidents before they occur. Implement automated data recovery mechanisms to restore lost or corrupted data quickly. Regularly test and validate predictive data recovery processes to ensure their effectiveness."
   },
-  "Domain7": {
+  "Domain-7": {
     "overview": "Risk management in the context of AI readiness involves proactively identifying, assessing, and mitigating potential risks associated with the adoption and deployment of 1  AI technologies. This encompasses a wide range of concerns, including technical risks like model drift and security vulnerabilities, as well as business risks such as reputational damage from biased AI outputs or operational disruptions due to AI failures. Establishing clear risk assessment frameworks, implementing monitoring and alerting systems, and developing robust contingency plans are crucial.",
     "qnum": "7",
     "title": "Risk Management",
