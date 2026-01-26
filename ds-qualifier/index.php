@@ -56,14 +56,6 @@
     <div class="qualifier-header">
       <h1><i class="fa-solid fa-clipboard-check"></i> Digital Sovereignty Sales Opportunity Qualifier</h1>
       <p class="subtitle">Quick 10-15 minute assessment for sales teams</p>
-
-      <!-- Progress Indicator -->
-      <div class="section-progress">
-        <span class="progress-text">Section <span id="current-section">1</span> of 7</span>
-        <div class="progress-bar-container">
-          <div class="progress-bar-fill" id="section-progress-bar"></div>
-        </div>
-      </div>
     </div>
 
     <div class="qualifier-intro" id="intro-section">
@@ -93,6 +85,14 @@
           <div class="domain-header">
             <h2><i class="fa-solid fa-shield-halved"></i> <?php echo htmlspecialchars($domainName); ?></h2>
             <p class="domain-description"><?php echo htmlspecialchars($domainData['description']); ?></p>
+          </div>
+
+          <!-- Progress Indicator -->
+          <div class="section-progress">
+            <span class="progress-text">Section <span id="current-section"><?php echo $sectionIndex; ?></span> of 7</span>
+            <div class="progress-bar-container">
+              <div class="progress-bar-fill" id="section-progress-bar" style="width: <?php echo ($sectionIndex / 7) * 100; ?>%;"></div>
+            </div>
           </div>
 
           <div class="questions-list">
