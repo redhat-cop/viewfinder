@@ -6,9 +6,6 @@ logs/
 vendor/
 composer.phar
 
-# Backups
-*.backup.*
-
 # IDE
 .idea/
 .vscode/
@@ -22,6 +19,4 @@ Thumbs.db
 
 # PHPUnit
 .phpunit.result.cache
-
-# Claude
-.claude
+quiz/data/leaderboard.json

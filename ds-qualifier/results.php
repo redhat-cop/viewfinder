@@ -61,6 +61,7 @@
     $maxScore = 21;
     $domainScores = [];
     $domainResponses = [];
+    $unknownQuestions = []; // Track "Don't Know" responses
 
     // Map domain keys to display names
     $domainKeyMap = [];
@@ -74,17 +75,26 @@
     foreach ($_POST as $key => $value) {
         // Match question IDs (ds1, ts1, os1, etc.)
         if (preg_match('/^(ds|ts|os|as|oss|eo|ms)\d+$/', $key)) {
-            $intValue = intval($value);
-            $totalScore += $intValue;
-
             // Find which domain this question belongs to
             foreach ($questions as $domainName => $domainData) {
                 foreach ($domainData['questions'] as $question) {
                     if ($question['id'] === $key) {
-                        $domainScores[$domainName] += $intValue;
-                        // Only add to responses if answer was "Yes" (value > 0)
-                        if ($intValue > 0) {
-                            $domainResponses[$domainName][] = $question['text'];
+                        // Handle "Don't Know" responses
+                        if ($value === 'unknown') {
+                            $unknownQuestions[] = [
+                                'domain' => $domainName,
+                                'question' => $question['text'],
+                                'tooltip' => $question['tooltip'] ?? ''
+                            ];
+                            // Don't count toward score, but don't penalize either
+                        } else {
+                            $intValue = intval($value);
+                            $totalScore += $intValue;
+                            $domainScores[$domainName] += $intValue;
+                            // Only add to responses if answer was "Yes" (value > 0)
+                            if ($intValue > 0) {
+                                $domainResponses[$domainName][] = $question['text'];
+                            }
                         }
                         break 2;
                     }
@@ -216,6 +226,55 @@
         </table>
       </div>
     </div>
+
+    <!-- Questions to Ask Your Customer -->
+    <?php if (!empty($unknownQuestions)): ?>
+    <div class="unknown-questions-section">
+      <h2><i class="fa-solid fa-clipboard-question"></i> Questions to Ask Your Customer</h2>
+      <p class="section-description">
+        The following questions were marked as "Don't Know". Use these as discovery questions in your next customer conversation
+        to better understand their Digital Sovereignty requirements and readiness.
+      </p>
+
+      <?php
+      // Group unknown questions by domain
+      $unknownByDomain = [];
+      foreach ($unknownQuestions as $uq) {
+        $unknownByDomain[$uq['domain']][] = $uq;
+      }
+      ?>
+
+      <div class="unknown-questions-list">
+        <?php foreach ($unknownByDomain as $domainName => $domainUnknowns): ?>
+          <div class="unknown-domain-section">
+            <h3><i class="fa-solid fa-folder-open"></i> <?php echo htmlspecialchars($domainName); ?></h3>
+            <ul class="unknown-question-items">
+              <?php foreach ($domainUnknowns as $uq): ?>
+                <li class="unknown-question-item">
+                  <span class="question-icon"><i class="fa-solid fa-question-circle"></i></span>
+                  <div class="question-content">
+                    <div class="question-text"><?php echo htmlspecialchars($uq['question']); ?></div>
+                    <?php if (!empty($uq['tooltip'])): ?>
+                      <div class="question-context">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <strong>Context:</strong> <?php echo htmlspecialchars($uq['tooltip']); ?>
+                      </div>
+                    <?php endif; ?>
+                  </div>
+                </li>
+              <?php endforeach; ?>
+            </ul>
+          </div>
+        <?php endforeach; ?>
+      </div>
+
+      <div class="discovery-tip">
+        <i class="fa-solid fa-circle-info"></i>
+        <strong>Pro Tip:</strong> These questions help uncover hidden requirements and demonstrate your expertise in Digital Sovereignty.
+        Use them to guide technical discovery sessions and identify specific solution opportunities.
+      </div>
+    </div>
+    <?php endif; ?>
 
     <!-- Sales Actions -->
     <div class="sales-actions">

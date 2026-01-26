@@ -64,8 +64,9 @@
          Answer the questions below based on customer conversations, discovery notes, or RFP requirements.</p>
       <ul>
         <li><strong>Time Required:</strong> 10-15 minutes</li>
-        <li><strong>Questions:</strong> 21 yes/no questions across 7 domains</li>
+        <li><strong>Questions:</strong> 21 questions across 7 domains (Yes / No / Don't Know)</li>
         <li><strong>Output:</strong> Opportunity score with recommended next steps</li>
+        <li><strong>Don't Know?</strong> Questions marked "Don't Know" will appear as "Questions to Ask Your Customer"</li>
         <li><strong>For Full Assessment:</strong> Use the <a href="../index.php?profile=DigitalSovereignty">complete Viewfinder tool</a> for technical deep-dive</li>
       </ul>
     </div>
@@ -124,6 +125,15 @@
                          class="question-radio">
                   <label for="<?php echo $question['id']; ?>-no" class="btn-option btn-no">
                     <i class="fa-solid fa-xmark"></i> No
+                  </label>
+
+                  <input type="radio"
+                         id="<?php echo $question['id']; ?>-unknown"
+                         name="<?php echo $question['id']; ?>"
+                         value="unknown"
+                         class="question-radio">
+                  <label for="<?php echo $question['id']; ?>-unknown" class="btn-option btn-unknown">
+                    <i class="fa-solid fa-question"></i> Don't Know
                   </label>
                 </div>
               </div>
