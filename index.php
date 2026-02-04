@@ -374,6 +374,37 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Sticky Footer Styles */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.landing-page-wrapper {
+  flex: 1 0 auto;
+}
+
+.disclaimer-footer {
+  flex-shrink: 0;
+  background-color: #1a1a1a;
+  border-top: 1px solid #444;
+  padding: 1.5rem 2rem;
+  text-align: center;
+  margin-top: auto;
+}
+
+.disclaimer-footer p {
+  color: #999;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.disclaimer-footer strong {
+  color: #ccc;
+}
 </style>
 
 <?php else: ?>
