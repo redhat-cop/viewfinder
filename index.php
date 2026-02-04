@@ -31,6 +31,26 @@
   .pf-c-page__header-tools button {
     margin-right: 1rem;
   }
+
+  /* Ensure consistent button height and icon display */
+  .pf-c-page__header-tools button,
+  .widget button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.5;
+  }
+
+  /* Icon alignment in header buttons */
+  .pf-c-page__header-tools button i,
+  .widget button i {
+    font-size: 1em;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    display: inline-block;
+    color: inherit;
+    opacity: 1;
+  }
 </style>
 
 <script>
@@ -131,7 +151,8 @@
             </div>
             <div class="pf-c-page__header-tools">
               <div class="widget">
-                <a href="ds-qualifier/"><button>DS Sales Qualifier</button></a>
+                <a href="index.php"><button><i class="fa-solid fa-home"></i> Home</button></a>
+                <a href="ds-qualifier/"><button>DS Readiness Assessment</button></a>
                 <a href="profile-admin.php"><button>Manage Profiles</button></a>
               </div>
             </div>
@@ -154,6 +175,38 @@
     </div>
 
   <div class="landing-cards-grid">
+    <!-- Digital Sovereignty Readiness Assessment Card -->
+    <div class="landing-card">
+      <div class="landing-card-header">
+        <i class="fa-solid fa-clipboard-check"></i>
+        <h2>Digital Sovereignty Readiness Assessment</h2>
+      </div>
+      <p class="landing-card-description">
+        Quick 10-15 minute assessment to evaluate your organization's digital sovereignty readiness across 7 key domains
+      </p>
+      <div class="landing-card-buttons">
+        <a href="ds-qualifier/" class="landing-button landing-button-success">
+          <i class="fa-solid fa-rocket"></i> Start Assessment
+        </a>
+      </div>
+    </div>
+
+    <!-- Digital Sovereignty Quiz Card -->
+    <div class="landing-card">
+      <div class="landing-card-header">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <h2>Digital Sovereignty Quiz</h2>
+      </div>
+      <p class="landing-card-description">
+        Interactive knowledge assessment with 7 domains, instant results, certificates, and leaderboard rankings
+      </p>
+      <div class="landing-card-buttons">
+        <a href="quiz/" class="landing-button landing-button-primary">
+          <i class="fa-solid fa-brain"></i> Take the Quiz
+        </a>
+      </div>
+    </div>
+
     <!-- Full Maturity Assessments Card -->
     <div class="landing-card">
       <div class="landing-card-header">
@@ -177,22 +230,6 @@
       </div>
     </div>
 
-    <!-- DS Sales Qualifier Card -->
-    <div class="landing-card">
-      <div class="landing-card-header">
-        <i class="fa-solid fa-gauge-high"></i>
-        <h2>Digital Sovereignty Sales Qualifier</h2>
-      </div>
-      <p class="landing-card-description">
-        Quick 10-15 minute sales qualification tool to identify Digital Sovereignty opportunities and gaps
-      </p>
-      <div class="landing-card-buttons">
-        <a href="ds-qualifier/" class="landing-button landing-button-success">
-          <i class="fa-solid fa-rocket"></i> Start Sales Qualifier
-        </a>
-      </div>
-    </div>
-
     <!-- Escape Room Card -->
     <div class="landing-card">
       <div class="landing-card-header">
@@ -205,38 +242,6 @@
       <div class="landing-card-buttons">
         <a href="escape-room.php" class="landing-button landing-button-warning">
           <i class="fa-solid fa-puzzle-piece"></i> View Escape Room Overview
-        </a>
-      </div>
-    </div>
-
-    <!-- Digital Sovereignty Quiz Card -->
-    <div class="landing-card">
-      <div class="landing-card-header">
-        <i class="fa-solid fa-graduation-cap"></i>
-        <h2>Digital Sovereignty Quiz</h2>
-      </div>
-      <p class="landing-card-description">
-        Interactive knowledge assessment with 7 domains, instant results, certificates, and leaderboard rankings
-      </p>
-      <div class="landing-card-buttons">
-        <a href="quiz/" class="landing-button landing-button-primary">
-          <i class="fa-solid fa-brain"></i> Take the Quiz
-        </a>
-      </div>
-    </div>
-
-    <!-- Profile Management Card -->
-    <div class="landing-card">
-      <div class="landing-card-header">
-        <i class="fa-solid fa-gears"></i>
-        <h2>Profile Management</h2>
-      </div>
-      <p class="landing-card-description">
-        Configure and manage assessment profiles, customize domains, and control which assessments are available
-      </p>
-      <div class="landing-card-buttons">
-        <a href="profile-admin.php" class="landing-button landing-button-secondary">
-          <i class="fa-solid fa-sliders"></i> Manage Profiles
         </a>
       </div>
     </div>
@@ -522,7 +527,7 @@ document.getElementById("defaultOpen").click();
 <?php endif; ?>
 
 <footer class="disclaimer-footer">
-  <p><strong>Red Hat Disclaimer:</strong> This application is provided for informational purposes only. The information is provided "as is" with no guarantee or warranty of accuracy, completeness, or fitness for a particular purpose.</p>
+  <p><strong>Red Hat Disclaimer:</strong> These applications are provided for informational purposes only. The information is provided "as is" with no guarantee or warranty of accuracy, completeness, or fitness for a particular purpose.</p>
 </footer>
 
 </body>

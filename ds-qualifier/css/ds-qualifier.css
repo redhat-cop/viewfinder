@@ -1,5 +1,5 @@
 /**
- * Digital Sovereignty Sales Qualifier - Custom Styles
+ * Digital Sovereignty Readiness Assessment - Custom Styles
  * Builds on existing Viewfinder dark theme
  */
 
@@ -479,6 +479,16 @@
     border-top: 2px solid #444;
 }
 
+.form-actions form {
+    display: inline;
+    margin: 0;
+}
+
+.form-actions button,
+.form-actions a {
+    margin: 0 0.5rem;
+}
+
 /* ============================================
    RESULTS PAGE STYLES
    ============================================ */
@@ -512,19 +522,24 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-.score-card.priority-high {
-    background: linear-gradient(135deg, #2aaa04 0%, #1b7003 100%);
-    border: 2px solid #2aaa04;
+.score-card.maturity-foundation {
+    background: linear-gradient(135deg, #c9190b 0%, #a30000 100%);
+    border: 2px solid #c9190b;
 }
 
-.score-card.priority-medium {
+.score-card.maturity-developing {
+    background: linear-gradient(135deg, #ec7a08 0%, #c46100 100%);
+    border: 2px solid #ec7a08;
+}
+
+.score-card.maturity-strategic {
     background: linear-gradient(135deg, #f0ab00 0%, #c58c00 100%);
     border: 2px solid #f0ab00;
 }
 
-.score-card.priority-low {
-    background: linear-gradient(135deg, #c9190b 0%, #a30000 100%);
-    border: 2px solid #c9190b;
+.score-card.maturity-advanced {
+    background: linear-gradient(135deg, #2aaa04 0%, #1b7003 100%);
+    border: 2px solid #2aaa04;
 }
 
 .score-icon {
@@ -571,17 +586,21 @@
     transition: stroke-dashoffset 1s ease;
 }
 
-/* Color the ring based on priority */
-.priority-high .progress-ring-circle {
-    stroke: #3fcc00;
+/* Color the ring based on maturity level */
+.maturity-foundation .progress-ring-circle {
+    stroke: #e01000;
 }
 
-.priority-medium .progress-ring-circle {
+.maturity-developing .progress-ring-circle {
+    stroke: #ec7a08;
+}
+
+.maturity-strategic .progress-ring-circle {
     stroke: #ffc425;
 }
 
-.priority-low .progress-ring-circle {
-    stroke: #e01000;
+.maturity-advanced .progress-ring-circle {
+    stroke: #3fcc00;
 }
 
 .progress-text {
@@ -696,16 +715,20 @@
     border-radius: 10px;
 }
 
-.progress-fill.strength-high {
-    background: linear-gradient(90deg, #2aaa04 0%, #3fcc00 100%);
+.progress-fill.strength-foundation {
+    background: linear-gradient(90deg, #c9190b 0%, #e01000 100%);
 }
 
-.progress-fill.strength-medium {
+.progress-fill.strength-developing {
+    background: linear-gradient(90deg, #ec7a08 0%, #f4b678 100%);
+}
+
+.progress-fill.strength-strategic {
     background: linear-gradient(90deg, #f0ab00 0%, #ffc425 100%);
 }
 
-.progress-fill.strength-low {
-    background: linear-gradient(90deg, #c9190b 0%, #e01000 100%);
+.progress-fill.strength-advanced {
+    background: linear-gradient(90deg, #2aaa04 0%, #3fcc00 100%);
 }
 
 .strength-badge {
@@ -715,30 +738,35 @@
     display: inline-block;
 }
 
-.strength-badge.strength-high {
-    background: #2aaa04;
-    color: #fff;
-}
-
-.strength-badge.strength-medium {
-    background: #f0ab00;
-    color: #000;
-}
-
-.strength-badge.strength-low {
+.strength-badge.strength-foundation {
     background: #c9190b;
     color: #fff;
 }
 
+.strength-badge.strength-developing {
+    background: #ec7a08;
+    color: #fff;
+}
+
+.strength-badge.strength-strategic {
+    background: #f0ab00;
+    color: #000;
+}
+
+.strength-badge.strength-advanced {
+    background: #2aaa04;
+    color: #fff;
+}
+
 /* Sales Actions */
-.sales-actions {
+.improvement-actions {
     background: #2a2a2a;
     padding: 2rem;
     border-radius: 8px;
     margin: 2rem 0;
 }
 
-.sales-actions h2 {
+.improvement-actions h2 {
     color: #9ec7fc;
     margin-bottom: 1.5rem;
     font-size: 1.8rem;
@@ -750,19 +778,24 @@
     border-left: 4px solid;
 }
 
-.action-priority.priority-high {
-    background: rgba(42, 170, 4, 0.1);
-    border-color: #2aaa04;
+.action-priority.maturity-foundation {
+    background: rgba(201, 25, 11, 0.1);
+    border-color: #c9190b;
 }
 
-.action-priority.priority-medium {
+.action-priority.maturity-developing {
+    background: rgba(236, 122, 8, 0.1);
+    border-color: #ec7a08;
+}
+
+.action-priority.maturity-strategic {
     background: rgba(240, 171, 0, 0.1);
     border-color: #f0ab00;
 }
 
-.action-priority.priority-low {
-    background: rgba(201, 25, 11, 0.1);
-    border-color: #c9190b;
+.action-priority.maturity-advanced {
+    background: rgba(42, 170, 4, 0.1);
+    border-color: #2aaa04;
 }
 
 .action-priority h3 {
@@ -1141,7 +1174,7 @@
     }
 
     .domain-breakdown,
-    .sales-actions,
+    .improvement-actions,
     .domain-insights {
         page-break-inside: avoid;
     }

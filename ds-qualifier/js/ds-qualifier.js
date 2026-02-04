@@ -1,5 +1,5 @@
 /**
- * Digital Sovereignty Sales Qualifier - Interactive Features
+ * Digital Sovereignty Readiness Assessment - Interactive Features
  * Provides auto-save, score tracking, and UX enhancements
  */
 

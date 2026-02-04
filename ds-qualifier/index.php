@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Digital Sovereignty Sales Opportunity Qualifier - Viewfinder</title>
+  <title>Digital Sovereignty Readiness Assessment - Viewfinder</title>
 
   <!-- Reuse existing CSS from parent directory -->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
@@ -43,7 +43,7 @@
 
     <div class="widget">
       <a href="../index.php"><button><i class="fa-solid fa-home"></i> Home</button></a>
-      <a href="../index.php?profile=DigitalSovereignty"><button style="margin-left: 1rem;">Full Assessment</button></a>
+      <a href="../quiz/"><button style="margin-left: 1rem;">Take Quiz</button></a>
     </div>
   </header>
 
@@ -54,20 +54,19 @@
     ?>
 
     <div class="qualifier-header">
-      <h1><i class="fa-solid fa-clipboard-check"></i> Digital Sovereignty Sales Opportunity Qualifier</h1>
-      <p class="subtitle">Quick 10-15 minute assessment for sales teams</p>
+      <h1><i class="fa-solid fa-clipboard-check"></i> Digital Sovereignty Readiness Assessment</h1>
+      <p class="subtitle">Quick 10-15 minute assessment to evaluate digital sovereignty readiness</p>
     </div>
 
     <div class="qualifier-intro" id="intro-section">
       <h3><i class="fa-solid fa-info-circle"></i> About This Tool</h3>
-      <p>This lightweight qualification tool helps identify whether an opportunity has Digital Sovereignty requirements.
-         Answer the questions below based on customer conversations, discovery notes, or RFP requirements.</p>
+      <p>This lightweight assessment tool helps evaluate your organization's digital sovereignty readiness.
+         Answer the questions below based on your current practices and requirements.</p>
       <ul>
         <li><strong>Time Required:</strong> 10-15 minutes</li>
         <li><strong>Questions:</strong> 21 questions across 7 domains (Yes / No / Don't Know)</li>
-        <li><strong>Output:</strong> Opportunity score with recommended next steps</li>
-        <li><strong>Don't Know?</strong> Questions marked "Don't Know" will appear as "Questions to Ask Your Customer"</li>
-        <li><strong>For Full Assessment:</strong> Use the <a href="../index.php?profile=DigitalSovereignty">complete Viewfinder tool</a> for technical deep-dive</li>
+        <li><strong>Output:</strong> Readiness score with recommended next steps</li>
+        <li><strong>Don't Know?</strong> Questions marked "Don't Know" will appear as "Questions to Research"</li>
       </ul>
     </div>
 

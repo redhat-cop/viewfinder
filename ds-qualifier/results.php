@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sales Qualification Results - Digital Sovereignty Sales Opportunity Qualifier</title>
+  <title>Results - Digital Sovereignty Readiness Assessment</title>
 
   <!-- Reuse existing CSS from parent directory -->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
@@ -46,13 +46,19 @@
 
     <div class="widget">
       <a href="../index.php"><button><i class="fa-solid fa-home"></i> Home</button></a>
-      <a href="index.php"><button style="margin-left: 1rem;">New Sales Qualification</button></a>
-      <a href="../index.php?profile=DigitalSovereignty"><button style="margin-left: 1rem;">Full Assessment</button></a>
+      <a href="index.php"><button style="margin-left: 1rem;">New Assessment</button></a>
+      <a href="../quiz/"><button style="margin-left: 1rem;">Take Quiz</button></a>
     </div>
   </header>
 
   <div class="container">
     <?php
+    // Start session to store results for PDF generation
+    session_start();
+
+    // Store POST data in session for PDF generator
+    $_SESSION['assessment_data'] = $_POST;
+
     // Load questions configuration for domain mapping
     $questions = require_once 'config.php';
 
@@ -103,25 +109,33 @@
         }
     }
 
-    // Determine priority level (INVERTED: Low score = High opportunity because customer lacks DS capabilities)
-    if ($totalScore <= 7) {
-        $priority = 'High';
-        $priorityClass = 'priority-high';
-        $priorityIcon = 'fa-circle-check';
-        $recommendation = 'Strong Digital Sovereignty Opportunity';
-        $recommendationDetail = 'This customer has significant gaps in Digital Sovereignty capabilities. Excellent opportunity to position Red Hat sovereign solutions across multiple domains.';
-    } elseif ($totalScore <= 14) {
-        $priority = 'Medium';
-        $priorityClass = 'priority-medium';
-        $priorityIcon = 'fa-circle-exclamation';
-        $recommendation = 'Moderate Digital Sovereignty Opportunity';
-        $recommendationDetail = 'This customer has some DS capabilities but notable gaps remain. Good opportunity to strengthen their sovereignty posture with Red Hat solutions.';
+    // Determine maturity level based on score (4-level system)
+    // Foundation: 0-25% (0-5 points), Developing: 26-50% (6-10 points)
+    // Strategic: 51-75% (11-15 points), Advanced: 76-100% (16-21 points)
+    if ($totalScore <= 5) {
+        $maturityLevel = 'Foundation';
+        $priorityClass = 'maturity-foundation';
+        $priorityIcon = 'fa-seedling';
+        $recommendation = 'Foundation Level';
+        $recommendationDetail = 'Your organization is in the early stages of digital sovereignty. Significant opportunities exist to strengthen capabilities across multiple domains and reduce dependencies on external providers.';
+    } elseif ($totalScore <= 10) {
+        $maturityLevel = 'Developing';
+        $priorityClass = 'maturity-developing';
+        $priorityIcon = 'fa-arrow-trend-up';
+        $recommendation = 'Developing Level';
+        $recommendationDetail = 'Your organization is actively building digital sovereignty capabilities and making progress. Continue developing your foundational controls and addressing gaps to move toward strategic maturity.';
+    } elseif ($totalScore <= 15) {
+        $maturityLevel = 'Strategic';
+        $priorityClass = 'maturity-strategic';
+        $priorityIcon = 'fa-chart-line';
+        $recommendation = 'Strategic Level';
+        $recommendationDetail = 'Your organization has established strong digital sovereignty capabilities across most domains. Focus on closing remaining gaps and optimizing existing controls to achieve advanced maturity.';
     } else {
-        $priority = 'Low';
-        $priorityClass = 'priority-low';
-        $priorityIcon = 'fa-circle-xmark';
-        $recommendation = 'Limited Digital Sovereignty Opportunity';
-        $recommendationDetail = 'This customer already has strong DS capabilities in place. Limited opportunity for new DS solutions, but consider maintenance, upgrades, or other Red Hat value propositions.';
+        $maturityLevel = 'Advanced';
+        $priorityClass = 'maturity-advanced';
+        $priorityIcon = 'fa-shield-halved';
+        $recommendation = 'Advanced Level';
+        $recommendationDetail = 'Your organization demonstrates comprehensive digital sovereignty capabilities across all domains. Continue maintaining excellence and stay ahead of evolving regulatory and geopolitical requirements.';
     }
 
     $assessmentDate = date('F j, Y \a\t g:i A');
@@ -129,7 +143,7 @@
 
     <!-- Results Header -->
     <div class="results-header">
-      <h1><i class="fa-solid fa-chart-bar"></i> Digital Sovereignty Sales Qualification Results</h1>
+      <h1><i class="fa-solid fa-chart-bar"></i> Digital Sovereignty Readiness Assessment Results</h1>
       <p class="assessment-date"><strong>Assessment Date:</strong> <?php echo $assessmentDate; ?></p>
     </div>
 
@@ -138,7 +152,7 @@
       <div class="score-icon">
         <i class="fa-solid <?php echo $priorityIcon; ?>"></i>
       </div>
-      <h2><?php echo $priority; ?> Priority Opportunity</h2>
+      <h2><?php echo $maturityLevel; ?> Maturity Level</h2>
 
       <?php
       // Calculate percentage for visual display
@@ -169,16 +183,16 @@
     <!-- Domain Breakdown -->
     <div class="domain-breakdown">
       <h2><i class="fa-solid fa-table"></i> Domain Analysis</h2>
-      <p class="section-intro">Breakdown of qualification scores across the 7 Digital Sovereignty domains:</p>
+      <p class="section-intro">Breakdown of your readiness across the 7 Digital Sovereignty domains:</p>
 
       <div class="domain-table-wrapper">
         <table class="domain-table">
           <thead>
             <tr>
               <th>Domain</th>
-              <th style="text-align: center;">Current Capabilities</th>
-              <th style="text-align: center;">Gap Analysis</th>
-              <th>Opportunity Level</th>
+              <th style="text-align: center;">Your Score</th>
+              <th style="text-align: center;">Progress</th>
+              <th>Maturity Level</th>
             </tr>
           </thead>
           <tbody>
@@ -188,19 +202,24 @@
                 $maxDomainScore = count($domainData['questions']);
                 $percentage = ($score / $maxDomainScore) * 100;
 
-                // INVERTED: Low score = High opportunity (customer lacks capabilities)
-                if ($percentage <= 33) {
-                    $strengthClass = 'strength-high';
-                    $strengthIcon = 'fa-circle-check';
-                    $strengthText = 'High Opportunity';
-                } elseif ($percentage <= 66) {
-                    $strengthClass = 'strength-medium';
-                    $strengthIcon = 'fa-circle-exclamation';
-                    $strengthText = 'Medium Opportunity';
+                // Maturity levels based on score percentage (4-level system)
+                // Foundation: 0%, Developing: 1-33%, Strategic: 34-67%, Advanced: 68-100%
+                if ($percentage == 0) {
+                    $strengthClass = 'strength-foundation';
+                    $strengthIcon = 'fa-seedling';
+                    $strengthText = 'Foundation';
+                } elseif ($percentage <= 33) {
+                    $strengthClass = 'strength-developing';
+                    $strengthIcon = 'fa-arrow-trend-up';
+                    $strengthText = 'Developing';
+                } elseif ($percentage <= 67) {
+                    $strengthClass = 'strength-strategic';
+                    $strengthIcon = 'fa-chart-line';
+                    $strengthText = 'Strategic';
                 } else {
-                    $strengthClass = 'strength-low';
-                    $strengthIcon = 'fa-circle-xmark';
-                    $strengthText = 'Low Opportunity';
+                    $strengthClass = 'strength-advanced';
+                    $strengthIcon = 'fa-shield-halved';
+                    $strengthText = 'Advanced';
                 }
             ?>
               <tr>
@@ -227,13 +246,13 @@
       </div>
     </div>
 
-    <!-- Questions to Ask Your Customer -->
+    <!-- Questions to Research -->
     <?php if (!empty($unknownQuestions)): ?>
     <div class="unknown-questions-section">
-      <h2><i class="fa-solid fa-clipboard-question"></i> Questions to Ask Your Customer</h2>
+      <h2><i class="fa-solid fa-clipboard-question"></i> Questions to Research</h2>
       <p class="section-description">
-        The following questions were marked as "Don't Know". Use these as discovery questions in your next customer conversation
-        to better understand their Digital Sovereignty requirements and readiness.
+        The following questions were marked as "Don't Know". Research these areas to get a complete picture
+        of your organization's Digital Sovereignty readiness and identify opportunities for improvement.
       </p>
 
       <?php
@@ -270,74 +289,102 @@
 
       <div class="discovery-tip">
         <i class="fa-solid fa-circle-info"></i>
-        <strong>Pro Tip:</strong> These questions help uncover hidden requirements and demonstrate your expertise in Digital Sovereignty.
-        Use them to guide technical discovery sessions and identify specific solution opportunities.
+        <strong>Tip:</strong> Understanding these areas will help you identify gaps in your digital sovereignty posture
+        and prioritize improvements to strengthen your organization's independence and resilience.
       </div>
     </div>
     <?php endif; ?>
 
-    <!-- Sales Actions -->
-    <div class="sales-actions">
-      <h2><i class="fa-solid fa-bullseye"></i> Recommended Next Steps</h2>
+    <!-- Improvement Actions -->
+    <div class="improvement-actions">
+      <h2><i class="fa-solid fa-bullseye"></i> Recommended Improvement Actions</h2>
 
-      <?php if ($priority === 'High'): ?>
-        <div class="action-priority priority-high">
-          <h3><i class="fa-solid fa-rocket"></i> Immediate Actions for High-Priority Opportunity</h3>
+      <?php if ($maturityLevel === 'Foundation'): ?>
+        <div class="action-priority maturity-foundation">
+          <h3><i class="fa-solid fa-seedling"></i> Priority Actions for Foundation Level</h3>
+          <p>Your organization is in the early stages of digital sovereignty. Focus on building foundational capabilities:</p>
           <ul>
-            <li><strong>Schedule Technical Deep-Dive:</strong> Arrange detailed discovery session on DS requirements, compliance needs, and technical architecture</li>
-            <li><strong>Engage Specialists:</strong> Involve Red Hat Digital Sovereignty specialists and solution architects</li>
-            <li><strong>Position Solutions:</strong> Present OpenShift, RHEL sovereign cloud, and compliance-focused offerings</li>
-            <li><strong>Compliance Discussion:</strong> Discuss relevant frameworks (GDPR, NIS2, SecNumCloud, DSGVO, etc.)</li>
-            <li><strong>Executive Alignment:</strong> Seek executive sponsor engagement on sovereignty strategy and budget</li>
-            <li><strong>Reference Stories:</strong> Share case studies from similar sovereign deployments in public sector/regulated industries</li>
+            <li><strong>Assess Current State:</strong> Conduct detailed inventory of data locations, vendor dependencies, and compliance requirements</li>
+            <li><strong>Define Strategy:</strong> Develop a digital sovereignty roadmap aligned with your business objectives and regulatory obligations</li>
+            <li><strong>Establish Governance:</strong> Create executive sponsorship and steering committee for sovereignty initiatives</li>
+            <li><strong>Address Quick Wins:</strong> Implement encryption key management (BYOK/HYOK) and data residency controls</li>
+            <li><strong>Build Expertise:</strong> Train technical teams on sovereign technologies and compliance frameworks</li>
+            <li><strong>Evaluate Solutions:</strong> Research open-source and sovereign-ready platforms that reduce vendor lock-in</li>
           </ul>
 
           <div class="recommended-products">
-            <h4>Recommended Red Hat Solutions:</h4>
+            <h4>Recommended Focus Areas:</h4>
             <ul>
-              <li>Red Hat OpenShift or Red Hat OpenShift AI</li>
-              <li>Red Hat Enterprise Linux (sovereign OS)</li>
-              <li>Red Hat Advanced Cluster Security</li>
-              <li>Red Hat Ansible Automation Platform</li>
+              <li>Data sovereignty and encryption controls</li>
+              <li>Open-source adoption strategy</li>
+              <li>Compliance framework alignment (GDPR, NIS2, etc.)</li>
+              <li>Vendor risk assessment and diversification</li>
             </ul>
           </div>
         </div>
 
-      <?php elseif ($priority === 'Medium'): ?>
-        <div class="action-priority priority-medium">
-          <h3><i class="fa-solid fa-magnifying-glass"></i> Discovery Actions for Medium-Priority Opportunity</h3>
+      <?php elseif ($maturityLevel === 'Developing'): ?>
+        <div class="action-priority maturity-developing">
+          <h3><i class="fa-solid fa-arrow-trend-up"></i> Advancement Actions for Developing Level</h3>
+          <p>Your organization is making progress building digital sovereignty capabilities. Continue your momentum:</p>
           <ul>
-            <li><strong>Full Assessment:</strong> Conduct complete <a href="../index.php?profile=DigitalSovereignty">Viewfinder Digital Sovereignty assessment</a> to identify specific gaps and requirements</li>
-            <li><strong>Discovery Call:</strong> Schedule focused call on data residency, compliance, and sovereignty drivers</li>
-            <li><strong>Education:</strong> Share Digital Sovereignty resources, whitepapers, and regulatory guidance</li>
-            <li><strong>Stakeholder Mapping:</strong> Identify who owns compliance, security, and infrastructure decisions</li>
-            <li><strong>Budget Validation:</strong> Confirm budget allocation and timeline for sovereignty initiatives</li>
-            <li><strong>Competition Analysis:</strong> Understand competing vendors and their DS positioning</li>
+            <li><strong>Strengthen Foundations:</strong> Solidify controls in domains where you scored lowest (0-1 points)</li>
+            <li><strong>Implement Standards:</strong> Adopt open standards and containerization to improve portability</li>
+            <li><strong>Enhance Data Controls:</strong> Ensure all sensitive data has proper residency and encryption controls</li>
+            <li><strong>Build Resilience:</strong> Develop disaster recovery and business continuity plans for geopolitical scenarios</li>
+            <li><strong>Expand Expertise:</strong> Grow in-house technical capabilities for managing sovereign infrastructure</li>
+            <li><strong>Document Policies:</strong> Create formal policies for open-source adoption and vendor selection</li>
+          </ul>
+
+          <div class="recommended-products">
+            <h4>Recommended Focus Areas:</h4>
+            <ul>
+              <li>Cloud platform portability and migration testing</li>
+              <li>Security log sovereignty and audit controls</li>
+              <li>Operational independence from external providers</li>
+              <li>Executive alignment and budget allocation</li>
+            </ul>
+          </div>
+        </div>
+
+      <?php elseif ($maturityLevel === 'Strategic'): ?>
+        <div class="action-priority maturity-strategic">
+          <h3><i class="fa-solid fa-chart-line"></i> Growth Actions for Strategic Level</h3>
+          <p>Your organization has established some capabilities. Continue building momentum:</p>
+          <ul>
+            <li><strong>Close Remaining Gaps:</strong> Address specific weaknesses identified in lower-scoring domains</li>
+            <li><strong>Enhance Portability:</strong> Migrate workloads to open standards and test cloud portability</li>
+            <li><strong>Strengthen Controls:</strong> Implement advanced monitoring, audit rights, and security log sovereignty</li>
+            <li><strong>Expand Open Source:</strong> Increase use of open-source software and participate in strategic projects</li>
+            <li><strong>Test Resilience:</strong> Validate disaster recovery plans and operational independence from cloud providers</li>
+            <li><strong>Pursue Certifications:</strong> Obtain national security certifications (NIS2, SecNumCloud, etc.)</li>
           </ul>
 
           <div class="recommended-resources">
             <h4>Recommended Resources:</h4>
             <ul>
-              <li>Digital Sovereignty whitepaper</li>
-              <li>NIS2 compliance guide</li>
-              <li>OpenShift sovereign deployment reference architectures</li>
-              <li>Customer success stories in regulated industries</li>
+              <li>Digital Sovereignty best practices and frameworks</li>
+              <li>Cloud migration and portability guides</li>
+              <li>National certification requirements documentation</li>
+              <li>Open-source governance policies</li>
             </ul>
           </div>
         </div>
 
       <?php else: ?>
-        <div class="action-priority priority-low">
-          <h3><i class="fa-solid fa-circle-info"></i> Positioning for Low-Priority Opportunity</h3>
+        <div class="action-priority maturity-advanced">
+          <h3><i class="fa-solid fa-shield-halved"></i> Optimization Actions for Advanced Level</h3>
+          <p>Your organization demonstrates strong sovereignty capabilities. Maintain and enhance your position:</p>
           <ul>
-            <li><strong>Alternative Value Props:</strong> Focus on other Red Hat strengths (automation, modernization, hybrid cloud, security)</li>
-            <li><strong>Awareness Building:</strong> Keep DS messaging in background for future consideration</li>
-            <li><strong>Monitor Changes:</strong> Track regulatory changes or M&A activity that could increase DS priority</li>
-            <li><strong>Stakeholder Education:</strong> Provide educational content on emerging DS requirements in their industry</li>
-            <li><strong>Revisit Quarterly:</strong> Reassess DS relevance as customer strategy evolves</li>
+            <li><strong>Maintain Excellence:</strong> Continuously monitor and update sovereignty controls as regulations evolve</li>
+            <li><strong>Share Knowledge:</strong> Document and share best practices internally and with industry peers</li>
+            <li><strong>Lead Innovation:</strong> Contribute to open-source projects and influence sovereignty standards</li>
+            <li><strong>Expand Scope:</strong> Apply sovereignty principles to emerging technologies (AI, edge computing, IoT)</li>
+            <li><strong>Regular Validation:</strong> Conduct periodic audits and re-certifications to maintain compliance</li>
+            <li><strong>Stay Informed:</strong> Monitor geopolitical changes and emerging regulations that may impact your strategy</li>
           </ul>
 
-          <p class="note"><strong>Note:</strong> Even if DS is not primary today, regulations and market dynamics change. Position Red Hat as the sovereign-ready platform for future needs.</p>
+          <p class="note"><strong>Note:</strong> Digital sovereignty is a continuous journey. Regulations and threats evolve, requiring ongoing attention and investment to maintain your advanced posture.</p>
         </div>
       <?php endif; ?>
     </div>
@@ -345,7 +392,7 @@
     <!-- Detailed Domain Insights -->
     <div class="domain-insights">
       <h2><i class="fa-solid fa-list-check"></i> Detailed Domain Insights</h2>
-      <p class="section-intro">Review the specific areas where the customer showed DS requirements:</p>
+      <p class="section-intro">Review your specific responses across all domains:</p>
 
       <?php foreach ($questions as $domainName => $domainData):
           $score = $domainScores[$domainName] ?? 0;
@@ -383,21 +430,20 @@
 
     <!-- Action Buttons -->
     <div class="form-actions no-print">
-      <button onclick="window.print()" class="btn-primary">
-        <i class="fa-solid fa-print"></i> Print Results
-      </button>
+      <a href="generate-pdf.php" class="btn-primary">
+        <i class="fa-solid fa-file-pdf"></i> Download PDF
+      </a>
       <a href="index.php" class="btn-secondary">
         <i class="fa-solid fa-rotate-left"></i> New Assessment
       </a>
-      <a href="../index.php?profile=DigitalSovereignty" class="btn-success">
-        <i class="fa-solid fa-arrow-right"></i> Run Full Viewfinder Assessment
+      <a href="../quiz/" class="btn-success">
+        <i class="fa-solid fa-graduation-cap"></i> Take the Quiz
       </a>
     </div>
 
     <!-- Footer -->
     <div class="results-footer">
-      <p><small>Generated by Viewfinder Digital Sovereignty Sales Qualifier on <?php echo $assessmentDate; ?></small></p>
-      <p><small>For technical assessments and detailed capability mapping, use the full <a href="../index.php?profile=DigitalSovereignty">Viewfinder Assessment Tool</a></small></p>
+      <p><small>Generated by Viewfinder Digital Sovereignty Readiness Assessment on <?php echo $assessmentDate; ?></small></p>
     </div>
   </div>
 </body>

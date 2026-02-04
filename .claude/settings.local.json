@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(composer require:*)",
+      "Bash(php:*)",
+      "Bash(curl:*)",
+      "Bash(test:*)",
+      "Bash(chmod:*)",
+      "Bash(composer update:*)",
+      "Bash(oc logs:*)",
+      "Bash(cat:*)",
+      "Bash(grep:*)",
+      "Bash(journalctl:*)",
+      "Bash(composer show:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(sudo chgrp:*)",
+      "Bash(sudo chmod:*)",
+      "Bash(sudo chown:*)",
+      "Bash(python3:*)",
+      "Bash(for file in controls-AI.json controls-NIST.json controls-OpenShift.json controls-RHEL.json controls-Template.json)",
+      "Bash(do)",
+      "Bash(done)",
+      "Bash(for file in controls*.json)",
+      "Bash(for file in js/profile-*.js)",
+      "Bash(find:*)",
+      "Bash(git -C /var/www/html/viewfinder-redhat log --oneline --all)",
+      "Bash(git -C /var/www/html/viewfinder-redhat status)",
+      "Bash(xargs ls:*)",
+      "Bash(rsync:*)",
+      "Bash(chown:*)"
+    ],
+    "deny": []
+  }
+}

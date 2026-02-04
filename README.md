@@ -32,12 +32,11 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 
 ### Landing Page Dashboard ✨ NEW
 - **Unified Entry Point**: Clean, professional landing page at root URL
-- **Card-Based Navigation**: Five main sections with intuitive card design
-  - **Full Maturity Assessments**: Dynamically generated buttons for all enabled profiles
-  - **DS Sales Qualifier**: Quick access to sales qualification tool
-  - **Operation Sovereign Shield**: Digital Sovereignty Escape Room for executives
+- **Card-Based Navigation**: Four main sections with intuitive card design
+  - **Digital Sovereignty Readiness Assessment**: Quick organizational self-assessment
   - **Digital Sovereignty Quiz**: Interactive knowledge assessment with certificates
-  - **Profile Management**: Administrative access
+  - **Full Maturity Assessments**: Dynamically generated buttons for all enabled profiles
+  - **Operation Sovereign Shield**: Digital Sovereignty Escape Room for executives
 - **Dynamic Profile Discovery**: Automatically displays new profiles when added via Profile Admin
 - **Automatic Updates**: Add/remove profiles and landing page updates automatically
 - **Responsive Design**: Mobile-friendly card grid layout
@@ -68,8 +67,8 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 - **Engaging Presentation**: Professional page design with challenge topics, benefits, and timeline
 - **Home Navigation**: Easy return to main landing page
 
-### Digital Sovereignty Sales Qualifier ✨ NEW
-- **Quick Sales Qualification**: Lightweight 10-15 minute assessment for sales teams
+### Digital Sovereignty Readiness Assessment ✨ NEW
+- **Quick Organizational Assessment**: Lightweight 10-15 minute self-assessment for evaluating DS maturity
 - **Paginated Navigation**: Section-by-section wizard with Next/Previous buttons and keyboard shortcuts
 - **21 Key Questions**: 2-3 critical questions per domain (Data, Technical, Operational, Assurance, Open Source, Executive, Managed Services)
 - **Answer Validation**: Required field validation - must answer all questions before proceeding to next section
@@ -78,15 +77,14 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
   - Regulatory frameworks (GDPR, NIS2, SecNumCloud, etc.)
   - Technical concepts (BYOK, vendor lock-in, etc.)
   - Real-world examples and use cases
-- **Opportunity Scoring**: 0-21 point scale with High/Medium/Low priority classification (lower scores = higher opportunity)
+- **Maturity Scoring**: 0-21 point scale with Foundation/Developing/Strategic/Advanced levels (higher scores = better maturity)
 - **Visual Score Display**: Circular progress chart showing percentage and points
-  - Color-coded by priority (green=high opportunity, yellow=medium, red=low)
+  - Color-coded by maturity (red=foundation, orange=developing, yellow=strategic, green=advanced)
   - Animated ring visualization
-- **Gap-Based Prioritization**: Identifies customers lacking DS capabilities as prime opportunities
-- **Sales-Friendly Results**: Actionable recommendations and next steps
-- **Domain Analysis**: Gap analysis showing opportunity level across all DS domains
-- **Automatic Recommendations**: Tailored product positioning and sales actions based on score
-- **Print & Share**: Print-optimized results for customer conversations
+- **Maturity-Based Results**: Actionable recommendations and next steps based on readiness level
+- **Domain Analysis**: Maturity analysis showing readiness level across all DS domains
+- **Automatic Recommendations**: Tailored improvement actions based on maturity score
+- **PDF Export**: Professional PDF report generation via Dompdf
 - **Auto-Save Progress**: Automatically saves form progress and current section in browser
 - **Keyboard Navigation**: Arrow keys to navigate between sections, Ctrl+S to save
 - **Full Assessment Link**: Easy transition to complete Viewfinder DS assessment
@@ -230,10 +228,11 @@ Once running, open your browser and navigate to:
 - **Container**: [http://localhost:8080](http://localhost:8080)
 - **Direct Installation**: [http://your-server/](http://your-server/)
 
-You'll see the **Landing Page Dashboard** with three main sections:
-1. **Full Maturity Assessments** - Click any profile to start a comprehensive assessment
-2. **DS Sales Qualifier** - Quick 10-15 minute sales qualification tool
-3. **Profile Management** - Configure and manage assessment profiles
+You'll see the **Landing Page Dashboard** with four main sections:
+1. **Digital Sovereignty Readiness Assessment** - Quick 10-15 minute organizational self-assessment
+2. **Digital Sovereignty Quiz** - Interactive knowledge assessment with certificates
+3. **Full Maturity Assessments** - Click any profile to start a comprehensive assessment
+4. **Operation Sovereign Shield** - Digital Sovereignty Escape Room for executives
 
 ## Architecture
 
@@ -294,17 +293,25 @@ You'll see the **Landing Page Dashboard** with three main sections:
 
 1. **Start from the Landing Page**:
    - Visit the root URL to access the main dashboard
-   - Choose from three main options
+   - Choose from four main sections
 
-2. **Select Full Maturity Assessment**:
+2. **Digital Sovereignty Readiness Assessment**:
+   - Click "Start Assessment" for a quick 10-15 minute organizational self-assessment
+   - Evaluate your DS maturity across 7 key domains
+   - Download professional PDF report
+
+3. **Digital Sovereignty Quiz**:
+   - Test your knowledge with interactive True/False questions
+   - Earn certificates and compete on the leaderboard
+
+4. **Full Maturity Assessments**:
    - Click any enabled profile button (Security, Digital Sovereignty, AI, etc.)
+   - Comprehensive technical assessments with detailed recommendations
    - Dynamically updated as new profiles are added
 
-3. **Quick Sales Qualification**:
-   - Click "Start Sales Qualifier" for the lightweight DS assessment tool
-
-4. **Profile Management**:
-   - Click "Manage Profiles" to configure assessments (admin)
+5. **Operation Sovereign Shield**:
+   - Immersive Digital Sovereignty Escape Room for executives
+   - Team-based strategic decision-making challenge
 
 ### Conducting an Assessment
 
@@ -350,62 +357,72 @@ You'll see the **Landing Page Dashboard** with three main sections:
 - **Compliance Frameworks**: Framework-specific guidance (if frameworks selected)
 - **Industry Specifics**: Line-of-business recommendations (if LOB selected)
 
-### Using the Digital Sovereignty Sales Qualifier
+### Using the Digital Sovereignty Readiness Assessment
 
-The DS Sales Qualifier is a lightweight tool designed for sales teams to quickly identify Digital Sovereignty opportunities. Access it via the **DS Sales Qualifier** button in the main navigation.
+The DS Readiness Assessment is a lightweight tool designed for organizations to quickly evaluate their Digital Sovereignty maturity. Access it via the **DS Readiness Assessment** button in the main navigation.
 
 #### Quick Start
 1. **Answer Domain Questions**:
    - Navigate through 7 DS domains using Next/Previous buttons
    - Review 2-3 yes/no questions per domain (21 questions total)
-   - Check boxes for any capabilities the customer currently has or requires
+   - Answer based on your organization's current capabilities
    - Track your progress with the live score counter and section indicator
    - Form auto-saves to browser storage (including your current section)
    - Use keyboard arrow keys for quick navigation
 
 2. **Submit & Review Results**:
-   - Click "Generate Qualification Report" on the final section
-   - Review opportunity priority (High/Medium/Low)
+   - Click "Complete Assessment" on the final section
+   - Review maturity level (Foundation/Developing/Strategic/Advanced)
    - Examine domain-by-domain breakdown
    - Follow recommended next steps
+   - Download PDF report for sharing
 
-#### Understanding DS Qualifier Results
+#### Understanding DS Readiness Results
 
-**Priority Levels (Inverted Scoring):**
+**Maturity Levels (Normal Scoring):**
 
-*Note: Lower scores indicate HIGHER sales opportunity because the customer lacks DS capabilities and needs Red Hat solutions.*
+*Note: Higher scores indicate better Digital Sovereignty maturity and readiness.*
 
-- **High Priority (0-7 points)**: Strong DS opportunity - Customer has significant gaps
-  - Engage DS specialists immediately
-  - Position OpenShift, RHEL sovereign solutions
-  - Schedule technical deep-dive
-  - Discuss compliance frameworks (GDPR, NIS2, etc.)
-  - Excellent opportunity to provide value across multiple domains
+- **Foundation (0-5 points)**: Early-stage DS maturity - Building foundational capabilities
+  - Establish basic data residency controls
+  - Begin documenting sovereignty requirements
+  - Assess current vendor dependencies
+  - Review compliance obligations (GDPR, NIS2, etc.)
+  - Prioritize quick wins in critical domains
 
-- **Medium Priority (8-14 points)**: Moderate DS opportunity - Customer has some capabilities
-  - Conduct full Viewfinder assessment
-  - Schedule discovery call on data residency
-  - Share DS resources and whitepapers
-  - Validate budget and timeline
-  - Good opportunity to strengthen their sovereignty posture
+- **Developing (6-10 points)**: Growing DS maturity - Expanding capabilities
+  - Strengthen foundational controls in weak domains
+  - Implement technical sovereignty measures
+  - Enhance operational independence
+  - Formalize governance processes
+  - Build internal expertise
 
-- **Low Priority (15-21 points)**: Limited DS opportunity - Customer already compliant
-  - Customer already has strong DS capabilities
-  - Limited opportunity for new DS solutions
-  - Consider maintenance, upgrades, or other Red Hat value propositions
-  - Monitor for future expansion opportunities
+- **Strategic (11-15 points)**: Mature DS posture - Comprehensive coverage
+  - Optimize existing controls for efficiency
+  - Address remaining capability gaps
+  - Implement advanced security measures
+  - Strengthen executive oversight
+  - Plan for continuous improvement
+
+- **Advanced (16-21 points)**: Leading DS maturity - Exemplary readiness
+  - Maintain and refine comprehensive controls
+  - Lead industry best practices
+  - Continuous monitoring and improvement
+  - Share expertise with peers
+  - Stay ahead of emerging regulations
 
 **Results Include:**
-- **Score Card**: Visual priority indicator with total score
-- **Domain Breakdown**: Gap analysis and opportunity level across 7 domains (Data, Technical, Operational, Assurance, Open Source, Executive, Managed Services)
-- **Sales Actions**: Recommended next steps based on priority level
-- **Domain Insights**: Detailed view of identified gaps and opportunities
-- **Printable Report**: Print-optimized format for customer meetings
+- **Score Card**: Visual maturity indicator with total score
+- **Domain Breakdown**: Maturity analysis across 7 domains (Data, Technical, Operational, Assurance, Open Source, Executive, Managed Services)
+- **Improvement Actions**: Recommended next steps based on maturity level
+- **Domain Insights**: Detailed view of strengths and improvement areas
+- **PDF Report**: Professional downloadable report for stakeholders
+- **Research Questions**: Areas flagged as "Don't Know" for further investigation
 
 **Next Steps:**
-- **Print Results**: Use print button for customer conversations
-- **New Assessment**: Start another qualification
-- **Full Assessment**: Run complete Viewfinder DS assessment for technical details
+- **Download PDF**: Generate professional report for sharing with stakeholders
+- **New Assessment**: Start another assessment
+- **Full Assessment**: Run complete Viewfinder DS assessment for comprehensive analysis
 
 ### Managing Profiles
 
@@ -559,10 +576,11 @@ viewfinder/
 ├── profile-deleter-handler.php        # AJAX handler for deletion
 ├── clear-cache.php                    # Opcode cache clearing utility
 │
-├── ds-qualifier/                      # ✨ Digital Sovereignty Sales Qualifier
-│   ├── index.php                      # Qualification questionnaire interface
-│   ├── results.php                    # Sales-friendly results page
+├── ds-qualifier/                      # ✨ Digital Sovereignty Readiness Assessment
+│   ├── index.php                      # Assessment questionnaire interface
+│   ├── results.php                    # Maturity results page
 │   ├── config.php                     # Questions configuration
+│   ├── generate-pdf.php               # PDF report generation (Dompdf)
 │   ├── css/
 │   │   └── ds-qualifier.css           # Tool-specific styling
 │   └── js/
@@ -832,6 +850,20 @@ Extend `includes/ProfileExporter.php` with new export methods
 - Update UI to include new framework option
 
 ## Version History
+
+### Version 2.7.0 (February 2026)
+- ✨ **NEW**: Digital Sovereignty Readiness Assessment replaces Sales Qualifier
+- ✨ **NEW**: PDF export functionality via Dompdf for assessment reports
+- ✨ **NEW**: Maturity-based scoring (Foundation/Developing/Strategic/Advanced)
+- ✨ **NEW**: Organization-focused questions ("Does your organization...")
+- ✨ **NEW**: Home button navigation on Full Maturity Assessments page
+- 🔧 **IMPROVED**: Landing page card order prioritizes DS tools
+- 🔧 **IMPROVED**: Removed Profile Management card from landing page (available in header)
+- 🔧 **IMPROVED**: Updated icon from gauge to clipboard-check
+- 🔧 **IMPROVED**: Normal scoring orientation (higher score = better maturity)
+- 🔧 **IMPROVED**: Color scheme matches maturity levels (Foundation=red, Advanced=green)
+- 📦 **DEPENDENCY**: Added dompdf/dompdf for PDF generation
+- 📖 **DOCS**: Updated README to reflect readiness assessment vs sales qualifier
 
 ### Version 2.6.0 (January 2026)
 - ✨ **NEW**: Digital Sovereignty Quiz - Interactive knowledge assessment tool
