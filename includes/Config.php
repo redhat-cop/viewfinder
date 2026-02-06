@@ -29,11 +29,6 @@ class Config {
             'name' => 'AI',
             'display_name' => 'AI Readiness Assessment',
             'enabled' => false // Work in Progress
-        ],
-        'OpenShift' => [
-            'name' => 'OpenShift',
-            'display_name' => 'OpenShift',
-            'enabled' => false
         ],];
 
     /**
