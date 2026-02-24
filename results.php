@@ -25,6 +25,11 @@
     color: #ccc !important;
   }
 
+  /* Header Top Padding */
+  .pf-c-page__header {
+    padding-top: 1.5rem;
+  }
+
   /* Header Button Spacing */
   .pf-c-page__header-tools button {
     margin-right: 1rem;
@@ -61,13 +66,13 @@
 <body>
   <header class="pf-c-page__header">
                 <div class="pf-c-page__header-brand">
-                  <a class="pf-c-page__header-brand-link" href="index.php">
-                  <img class="pf-c-brand" src="images/viewfinder-logo.png" alt="Viewfinder logo" />
-                  </a>
+                  <div class="pf-c-page__header-brand-toggle">
+                  </div>
                 </div>
                 <div class="pf-c-page__header-tools">
                   <div class="widget">
                     <a href="index.php"><button><i class="fa fa-home"></i> Home</button></a>
+                    <a href="export-results.php?<?php echo htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES, 'UTF-8'); ?>"><button><i class="fa fa-download"></i> Export Results</button></a>
                   </div>
                 </div>
 </header>
@@ -78,6 +83,7 @@ require_once __DIR__ . '/includes/Security.php';
 require_once __DIR__ . '/includes/MaturityRating.php';
 require_once __DIR__ . '/includes/Logger.php';
 require_once __DIR__ . '/includes/Config.php';
+require_once __DIR__ . '/includes/Exceptions/ResultsException.php';
 
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Encoding\Encoding;
@@ -89,10 +95,54 @@ use Endroid\QrCode\Writer\PngWriter;
 ErrorHandler::register();
 
 try {
+    // Start session for import handling
+    session_start();
+
     Logger::info('Results page loaded', ['page' => 'results.php']);
 
-    // Parse and validate input data
-    parse_str($_SERVER["QUERY_STRING"] ?? '', $data);
+    // Check if this is an imported result
+    if (isset($_GET['imported']) && isset($_SESSION['imported_results'])) {
+        $importedData = $_SESSION['imported_results'];
+
+        // Validate import type
+        if ($importedData['viewfinder_export']['type'] !== 'security_assessment') {
+            throw ResultsException::wrongType(
+                'security_assessment',
+                $importedData['viewfinder_export']['type']
+            );
+        }
+
+        // Extract assessment data and flatten structure
+        $assessment = $importedData['assessment'];
+
+        // Start with base data (profile, lob)
+        $data = [
+            'profile' => $assessment['profile'],
+            'lob' => $assessment['lob'] ?? ''
+        ];
+
+        // Handle frameworks - set 'framework' param if frameworks exist
+        if (isset($assessment['frameworks']) && !empty($assessment['frameworks'])) {
+            // Set framework parameter for tab display (expects singular)
+            $data['framework'] = $assessment['frameworks'];
+        }
+
+        // Flatten controls to root level (expected by results.php)
+        if (isset($assessment['controls'])) {
+            foreach ($assessment['controls'] as $controlId => $controlValue) {
+                // Cast to integer to ensure proper type
+                $data[$controlId] = (int)$controlValue;
+            }
+        }
+
+        // Clear session
+        unset($_SESSION['imported_results']);
+
+        Logger::info('Imported Security results displayed', ['profile' => $data['profile']]);
+    } else {
+        // Normal flow - parse query string
+        parse_str($_SERVER["QUERY_STRING"] ?? '', $data);
+    }
 
     // Validate profile parameter
     $profile = Security::validateProfile($data['profile'] ?? '');

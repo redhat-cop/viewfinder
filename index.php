@@ -27,9 +27,24 @@
     color: #ccc !important;
   }
 
+  /* Header Top Padding */
+  .pf-c-page__header {
+    padding-top: 1.5rem;
+  }
+
+  /* Left padding for profile navigation buttons */
+  .pf-c-page__header .widget {
+    padding-left: 1.5rem;
+  }
+
   /* Header Button Spacing */
   .pf-c-page__header-tools button {
     margin-right: 1rem;
+  }
+
+  /* Reduce gap between tabcontent and horizontal checkboxes */
+  .horizontal-checkboxes {
+    margin-top: 1rem;
   }
 
   /* Ensure consistent button height and icon display */
@@ -87,9 +102,6 @@
                 <div class="pf-c-page__header-brand">
                   <div class="pf-c-page__header-brand-toggle">
                   </div>
-                  <a class="pf-c-page__header-brand-link" href="index.php">
-                  <img class="pf-c-brand" src="images/viewfinder-logo.png" alt="Viewfinder logo" />
-                  </a>
                 </div>
                 <?php
                 require_once __DIR__ . '/vendor/autoload.php';
@@ -153,6 +165,7 @@
               <div class="widget">
                 <a href="index.php"><button><i class="fa-solid fa-home"></i> Home</button></a>
                 <a href="ds-qualifier/"><button>DS Readiness Assessment</button></a>
+                <a href="import-results.php"><button><i class="fa fa-upload"></i> Import Results</button></a>
                 <a href="profile-admin.php"><button>Manage Profiles</button></a>
               </div>
             </div>
@@ -558,7 +571,7 @@ document.getElementById("defaultOpen").click();
 <?php endif; ?>
 
 <footer class="disclaimer-footer">
-  <p><strong>Red Hat Disclaimer:</strong> These applications are provided for informational purposes only. The information is provided "as is" with no guarantee or warranty of accuracy, completeness, or fitness for a particular purpose.</p>
+  <p><strong>Red Hat Disclaimer:</strong> This Cloud Sovereignty Framework Self-Assessment Tool is provided by Red Hat to help organizations review their sovereign posture. It is not endorsed by any regulatory authority, and its findings or recommendations do not constitute legal advice. Red Hat bears no legal responsibility or liability for the results or its use.</p>
 </footer>
 
 </body>
