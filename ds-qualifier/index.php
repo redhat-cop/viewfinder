@@ -26,6 +26,9 @@
       background-color: #151515 !important;
       color: #ccc !important;
     }
+    .pf-c-page__header {
+      padding-top: 1.5rem;
+    }
     .pf-c-page__header-tools button {
       margin-right: 1rem;
     }
@@ -36,13 +39,11 @@
   <header class="pf-c-page__header">
     <div class="pf-c-page__header-brand">
       <div class="pf-c-page__header-brand-toggle"></div>
-      <a class="pf-c-page__header-brand-link" href="../index.php">
-        <img class="pf-c-brand" src="../images/viewfinder-logo.png" alt="Viewfinder logo" />
-      </a>
     </div>
 
     <div class="widget">
       <a href="../index.php"><button><i class="fa-solid fa-home"></i> Home</button></a>
+      <a href="../import-results.php"><button style="margin-left: 1rem;"><i class="fa-solid fa-upload"></i> Import Results</button></a>
       <a href="../quiz/"><button style="margin-left: 1rem;">Take Quiz</button></a>
     </div>
   </header>

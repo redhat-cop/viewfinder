@@ -25,6 +25,9 @@
       background-color: #151515 !important;
       color: #ccc !important;
     }
+    .pf-c-page__header {
+      padding-top: 1.5rem;
+    }
     .pf-c-page__header-tools button {
       margin-right: 1rem;
     }
@@ -39,22 +42,46 @@
   <header class="pf-c-page__header no-print">
     <div class="pf-c-page__header-brand">
       <div class="pf-c-page__header-brand-toggle"></div>
-      <a class="pf-c-page__header-brand-link" href="../index.php">
-        <img class="pf-c-brand" src="../images/viewfinder-logo.png" alt="Viewfinder logo" />
-      </a>
     </div>
 
     <div class="widget">
       <a href="../index.php"><button><i class="fa-solid fa-home"></i> Home</button></a>
       <a href="index.php"><button style="margin-left: 1rem;">New Assessment</button></a>
+      <a href="../import-results.php"><button style="margin-left: 1rem;"><i class="fa-solid fa-upload"></i> Import Results</button></a>
+      <a href="export-results.php"><button style="margin-left: 1rem;"><i class="fa-solid fa-download"></i> Export Results</button></a>
       <a href="../quiz/"><button style="margin-left: 1rem;">Take Quiz</button></a>
     </div>
   </header>
 
   <div class="container">
     <?php
+    require_once __DIR__ . '/../includes/Exceptions/ResultsException.php';
+    require_once __DIR__ . '/../includes/Logger.php';
+
     // Start session to store results for PDF generation
     session_start();
+
+    // Check if this is an imported result
+    if (isset($_GET['imported']) && isset($_SESSION['imported_results'])) {
+        $importedData = $_SESSION['imported_results'];
+
+        // Validate import type
+        if ($importedData['viewfinder_export']['type'] !== 'ds_qualifier') {
+            throw ResultsException::wrongType(
+                'ds_qualifier',
+                $importedData['viewfinder_export']['type']
+            );
+        }
+
+        // Extract responses
+        $_POST = $importedData['assessment']['responses'];
+        $_SESSION['assessment_data'] = $_POST;
+
+        // Clear import session
+        unset($_SESSION['imported_results']);
+
+        Logger::info('Imported DS-Qualifier results displayed');
+    }
 
     // Store POST data in session for PDF generator
     $_SESSION['assessment_data'] = $_POST;
