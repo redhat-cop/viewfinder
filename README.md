@@ -21,6 +21,7 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 - **Real-time Scoring**: Dynamic calculation of maturity scores as assessments are completed
 - **Framework Mapping**: Map assessments to NIST 800-53, PCI DSS, ISO 27001, FedRAMP, NIS2, DORA, DISA STIG
 - **Industry-Specific Guidance**: Tailored recommendations for Finance, Government, Healthcare, Manufacturing, Telecommunications
+- **Export/Import Results**: ✨ Save and restore completed assessment results for record-keeping, sharing, and comparison
 
 ### Visualization & Reporting
 - **Interactive Radar Charts**: D3.js-powered visualizations of maturity across domains
@@ -123,7 +124,7 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 - **Delete Profiles**: Remove custom profiles with automatic cleanup
 - **Protected Profiles**: Core profiles safeguarded from modification/deletion
 
-### Export/Import Functionality ✨ NEW
+### Profile Export/Import Functionality ✨ NEW
 - **Export Profiles**: Download any profile as JSON for backup or sharing
   - Works with both protected and custom profiles
   - Standard JSON format (`controls-{ProfileName}.json`)
@@ -145,6 +146,50 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
   - Tier and points validation
   - File size and MIME type checking (5MB limit)
   - Detailed error messages for troubleshooting
+
+### Assessment Results Export/Import ✨ NEW
+- **Export Assessment Results**: Save completed assessment results for record-keeping and sharing
+  - **Security Assessments**: Export from results page after completing any Security assessment
+    - Filename format: `viewfinder-{Profile}-{YYYYMMDD}-{HHMM}.json`
+    - Example: `viewfinder-Security-20260224-1430.json`
+    - Includes all assessment data (profile, LOB, frameworks, control responses)
+    - Preserves calculated scores and maturity ratings
+  - **DS Readiness Assessment**: Export from readiness assessment results page
+    - Filename format: `viewfinder-readiness-assessment-{YYYYMMDD}-{HHMM}.json`
+    - Example: `viewfinder-readiness-assessment-20260224-1430.json`
+    - Includes question responses and domain scores
+    - Preserves maturity level and recommendations
+  - One-click download with timestamped filenames
+  - JSON format compatible with any Viewfinder installation
+  - Works for ephemeral results (URL parameters, session data)
+
+- **Import Assessment Results**: Restore previously exported results for viewing
+  - Accessible from main navigation and assessment pages
+  - Drag-and-drop file upload interface
+  - Automatic detection of assessment type (Security vs DS Readiness)
+  - Automatic routing to correct results page
+  - Session-based secure data transfer
+  - All visualizations and tabs work correctly (Radar Chart, Recommendations, etc.)
+  - Preserves all original assessment details and calculations
+
+- **Results Validation**: Comprehensive import validation
+  - File format and structure validation
+  - Assessment type verification
+  - Profile and LOB validation against available options
+  - Control format and value validation
+  - Question ID and response validation
+  - Version compatibility checking
+  - File size limit: 5MB
+  - MIME type verification (not just extension)
+  - Clear error messages for troubleshooting
+
+- **Use Cases**:
+  - **Record Keeping**: Export results for audit trails and compliance documentation
+  - **Sharing**: Share assessment results with stakeholders or consultants
+  - **Comparison**: Compare assessments over time by importing historical results
+  - **Backup**: Save results from URL-based assessments before losing the link
+  - **Migration**: Transfer results between Viewfinder installations
+  - **Offline Analysis**: Download results for offline review and analysis
 
 ### Security & Reliability
 - **Input Validation**: Comprehensive sanitization of all user inputs
@@ -234,6 +279,10 @@ You'll see the **Landing Page Dashboard** with four main sections:
 3. **Full Maturity Assessments** - Click any profile to start a comprehensive assessment
 4. **Operation Sovereign Shield** - Digital Sovereignty Escape Room for executives
 
+**Additional Features:**
+- **Import Results** button in header - Upload previously exported assessment results
+- **Manage Profiles** button in header - Access profile administration dashboard
+
 ## Architecture
 
 ### Technology Stack
@@ -268,15 +317,22 @@ You'll see the **Landing Page Dashboard** with four main sections:
 - **ProfileDeleter.php**: Profile deletion with cleanup
 - **ProfileExporter.php**: ✨ Profile export functionality
 - **ProfileImporter.php**: ✨ Profile import with validation
+- **ResultsExporter.php**: ✨ Assessment results export functionality
+- **ResultsImporter.php**: ✨ Assessment results import with validation
 - **FileUpdater.php**: Safe file modification utilities
 - **MaturityRating.php**: Maturity score calculations
 - **Exceptions/**: Custom exception hierarchy
+  - **ProfileException.php**: Profile-specific errors
+  - **ResultsException.php**: ✨ Results export/import errors
+  - **ViewfinderException.php**: Base exception class
 
 #### Frontend Components
 - **profile-admin.php**: Administration dashboard UI
 - **profile-creator.php**: Profile creation wizard
 - **profile-editor.php**: Profile editing interface
 - **profile-deleter.php**: Profile deletion interface
+- **import-results.php**: ✨ Assessment results import interface
+- **export-results.php**: ✨ Security assessment results export handler
 - **index.php**: Main assessment interface
 - **results.php**: Results dashboard with visualizations
 
@@ -423,6 +479,53 @@ The DS Readiness Assessment is a lightweight tool designed for organizations to 
 - **Download PDF**: Generate professional report for sharing with stakeholders
 - **New Assessment**: Start another assessment
 - **Full Assessment**: Run complete Viewfinder DS assessment for comprehensive analysis
+
+### Exporting and Importing Assessment Results
+
+Assessment results can be exported and imported to preserve completed assessments, share with stakeholders, or transfer between Viewfinder installations.
+
+#### Export Security Assessment Results
+1. Complete a Security assessment (any profile)
+2. View the results page
+3. Click the **Export Results** button in the header
+4. File downloads automatically with format: `viewfinder-{Profile}-{YYYYMMDD}-{HHMM}.json`
+5. Save the file to your desired location
+
+#### Export DS Readiness Assessment Results
+1. Complete a Digital Sovereignty Readiness Assessment
+2. View the results page
+3. Click the **Export Results** button in the header
+4. File downloads automatically with format: `viewfinder-readiness-assessment-{YYYYMMDD}-{HHMM}.json`
+5. Save the file to your desired location
+
+#### Import Assessment Results
+1. Click **Import Results** button from:
+   - Main navigation header (index.php)
+   - DS Readiness Assessment pages
+2. Upload your exported JSON file:
+   - Click **Select File** or drag and drop
+   - File validated automatically
+   - Maximum size: 5MB
+3. Click **Import Results**
+4. System automatically:
+   - Detects assessment type (Security vs DS Readiness)
+   - Validates data structure and values
+   - Redirects to appropriate results page
+   - Displays all original data and visualizations
+
+#### What Gets Exported/Imported
+
+**Security Assessments:**
+- Profile name
+- Line of Business selection
+- Compliance frameworks selected
+- All control responses (only non-zero values)
+- Calculated scores and ratings
+
+**DS Readiness Assessments:**
+- All question responses (Yes/No/Don't Know)
+- Domain scores
+- Total score and maturity level
 
 ### Managing Profiles
 
@@ -581,6 +684,7 @@ viewfinder/
 │   ├── results.php                    # Maturity results page
 │   ├── config.php                     # Questions configuration
 │   ├── generate-pdf.php               # PDF report generation (Dompdf)
+│   ├── export-results.php             # ✨ DS assessment results export handler
 │   ├── css/
 │   │   └── ds-qualifier.css           # Tool-specific styling
 │   └── js/
@@ -596,10 +700,13 @@ viewfinder/
 │   ├── ProfileDeleter.php             # Profile deletion logic
 │   ├── ProfileExporter.php            # ✨ Profile export functionality
 │   ├── ProfileImporter.php            # ✨ Profile import functionality
+│   ├── ResultsExporter.php            # ✨ Assessment results export functionality
+│   ├── ResultsImporter.php            # ✨ Assessment results import functionality
 │   ├── FileUpdater.php                # Safe file modification utilities
 │   ├── MaturityRating.php             # Rating calculations
 │   └── Exceptions/                    # Custom exceptions
 │       ├── ProfileException.php
+│       ├── ResultsException.php       # ✨ Results export/import errors
 │       ├── ViewfinderException.php
 │       └── ...
 │
@@ -850,6 +957,27 @@ Extend `includes/ProfileExporter.php` with new export methods
 - Update UI to include new framework option
 
 ## Version History
+
+### Version 2.8.0 (February 2026)
+- ✨ **NEW**: Assessment Results Export/Import functionality
+- ✨ **NEW**: Export Security assessment results to JSON with timestamped filenames
+- ✨ **NEW**: Export DS Readiness assessment results to JSON
+- ✨ **NEW**: Import assessment results interface with drag-and-drop support
+- ✨ **NEW**: Automatic assessment type detection and routing
+- ✨ **NEW**: ResultsExporter class for generating JSON exports
+- ✨ **NEW**: ResultsImporter class with comprehensive validation
+- ✨ **NEW**: ResultsException for structured error handling
+- ✨ **NEW**: Session-based secure data transfer for imports
+- 🔧 **IMPROVED**: Filename format: `viewfinder-{Profile}-{YYYYMMDD}-{HHMM}.json` for Security
+- 🔧 **IMPROVED**: Filename format: `viewfinder-readiness-assessment-{YYYYMMDD}-{HHMM}.json` for DS
+- 🔧 **IMPROVED**: Export buttons added to all results pages
+- 🔧 **IMPROVED**: Import buttons added throughout application
+- 🔧 **IMPROVED**: All results tabs work correctly with imported data (Radar, Recommendations, etc.)
+- 🛡️ **SECURITY**: Comprehensive validation of imported data
+- 🛡️ **SECURITY**: MIME type verification and file size limits
+- 🛡️ **SECURITY**: Session data cleared after import
+- 📖 **DOCS**: Updated README with export/import usage guide
+- 📖 **DOCS**: Updated Dockerfile to version 2.8.0
 
 ### Version 2.7.0 (February 2026)
 - ✨ **NEW**: Digital Sovereignty Readiness Assessment replaces Sales Qualifier

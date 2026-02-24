@@ -3,8 +3,8 @@ FROM registry.access.redhat.com/ubi9/php-83:latest
 
 # Metadata
 LABEL maintainer="Chris Jenkins <chrisj@redhat.com>" \
-      version="2.7.0" \
-      description="Viewfinder Maturity Assessment Tool - Production Ready with Landing Page, Profile Management, DS Readiness Assessment with PDF Export, Operation Sovereign Shield Escape Room, Digital Sovereignty Quiz"
+      version="2.8.0" \
+      description="Viewfinder Maturity Assessment Tool - Production Ready with Landing Page, Profile Management, DS Readiness Assessment with PDF Export, Operation Sovereign Shield Escape Room, Digital Sovereignty Quiz, Assessment Results Export/Import"
 
 # Set working directory
 WORKDIR /opt/app-root/src
@@ -39,6 +39,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-di
 # Includes all profile management features: Create, Edit, Delete, Export, Import
 # Includes Digital Sovereignty Readiness Assessment with PDF export (Dompdf)
 # Includes Digital Sovereignty Quiz with certificates and leaderboard
+# Includes Assessment Results Export/Import for preserving and sharing completed assessments
 COPY --chown=1001:0 *.php ./
 COPY --chown=1001:0 includes/ ./includes/
 COPY --chown=1001:0 css/ ./css/
