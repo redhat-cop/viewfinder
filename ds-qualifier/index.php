@@ -43,6 +43,7 @@
 
     <div class="widget">
       <a href="../index.php"><button><i class="fa-solid fa-home"></i> Home</button></a>
+      <a href="../import-results.php"><button style="margin-left: 1rem;"><i class="fa-solid fa-upload"></i> Import Results</button></a>
       <a href="../quiz/"><button style="margin-left: 1rem;">Take Quiz</button></a>
     </div>
   </header>
