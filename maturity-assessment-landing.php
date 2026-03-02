@@ -319,6 +319,7 @@
     <div class="pf-c-page__header-tools">
       <div class="widget">
         <a href="index.php"><button><i class="fa fa-home"></i> Home</button></a>
+        <a href="import-results.php"><button><i class="fa fa-upload"></i> Import Results</button></a>
       </div>
     </div>
   </header>
