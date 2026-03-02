@@ -89,9 +89,12 @@ body {
   background-color: #1f1f1f;
   border-radius: 0 0 8px 8px;
   width: 100%;
+  max-width: 100%;
   margin: 0 auto;
   animation: fadeEffect 0.5s;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* Clear floats in Radar tab */
@@ -207,24 +210,38 @@ tr:hover {
   text-align: center;
 }
 
-/* Maturity Table Row Colors - Override table2.css light theme */
-.foundation {
-  background-color: #9ec7fc !important;
-  color: #070707 !important;
-  border-right: 2px solid #444 !important;
-  font-weight: bold;
-}
-
-.strategic {
-  background-color: #0d60f8 !important;
+/* Maturity Table Row Colors - CMMI 5-Level System */
+.initial {
+  background-color: #e57373 !important;
   color: #ffffff !important;
   border-right: 2px solid #444 !important;
   font-weight: bold;
 }
 
-.advanced {
+.managed {
+  background-color: #ec7a08 !important;
+  color: #ffffff !important;
+  border-right: 2px solid #444 !important;
+  font-weight: bold;
+}
+
+.defined {
+  background-color: #ffc107 !important;
+  color: #000000 !important;
+  border-right: 2px solid #444 !important;
+  font-weight: bold;
+}
+
+.quantitative {
+  background-color: #8bc34a !important;
+  color: #000000 !important;
+  border-right: 2px solid #444 !important;
+  font-weight: bold;
+}
+
+.optimizing {
   background-color: #2aaa04 !important;
-  color: #faf7f7 !important;
+  color: #ffffff !important;
   border-right: 2px solid #444 !important;
   font-weight: bold;
 }
@@ -241,7 +258,7 @@ tr:hover {
 
 /* Table Layouts */
 .bigtable {
-  width: 100%;
+  width: 95%;
   margin: 1rem auto;
   padding: 1rem;
   background-color: #1f1f1f;
@@ -249,68 +266,163 @@ tr:hover {
 }
 
 .bigtableLeft {
+  position: relative !important;
   overflow: hidden;
-  padding: 0;
+  padding: 0 0.25rem 0 0.5rem !important;
   background-color: transparent;
   margin-top: 0;
-  margin-left: 10%;
-  top: auto;
-  max-width: 70%;
+  margin-left: 0;
+  top: auto !important;
+  left: auto !important;
+  width: 50% !important;
+  float: right !important;
+  box-sizing: border-box;
+  max-width: 50% !important;
+}
+
+.bigtableLeft table {
+  margin: 0.5rem 0 0 0;
+  width: 100% !important;
+  max-width: 100% !important;
+  table-layout: fixed !important;
+  box-sizing: border-box;
+}
+
+.bigtableLeft .spacedTable {
+  margin: 0.5rem 0 0 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  table-layout: fixed !important;
+  box-sizing: border-box !important;
+  padding-right: 0 !important;
+  border-spacing: 0 5px !important;
+}
+
+.bigtableLeft .spacedTable tbody td {
+  padding-right: 0.3rem !important;
+  padding-left: 0.3rem !important;
 }
 
 .spacedTable {
-  margin: 0;
+  margin: 0.5rem 0 0 0;
   width: 100%;
   max-width: 100%;
-  table-layout: auto;
+  table-layout: fixed;
+  box-sizing: border-box;
 }
 
-/* Maturity Level Cell Colors - Matching tab-dark.css */
-.cellFoundation,
-.cellPartial {
-  background-color: #9ec7fc !important;
-  color: #070707 !important;
+.spacedTable th,
+.spacedTable td {
+  padding: 0.4rem 0.3rem !important;
+  max-width: none !important;
+}
+
+.spacedTable th:first-child,
+.spacedTable td:first-child {
+  width: 35% !important;
+  max-width: 35% !important;
+  text-align: left;
+  line-height: 1.2;
+  padding: 0.4rem 0.3rem !important;
+  font-size: 0.85rem;
+}
+
+.spacedTable th:last-child,
+.spacedTable td:last-child {
+  width: 65% !important;
+  max-width: 65% !important;
   text-align: center;
-  font-weight: bold;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.3rem !important;
+  overflow: hidden;
+  word-break: break-word;
 }
 
-.cellStrategic,
-.cellRisk-Informed {
-  background-color: #0d60f8 !important;
+/* Maturity Level Cell Colors - CMMI 5-Level System */
+.cellInitial {
+  background-color: #e57373 !important;
   color: #ffffff !important;
   text-align: center;
   font-weight: bold;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
 }
 
-.cellAdvanced {
+.cellManaged {
+  background-color: #ec7a08 !important;
+  color: #ffffff !important;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 4px;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.cellDefined {
+  background-color: #ffc107 !important;
+  color: #000000 !important;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 4px;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.cellQuantitative {
+  background-color: #8bc34a !important;
+  color: #000000 !important;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 4px;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.cellOptimizing {
   background-color: #2aaa04 !important;
-  color: #faf7f7 !important;
+  color: #ffffff !important;
   text-align: center;
   font-weight: bold;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
 }
 
-/* Header cells for maturity levels */
-.cellHeaderFoundation {
-  color: #4291f8 !important;
-  text-align: center;
-  font-weight: bold;
-  background-color: transparent;
-}
-
-.cellHeaderStrategic {
-  color: #0d60f8 !important;
+/* Header cells for maturity levels - CMMI 5-Level System */
+.cellHeaderInitial {
+  color: #e57373 !important;
   text-align: center;
   font-weight: bold;
   background-color: transparent;
 }
 
-.cellHeaderAdvanced {
+.cellHeaderManaged {
+  color: #ec7a08 !important;
+  text-align: center;
+  font-weight: bold;
+  background-color: transparent;
+}
+
+.cellHeaderDefined {
+  color: #ffc107 !important;
+  text-align: center;
+  font-weight: bold;
+  background-color: transparent;
+}
+
+.cellHeaderQuantitative {
+  color: #8bc34a !important;
+  text-align: center;
+  font-weight: bold;
+  background-color: transparent;
+}
+
+.cellHeaderOptimizing {
   color: #2aaa04 !important;
   text-align: center;
   font-weight: bold;
@@ -379,12 +491,23 @@ tr:hover {
 }
 
 /* Radar Chart Container */
+#Radar.tabcontent {
+  overflow: auto;
+}
+
+#Radar.tabcontent::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 .htmlChart {
-  padding: 1.5rem;
+  padding: 0.5rem 0.5rem 0.5rem 0.25rem;
   margin: 0;
   text-align: center;
   width: 50%;
   float: left;
+  box-sizing: border-box;
 }
 
 .radarChart {
@@ -405,7 +528,7 @@ tr:hover {
 
 .radarChart .legend {
   fill: #fff !important;
-  font-size: 13px !important;
+  font-size: 11px !important;
   font-weight: 600;
 }
 
@@ -466,6 +589,24 @@ a:hover {
   color: #fff;
 }
 
+/* LOB Specifics Tab - Dark Mode Overrides */
+.tabcontent .title-text-small {
+  color: #fff !important;
+}
+
+.tabcontent .sovereignty-title {
+  color: #66b3ff !important;
+  border-bottom: 1px solid #666;
+}
+
+.tabcontent .niceList-advice li {
+  color: #ccc;
+}
+
+.tabcontent .niceList-advice p {
+  color: #ccc;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .container {
@@ -497,6 +638,7 @@ a:hover {
     float: none;
     width: 100%;
     margin: 1rem 0;
+    padding: 1rem;
   }
 
   .htmlChart {
@@ -513,4 +655,152 @@ a:hover {
   th, td {
     padding: 0.5rem;
   }
+}
+
+/* ============================================
+   LOB SPECIFICS (Finance, Healthcare, etc.)
+   ============================================ */
+
+/* Constrain LOB content to container */
+#LineOfBusiness {
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* LOB page header */
+#LineOfBusiness .category-large {
+  color: #9ec7fc !important;
+  font-weight: 600 !important;
+  font-size: 1.5rem !important;
+  margin-bottom: 1.5rem;
+}
+
+/* Fix LOB table width to fit in tabcontent */
+#LineOfBusiness .wrapper,
+#LineOfBusiness table {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  margin: 0 !important;
+}
+
+#LineOfBusiness table {
+  table-layout: fixed !important;
+  border-spacing: 5px !important;
+  border-collapse: separate !important;
+}
+
+#LineOfBusiness td {
+  width: 50% !important;
+  max-width: 50% !important;
+  padding: 0.5rem !important;
+  vertical-align: top;
+  background-color: transparent !important;
+  border: none !important;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+#LineOfBusiness th {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+/* Sovereignty boxes - improve contrast */
+.sovereignty-box {
+  border: 2px solid #0d60f8 !important;
+  background: #1a1a1a !important;
+  padding: 1rem !important;
+  margin: 0.5rem 0 !important;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.sovereignty-title {
+  color: #9ec7fc !important;
+  border-bottom: 1px solid #444 !important;
+  padding-bottom: 0.5rem !important;
+  margin-bottom: 0.75rem !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+}
+
+.sovereign-text {
+  color: #ccc !important;
+  font-weight: normal !important;
+  font-size: 0.9rem !important;
+  line-height: 1.5 !important;
+}
+
+.sovereign-text b {
+  color: #fff !important;
+  font-weight: 600 !important;
+}
+
+/* Regular LOB boxes (non-sovereignty) */
+#LineOfBusiness .wrapper {
+  background-color: transparent !important;
+  color: #ccc !important;
+  display: grid;
+  grid-gap: 10px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+#LineOfBusiness .box {
+  background-color: #1a1a1a !important;
+  color: #ccc !important;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 1rem !important;
+  font-size: 1rem !important;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+#LineOfBusiness .box h4 {
+  color: #9ec7fc !important;
+  margin-bottom: 0.75rem;
+}
+
+#LineOfBusiness .box ul {
+  color: #ccc !important;
+  padding-left: 1.5rem;
+}
+
+#LineOfBusiness .box li {
+  color: #ccc !important;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+/* ============================================
+   WEIGHT BADGES (LOB Weighting)
+   ============================================ */
+
+/* Weight badges in domain tables */
+.weight-badge {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  background: #1a1a1a;
+  border: 1px solid #444;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ccc;
+  white-space: nowrap;
+}
+
+.weight-badge.weight-high {
+  background: linear-gradient(135deg, #f0ab00 0%, #c58c00 100%);
+  border-color: #f0ab00;
+  color: #000;
+  box-shadow: 0 2px 4px rgba(240, 171, 0, 0.3);
 }

@@ -204,6 +204,22 @@
       </div>
     </div>
 
+    <!-- EU Cloud Sovereignty Framework Card -->
+    <div class="landing-card">
+      <div class="landing-card-header">
+        <div class="eu-flag">🇪🇺</div>
+        <h2>EU Cloud Sovereignty Assessment</h2>
+      </div>
+      <p class="landing-card-description">
+        Evaluate your organization against the European Commission's Cloud Sovereignty Framework (v1.2.1). 24 questions across 8 SOV objectives with SEAL 0-4 rating levels.
+      </p>
+      <div class="landing-card-buttons">
+        <a href="eu-sovereignty/" class="landing-button" style="background: linear-gradient(135deg, #003399 0%, #0051A5 100%); color: #fff;">
+          <i class="fa-solid fa-certificate"></i> Start EU Assessment
+        </a>
+      </div>
+    </div>
+
     <!-- Digital Sovereignty Quiz Card -->
     <div class="landing-card">
       <div class="landing-card-header">
@@ -227,23 +243,16 @@
         <h2>Full Maturity Assessments</h2>
       </div>
       <p class="landing-card-description">
-        Comprehensive technical assessments to evaluate your organization's maturity across multiple technology domains
+        Comprehensive CMMI-based maturity assessments weighted for your industry's priorities. Choose from Security or Digital Sovereignty assessments.
       </p>
       <div class="landing-card-buttons">
-        <?php
-        $enabledProfiles = Config::getEnabledProfiles();
-        foreach ($enabledProfiles as $profileKey => $profileData) {
-            $profileName = htmlspecialchars($profileKey, ENT_QUOTES, 'UTF-8');
-            $displayName = htmlspecialchars($profileData['display_name'], ENT_QUOTES, 'UTF-8');
-            echo '<a href="index.php?profile=' . $profileName . '" class="landing-button landing-button-primary">';
-            echo '<i class="fa-solid fa-clipboard-check"></i> ' . $displayName . ' Assessment';
-            echo '</a>' . "\n        ";
-        }
-        ?>
+        <a href="maturity-assessment-landing.php" class="landing-button landing-button-primary">
+          <i class="fa-solid fa-rocket"></i> Start Full Assessment
+        </a>
       </div>
     </div>
 
-    <!-- Escape Room Card -->
+    <!-- Escape Room Card - COMMENTED OUT TO SAVE SCREEN SPACE
     <div class="landing-card">
       <div class="landing-card-header">
         <i class="fa-solid fa-shield-halved"></i>
@@ -258,6 +267,7 @@
         </a>
       </div>
     </div>
+    -->
   </div>
 </div>
 </div>
@@ -283,6 +293,8 @@
   border-radius: 8px;
   padding: 1.1rem;
   transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .landing-card:hover {
@@ -323,6 +335,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  margin-top: auto;
 }
 
 .landing-button {
@@ -418,6 +431,14 @@ body {
 .disclaimer-footer strong {
   color: #ccc;
 }
+
+/* EU Flag */
+.eu-flag {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
 </style>
 
 <?php else: ?>
@@ -449,13 +470,19 @@ while( $i < 9) {
   } else {
     $itemSummary = "";
   }
-  $tier = $i . '-tier';
-  $tierClass = "smallText" . $json[$area][$tier];
+  // Removed tier display (Foundation/Strategic/Advanced) - now using CMMI 5-level model
   $points = $i . "-points";
-  print '<li><input type="checkbox" name="' . "control" . $qnum . "-" . $i . "\" id=\"" . "control" . "$qnum" . "-" . $i . '" value="' . $json[$area][$points] . '"><label for="' . "control" . $qnum . "-" . $i . '"><p class="' . $tierClass. '">'  . $json[$area][$tier] . '</p>' . $json[$area][$i] . "$itemSummary &nbsp </label></li>". "\n";
+  print '<li><input type="checkbox" name="' . "control" . $qnum . "-" . $i . "\" id=\"" . "control" . "$qnum" . "-" . $i . '" value="' . $json[$area][$points] . '"><label for="' . "control" . $qnum . "-" . $i . '">' . $json[$area][$i] . "$itemSummary &nbsp </label></li>". "\n";
   $i++;
 }
 print "</ul>";
+
+// Add facilitator notes textarea for this domain
+print '<div style="margin-top: 1.5rem; padding: 1rem; background: #1f1f1f; border-left: 3px solid #0d60f8; border-radius: 4px;">';
+print '<label for="domain_notes_' . $qnum . '" style="display: block; color: #9ec7fc; font-weight: 600; margin-bottom: 0.5rem;">';
+print '</i> Facilitator Notes for ' . $title . ':</label>';
+print '<textarea name="domain_notes_' . $qnum . '" id="domain_notes_' . $qnum . '" rows="4" style="width: 100%; padding: 0.5rem; background: #2a2a2a; border: 1px solid #444; border-radius: 4px; color: #ccc; font-family: inherit; resize: vertical;" placeholder="Add workshop notes, observations, or context for this domain..."></textarea>';
+print '</div>';
 }
 ?>
 <div class="tab">
@@ -481,27 +508,21 @@ $first++;
 </div>
 <form action="results.php">
 
-<div class="lob">
-<h3 class="lobFont">Line of Business</h3>
-<input type="radio" name="lob" value="Finance">
-<span class="lobItem">Finance</span>
-<br>
-<input type="radio" name="lob" value="Government">
-<span class="lobItem">Government</span>
-<br>
-<input type="radio" name="lob" value="Manufacturing">
-<span class="lobItem">Manufacturing</span>
-<br>
-<input type="radio" name="lob" value="Telecommunications">
-<span class="lobItem">Telecommunications</span>
-<br>
-<input type="radio" name="lob" value="Healthcare">
-<span class="lobItem">Healthcare</span>
-<br>
-<input type="radio" name="lob" value="Other">
-<span class="lobItem">Other</span>
+<?php
+// Get LOB from URL parameter and pass it as hidden input
+$selectedLobFromUrl = isset($_GET['lob']) ? $_GET['lob'] : 'General';
 
-</div>
+// Map "Balanced" to "General" for compatibility
+if ($selectedLobFromUrl === 'Balanced') {
+    $selectedLob = 'General';
+} else {
+    $selectedLob = Security::validateLOB($selectedLobFromUrl);
+    if ($selectedLob === null) {
+        $selectedLob = 'General';
+    }
+}
+?>
+<input type="hidden" name="lob" value="<?php echo Security::escape($selectedLob); ?>">
 
 <div class="container">
   
@@ -517,7 +538,6 @@ print '</div>';
   </fieldset>
   <br>
   <input type="hidden" name="profile" value="<?php echo Security::escape($profile);?>">
-  <div id="centerDivLine">
   <?php
 ## Compliance Frameworks
 try {
@@ -528,14 +548,16 @@ try {
     throw $e;
 }
 
-## Add checklist for compliance frameworks
-print '<div class="form-group horizontal-checkboxes">
-<p class="smallTextFramework">To which of the following compliance frameworks do you have to adhere?</p>';
-foreach ($jsonFrameworks as $framework) {
-  print "<input id='" . $framework['name'] . "' name='framework[]' value='" . $framework['name'] . "' type='checkbox'>&nbsp <label class='smallTextFramework'  id='" . $framework['name'] . "' for='framework'>" . $framework['name'] . "</label>&nbsp &nbsp";
+// Get selected frameworks from URL parameters and pass them through as hidden fields
+$selectedFrameworks = isset($_GET['framework']) ? $_GET['framework'] : [];
+if (!is_array($selectedFrameworks)) {
+    $selectedFrameworks = [$selectedFrameworks];
 }
 
-print '</div>';
+// Pass selected frameworks through as hidden fields (no need to show them again)
+foreach ($selectedFrameworks as $framework) {
+    print '<input type="hidden" name="framework[]" value="' . Security::escape($framework) . '">';
+}
 ?>
 </div>
 <br>

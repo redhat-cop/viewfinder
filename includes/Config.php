@@ -35,6 +35,7 @@ class Config {
      * Line of Business options
      */
     const LOB_OPTIONS = [
+        'General' => 'General',
         'Finance' => 'Finance',
         'Government' => 'Government',
         'Manufacturing' => 'Manufacturing',
@@ -44,44 +45,66 @@ class Config {
 ,];
 
     /**
-     * Maturity level thresholds for individual controls
+     * Maturity level thresholds for individual controls (CMMI 5-level system)
+     * Based on max score of 36 per control with 20% intervals
      */
     const MATURITY_LEVELS = [
-        'foundation' => [
+        'initial' => [
             'min' => 0,
-            'max' => 9,
-            'display_name' => 'Foundation'
+            'max' => 7.2,
+            'display_name' => 'Initial'
         ],
-        'strategic' => [
-            'min' => 10,
-            'max' => 27,
-            'display_name' => 'Strategic'
+        'managed' => [
+            'min' => 7.21,
+            'max' => 14.4,
+            'display_name' => 'Managed'
         ],
-        'advanced' => [
-            'min' => 28,
+        'defined' => [
+            'min' => 14.41,
+            'max' => 21.6,
+            'display_name' => 'Defined'
+        ],
+        'quantitative' => [
+            'min' => 21.61,
+            'max' => 28.8,
+            'display_name' => 'Quantitatively Managed'
+        ],
+        'optimizing' => [
+            'min' => 28.81,
             'max' => 36,
-            'display_name' => 'Advanced'
+            'display_name' => 'Optimizing'
         ]
     ];
 
     /**
-     * Overall maturity rating thresholds (total across all controls)
+     * Overall maturity rating thresholds (total across all controls - CMMI 5-level system)
+     * Based on max total score of 252 (7 controls × 36) with 20% intervals
      */
     const TOTAL_MATURITY_LEVELS = [
-        'foundation' => [
+        'initial' => [
             'min' => 0,
-            'max' => 84,
-            'display_name' => 'Foundation'
+            'max' => 50.4,
+            'display_name' => 'Initial'
         ],
-        'strategic' => [
-            'min' => 85,
-            'max' => 168,
-            'display_name' => 'Strategic'
+        'managed' => [
+            'min' => 50.41,
+            'max' => 100.8,
+            'display_name' => 'Managed'
         ],
-        'advanced' => [
-            'min' => 169,
+        'defined' => [
+            'min' => 100.81,
+            'max' => 151.2,
+            'display_name' => 'Defined'
+        ],
+        'quantitative' => [
+            'min' => 151.21,
+            'max' => 201.6,
+            'display_name' => 'Quantitatively Managed'
+        ],
+        'optimizing' => [
+            'min' => 201.61,
             'max' => 252,
-            'display_name' => 'Advanced'
+            'display_name' => 'Optimizing'
         ]
     ];
 

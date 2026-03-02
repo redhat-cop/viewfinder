@@ -16,18 +16,26 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 ### Assessment Capabilities
 - **Multi-Profile Assessments**: Security, Digital Sovereignty, AI Readiness, OpenShift, RHEL, and custom profiles
 - **Multi-Domain Evaluation**: 7 control domains per profile
-- **Tiered Maturity Levels**: Foundation (0-9), Strategic (10-27), Advanced (28-36)
+- **CMMI 5-Level Maturity Model**: ✨ Initial, Managed, Defined, Quantitatively Managed, Optimizing (aligned with CMMI standards)
 - **8 Capability Levels**: Progressive maturity scoring from 1-8 points per domain
 - **Real-time Scoring**: Dynamic calculation of maturity scores as assessments are completed
+- **Industry-Weighted Scoring**: ✨ Domain weights adjusted based on Line of Business (Finance, Healthcare, Government, etc.)
 - **Framework Mapping**: Map assessments to NIST 800-53, PCI DSS, ISO 27001, FedRAMP, NIS2, DORA, DISA STIG
 - **Industry-Specific Guidance**: Tailored recommendations for Finance, Government, Healthcare, Manufacturing, Telecommunications
+- **Workshop Facilitator Notes**: ✨ Capture domain-specific notes during facilitated workshops - notes flow through results, detailed reports, and export/import
 - **Export/Import Results**: ✨ Save and restore completed assessment results for record-keeping, sharing, and comparison
 
 ### Visualization & Reporting
 - **Interactive Radar Charts**: D3.js-powered visualizations of maturity across domains
+- **Dynamic Executive Summary**: ✨ Personalized one-page summary showing:
+  - Overall maturity level and score
+  - Top 2 strengths to celebrate
+  - Critical gaps prioritized by industry weight
+  - Strategic recommendations tailored to assessment results
 - **Detailed Recommendations**: HTML-formatted guidance for improving maturity levels
+- **Workshop Notes in Reports**: ✨ Facilitator notes displayed in both results page and detailed PDF reports
 - **Compliance Mapping**: Link capabilities to compliance framework controls
-- **Maturity Tables**: Tabular view of scores and recommendations
+- **Maturity Tables**: Tabular view of scores and recommendations with CMMI color coding
 - **Framework-Specific Views**: Detailed compliance guidance per selected framework
 - **Industry-Specific Views**: Sector-specific recommendations
 
@@ -361,7 +369,11 @@ You'll see the **Landing Page Dashboard** with four main sections:
    - Earn certificates and compete on the leaderboard
 
 4. **Full Maturity Assessments**:
-   - Click any enabled profile button (Security, Digital Sovereignty, AI, etc.)
+   - ✨ Professional landing page with profile selection, industry weights, and compliance frameworks
+   - Visual domain weighting display showing industry-specific priorities
+   - Select assessment type (Security, Digital Sovereignty, etc.)
+   - Choose your industry for weighted scoring (Finance, Healthcare, Government, etc.)
+   - Optional compliance framework selection (NIST 800-53, PCI DSS, ISO 27001, etc.)
    - Comprehensive technical assessments with detailed recommendations
    - Dynamically updated as new profiles are added
 
@@ -371,47 +383,52 @@ You'll see the **Landing Page Dashboard** with four main sections:
 
 ### Conducting an Assessment
 
-1. **Select Assessment Profile**:
-   - From the landing page or navigation header
-   - Security, Digital Sovereignty, AI Readiness, OpenShift, RHEL, or custom profiles
-   - Each profile evaluates 7 distinct domains
+1. **Start from Landing Page**:
+   - Navigate to Full Maturity Assessment
+   - Professional landing page displays three columns:
+     - Left: Profile and Industry selection
+     - Middle: Domain weighting visualization
+     - Right: CMMI maturity level reference
 
-2. **Choose Line of Business** (optional):
-   - Select your industry for tailored recommendations
-   - Available: Finance, Government, Healthcare, Manufacturing, Telecommunications, Other
+2. **Configure Assessment**:
+   - Select Assessment Type (Security, Digital Sovereignty, AI, etc.)
+   - Choose Your Industry (Finance, Government, Healthcare, Manufacturing, etc.)
+   - Select Compliance Frameworks (optional - NIST 800-53, PCI DSS, ISO 27001, etc.)
+   - View real-time domain weight visualization showing industry priorities
 
 3. **Complete Domain Assessment**:
    - Navigate through 7 domain tabs
    - For each domain, select your current maturity level (1-8 capabilities)
+   - ✨ Add workshop facilitator notes for each domain (optional)
    - Use info icons for detailed control descriptions
    - Real-time scoring updates as you progress
 
-4. **Select Compliance Frameworks** (optional):
-   - Choose relevant regulatory frameworks
-   - Options: NIST 800-53, PCI DSS, ISO 27001, FedRAMP, NIS2, DORA, DISA STIG
-   - Multiple selections supported
-
-5. **Submit Assessment**:
+4. **Submit Assessment**:
    - Review your selections
    - Submit for processing
 
 ### Interpreting Results
 
-#### Maturity Levels
-- **Foundation (0-9 points)**: Basic controls in place, manual processes
-- **Strategic (10-27 points)**: Intermediate posture with some automation
-- **Advanced (28-36 points)**: Mature program with comprehensive automation
+#### CMMI Maturity Levels
+- **Level 1 - Initial (0-20%)**: Ad-hoc processes, unpredictable results
+- **Level 2 - Managed (21-40%)**: Project-level management, repeatable processes
+- **Level 3 - Defined (41-60%)**: Organization-wide standards, proactive approach
+- **Level 4 - Quantitatively Managed (61-80%)**: Measured and controlled processes
+- **Level 5 - Optimizing (81-100%)**: Continuous improvement, innovation focus
 
-#### Maximum Scores
-- Per domain: 36 points (8 capabilities × 1-8 points each)
+#### Scoring
+- Per domain: 36 points (9 capabilities × 0-4 points each)
 - Total assessment: 252 points (7 domains × 36 points)
+- ✨ Industry-weighted scoring adjusts final score based on domain importance for your sector
 
 #### Results Tabs
-- **Radar Chart**: Visual representation of maturity across all 7 domains
-- **Recommendations**: Specific improvement suggestions based on identified gaps
-- **Maturity Table**: Detailed scoring breakdown by domain and capability
+- **Radar Chart & Maturity Levels**: Visual representation with overall maturity score and domain breakdown
+- **Recommendations**: Specific improvement suggestions with domain-specific facilitator notes
+- **Maturity Table**: CMMI-coded table showing capability status across all levels
+- **Workshop Notes**: ✨ Consolidated facilitator notes from the assessment (if captured)
 - **Compliance Frameworks**: Framework-specific guidance (if frameworks selected)
 - **Industry Specifics**: Line-of-business recommendations (if LOB selected)
+- **Detailed Output**: Professional PDF-ready report with Executive Summary
 
 ### Using the Digital Sovereignty Readiness Assessment
 
@@ -957,6 +974,48 @@ Extend `includes/ProfileExporter.php` with new export methods
 - Update UI to include new framework option
 
 ## Version History
+
+### Version 2.9.0 (March 2026)
+- ✨ **NEW**: Workshop Facilitator Notes - Capture domain-specific notes during assessments
+  - Notes textarea for each domain in assessment form
+  - Notes displayed in results page accordion sections
+  - Notes included in detailed PDF reports per domain
+  - Notes exported in JSON and restored on import
+  - Full workflow support without persistent file storage
+- ✨ **NEW**: Dynamic Executive Summary in detailed reports
+  - Personalized summary based on actual assessment scores
+  - Overall maturity level and percentage display
+  - Top 2 strengths automatically identified
+  - Critical gaps prioritized by industry weight
+  - Strategic recommendations tailored to assessment results
+  - Replaces generic static summary with data-driven insights
+- ✨ **NEW**: CMMI 5-Level Maturity Model alignment
+  - Updated from 3-tier (Foundation/Strategic/Advanced) to standard CMMI levels
+  - Level 1: Initial (0-20%) - Unpredictable, reactive
+  - Level 2: Managed (21-40%) - Planned, basic controls
+  - Level 3: Defined (41-60%) - Standardized, documented
+  - Level 4: Quantitatively Managed (61-80%) - Measured, controlled
+  - Level 5: Optimizing (81-100%) - Continuous improvement
+  - Color-coded maturity tables throughout application
+- ✨ **NEW**: Enhanced Full Maturity Assessment Landing Page
+  - Professional 3-column layout with assessment configuration
+  - Profile selection (Security, Digital Sovereignty, AI, etc.)
+  - Industry selection with real-time weight visualization
+  - Compliance framework selection (multi-select checkboxes)
+  - Visual domain weighting bars showing industry priorities
+  - CMMI maturity level reference guide
+  - Compact 2-column framework selection (no scrolling)
+- 🔧 **IMPROVED**: Cleaner assessment workflow
+  - LOB and compliance frameworks selected upfront on landing page
+  - Removed redundant LOB radio buttons from assessment form
+  - Frameworks passed as hidden fields (no duplicate display)
+  - Streamlined UI with less clutter
+- 🔧 **IMPROVED**: Visual refinements
+  - Current Status table width reduced to 95% (better spacing)
+  - Workshop Notes tab with proper dark theme styling
+  - Maturity level descriptions in white for better visibility
+  - Compact landing page layout (reduced top margin)
+- 📖 **DOCS**: Updated README with new features and CMMI levels
 
 ### Version 2.8.0 (February 2026)
 - ✨ **NEW**: Assessment Results Export/Import functionality

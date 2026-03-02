@@ -406,61 +406,101 @@ input.underlined
 	color: rgb(253, 253, 253);  
 }
 
-.smallTextFoundation, .smallTextPartial {
-	color: #4291f8;
+.smallTextInitial {
+	color: #e57373;
 	font-size: small;
 	text-align: center;
 }
 
-.smallTextStrategic, .smallTextRisk-Informed {
-	color: #0f01ca;
+.smallTextManaged {
+	color: #ec7a08;
 	font-size: small;
 	text-align: center;
 }
 
-.smallTextAdvanced {
+.smallTextDefined {
+	color: #ffc107;
+	font-size: small;
+	text-align: center;
+}
+
+.smallTextQuantitative {
+	color: #8bc34a;
+	font-size: small;
+	text-align: center;
+}
+
+.smallTextOptimizing {
 	color: #2aaa04;
 	font-size: small;
 	text-align: center;
 }
 
-.cellFoundation, .cellPartial{
-	background-color: #9ec7fc;
-	color: #070707;
-	text-align: center;
-	font-weight: bold;
-	border-radius: 5px;
-}
-
-.cellStrategic, .cellRisk-Informed {
-	background-color: #0d60f8;
+.cellInitial {
+	background-color: #e57373;
 	color: #ffffff;
 	text-align: center;
 	font-weight: bold;
 	border-radius: 5px;
 }
 
-.cellAdvanced {
-	background-color: #2aaa04;
-	color: #faf7f7;
+.cellManaged {
+	background-color: #ec7a08;
+	color: #ffffff;
 	text-align: center;
 	font-weight: bold;
 	border-radius: 5px;
 }
 
-.cellHeaderFoundation {
-	color: #b1b0b0;
+.cellDefined {
+	background-color: #ffc107;
+	color: #000000;
+	text-align: center;
+	font-weight: bold;
+	border-radius: 5px;
+}
+
+.cellQuantitative {
+	background-color: #8bc34a;
+	color: #000000;
+	text-align: center;
+	font-weight: bold;
+	border-radius: 5px;
+}
+
+.cellOptimizing {
+	background-color: #2aaa04;
+	color: #ffffff;
+	text-align: center;
+	font-weight: bold;
+	border-radius: 5px;
+}
+
+.cellHeaderInitial {
+	color: #e57373;
 	text-align: center;
 	font-weight: bold;
 }
 
-.cellHeaderStrategic {
-	color: #fdd171;
+.cellHeaderManaged {
+	color: #ec7a08;
 	text-align: center;
 	font-weight: bold;
 }
 
-.cellHeaderAdvanced {
+.cellHeaderDefined {
+	color: #ffc107;
+	text-align: center;
+	font-weight: bold;
+}
+
+.cellHeaderQuantitative {
+	color: #8bc34a;
+	text-align: center;
+	font-weight: bold;
+}
+
+.cellHeaderOptimizing {
 	color: #2aaa04;
 	text-align: center;
 	font-weight: bold;

@@ -12,8 +12,8 @@ function RadarChart(id, data, options) {
 	 margin: {top: 20, right: 20, bottom: 20, left: 20}, //The margins of the SVG
 	 levels: 8,				//How many levels or inner circles should there be drawn
 	 maxValue: 36, 			//What is the value that the biggest circle will represent
-	 labelFactor: 1.25, 	//How much farther than the radius of the outer circle should the labels be placed
-	 wrapWidth: 60, 		//The number of pixels after which a label needs to be given a new line
+	 labelFactor: 1.45, 	//How much farther than the radius of the outer circle should the labels be placed
+	 wrapWidth: 100, 		//The number of pixels after which a label needs to be given a new line
 	 opacityArea: 0.35, 	//The opacity of the area of the blob
 	 dotRadius: 4, 			//The size of the colored circles of each blog
 	 opacityCircles: 0.1, 	//The opacity of the circles of each blob
@@ -124,7 +124,7 @@ function RadarChart(id, data, options) {
 	//Append the labels at each axis
 	axis.append("text")
 		.attr("class", "legend")
-		.style("font-size", "13px")
+		.style("font-size", "12px")
 		.style("fill", "#fff")
 		.style("font-weight", "600")
 		.attr("text-anchor", "middle")
@@ -244,29 +244,43 @@ function RadarChart(id, data, options) {
 	/////////////////////////////////////////////////////////
 
 	//Taken from http://bl.ocks.org/mbostock/7555321
-	//Wraps SVG text	
+	//Wraps SVG text - Modified to split multi-word labels
 	function wrap(text, width) {
 	  text.each(function() {
 		var text = d3.select(this),
-			words = text.text().split(/\s+/).reverse(),
+			fullText = text.text(),
+			words = fullText.split(/\s+/),
 			word,
 			line = [],
 			lineNumber = 0,
-			lineHeight = 1.4, // ems
+			lineHeight = 1.2, // ems (reduced for tighter spacing)
 			y = text.attr("y"),
 			x = text.attr("x"),
 			dy = parseFloat(text.attr("dy")),
-			tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
-			
-		while (word = words.pop()) {
-		  line.push(word);
-		  tspan.text(line.join(" "));
-		  if (tspan.node().getComputedTextLength() > width) {
-			line.pop();
-			tspan.text(line.join(" "));
-			line = [word];
-			tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-		  }
+			tspan;
+
+		// If the text has 2 or more words, split on first space for cleaner display
+		if (words.length >= 2) {
+			text.text(null);
+			// First line
+			tspan = text.append("tspan")
+				.attr("x", x)
+				.attr("y", y)
+				.attr("dy", "-0.3em")
+				.text(words[0]);
+			// Second line (remaining words)
+			tspan = text.append("tspan")
+				.attr("x", x)
+				.attr("y", y)
+				.attr("dy", "1.0em")
+				.text(words.slice(1).join(" "));
+		} else {
+			// Single word, just display it
+			tspan = text.text(null).append("tspan")
+				.attr("x", x)
+				.attr("y", y)
+				.attr("dy", dy + "em")
+				.text(fullText);
 		}
 	  });
 	}//wrap	

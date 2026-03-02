@@ -198,6 +198,12 @@ class ResultsImporter {
             );
         }
 
+        // Map legacy 'Balanced' LOB to 'General' for backwards compatibility
+        if (isset($assessment['lob']) && $assessment['lob'] === 'Balanced') {
+            $assessment['lob'] = 'General';
+            Logger::info('Mapped legacy LOB value', ['from' => 'Balanced', 'to' => 'General']);
+        }
+
         // Validate LOB (optional)
         if (isset($assessment['lob']) && !empty($assessment['lob'])) {
             if (!array_key_exists($assessment['lob'], Config::LOB_OPTIONS)) {
@@ -264,6 +270,11 @@ class ResultsImporter {
 
         // Validate question ID format and values
         foreach ($assessment['responses'] as $questionId => $value) {
+            // Skip metadata fields (profile, custom weights)
+            if ($questionId === 'profile' || preg_match('/^custom_weight_/', $questionId)) {
+                continue;
+            }
+
             // Question format: (ds|ts|os|as|oss|eo|ms)\d+
             if (!preg_match('/^(ds|ts|os|as|oss|eo|ms)\d+$/', $questionId)) {
                 throw ResultsException::dataValidationFailed(

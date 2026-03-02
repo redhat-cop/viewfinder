@@ -870,43 +870,71 @@ table.paleBlueRows {
 	font-size: 14px;
   }
 
-  .cellFoundation {
-	background-color: #9ec7fc;
-	color: #070707;
-	text-align: center;
-	font-weight: bold;
-	border-radius: 5px;
-}
-
-.cellStrategic {
-	background-color: #0d60f8;
+  .cellInitial {
+	background-color: #e57373;
 	color: #ffffff;
 	text-align: center;
 	font-weight: bold;
 	border-radius: 5px;
 }
 
-.cellAdvanced {
-	background-color: #2aaa04;
-	color: #faf7f7;
+.cellManaged {
+	background-color: #ec7a08;
+	color: #ffffff;
 	text-align: center;
 	font-weight: bold;
 	border-radius: 5px;
 }
 
-.cellHeaderFoundation {
-	color: #9ec7fc;
+.cellDefined {
+	background-color: #ffc107;
+	color: #000000;
+	text-align: center;
+	font-weight: bold;
+	border-radius: 5px;
+}
+
+.cellQuantitative {
+	background-color: #8bc34a;
+	color: #000000;
+	text-align: center;
+	font-weight: bold;
+	border-radius: 5px;
+}
+
+.cellOptimizing {
+	background-color: #2aaa04;
+	color: #ffffff;
+	text-align: center;
+	font-weight: bold;
+	border-radius: 5px;
+}
+
+.cellHeaderInitial {
+	color: #e57373;
 	text-align: center;
 	font-weight: bold;
 }
 
-.cellHeaderStrategic {
-	color: #fdd171;
+.cellHeaderManaged {
+	color: #ec7a08;
 	text-align: center;
 	font-weight: bold;
 }
 
-.cellHeaderAdvanced {
+.cellHeaderDefined {
+	color: #ffc107;
+	text-align: center;
+	font-weight: bold;
+}
+
+.cellHeaderQuantitative {
+	color: #8bc34a;
+	text-align: center;
+	font-weight: bold;
+}
+
+.cellHeaderOptimizing {
 	color: #2aaa04;
 	text-align: center;
 	font-weight: bold;

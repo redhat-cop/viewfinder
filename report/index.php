@@ -134,9 +134,74 @@ foreach($data as $field=>$value){
 }
 }
 
+// Collect workshop notes if any exist
+$hasNotes = false;
+$workshopNotes = [];
+foreach ($controls as $control) {
+    $qnum = $json[$control]['qnum'];
+    $notesFieldName = 'domain_notes_' . $qnum;
+    if (isset($data[$notesFieldName]) && !empty(trim($data[$notesFieldName]))) {
+        $hasNotes = true;
+        $workshopNotes[$qnum] = [
+            'title' => $json[$control]['title'],
+            'notes' => $data[$notesFieldName]
+        ];
+    }
+}
+
 // Functions moved to MaturityRating class
 
-$totalScore = 0;
+// ==========================================
+// WEIGHTED SCORING IMPLEMENTATION
+// ==========================================
+
+// Load LOB weights
+$lobWeights = require_once __DIR__ . '/../lob-weights.php';
+
+// Get selected LOB (default to 'General' if not set)
+$selectedLob = Security::validateLOB($_REQUEST['lob'] ?? '');
+if ($selectedLob === null) {
+    $selectedLob = 'General';
+}
+
+// Get weights for this profile and LOB
+$domainWeights = [];
+if (isset($lobWeights[$profile]) && isset($lobWeights[$profile][$selectedLob])) {
+    $domainWeights = $lobWeights[$profile][$selectedLob]['weights'];
+} else {
+    // Fallback to balanced weights (all 1.0)
+    foreach ($controls as $control) {
+        $title = $json[$control]['title'];
+        $domainWeights[$title] = 1.0;
+    }
+}
+
+// Calculate raw total score (unweighted, for reference)
+$rawTotalScore = array_sum($controlTotal);
+
+// Calculate weighted score
+$weightedSum = 0;
+$totalWeight = 0;
+$maxPossiblePerDomain = 36; // Each domain has max 36 points (9 questions × 4 levels)
+
+foreach ($controls as $control) {
+    $title = $json[$control]['title'];
+    $qnum = $json[$control]['qnum'];
+    $domainScore = $controlTotal[$qnum];
+
+    // Get weight for this domain (default 1.0 if not found)
+    $weight = isset($domainWeights[$title]) ? $domainWeights[$title] : 1.0;
+
+    // Calculate weighted contribution
+    $domainPercentage = $domainScore / $maxPossiblePerDomain;
+    $weightedDomainScore = $domainPercentage * $weight;
+
+    $weightedSum += $weightedDomainScore;
+    $totalWeight += $weight;
+}
+
+// Normalize weighted score to 0-252 scale (7 domains × 36 max points)
+$totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * (count($controls) * $maxPossiblePerDomain) : 0;
 
 
 ?>
@@ -222,73 +287,124 @@ $totalScore = 0;
       <!-- business -->
       <div class="business">
                                        <?php if ($profile == "DigitalSovereignty") {
-                              print '   
+                              // Generate dynamic executive summary based on assessment results
+                              $totalMaturityScore = array_sum($controlTotal);
+                              $maxPossible = 252; // 7 domains × 36 points each
+                              $overallPercentage = round(($totalMaturityScore / $maxPossible) * 100);
+                              $overallRating = MaturityRating::getTotalRating($totalMaturityScore);
+
+                              // Get LOB for context
+                              $assessmentLob = $selectedLob ?? "General";
+
+                              // Analyze domain performance
+                              $domainAnalysis = [];
+                              foreach ($controls as $control) {
+                                  $qnum = $json[$control]["qnum"];
+                                  $title = $json[$control]["title"];
+                                  $score = $controlTotal[$qnum];
+                                  $maxScore = 36;
+                                  $percentage = round(($score / $maxScore) * 100);
+                                  $rating = MaturityRating::getRating($score);
+                                  $weight = isset($domainWeights[$title]) ? $domainWeights[$title] : 1.0;
+
+                                  $domainAnalysis[] = [
+                                      "title" => $title,
+                                      "score" => $score,
+                                      "percentage" => $percentage,
+                                      "rating" => $rating,
+                                      "weight" => $weight
+                                  ];
+                              }
+
+                              // Sort by score to find strengths and gaps
+                              usort($domainAnalysis, function($a, $b) {
+                                  return $b["score"] <=> $a["score"];
+                              });
+
+                              $strengths = array_slice($domainAnalysis, 0, 2); // Top 2 domains
+                              $gaps = array_slice($domainAnalysis, -3); // Bottom 3 domains
+
+                              // Filter gaps to prioritize high-weighted domains
+                              usort($gaps, function($a, $b) {
+                                  // Sort by weight first, then by low score
+                                  if ($b["weight"] != $a["weight"]) {
+                                      return $b["weight"] <=> $a["weight"];
+                                  }
+                                  return $a["score"] <=> $b["score"];
+                              });
+
+                              ?>
                               <div class="overviewBlock">
                               <div class="titlepage">
-<span>Executive Summary: Strategic Imperatives for Digital Sovereignty</span>
-</div>
-<p>The Digital Sovereignty Maturity Assessment reveals the organization\'s current control posture and identifies critical dependencies across its digital ecosystem. Moving from a reactive, compliant state to a proactive, sovereign state requires executive-level commitment to strategic investments in autonomy and resilience. Our findings are grouped into four strategic areas requiring immediate focus:</p>
+                              <span>Executive Summary</span>
+                              </div>
 
-    <div class="section-header">
-        <h3>1. Data and Legal Autonomy (Immediate Priority)</h3>
-        <p>The core risk lies in external jurisdictional control over critical data. Achieving data sovereignty requires moving beyond mere residency and establishing cryptographic and legal independence. This is increasingly vital as new laws like the <b>EU AI Act</b> mandate specific governance, transparency, and data quality requirements based on the legal jurisdiction of the AI system\'s output and training data.</p>
-        
-        <p class="imperative">Imperative: Mandate a formal, comprehensive Data Residency Policy and enforce it with technical controls, securing legal independence from foreign jurisdictions.</p>
-        
-        <ul class="action-list">
-            <li>Secure explicit contractual clauses that assign <b>exclusive governing law and jurisdiction</b> to mitigate risks from foreign legal access (e.g., the CLOUD Act).</li>
-            <li>Most critically, transition to a <b>Customer-Managed Key (CMK) solution</b> where the root encryption keys for all sensitive data are independently controlled, effectively neutralizing third-party access rights.</li>
-            <li>Implement rigorous <b>Data Flow and Transfer Auditing</b> to track data used in high-risk AI models, ensuring compliance with <b>EU AI Act</b> transparency and traceability obligations.</li>
-        </ul>
-        
-        <div class="result">Result: Data access is determined by organizational policy and domestic law, supporting compliance with strict AI and privacy regulations.</div>
-    </div>
+                              <div style="background: #f9f9f9; border-left: 4px solid #0d60f8; padding: 1.5rem; margin-bottom: 2rem; border-radius: 4px;">
+                                  <h3 style="color: #0d60f8; margin-top: 0;">Overall Maturity Assessment</h3>
+                                  <table style="width: 100%; border-collapse: collapse;">
+                                      <tr>
+                                          <td style="padding: 0.5rem; font-weight: 600; width: 200px;">Overall Maturity Level:</td>
+                                          <td style="padding: 0.5rem;"><strong><?php echo Security::escape($overallRating); ?></strong> (<?php echo $overallPercentage; ?>%)</td>
+                                      </tr>
+                                      <tr style="background: #f5f5f5;">
+                                          <td style="padding: 0.5rem; font-weight: 600;">Industry Context:</td>
+                                          <td style="padding: 0.5rem;"><?php echo Security::escape($assessmentLob); ?></td>
+                                      </tr>
+                                      <tr>
+                                          <td style="padding: 0.5rem; font-weight: 600;">Total Score:</td>
+                                          <td style="padding: 0.5rem;"><?php echo $totalMaturityScore; ?> / <?php echo $maxPossible; ?> points</td>
+                                      </tr>
+                                      <tr style="background: #f5f5f5;">
+                                          <td style="padding: 0.5rem; font-weight: 600;">Assessment Date:</td>
+                                          <td style="padding: 0.5rem;"><?php echo date("F j, Y"); ?></td>
+                                      </tr>
+                                  </table>
+                              </div>
 
-    <div class="section-header">
-        <h3>2. Strategic Technical Independence</h3>
-        <p>Reducing the reliance on deeply integrated, proprietary vendor ecosystems is crucial for long-term operational freedom, cost control, and preventing vendor lock-in risk.</p>
-        
-        <p class="imperative">Imperative: Strategically eliminate single-vendor lock-in through the mandatory adoption of open industry standards and platform-agnostic architectures.</p>
-        
-        <ul class="action-list">
-            <li>Fund the development of a formal <b>Portability Strategy</b> and execute regular <b>"exit drills"</b> to maintain the technical capability to migrate critical workloads and data quickly.</li>
-            <li>Prioritize technologies that grant full-stack <b>Technology Stack Ownership & Control</b>, including the use of <b>Open Source Software (OSS)</b> where feasible to reduce reliance on proprietary codebases.</li>
-            <li>Mandate the use of <b>Standardised Technical Frameworks</b> (e.g., Kubernetes, open APIs) to decouple applications from specific cloud platforms.</li>
-        </ul>
-        
-        <div class="result">Result: Technology choices are driven by business needs and sovereignty requirements, not vendor roadmaps.</div>
-    </div>
+                              <div class="section-header">
+                                  <h3><i class="fa-solid fa-chart-line"></i> Key Strengths</h3>
+                                  <p>The assessment identified the following areas of strong maturity:</p>
+                                  <ul class="action-list">
+                                  <?php foreach ($strengths as $strength): ?>
+                                      <li><strong><?php echo Security::escape($strength["title"]); ?></strong>: <?php echo Security::escape($strength["rating"]); ?> level (<?php echo $strength["percentage"]; ?>%) - demonstrating well-established capabilities in this domain.</li>
+                                  <?php endforeach; ?>
+                                  </ul>
+                              </div>
 
-    <div class="section-header">
-        <h3>3. Operational Control and Resilience</h3>
-        <p>Operational sovereignty dictates that critical business functions must be insulated from external geopolitical and supply chain risks to guarantee continuity.</p>
-        
-        <p class="imperative">Imperative: Achieve verifiable Operational Autonomy for critical functions and eliminate reliance on external managed services for system administration.</p>
-        
-        <ul class="action-list">
-            <li>Develop an executive-approved, tested <b>Sovereign Incident Response Plan</b> detailing steps for reacting to politically motivated attacks or foreign legal demands.</li>
-            <li>Invest strategically in building and maintaining <b>in-house expertise</b> (Internal Skills and Competency Development) to operate key sovereign infrastructure independently.</li>
-            <li>Formalize a <b>Supply Chain Vetting Program</b> to assess and mitigate geopolitical risk for all Tier 1 suppliers.</li>
-        </ul>
-        
-        <div class="result">Result: Business continuity is guaranteed, even in scenarios involving geopolitical isolation or external vendor failure.</div>
-    </div>
+                              <div class="section-header">
+                                  <h3><i class="fa-solid fa-exclamation-triangle"></i> Critical Gaps</h3>
+                                  <p>Priority areas requiring immediate attention
+                                  <?php if ($assessmentLob !== "General"): ?>
+                                  (based on <?php echo Security::escape($assessmentLob); ?> industry priorities)
+                                  <?php endif; ?>:</p>
+                                  <ul class="action-list">
+                                  <?php foreach ($gaps as $gap): ?>
+                                      <?php
+                                      $priorityNote = "";
+                                      if ($gap["weight"] >= 1.5) {
+                                          $priorityNote = " <strong>(High Priority for " . Security::escape($assessmentLob) . ")</strong>";
+                                      }
+                                      ?>
+                                      <li><strong><?php echo Security::escape($gap["title"]); ?></strong>: <?php echo Security::escape($gap["rating"]); ?> level (<?php echo $gap["percentage"]; ?>%)<?php echo $priorityNote; ?></li>
+                                  <?php endforeach; ?>
+                                  </ul>
+                              </div>
 
-    <div class="section-header">
-        <h3>4. Executive Governance and Investment</h3>
-        <p>Sovereignty requires dedicated, top-down governance, moving it from an IT checklist to a core strategic pillar integrated into the organization’s long-term strategy.</p>
-        
-        <p class="imperative">Imperative: Formally establish the leadership and resource allocation necessary to execute and measure the sovereignty roadmap.</p>
-        
-        <ul class="action-list">
-            <li>Appoint a <b>Designated Executive Sponsor</b> and empower a <b>Sovereignty Governance Board</b> (Legal, IT, Procurement) to oversee compliance and risk.</li>
-            <li>Link accountability by defining and tracking quantitative <b>Key Performance Indicators (KPIs)</b> (e.g., data localization percentage) that are reported to the Board monthly.</li>
-            <li>Ensure a protected <b>Budget Allocation for Sovereignty Initiatives</b>, recognizing the strategic value of resilience over short-term costs.</li>
-        </ul>
-        
-        <div class="result">Result: Sovereignty risk mitigation is prioritized, funded, and managed at the highest level of the organization.</div>
-    </div>
- ';
+                              <div class="section-header">
+                                  <h3><i class="fa-solid fa-route"></i> Strategic Recommendations</h3>
+                                  <p class="imperative">To advance digital sovereignty maturity, executive leadership should:</p>
+                                  <ul class="action-list">
+                                      <li><strong>Prioritize foundational capabilities</strong> in the identified gap areas before pursuing advanced maturity levels</li>
+                                      <li><strong>Align investment decisions</strong> with <?php echo Security::escape($assessmentLob); ?> industry requirements and regulatory obligations</li>
+                                      <li><strong>Establish executive sponsorship</strong> for sovereignty initiatives with dedicated budget allocation</li>
+                                      <li><strong>Leverage existing strengths</strong> in <?php echo Security::escape($strengths[0]["title"]); ?> to build momentum and demonstrate value</li>
+                                      <li><strong>Review detailed domain analysis</strong> (following pages) for specific technical and operational recommendations</li>
+                                  </ul>
+
+                                  <div class="result">The detailed assessment report that follows provides actionable recommendations for each domain, prioritized by maturity gap and industry relevance.</div>
+                              </div>
+                              </div>
+                              <?php
                            }
                            ?>
             <div class="row">
@@ -315,29 +431,30 @@ $totalScore = 0;
 
 
 <?php
-$totalScore = 0;
+// Use the weighted totalScore calculated earlier
+$displayTotalScore = round($totalScore);
+
 ## Work out all the stuff for the table
 foreach ($controls as $control) {
 	print "<tr>";
 	$title = $json[$control]['title'];
 	$qnum = $json[$control]['qnum'];
 	$score = $controlTotal[$qnum];
-	$totalScore += $score;
+
 	#print "<td><i class='fa-regular fa-" . $qnum . "'>&nbsp; &nbsp; </i>" . $title . "</td>";
 	print "<td>" . $title . "</td>";
 	$rating = MaturityRating::getRating($score);
-	print "<td class='cell" . $rating . "'>" . $rating . " ($score out of 36)</td>";
+	$ratingClass = MaturityRating::getRatingClass($rating);
+	print "<td class='" . $ratingClass . "'>" . $rating . " ($score out of 36)</td>";
 	print "</tr>";
 }
 print '</table>';
-$overallRating = MaturityRating::getTotalRating($totalScore);
-print "<br><table><td class='cell" . $overallRating . "'>Overall rating: " . $overallRating . " ($totalScore out of 252)</td></tr></table>";
+$overallRating = MaturityRating::getTotalRating($displayTotalScore);
+$overallRatingClass = MaturityRating::getRatingClass($overallRating);
+print "<br><table><td class='" . $overallRatingClass . "'>Overall rating: " . $overallRating . " (" . $displayTotalScore . " weighted out of 252)</td></tr></table>";
 
-// Check if profile-specific maturity assessment image exists
-$imagePath = "images/" . Security::escape($profile) . "-Maturity-Assessment.png";
-if (file_exists(__DIR__ . '/' . $imagePath)) {
-    echo '<img src="' . $imagePath . '" alt="' . Security::escape($profileDisplayName) . ' Maturity Assessment" />';
-}
+// Display CMMI Maturity Model visualization (HTML/CSS)
+require_once __DIR__ . '/includes/maturity-model-visual.php';
 ?>
                         </div>
                      </div>
@@ -383,22 +500,22 @@ print '<th class="table-header">' . $title .'</th>';
 
 </tr></thead>
 <tr>
-<td class="advanced"></td>
+<td class="optimizing"></td>
 <?php
 MaturityRating::putDomainStatus("8",$controlDetails,$json);
-?>                          
+?>
 </tr>
 
 <tr>
-<td class="advanced">Advanced</td>
-   
+<td class="optimizing">Optimizing</td>
+
 <?php
 MaturityRating::putDomainStatus("7",$controlDetails,$json);
-?>          
+?>
 </tr>
 
 <tr>
-<td class="advanced"></td>
+<td class="quantitative">Quantitatively Managed</td>
 <?php
 
 MaturityRating::putDomainStatus("6",$controlDetails,$json);
@@ -408,23 +525,23 @@ MaturityRating::putDomainStatus("6",$controlDetails,$json);
 </tr>
 
 <tr>
-<td class="strategic"></td>
+<td class="quantitative"></td>
 <?php
 MaturityRating::putDomainStatus("5",$controlDetails,$json);
 
-?> 
+?>
 </tr>
 
 <tr>
-<td class="strategic">Strategic</td>
+<td class="defined">Defined</td>
 <?php
 MaturityRating::putDomainStatus("4",$controlDetails,$json);
 
-?>      
+?>
 </tr>
 
 <tr>
-<td class="strategic"></td>
+<td class="defined"></td>
 
 <?php
 MaturityRating::putDomainStatus("3",$controlDetails,$json);
@@ -433,16 +550,16 @@ MaturityRating::putDomainStatus("3",$controlDetails,$json);
 </tr>
 
 <tr>
-<td class="foundation"></td>
+<td class="managed">Managed</td>
 <?php
 MaturityRating::putDomainStatus("2",$controlDetails,$json);
 
 ?>
-                   
+
 </tr>
 
 <tr>
-<td class="foundation">Foundation</td>
+<td class="initial">Initial</td>
 <?php
 MaturityRating::putDomainStatus("1",$controlDetails,$json);
 
@@ -494,7 +611,11 @@ if (isset($_REQUEST['lob'])) {
         }
     }
 }
+?>
 
+<h1 style="margin-top: 2rem;">Domain Analysis & Recommendations</h1>
+
+<?php
 foreach ($controls as $control) {
     $highest=0;	
     $qnum = $json[$control]['qnum'];
@@ -503,7 +624,10 @@ foreach ($controls as $control) {
 	array_push($nextDomain, $title);
    #print '<div class="pagebreak"> </div>';
 	$rating = MaturityRating::getRating($score);
-    print "<br><h2>$title - <span class='cellHeader" . $rating . "'>". $rating . " Level</span></h2><div>";
+	$ratingClass = MaturityRating::getRatingClass($rating);
+	// Convert cell class to header class (e.g., cellInitial -> cellHeaderInitial)
+	$headerClass = str_replace('cell', 'cellHeader', $ratingClass);
+    print "<br><h2>$title - <span class='" . $headerClass . "'>". $rating . " Level</span></h2><div>";
 
     
     $qnum = $json[$control]['qnum'];
@@ -532,6 +656,16 @@ foreach ($controls as $control) {
         } else {
         print "<p>You're doing great as you are!</p>";
     }
+   }
+
+   // Display workshop notes for this domain if they exist
+   $notesFieldName = 'domain_notes_' . $qnum;
+   if (isset($data[$notesFieldName]) && !empty(trim($data[$notesFieldName]))) {
+       $notes = Security::escape($data[$notesFieldName]);
+       print '<div style="margin-top: 2rem; padding: 1.5rem; background: #f5f5f5; border-left: 4px solid #0d60f8; border-radius: 4px; border: 1px solid #ddd;">';
+       print '<h3 style="color: #0d60f8; margin-top: 0; margin-bottom: 1rem;"><i class="fa-solid fa-note-sticky"></i> Workshop Notes</h3>';
+       print '<div style="white-space: pre-wrap; color: #333; line-height: 1.6; font-size: 1rem;">' . $notes . '</div>';
+       print '</div>';
    }
 
 

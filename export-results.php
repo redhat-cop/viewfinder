@@ -33,7 +33,7 @@ try {
     // Extract assessment data
     $controls = [];
     $controlScores = [];
-    $totalScore = 0;
+    $rawTotalScore = 0;
 
     // Parse control responses from query string
     // Only include controls with non-zero values (matches normal query string behavior)
@@ -49,10 +49,64 @@ try {
             $controlScore += $value;
         }
         $controlScores[$i] = $controlScore;
-        $totalScore += $controlScore;
+        $rawTotalScore += $controlScore;
     }
 
-    // Calculate overall rating
+    // ==========================================
+    // WEIGHTED SCORING IMPLEMENTATION
+    // ==========================================
+
+    // Load LOB weights
+    $lobWeights = require_once __DIR__ . '/lob-weights.php';
+
+    // Get selected LOB (default to 'General' if not set)
+    // Note: 'Balanced' is mapped to 'General' for consistency with Config::LOB_OPTIONS
+    $selectedLob = Security::validateLOB($data['lob'] ?? '');
+    if ($selectedLob === null || $selectedLob === 'Balanced') {
+        $selectedLob = 'General';
+    }
+
+    // Get weights for this profile and LOB
+    $domainWeights = [];
+    if (isset($lobWeights[$profile]) && isset($lobWeights[$profile][$selectedLob])) {
+        $domainWeights = $lobWeights[$profile][$selectedLob]['weights'];
+    } else {
+        // Fallback to balanced weights (all 1.0)
+        foreach ($json as $control) {
+            if (isset($control['title'])) {
+                $domainWeights[$control['title']] = 1.0;
+            }
+        }
+    }
+
+    // Calculate weighted score
+    $weightedSum = 0;
+    $totalWeight = 0;
+    $maxPossiblePerDomain = 36; // Each domain has max 36 points (9 questions × 4 levels)
+
+    for ($i = 1; $i <= 7; $i++) {
+        $controlKey = "Domain-$i";
+        if (isset($json[$controlKey]['title'])) {
+            $title = $json[$controlKey]['title'];
+            $domainScore = $controlScores[$i];
+
+            // Get weight for this domain (default 1.0 if not found)
+            $weight = isset($domainWeights[$title]) ? $domainWeights[$title] : 1.0;
+
+            // Calculate weighted contribution
+            $domainPercentage = $domainScore / $maxPossiblePerDomain;
+            $weightedDomainScore = $domainPercentage * $weight;
+
+            $weightedSum += $weightedDomainScore;
+            $totalWeight += $weight;
+        }
+    }
+
+    // Normalize weighted score to 0-252 scale (7 domains × 36 max points)
+    $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * (7 * $maxPossiblePerDomain) : 0;
+    $totalScore = round($totalScore);
+
+    // Calculate overall rating using weighted score
     $overallRating = MaturityRating::getTotalRating($totalScore);
 
     // Extract frameworks (if present) - handle both 'framework' and 'frameworks'
@@ -71,15 +125,27 @@ try {
         }
     }
 
+    // Capture domain notes
+    $domainNotes = [];
+    foreach ($data as $key => $value) {
+        if (strpos($key, 'domain_notes_') === 0 && !empty(trim($value))) {
+            $domainNotes[$key] = $value;
+        }
+    }
+
     // Build export data
     $exportData = [
         'profile' => $profile,
-        'lob' => $data['lob'] ?? '',
+        'lob' => $selectedLob,
         'frameworks' => $frameworks,
         'controls' => $controls,
-        'total_score' => $totalScore,
+        'raw_total_score' => $rawTotalScore,      // Unweighted score
+        'weighted_total_score' => $totalScore,    // Weighted score (used for rating)
+        'total_score' => $totalScore,             // For backward compatibility
         'overall_rating' => $overallRating,
-        'control_scores' => $controlScores
+        'control_scores' => $controlScores,
+        'domain_weights' => $domainWeights,       // Include weight information
+        'domain_notes' => $domainNotes            // Include facilitator notes
     ];
 
     // Generate JSON content

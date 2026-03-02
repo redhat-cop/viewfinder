@@ -100,7 +100,7 @@
 }
 
 .form-group .required {
-    color: #c9190b;
+    color: #e57373;
 }
 
 .form-control {
@@ -340,8 +340,8 @@
 
 .btn-no {
     background: #1a1a1a;
-    border-color: #c9190b;
-    color: #c9190b;
+    border-color: #e57373;
+    color: #e57373;
 }
 
 .btn-no:hover {
@@ -371,8 +371,8 @@
 }
 
 .question-radio:checked + .btn-no {
-    background: linear-gradient(135deg, #c9190b 0%, #a30000 100%);
-    border-color: #c9190b;
+    background: linear-gradient(135deg, #e57373 0%, #a30000 100%);
+    border-color: #e57373;
     color: #fff;
     box-shadow: 0 2px 8px rgba(201, 25, 11, 0.3);
 }
@@ -522,22 +522,27 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-.score-card.maturity-foundation {
-    background: linear-gradient(135deg, #c9190b 0%, #a30000 100%);
-    border: 2px solid #c9190b;
+.score-card.maturity-initial {
+    background: linear-gradient(135deg, #e57373 0%, #a30000 100%);
+    border: 2px solid #e57373;
 }
 
-.score-card.maturity-developing {
+.score-card.maturity-managed {
     background: linear-gradient(135deg, #ec7a08 0%, #c46100 100%);
     border: 2px solid #ec7a08;
 }
 
-.score-card.maturity-strategic {
-    background: linear-gradient(135deg, #f0ab00 0%, #c58c00 100%);
-    border: 2px solid #f0ab00;
+.score-card.maturity-defined {
+    background: linear-gradient(135deg, #ffc107 0%, #f0ab00 100%);
+    border: 2px solid #ffc107;
 }
 
-.score-card.maturity-advanced {
+.score-card.maturity-quantitative {
+    background: linear-gradient(135deg, #8bc34a 0%, #689f38 100%);
+    border: 2px solid #8bc34a;
+}
+
+.score-card.maturity-optimizing {
     background: linear-gradient(135deg, #2aaa04 0%, #1b7003 100%);
     border: 2px solid #2aaa04;
 }
@@ -587,19 +592,23 @@
 }
 
 /* Color the ring based on maturity level */
-.maturity-foundation .progress-ring-circle {
+.maturity-initial .progress-ring-circle {
     stroke: #e01000;
 }
 
-.maturity-developing .progress-ring-circle {
+.maturity-managed .progress-ring-circle {
     stroke: #ec7a08;
 }
 
-.maturity-strategic .progress-ring-circle {
-    stroke: #ffc425;
+.maturity-defined .progress-ring-circle {
+    stroke: #ffd54f;
 }
 
-.maturity-advanced .progress-ring-circle {
+.maturity-quantitative .progress-ring-circle {
+    stroke: #aed581;
+}
+
+.maturity-optimizing .progress-ring-circle {
     stroke: #3fcc00;
 }
 
@@ -715,19 +724,23 @@
     border-radius: 10px;
 }
 
-.progress-fill.strength-foundation {
-    background: linear-gradient(90deg, #c9190b 0%, #e01000 100%);
+.progress-fill.strength-initial {
+    background: linear-gradient(90deg, #e57373 0%, #e01000 100%);
 }
 
-.progress-fill.strength-developing {
+.progress-fill.strength-managed {
     background: linear-gradient(90deg, #ec7a08 0%, #f4b678 100%);
 }
 
-.progress-fill.strength-strategic {
-    background: linear-gradient(90deg, #f0ab00 0%, #ffc425 100%);
+.progress-fill.strength-defined {
+    background: linear-gradient(90deg, #ffc107 0%, #ffd54f 100%);
 }
 
-.progress-fill.strength-advanced {
+.progress-fill.strength-quantitative {
+    background: linear-gradient(90deg, #8bc34a 0%, #aed581 100%);
+}
+
+.progress-fill.strength-optimizing {
     background: linear-gradient(90deg, #2aaa04 0%, #3fcc00 100%);
 }
 
@@ -738,22 +751,27 @@
     display: inline-block;
 }
 
-.strength-badge.strength-foundation {
-    background: #c9190b;
+.strength-badge.strength-initial {
+    background: #e57373;
     color: #fff;
 }
 
-.strength-badge.strength-developing {
+.strength-badge.strength-managed {
     background: #ec7a08;
     color: #fff;
 }
 
-.strength-badge.strength-strategic {
-    background: #f0ab00;
+.strength-badge.strength-defined {
+    background: #ffc107;
     color: #000;
 }
 
-.strength-badge.strength-advanced {
+.strength-badge.strength-quantitative {
+    background: #8bc34a;
+    color: #000;
+}
+
+.strength-badge.strength-optimizing {
     background: #2aaa04;
     color: #fff;
 }
@@ -778,22 +796,27 @@
     border-left: 4px solid;
 }
 
-.action-priority.maturity-foundation {
+.action-priority.maturity-initial {
     background: rgba(201, 25, 11, 0.1);
-    border-color: #c9190b;
+    border-color: #e57373;
 }
 
-.action-priority.maturity-developing {
+.action-priority.maturity-managed {
     background: rgba(236, 122, 8, 0.1);
     border-color: #ec7a08;
 }
 
-.action-priority.maturity-strategic {
-    background: rgba(240, 171, 0, 0.1);
-    border-color: #f0ab00;
+.action-priority.maturity-defined {
+    background: rgba(255, 193, 7, 0.1);
+    border-color: #ffc107;
 }
 
-.action-priority.maturity-advanced {
+.action-priority.maturity-quantitative {
+    background: rgba(139, 195, 74, 0.1);
+    border-color: #8bc34a;
+}
+
+.action-priority.maturity-optimizing {
     background: rgba(42, 170, 4, 0.1);
     border-color: #2aaa04;
 }
@@ -1182,5 +1205,338 @@
     a {
         text-decoration: none;
         color: #000;
+    }
+}
+
+/* ============================================
+   PROFILE WEIGHTING STYLES
+   ============================================ */
+
+/* Profile selector dropdown */
+.profile-dropdown {
+    width: 100%;
+    padding: 0.75rem;
+    background: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.profile-dropdown:hover {
+    border-color: #0d60f8;
+}
+
+.profile-dropdown:focus {
+    outline: none;
+    border-color: #0d60f8;
+    box-shadow: 0 0 0 2px rgba(13, 96, 248, 0.2);
+}
+
+/* Weight badges */
+.weight-badge {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    background: #1a1a1a;
+    border: 1px solid #444;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #ccc;
+}
+
+.weight-badge.weight-high {
+    background: linear-gradient(135deg, #f0ab00 0%, #c58c00 100%);
+    border-color: #f0ab00;
+    color: #000;
+    box-shadow: 0 2px 4px rgba(240, 171, 0, 0.3);
+}
+
+/* Profile info display */
+.profile-info {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   LANDING PAGE STYLES
+   ============================================ */
+
+/* Landing Page Profile Selector */
+.landing-profile-selector {
+    padding: 1.5rem;
+    background: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 8px;
+    height: 100%;
+}
+
+.landing-profile-selector h3 {
+    color: #9ec7fc;
+    font-size: 1rem;
+    margin: 0 0 0.75rem 0;
+    font-weight: 600;
+}
+
+.profile-description {
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    background: #1a1a1a;
+    border-left: 3px solid #0d60f8;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: #999;
+    line-height: 1.4;
+}
+
+.profile-description i {
+    margin-right: 0.5rem;
+    color: #0d60f8;
+}
+
+/* Domain Weights Display */
+.weights-display {
+    padding: 1.5rem;
+    background: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 8px;
+    height: 100%;
+}
+
+.weights-display h3 {
+    color: #9ec7fc;
+    font-size: 1rem;
+    margin: 0 0 0.75rem 0;
+    text-align: center;
+    font-weight: 600;
+}
+
+.weight-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid #333;
+}
+
+.weight-item:last-child {
+    border-bottom: none;
+}
+
+.weight-domain {
+    color: #ccc;
+    font-size: 0.85rem;
+    flex: 1;
+    min-width: 140px;
+}
+
+.weight-bar-container {
+    flex: 1;
+    margin: 0 0.75rem;
+    height: 8px;
+    background: #1a1a1a;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.weight-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #0d60f8 0%, #12bbd4 100%);
+    transition: width 0.3s ease;
+    border-radius: 4px;
+}
+
+.weight-bar.critical {
+    background: linear-gradient(90deg, #f0ab00 0%, #c58c00 100%);
+}
+
+.weight-value {
+    min-width: 40px;
+    text-align: right;
+    color: #9ec7fc;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Custom Weights Sliders */
+.custom-weights-section {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #1a1a1a;
+    border: 1px solid #0d60f8;
+    border-radius: 4px;
+    display: none;
+}
+
+.custom-weights-section.active {
+    display: block;
+}
+
+.custom-weights-section h4 {
+    color: #9ec7fc;
+    font-size: 0.9rem;
+    margin: 0 0 1rem 0;
+    text-align: center;
+}
+
+.custom-weight-control {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.custom-weight-control label {
+    flex: 1;
+    color: #ccc;
+    font-size: 0.85rem;
+    font-weight: normal;
+}
+
+.custom-weight-control input[type="range"] {
+    flex: 2;
+    height: 6px;
+    background: #2a2a2a;
+    border-radius: 3px;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.custom-weight-control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: #0d60f8;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.custom-weight-control input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: #0d60f8;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+.custom-weight-control .weight-slider-value {
+    min-width: 50px;
+    text-align: right;
+    color: #9ec7fc;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Maturity Levels Display */
+.maturity-levels-display {
+    padding: 1.5rem;
+    background: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 8px;
+    height: 100%;
+}
+
+.maturity-levels-display h3 {
+    color: #9ec7fc;
+    font-size: 1rem;
+    margin: 0 0 0.75rem 0;
+    text-align: center;
+    font-weight: 600;
+}
+
+.maturity-level-item {
+    padding: 0.6rem 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    border-left: 4px solid;
+}
+
+.maturity-level-item:last-child {
+    margin-bottom: 0;
+}
+
+.maturity-level-item.level-initial {
+    background: rgba(201, 25, 11, 0.15);
+    border-color: #c9190b;
+}
+
+.maturity-level-item.level-managed {
+    background: rgba(236, 122, 8, 0.15);
+    border-color: #ec7a08;
+}
+
+.maturity-level-item.level-defined {
+    background: rgba(255, 193, 7, 0.15);
+    border-color: #ffc107;
+}
+
+.maturity-level-item.level-quantitative {
+    background: rgba(139, 195, 74, 0.15);
+    border-color: #8bc34a;
+}
+
+.maturity-level-item.level-optimizing {
+    background: rgba(42, 170, 4, 0.15);
+    border-color: #2aaa04;
+}
+
+.maturity-level-name {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #9ec7fc;
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.maturity-level-range {
+    font-size: 0.7rem;
+    color: #999;
+    font-weight: normal;
+}
+
+.maturity-level-desc {
+    font-size: 0.75rem;
+    color: #ccc;
+    line-height: 1.4;
+}
+
+/* Responsive Grid */
+@media (max-width: 1400px) {
+    .landing-card-content {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 1.5rem;
+    }
+
+    .maturity-levels-display {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 1024px) {
+    .landing-card-content {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .weight-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .weight-bar-container {
+        width: 100%;
+        margin: 0;
     }
 }

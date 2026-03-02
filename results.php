@@ -135,6 +135,13 @@ try {
             }
         }
 
+        // Include domain notes if present
+        if (isset($assessment['domain_notes'])) {
+            foreach ($assessment['domain_notes'] as $noteKey => $noteValue) {
+                $data[$noteKey] = $noteValue;
+            }
+        }
+
         // Clear session
         unset($_SESSION['imported_results']);
 
@@ -213,7 +220,73 @@ foreach($data as $field=>$value){
 
 // Functions moved to MaturityRating class
 
-$totalScore = 0;
+// ==========================================
+// WEIGHTED SCORING IMPLEMENTATION
+// ==========================================
+
+// Load LOB weights
+$lobWeights = require_once __DIR__ . '/lob-weights.php';
+
+// Get selected LOB (default to 'General' if not set)
+$selectedLob = Security::validateLOB($_REQUEST['lob'] ?? '');
+if ($selectedLob === null) {
+    $selectedLob = 'General';
+}
+
+// Get weights for this profile and LOB
+$domainWeights = [];
+if (isset($lobWeights[$profile]) && isset($lobWeights[$profile][$selectedLob])) {
+    $domainWeights = $lobWeights[$profile][$selectedLob]['weights'];
+} else {
+    // Fallback to balanced weights (all 1.0)
+    foreach ($controls as $control) {
+        $title = $json[$control]['title'];
+        $domainWeights[$title] = 1.0;
+    }
+}
+
+// Calculate raw total score (unweighted, for reference)
+$totalScore = array_sum($controlTotal);
+
+// Calculate weighted score
+$weightedSum = 0;
+$totalWeight = 0;
+$maxPossiblePerDomain = 36; // Each domain has max 36 points (9 questions × 4 levels)
+
+foreach ($controls as $control) {
+    $title = $json[$control]['title'];
+    $qnum = $json[$control]['qnum'];
+    $domainScore = $controlTotal[$qnum];
+
+    // Get weight for this domain (default 1.0 if not found)
+    $weight = isset($domainWeights[$title]) ? $domainWeights[$title] : 1.0;
+
+    // Calculate weighted contribution
+    // Normalize domain score to 0-1 range, apply weight, then scale back
+    $domainPercentage = $domainScore / $maxPossiblePerDomain;
+    $weightedDomainScore = $domainPercentage * $weight;
+
+    $weightedSum += $weightedDomainScore;
+    $totalWeight += $weight;
+}
+
+// Normalize weighted score to 0-252 scale (7 domains × 36 max points)
+$totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * (count($controls) * $maxPossiblePerDomain) : 0;
+
+// Check if any workshop notes exist
+$hasNotes = false;
+$workshopNotes = [];
+foreach ($controls as $control) {
+    $qnum = $json[$control]['qnum'];
+    $notesFieldName = 'domain_notes_' . $qnum;
+    if (isset($_REQUEST[$notesFieldName]) && !empty(trim($_REQUEST[$notesFieldName]))) {
+        $hasNotes = true;
+        $workshopNotes[$qnum] = [
+            'title' => $json[$control]['title'],
+            'notes' => $_REQUEST[$notesFieldName]
+        ];
+    }
+}
 
 ?>
 
@@ -236,6 +309,12 @@ $totalScore = 0;
       print '<button class="tablinks" onclick="openTab(event, \'LineOfBusiness\')">' . Security::escape($lob) . ' Specifics</button>';
   }
   ?>
+  <?php
+  // Display Workshop Notes tab if notes exist
+  if ($hasNotes) {
+      print '<button class="tablinks" onclick="openTab(event, \'WorkshopNotes\')"></i> Workshop Notes</button>';
+  }
+  ?>
   <button class="tablinks""><a href="<?php print $urlData; ?>" target= _blank>Detailed Output</a>&nbsp; <i class='fas fa-external-link-alt'></i></button>
 
 </div>
@@ -249,10 +328,24 @@ $totalScore = 0;
 <div class="bigtableLeft">
 <h1 class="profileHeader">Profile: <?php print Security::escape(Config::getProfileDisplayName($data['profile']));?> </h1>
 
+<?php
+// Display selected LOB profile info
+if (isset($lobWeights[$profile][$selectedLob])) {
+    $lobData = $lobWeights[$profile][$selectedLob];
+    print '<div style="background: #1a1a1a; border-left: 3px solid #0d60f8; padding: 0.75rem; margin-bottom: 1rem; border-radius: 4px;">';
+    print '<i class="fa-solid ' . htmlspecialchars($lobData['icon']) . '" style="color: #0d60f8; margin-right: 0.5rem;"></i>';
+    print '<strong style="color: #9ec7fc;">Industry Profile:</strong> ';
+    print '<span style="color: #fff;">' . Security::escape($lobData['name']) . '</span><br>';
+    print '<span style="color: #999; font-size: 0.9rem; margin-left: 1.5rem;">' . Security::escape($lobData['description']) . '</span>';
+    print '</div>';
+}
+?>
+
 <table class="spacedTable">
 	<thead>
 		<tr>
 			<th>Control</th>
+			<th style="text-align: center;">Weight</th>
 			<th>Rating</th>
 			</tr>
 		</tr>
@@ -260,23 +353,40 @@ $totalScore = 0;
 
 
 <?php
-$totalScore = 0;
+// Use the weighted totalScore calculated earlier, don't recalculate
+$displayTotalScore = round($totalScore); // Round for display
+
 ## Work out all the stuff for the table
 foreach ($controls as $control) {
 	print "<tr>";
 	$title = $json[$control]['title'];
 	$qnum = $json[$control]['qnum'];
 	$score = $controlTotal[$qnum];
-	$totalScore += $score;
-	#print "<td><i class='fa-regular fa-" . $qnum . "'>&nbsp; &nbsp; </i>" . $title . "</td>";
-	print "<td>" . $title . "</td>";
+
+	// Get weight for this domain
+	$weight = isset($domainWeights[$title]) ? $domainWeights[$title] : 1.0;
+	$isWeighted = $weight >= 1.5;
+
+	// Split multi-word titles to reduce column width (e.g., "Data Sovereignty" → "Data<br>Sovereignty")
+	$displayTitle = str_replace(' ', '<br>', $title);
+
+	print "<td>" . $displayTitle . "</td>";
+
+	// Weight column with badge
+	print "<td style='text-align: center;'>";
+	$weightBadgeClass = $isWeighted ? 'weight-badge weight-high' : 'weight-badge';
+	print "<span class='" . $weightBadgeClass . "'>" . number_format($weight, 1) . "×</span>";
+	print "</td>";
+
 	$rating = MaturityRating::getRating($score);
-	print "<td class='cell" . $rating . "'>" . $rating . " ($score out of 36)</td>";
+	$ratingClass = MaturityRating::getRatingClass($rating);
+	print "<td class='" . $ratingClass . "'>" . $rating . " ($score out of 36)</td>";
 	print "</tr>";
 }
 print '</table>';
-$overallRating = MaturityRating::getTotalRating($totalScore);
-print "<br><table><td class='cell" . $overallRating . "'>Overall rating: " . $overallRating . " ($totalScore out of 252)</td></tr></table>";
+$overallRating = MaturityRating::getTotalRating($displayTotalScore);
+$overallRatingClass = MaturityRating::getRatingClass($overallRating);
+print "<br><table class='spacedTable' style='margin-top: 0.5rem;'><tr><td class='" . $overallRatingClass . "' style='padding: 0.5rem;'>Overall rating: " . $overallRating . " (" . $displayTotalScore . " weighted out of 252)</td></tr></table>";
 
 ?>
 </div>
@@ -292,7 +402,10 @@ foreach ($controls as $control) {
 	$title = $json[$control]['title'];
 	array_push($nextDomain, $title);
 	$rating = MaturityRating::getRating($score);
-    print "<h3>$title <span class='cellHeader" . $rating . "'>". $rating . "</span></h3><div>";
+	$ratingClass = MaturityRating::getRatingClass($rating);
+	// Convert cell class to header class (e.g., cellInitial -> cellHeaderInitial)
+	$headerClass = str_replace('cell', 'cellHeader', $ratingClass);
+    print "<h3>$title <span class='" . $headerClass . "'>". $rating . "</span></h3><div>";
 
     
     $qnum = $json[$control]['qnum'];
@@ -309,7 +422,7 @@ foreach ($controls as $control) {
         ## Check if there is a recommendation for the next level
         $nextRecommendation = $nextLevel . '-recommendation';
         $nextSummary = $nextLevel . '-summary';
-        print "<h4 class=title-text>Recommendation</h4>"; 
+        print "<h4 class=title-text>Recommendation</h4>";
         print "<p>Start to work on preparing for actions concerning " . $json[$control][$nextLevel] . " (Level $nextLevel)<p>";
         print "<br><p class=why-what>What is " . $json[$control][$nextLevel] . " ?</p><p>" . $json[$control][$nextSummary] . "</p>";
 
@@ -389,14 +502,14 @@ print '<th class="table-header">' . $title .'</th>';
 
 </tr></thead>
 <tr>
-<td class="advanced"></td>
+<td class="optimizing">Optimizing</td>
 <?php
 MaturityRating::putDomainStatus("8",$controlDetails,$json);
 ?>
 </tr>
 
 <tr>
-<td class="advanced">Advanced</td>
+<td class="quantitative"></td>
 
 <?php
 MaturityRating::putDomainStatus("7",$controlDetails,$json);
@@ -404,46 +517,46 @@ MaturityRating::putDomainStatus("7",$controlDetails,$json);
 </tr>
 
 <tr>
-<td class="advanced"></td>
+<td class="quantitative">Quantitatively Managed</td>
 <?php
 MaturityRating::putDomainStatus("6",$controlDetails,$json);
 ?>
 </tr>
 
 <tr>
-<td class="strategic"></td>
+<td class="defined"></td>
 <?php
 MaturityRating::putDomainStatus("5",$controlDetails,$json);
 ?>
 </tr>
 
 <tr>
-<td class="strategic">Strategic</td>
+<td class="defined">Defined</td>
 <?php
 MaturityRating::putDomainStatus("4",$controlDetails,$json);
 ?>
 </tr>
 
 <tr>
-<td class="strategic"></td>
+<td class="managed"></td>
 <?php
 MaturityRating::putDomainStatus("3",$controlDetails,$json);
 ?>
 </tr>
 
 <tr>
-<td class="foundation"></td>
+<td class="managed">Managed</td>
 <?php
 MaturityRating::putDomainStatus("2",$controlDetails,$json);
 ?>
 </tr>
 
 <tr>
-<td class="foundation">Foundation</td>
+<td class="initial">Initial</td>
 <?php
 MaturityRating::putDomainStatus("1",$controlDetails,$json);
 ?>
-  
+
 </tr>
 
 </table>
@@ -453,9 +566,6 @@ MaturityRating::putDomainStatus("1",$controlDetails,$json);
 
 </div>
 <!-- End of table output  -->
-
-
-
 
 <!-- Start of Security Frameworks -->
 <div id="Frameworks" class="tabcontent">
@@ -523,6 +633,28 @@ if (isset($_REQUEST['lob'])) {
 
 </div>
 
+<!-- Start of Workshop Notes -->
+<?php if ($hasNotes): ?>
+<div id="WorkshopNotes" class="tabcontent">
+    <h2 style="color: #9ec7fc; margin-bottom: 1.5rem;">
+        Workshop Facilitator Notes
+    </h2>
+    <p style="color: #999; margin-bottom: 2rem;">
+        Notes captured during the assessment workshop for each domain.
+    </p>
+
+    <?php foreach ($workshopNotes as $qnum => $noteData): ?>
+        <div style="margin-bottom: 2rem; padding: 1rem 1.5rem 1rem 0; background: #1f1f1f; border-left: 4px solid #0d60f8; border-radius: 4px; border: 1px solid #444;">
+            <h3 style="color: #9ec7fc; ">
+                <?php echo Security::escape($noteData['title']); ?>
+            </h3>
+            <div style="color: #ccc; line-height: 1.6; margin: 0; padding: 0.5rem;">
+                <?php echo Security::escape($noteData['notes']); ?>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>
+<?php endif; ?>
 
 </div>
 
@@ -536,8 +668,8 @@ if (isset($_REQUEST['lob'])) {
 			//////////////////////// Set-Up ////////////////////////////// 
 			////////////////////////////////////////////////////////////// 
 
-			var margin = {top: 100, right: 100, bottom: 100, left: 100},
-				width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
+			var margin = {top: 120, right: 120, bottom: 120, left: 120},
+				width = Math.min(500, window.innerWidth - 10) - margin.left - margin.right,
 				height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
 					
 			////////////////////////////////////////////////////////////// 

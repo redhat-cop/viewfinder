@@ -12,22 +12,44 @@
 	font-size: small;
 }
 
-.foundation {
-	background-color: aliceblue;	
-	border-right: 5px solid red;
+.initial {
+	background-color: #e57373;
+	color: #ffffff;
+	border-right: 5px solid #444;
 	font-size: small;
+	font-weight: bold;
 }
 
-.strategic {
-	background-color: cornsilk;
-	border-right: 5px solid red;
+.managed {
+	background-color: #ec7a08;
+	color: #ffffff;
+	border-right: 5px solid #444;
 	font-size: small;
+	font-weight: bold;
 }
 
-.advanced {
-	background-color: aquamarine;
-	border-right: 5px solid red;
+.defined {
+	background-color: #ffc107;
+	color: #000000;
+	border-right: 5px solid #444;
 	font-size: small;
+	font-weight: bold;
+}
+
+.quantitative {
+	background-color: #8bc34a;
+	color: #000000;
+	border-right: 5px solid #444;
+	font-size: small;
+	font-weight: bold;
+}
+
+.optimizing {
+	background-color: #2aaa04;
+	color: #ffffff;
+	border-right: 5px solid #444;
+	font-size: small;
+	font-weight: bold;
 }
 
 

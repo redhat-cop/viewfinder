@@ -372,7 +372,7 @@ tr:hover {
 
 #righty {
   float: right;
-  color: #c9190b;
+  color: #e57373;
   font-weight: bold;
   font-size: 2em;
 }
@@ -386,29 +386,41 @@ tr:hover {
 #duplicates {
   font-weight: bold;
   font-size: 1.2em;
-  color: #c9190b;
+  color: #e57373;
   margin: auto;
   text-align: center;
 }
 
-/* Maturity Level Text Colors (matching original style.css) */
-.smallTextFoundation,
-.smallTextPartial {
-  color: #4291f8 !important;
+/* Maturity Level Text Colors - CMMI 5-Level System */
+.smallTextInitial {
+  color: #e57373 !important;
   font-size: 1.0rem;
   font-weight: bold;
   text-align: center;
 }
 
-.smallTextStrategic,
-.smallTextRisk-Informed {
-  color: #0d60f8 !important;
+.smallTextManaged {
+  color: #ec7a08 !important;
   font-size: 1.0rem;
   font-weight: bold;
   text-align: center;
 }
 
-.smallTextAdvanced {
+.smallTextDefined {
+  color: #ffc107 !important;
+  font-size: 1.0rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.smallTextQuantitative {
+  color: #8bc34a !important;
+  font-size: 1.0rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.smallTextOptimizing {
   color: #2aaa04 !important;
   font-size: 1.0rem;
   font-weight: bold;
@@ -420,46 +432,72 @@ tr:hover {
   color: #ccc !important;
 }
 
-/* Maturity Level Cell Backgrounds (matching original style.css) */
-.cellFoundation,
-.cellPartial {
-  background-color: #9ec7fc !important;
-  color: #070707 !important;
-  text-align: center;
-  font-weight: bold;
-  border-radius: 5px;
-}
-
-.cellStrategic,
-.cellRisk-Informed {
-  background-color: #0d60f8 !important;
+/* Maturity Level Cell Backgrounds - CMMI 5-Level System */
+.cellInitial {
+  background-color: #e57373 !important;
   color: #ffffff !important;
   text-align: center;
   font-weight: bold;
   border-radius: 5px;
 }
 
-.cellAdvanced {
-  background-color: #2aaa04 !important;
-  color: #faf7f7 !important;
+.cellManaged {
+  background-color: #ec7a08 !important;
+  color: #ffffff !important;
   text-align: center;
   font-weight: bold;
   border-radius: 5px;
 }
 
-.cellHeaderFoundation {
-  color: #4291f8 !important;
+.cellDefined {
+  background-color: #ffc107 !important;
+  color: #000000 !important;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.cellQuantitative {
+  background-color: #8bc34a !important;
+  color: #000000 !important;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.cellOptimizing {
+  background-color: #2aaa04 !important;
+  color: #ffffff !important;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.cellHeaderInitial {
+  color: #e57373 !important;
   text-align: center;
   font-weight: bold;
 }
 
-.cellHeaderStrategic {
-  color: #0d60f8 !important;
+.cellHeaderManaged {
+  color: #ec7a08 !important;
   text-align: center;
   font-weight: bold;
 }
 
-.cellHeaderAdvanced {
+.cellHeaderDefined {
+  color: #ffc107 !important;
+  text-align: center;
+  font-weight: bold;
+}
+
+.cellHeaderQuantitative {
+  color: #8bc34a !important;
+  text-align: center;
+  font-weight: bold;
+}
+
+.cellHeaderOptimizing {
   color: #2aaa04 !important;
   text-align: center;
   font-weight: bold;

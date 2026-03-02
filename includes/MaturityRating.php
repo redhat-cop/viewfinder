@@ -12,7 +12,7 @@ class MaturityRating {
      * Get maturity rating based on individual control score
      *
      * @param int $score The control score
-     * @return string The rating level (Foundation, Strategic, Advanced, or Not Rated)
+     * @return string The rating level (Initial, Managed, Defined, Quantitatively Managed, Optimizing, or Not Rated)
      */
     public static function getRating($score) {
         if ($score == 0) {
@@ -21,35 +21,53 @@ class MaturityRating {
 
         $levels = Config::MATURITY_LEVELS;
 
-        if ($score >= $levels['strategic']['min'] && $score <= $levels['strategic']['max']) {
-            return $levels['strategic']['display_name'];
+        // Check levels in descending order for accurate classification
+        if ($score >= $levels['optimizing']['min']) {
+            return $levels['optimizing']['display_name'];
         }
 
-        if ($score >= $levels['advanced']['min']) {
-            return $levels['advanced']['display_name'];
+        if ($score >= $levels['quantitative']['min'] && $score <= $levels['quantitative']['max']) {
+            return $levels['quantitative']['display_name'];
         }
 
-        return $levels['foundation']['display_name'];
+        if ($score >= $levels['defined']['min'] && $score <= $levels['defined']['max']) {
+            return $levels['defined']['display_name'];
+        }
+
+        if ($score >= $levels['managed']['min'] && $score <= $levels['managed']['max']) {
+            return $levels['managed']['display_name'];
+        }
+
+        return $levels['initial']['display_name'];
     }
 
     /**
      * Get overall maturity rating based on total score
      *
      * @param int $score The total score across all controls
-     * @return string The overall rating level (Foundation, Strategic, or Advanced)
+     * @return string The overall rating level (Initial, Managed, Defined, Quantitatively Managed, or Optimizing)
      */
     public static function getTotalRating($score) {
         $levels = Config::TOTAL_MATURITY_LEVELS;
 
-        if ($score >= $levels['strategic']['min'] && $score <= $levels['strategic']['max']) {
-            return $levels['strategic']['display_name'];
+        // Check levels in descending order for accurate classification
+        if ($score >= $levels['optimizing']['min']) {
+            return $levels['optimizing']['display_name'];
         }
 
-        if ($score >= $levels['advanced']['min']) {
-            return $levels['advanced']['display_name'];
+        if ($score >= $levels['quantitative']['min'] && $score <= $levels['quantitative']['max']) {
+            return $levels['quantitative']['display_name'];
         }
 
-        return $levels['foundation']['display_name'];
+        if ($score >= $levels['defined']['min'] && $score <= $levels['defined']['max']) {
+            return $levels['defined']['display_name'];
+        }
+
+        if ($score >= $levels['managed']['min'] && $score <= $levels['managed']['max']) {
+            return $levels['managed']['display_name'];
+        }
+
+        return $levels['initial']['display_name'];
     }
 
     /**
@@ -61,12 +79,16 @@ class MaturityRating {
     public static function getRatingClass($rating) {
         $rating = strtolower($rating);
         switch ($rating) {
-            case 'advanced':
-                return 'cellAdvanced';
-            case 'strategic':
-                return 'cellStrategic';
-            case 'foundation':
-                return 'cellFoundation';
+            case 'optimizing':
+                return 'cellOptimizing';
+            case 'quantitatively managed':
+                return 'cellQuantitative';
+            case 'defined':
+                return 'cellDefined';
+            case 'managed':
+                return 'cellManaged';
+            case 'initial':
+                return 'cellInitial';
             case 'not rated':
                 return 'cellNotRated';
             default:

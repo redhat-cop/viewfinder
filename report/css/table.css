@@ -7,6 +7,20 @@
 }
 
 
+.bigtable {
+	width: 95%;
+	margin: 0 auto;
+	text-align: center;
+	display: block;
+	clear: both;
+}
+
+.bigtable table {
+	display: table;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .bigtableLeft {
 	position: absolute;
 	top: 30%;
@@ -30,6 +44,8 @@ table {
 	border-collapse: collapse;
 	overflow: hidden;
 	border-radius: 5px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 th,
