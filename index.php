@@ -243,7 +243,7 @@
         <h2>Full Maturity Assessments</h2>
       </div>
       <p class="landing-card-description">
-        Comprehensive CMMI-based maturity assessments weighted for your industry's priorities. Choose from Security or Digital Sovereignty assessments.
+        Comprehensive 5-Level maturity assessments weighted for your industry's priorities. Choose from Security or Digital Sovereignty assessments.
       </p>
       <div class="landing-card-buttons">
         <a href="maturity-assessment-landing.php" class="landing-button landing-button-primary">
@@ -470,7 +470,7 @@ while( $i < 9) {
   } else {
     $itemSummary = "";
   }
-  // Removed tier display (Foundation/Strategic/Advanced) - now using CMMI 5-level model
+  // Removed tier display (Foundation/Strategic/Advanced) - now using 5-Level Maturity Model
   $points = $i . "-points";
   print '<li><input type="checkbox" name="' . "control" . $qnum . "-" . $i . "\" id=\"" . "control" . "$qnum" . "-" . $i . '" value="' . $json[$area][$points] . '"><label for="' . "control" . $qnum . "-" . $i . '">' . $json[$area][$i] . "$itemSummary &nbsp </label></li>". "\n";
   $i++;

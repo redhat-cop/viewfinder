@@ -1,20 +1,20 @@
 <?php
 /**
- * CMMI Maturity Model Visualization
+ * 5-Level Maturity Model Visualization
  * HTML/CSS replacement for the old maturity assessment image
- * Shows 5 CMMI levels across domains from the current profile
+ * Shows 5 maturity levels across domains from the current profile
  */
 
 // Extract domains and capabilities from the $json variable (passed from parent scope)
 $domains = [];
 $capabilities = [];
 
-// Map control names from controls JSON to CMMI levels
-// Control 1 -> CMMI Level 1
-// Control 2 -> CMMI Level 2
-// Control 3 -> CMMI Level 3
-// Control 4 -> CMMI Level 4
-// Control 5 -> CMMI Level 5
+// Map control names from controls JSON to maturity levels
+// Control 1 -> Level 1 (Initial)
+// Control 2 -> Level 2 (Managed)
+// Control 3 -> Level 3 (Defined)
+// Control 4 -> Level 4 (Quantitatively Managed)
+// Control 5 -> Level 5 (Optimizing)
 foreach ($json as $key => $domainData) {
     // Skip non-domain entries
     if (!isset($domainData['title']) || !is_array($domainData)) {
@@ -33,7 +33,7 @@ foreach ($json as $key => $domainData) {
     }
 }
 
-// Define the 5 CMMI maturity levels (bottom to top)
+// Define the 5 maturity levels (bottom to top)
 $maturityLevels = [
     5 => ['name' => 'Optimizing', 'color' => '#2aaa04', 'textColor' => '#ffffff'],
     4 => ['name' => 'Quantitatively Managed', 'color' => '#8bc34a', 'textColor' => '#000000'],
@@ -254,7 +254,7 @@ $maturityLevels = [
 </style>
 
 <div class="maturity-model-container">
-    <div class="model-title">CMMI Cloud Sovereignty Maturity Model</div>
+    <div class="model-title">Cloud Sovereignty 5-Level Maturity Model</div>
 
     <div style="position: relative; margin: 0 60px 40px 100px;">
         <div class="axis-label-y">Maturity Level</div>

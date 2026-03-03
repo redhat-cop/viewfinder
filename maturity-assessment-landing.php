@@ -444,11 +444,11 @@
           </div>
         </div>
 
-        <!-- Right: CMMI Levels -->
+        <!-- Right: Maturity Levels -->
         <div class="maturity-levels-col">
           <div class="maturity-levels-display">
             <h3>
-              <i class="fa-solid fa-layer-group"></i> CMMI Maturity Levels
+              <i class="fa-solid fa-layer-group"></i> 5-Level Maturity Model
             </h3>
 
             <div class="maturity-level-item level-initial">

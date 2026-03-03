@@ -111,7 +111,7 @@ foreach ($domainScores as $domainName => $score) {
 // Normalize weighted score to 0-21 scale
 $weightedScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * 21 : 0;
 
-// Determine maturity level (same logic as results.php - CMMI 5-level system)
+// Determine maturity level (same logic as results.php - 5-Level Maturity Model)
 if ($weightedScore <= 4.2) {
     $maturityLevel = 'Initial';
     $maturityColor = '#e57373';

@@ -196,7 +196,7 @@
     // Normalize weighted score to 0-21 scale
     $weightedScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * 21 : 0;
 
-    // Determine maturity level based on weighted score (CMMI 5-level system)
+    // Determine maturity level based on weighted score (5-Level Maturity Model)
     // Initial: 0-20% (0-4.2 points), Managed: 21-40% (4.21-8.4 points)
     // Defined: 41-60% (8.41-12.6 points), Quantitatively Managed: 61-80% (12.61-16.8 points)
     // Optimizing: 81-100% (16.81-21 points)
@@ -308,7 +308,7 @@
                 // Determine if this domain is weighted higher
                 $isWeighted = $weight >= 1.5;
 
-                // Maturity levels based on score percentage (CMMI 5-level system)
+                // Maturity levels based on score percentage (5-Level Maturity Model)
                 // Initial: 0-20%, Managed: 21-40%, Defined: 41-60%, Quantitatively Managed: 61-80%, Optimizing: 81-100%
                 if ($percentage <= 20) {
                     $strengthClass = 'strength-initial';

@@ -16,7 +16,7 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 ### Assessment Capabilities
 - **Multi-Profile Assessments**: Security, Digital Sovereignty, AI Readiness, OpenShift, RHEL, and custom profiles
 - **Multi-Domain Evaluation**: 7 control domains per profile
-- **CMMI 5-Level Maturity Model**: ✨ Initial, Managed, Defined, Quantitatively Managed, Optimizing (aligned with CMMI standards)
+- **5-Level Maturity Model**: ✨ Initial, Managed, Defined, Quantitatively Managed, Optimizing (industry-standard progressive framework)
 - **8 Capability Levels**: Progressive maturity scoring from 1-8 points per domain
 - **Real-time Scoring**: Dynamic calculation of maturity scores as assessments are completed
 - **Industry-Weighted Scoring**: ✨ Domain weights adjusted based on Line of Business (Finance, Healthcare, Government, etc.)
@@ -35,7 +35,7 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 - **Detailed Recommendations**: HTML-formatted guidance for improving maturity levels
 - **Workshop Notes in Reports**: ✨ Facilitator notes displayed in both results page and detailed PDF reports
 - **Compliance Mapping**: Link capabilities to compliance framework controls
-- **Maturity Tables**: Tabular view of scores and recommendations with CMMI color coding
+- **Maturity Tables**: Tabular view of scores and recommendations with 5-level color coding
 - **Framework-Specific Views**: Detailed compliance guidance per selected framework
 - **Industry-Specific Views**: Sector-specific recommendations
 
@@ -388,7 +388,7 @@ You'll see the **Landing Page Dashboard** with four main sections:
    - Professional landing page displays three columns:
      - Left: Profile and Industry selection
      - Middle: Domain weighting visualization
-     - Right: CMMI maturity level reference
+     - Right: 5-Level maturity model reference
 
 2. **Configure Assessment**:
    - Select Assessment Type (Security, Digital Sovereignty, AI, etc.)
@@ -409,7 +409,7 @@ You'll see the **Landing Page Dashboard** with four main sections:
 
 ### Interpreting Results
 
-#### CMMI Maturity Levels
+#### 5-Level Maturity Model
 - **Level 1 - Initial (0-20%)**: Ad-hoc processes, unpredictable results
 - **Level 2 - Managed (21-40%)**: Project-level management, repeatable processes
 - **Level 3 - Defined (41-60%)**: Organization-wide standards, proactive approach
@@ -424,7 +424,7 @@ You'll see the **Landing Page Dashboard** with four main sections:
 #### Results Tabs
 - **Radar Chart & Maturity Levels**: Visual representation with overall maturity score and domain breakdown
 - **Recommendations**: Specific improvement suggestions with domain-specific facilitator notes
-- **Maturity Table**: CMMI-coded table showing capability status across all levels
+- **Maturity Table**: Color-coded table showing capability status across all levels
 - **Workshop Notes**: ✨ Consolidated facilitator notes from the assessment (if captured)
 - **Compliance Frameworks**: Framework-specific guidance (if frameworks selected)
 - **Industry Specifics**: Line-of-business recommendations (if LOB selected)
@@ -989,8 +989,8 @@ Extend `includes/ProfileExporter.php` with new export methods
   - Critical gaps prioritized by industry weight
   - Strategic recommendations tailored to assessment results
   - Replaces generic static summary with data-driven insights
-- ✨ **NEW**: CMMI 5-Level Maturity Model alignment
-  - Updated from 3-tier (Foundation/Strategic/Advanced) to standard CMMI levels
+- ✨ **NEW**: 5-Level Maturity Model alignment
+  - Updated from 3-tier (Foundation/Strategic/Advanced) to industry-standard 5-level model
   - Level 1: Initial (0-20%) - Unpredictable, reactive
   - Level 2: Managed (21-40%) - Planned, basic controls
   - Level 3: Defined (41-60%) - Standardized, documented
@@ -1003,7 +1003,7 @@ Extend `includes/ProfileExporter.php` with new export methods
   - Industry selection with real-time weight visualization
   - Compliance framework selection (multi-select checkboxes)
   - Visual domain weighting bars showing industry priorities
-  - CMMI maturity level reference guide
+  - 5-Level maturity model reference guide
   - Compact 2-column framework selection (no scrolling)
 - 🔧 **IMPROVED**: Cleaner assessment workflow
   - LOB and compliance frameworks selected upfront on landing page
@@ -1015,7 +1015,7 @@ Extend `includes/ProfileExporter.php` with new export methods
   - Workshop Notes tab with proper dark theme styling
   - Maturity level descriptions in white for better visibility
   - Compact landing page layout (reduced top margin)
-- 📖 **DOCS**: Updated README with new features and CMMI levels
+- 📖 **DOCS**: Updated README with new features and 5-level maturity model
 
 ### Version 2.8.0 (February 2026)
 - ✨ **NEW**: Assessment Results Export/Import functionality

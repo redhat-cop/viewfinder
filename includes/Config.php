@@ -45,7 +45,7 @@ class Config {
 ,];
 
     /**
-     * Maturity level thresholds for individual controls (CMMI 5-level system)
+     * Maturity level thresholds for individual controls (5-Level Maturity Model)
      * Based on max score of 36 per control with 20% intervals
      */
     const MATURITY_LEVELS = [
@@ -77,7 +77,7 @@ class Config {
     ];
 
     /**
-     * Overall maturity rating thresholds (total across all controls - CMMI 5-level system)
+     * Overall maturity rating thresholds (total across all controls - 5-Level Maturity Model)
      * Based on max total score of 252 (7 controls × 36) with 20% intervals
      */
     const TOTAL_MATURITY_LEVELS = [

@@ -391,7 +391,7 @@ tr:hover {
   text-align: center;
 }
 
-/* Maturity Level Text Colors - CMMI 5-Level System */
+/* Maturity Level Text Colors - 5-Level Maturity Model */
 .smallTextInitial {
   color: #e57373 !important;
   font-size: 1.0rem;
@@ -432,7 +432,7 @@ tr:hover {
   color: #ccc !important;
 }
 
-/* Maturity Level Cell Backgrounds - CMMI 5-Level System */
+/* Maturity Level Cell Backgrounds - 5-Level Maturity Model */
 .cellInitial {
   background-color: #e57373 !important;
   color: #ffffff !important;

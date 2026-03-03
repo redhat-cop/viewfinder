@@ -180,11 +180,11 @@
           </div>
         </div>
 
-        <!-- Right Column: CMMI Maturity Levels -->
+        <!-- Right Column: 5-Level Maturity Model -->
         <div class="landing-card-right">
           <div class="maturity-levels-display">
             <h3>
-              <i class="fa-solid fa-layer-group"></i> CMMI Maturity Levels
+              <i class="fa-solid fa-layer-group"></i> 5-Level Maturity Model
             </h3>
 
             <div class="maturity-level-item level-initial">

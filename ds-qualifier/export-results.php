@@ -117,7 +117,7 @@ try {
     $weightedScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * 21 : 0;
     $scorePercentage = round(($weightedScore / $maxScore) * 100);
 
-    // Determine maturity level based on weighted score (CMMI 5-level system)
+    // Determine maturity level based on weighted score (5-Level Maturity Model)
     if ($weightedScore <= 4.2) {
         $maturityLevel = 'Initial';
     } elseif ($weightedScore <= 8.4) {

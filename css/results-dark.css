@@ -210,7 +210,7 @@ tr:hover {
   text-align: center;
 }
 
-/* Maturity Table Row Colors - CMMI 5-Level System */
+/* Maturity Table Row Colors - 5-Level Maturity Model */
 .initial {
   background-color: #e57373 !important;
   color: #ffffff !important;
@@ -337,7 +337,7 @@ tr:hover {
   word-break: break-word;
 }
 
-/* Maturity Level Cell Colors - CMMI 5-Level System */
+/* Maturity Level Cell Colors - 5-Level Maturity Model */
 .cellInitial {
   background-color: #e57373 !important;
   color: #ffffff !important;
@@ -393,7 +393,7 @@ tr:hover {
   white-space: nowrap;
 }
 
-/* Header cells for maturity levels - CMMI 5-Level System */
+/* Header cells for maturity levels - 5-Level Maturity Model */
 .cellHeaderInitial {
   color: #e57373 !important;
   text-align: center;

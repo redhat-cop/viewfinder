@@ -453,7 +453,7 @@ $overallRating = MaturityRating::getTotalRating($displayTotalScore);
 $overallRatingClass = MaturityRating::getRatingClass($overallRating);
 print "<br><table><td class='" . $overallRatingClass . "'>Overall rating: " . $overallRating . " (" . $displayTotalScore . " weighted out of 252)</td></tr></table>";
 
-// Display CMMI Maturity Model visualization (HTML/CSS)
+// Display 5-Level Maturity Model visualization (HTML/CSS)
 require_once __DIR__ . '/includes/maturity-model-visual.php';
 ?>
                         </div>
