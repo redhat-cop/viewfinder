@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Digital Sovereignty Maturity Assessment - Executive Summary</title>
+  <style>
+    @page {
+      margin: 2cm;
+      size: A4;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.5;
+      color: #333;
+      max-width: 210mm;
+      margin: 0 auto;
+      padding: 20px;
+      background: white;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 3px solid #ee0000;
+    }
+
+    .header-left h1 {
+      color: #ee0000;
+      margin: 0;
+      font-size: 1.8em;
+    }
+
+    .header-left .subtitle {
+      color: #666;
+      font-size: 1.1em;
+      margin-top: 5px;
+    }
+
+    .header-right {
+      text-align: right;
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    .placeholder {
+      background: #fff3cd;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: bold;
+      color: #856404;
+    }
+
+    .score-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 15px;
+      margin: 25px 0;
+    }
+
+    .score-item {
+      background: #f5f5f5;
+      padding: 20px;
+      border-radius: 6px;
+      text-align: center;
+      border: 2px solid #ddd;
+    }
+
+    .score-item.overall {
+      background: #0088ce;
+      color: white;
+      border-color: #0088ce;
+    }
+
+    .score-item.strength {
+      background: #d4edda;
+      border-color: #28a745;
+    }
+
+    .score-item.priority {
+      background: #f8d7da;
+      border-color: #dc3545;
+    }
+
+    .score-number {
+      font-size: 2.5em;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .score-label {
+      font-size: 0.9em;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .score-sublabel {
+      font-size: 0.85em;
+      margin-top: 5px;
+      opacity: 0.8;
+    }
+
+    h2 {
+      color: #cc0000;
+      font-size: 1.4em;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      padding-bottom: 5px;
+      border-bottom: 2px solid #eee;
+    }
+
+    h3 {
+      color: #0088ce;
+      font-size: 1.1em;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+      font-size: 0.9em;
+    }
+
+    table th {
+      background: #0088ce;
+      color: white;
+      padding: 10px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    table td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    table tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+
+    .maturity-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.85em;
+      font-weight: 600;
+    }
+
+    .level-1 { background: #f8d7da; color: #721c24; }
+    .level-2 { background: #fff3cd; color: #856404; }
+    .level-3 { background: #d1ecf1; color: #0c5460; }
+    .level-4 { background: #d4edda; color: #155724; }
+    .level-5 { background: #28a745; color: white; }
+
+    .priority-high { color: #dc3545; font-weight: 600; }
+    .priority-medium { color: #ffc107; font-weight: 600; }
+    .priority-low { color: #28a745; font-weight: 600; }
+
+    .recommendations {
+      background: #e8f4fd;
+      border-left: 4px solid #0088ce;
+      padding: 15px;
+      margin: 20px 0;
+    }
+
+    .recommendations h4 {
+      margin-top: 0;
+      color: #0088ce;
+    }
+
+    .recommendations ul {
+      margin-bottom: 0;
+    }
+
+    .info-box {
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 15px;
+      margin: 15px 0;
+    }
+
+    .footer {
+      margin-top: 40px;
+      padding-top: 15px;
+      border-top: 2px solid #ccc;
+      font-size: 0.85em;
+      color: #666;
+      text-align: center;
+    }
+
+    @media print {
+      body {
+        max-width: 100%;
+      }
+
+      .score-card {
+        page-break-inside: avoid;
+      }
+
+      table {
+        page-break-inside: avoid;
+      }
+
+      .recommendations {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-left">
+      <h1>Digital Sovereignty Maturity Assessment</h1>
+      <div class="subtitle">Executive Summary</div>
+    </div>
+    <div class="header-right">
+      <div style="margin-bottom: 15px;">
+        <img src="../images/Logo-Red_Hat-C-Standard-RGB.svg" alt="Red Hat" style="height: 35px;">
+      </div>
+      <div><strong>Organization:</strong> <span class="placeholder">[Customer Name]</span></div>
+      <div><strong>Assessment Date:</strong> <span class="placeholder">[Date]</span></div>
+      <div><strong>Prepared By:</strong> <span class="placeholder">[Facilitator Name]</span>, Red Hat</div>
+      <div><strong>Version:</strong> 1.0</div>
+    </div>
+  </div>
+
+  <h2>Assessment Overview</h2>
+  <p>
+    This assessment evaluated <span class="placeholder">[Customer Organization]</span>'s Digital Sovereignty maturity across 7 key domains using a proven 5-level CMMI-based framework. The assessment was conducted through interactive workshops with representatives from IT leadership, security, operations, and compliance functions.
+  </p>
+
+  <div class="score-card">
+    <div class="score-item overall">
+      <div class="score-label">Overall Maturity</div>
+      <div class="score-number"><span class="placeholder">[XX]</span>%</div>
+      <div class="score-sublabel"><span class="placeholder">[Maturity Level Name]</span></div>
+    </div>
+
+    <div class="score-item strength">
+      <div class="score-label">Strongest Domain</div>
+      <div class="score-number"><span class="placeholder">[XX]</span>%</div>
+      <div class="score-sublabel"><span class="placeholder">[Domain Name]</span></div>
+    </div>
+
+    <div class="score-item priority">
+      <div class="score-label">Priority Gap</div>
+      <div class="score-number"><span class="placeholder">[XX]</span>%</div>
+      <div class="score-sublabel"><span class="placeholder">[Domain Name]</span></div>
+    </div>
+  </div>
+
+  <h2>Maturity Assessment Results</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Domain</th>
+        <th style="text-align: center;">Score</th>
+        <th style="text-align: center;">Maturity Level</th>
+        <th>Key Finding</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Data Sovereignty</strong></td>
+        <td style="text-align: center;"><span class="placeholder">[XX%]</span></td>
+        <td style="text-align: center;"><span class="maturity-badge level-2"><span class="placeholder">[Level]</span></span></td>
+        <td><span class="placeholder">[Brief finding - e.g., "Strong residency policies but gaps in key management"]</span></td>
+      </tr>
+      <tr>
+        <td><strong>Technical Sovereignty</strong></td>
+        <td style="text-align: center;"><span class="placeholder">[XX%]</span></td>
+        <td style="text-align: center;"><span class="maturity-badge level-2"><span class="placeholder">[Level]</span></span></td>
+        <td><span class="placeholder">[Brief finding]</span></td>
+      </tr>
+      <tr>
+        <td><strong>Operational Sovereignty</strong></td>
+        <td style="text-align: center;"><span class="placeholder">[XX%]</span></td>
+        <td style="text-align: center;"><span class="maturity-badge level-3"><span class="placeholder">[Level]</span></span></td>
+        <td><span class="placeholder">[Brief finding]</span></td>
+      </tr>
+      <tr>
+        <td><strong>Assurance Sovereignty</strong></td>
+        <td style="text-align: center;"><span class="placeholder">[XX%]</span></td>
+        <td style="text-align: center;"><span class="maturity-badge level-2"><span class="placeholder">[Level]</span></span></td>
+        <td><span class="placeholder">[Brief finding]</span></td>
+      </tr>
+      <tr>
+        <td><strong>Open Source</strong></td>
+        <td style="text-align: center;"><span class="placeholder">[XX%]</span></td>
+        <td style="text-align: center;"><span class="maturity-badge level-1"><span class="placeholder">[Level]</span></span></td>
+        <td><span class="placeholder">[Brief finding]</span></td>
+      </tr>
+      <tr>
+        <td><strong>Executive Oversight</strong></td>
+        <td style="text-align: center;"><span class="placeholder">[XX%]</span></td>
+        <td style="text-align: center;"><span class="maturity-badge level-3"><span class="placeholder">[Level]</span></span></td>
+        <td><span class="placeholder">[Brief finding]</span></td>
+      </tr>
+      <tr>
+        <td><strong>Managed Services</strong></td>
+        <td style="text-align: center;"><span class="placeholder">[XX%]</span></td>
+        <td style="text-align: center;"><span class="maturity-badge level-2"><span class="placeholder">[Level]</span></span></td>
+        <td><span class="placeholder">[Brief finding]</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Key Strengths</h2>
+  <ul>
+    <li><strong><span class="placeholder">[Strength 1 Domain/Capability]</span>:</strong> <span class="placeholder">[Description - e.g., "Well-documented operational procedures with quarterly reviews and clear ownership"]</span></li>
+    <li><strong><span class="placeholder">[Strength 2 Domain/Capability]</span>:</strong> <span class="placeholder">[Description]</span></li>
+    <li><strong><span class="placeholder">[Strength 3 Domain/Capability]</span>:</strong> <span class="placeholder">[Description]</span></li>
+  </ul>
+
+  <h2>Critical Gaps</h2>
+  <ul>
+    <li><strong><span class="placeholder">[Gap 1 Domain/Capability]</span>:</strong> <span class="placeholder">[Description - e.g., "No external key management - cloud provider controls encryption keys"]</span></li>
+    <li><strong><span class="placeholder">[Gap 2 Domain/Capability]</span>:</strong> <span class="placeholder">[Description]</span></li>
+    <li><strong><span class="placeholder">[Gap 3 Domain/Capability]</span>:</strong> <span class="placeholder">[Description]</span></li>
+  </ul>
+
+  <h2>Priority Recommendations</h2>
+
+  <h3>Immediate Actions (0-3 months)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Action</th>
+        <th>Domain</th>
+        <th style="text-align: center;">Priority</th>
+        <th>Impact</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="placeholder">[Action 1 - e.g., "Implement HSM-based external key management"]</span></td>
+        <td>Data Sovereignty</td>
+        <td style="text-align: center;"><span class="priority-high">HIGH</span></td>
+        <td><span class="placeholder">[Expected impact]</span></td>
+      </tr>
+      <tr>
+        <td><span class="placeholder">[Action 2]</span></td>
+        <td><span class="placeholder">[Domain]</span></td>
+        <td style="text-align: center;"><span class="priority-high">HIGH</span></td>
+        <td><span class="placeholder">[Expected impact]</span></td>
+      </tr>
+      <tr>
+        <td><span class="placeholder">[Action 3]</span></td>
+        <td><span class="placeholder">[Domain]</span></td>
+        <td style="text-align: center;"><span class="priority-medium">MEDIUM</span></td>
+        <td><span class="placeholder">[Expected impact]</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Tactical Improvements (3-12 months)</h3>
+  <ul>
+    <li><span class="placeholder">[Initiative 1 with brief description]</span></li>
+    <li><span class="placeholder">[Initiative 2 with brief description]</span></li>
+    <li><span class="placeholder">[Initiative 3 with brief description]</span></li>
+  </ul>
+
+  <h3>Strategic Initiatives (12-36 months)</h3>
+  <ul>
+    <li><span class="placeholder">[Long-term goal 1 with brief description]</span></li>
+    <li><span class="placeholder">[Long-term goal 2 with brief description]</span></li>
+    <li><span class="placeholder">[Long-term goal 3 with brief description]</span></li>
+  </ul>
+
+  <div class="recommendations">
+    <h4>Executive Recommendations</h4>
+    <p><strong>Key Message:</strong> <span class="placeholder">[Overall recommendation paragraph - e.g., "While the organization demonstrates strong executive awareness and operational foundations, critical gaps in cryptographic key management and vendor contract terms pose significant sovereignty risks. Immediate action is recommended to implement external key management and renegotiate cloud contracts with sovereignty clauses."]</span></p>
+
+    <p><strong>Investment Priority:</strong> Focus initial investments on:</p>
+    <ul>
+      <li><span class="placeholder">[Priority area 1 with budget/resource implication]</span></li>
+      <li><span class="placeholder">[Priority area 2 with budget/resource implication]</span></li>
+      <li><span class="placeholder">[Priority area 3 with budget/resource implication]</span></li>
+    </ul>
+  </div>
+
+  <h2>Industry Context</h2>
+  <p>
+    This assessment used <strong><span class="placeholder">[Industry/LOB]</span></strong> weighting, which emphasizes <span class="placeholder">[domains]</span> based on regulatory requirements and industry best practices relevant to <span class="placeholder">[specific regulations - e.g., "financial services (DORA, PCI DSS)"]</span>.
+  </p>
+
+  <div class="info-box">
+    <p><strong>Regulatory Drivers:</strong></p>
+    <ul>
+      <li><span class="placeholder">[Regulation 1 with deadline/requirement]</span></li>
+      <li><span class="placeholder">[Regulation 2 with deadline/requirement]</span></li>
+      <li><span class="placeholder">[Regulation 3 with deadline/requirement]</span></li>
+    </ul>
+  </div>
+
+  <h2>Next Steps</h2>
+  <ol>
+    <li><strong>Validate Findings:</strong> Review detailed assessment results with technical teams to confirm accuracy</li>
+    <li><strong>Roadmap Workshop:</strong> Conduct 2-hour planning session to develop detailed implementation roadmap</li>
+    <li><strong>Budget Planning:</strong> Develop resource requirements and budget estimates for priority initiatives</li>
+    <li><strong>Stakeholder Alignment:</strong> Brief Board/C-suite on findings and secure sponsorship for sovereignty program</li>
+    <li><strong>Initiate Quick Wins:</strong> Begin immediate actions that can be completed within 3 months</li>
+    <li><strong>Quarterly Reviews:</strong> Schedule progress check-ins every 90 days</li>
+    <li><strong>Annual Reassessment:</strong> Plan full reassessment in 12 months to measure improvement</li>
+  </ol>
+
+  <h2>How Red Hat Can Help</h2>
+  <p>
+    Red Hat offers comprehensive support for your sovereignty journey, including:
+  </p>
+  <ul>
+    <li><strong>Architecture & Design:</strong> Sovereign cloud architecture reviews and reference implementations</li>
+    <li><strong>Technology Solutions:</strong> Red Hat OpenShift, Advanced Cluster Security, Trusted Software Supply Chain</li>
+    <li><strong>Professional Services:</strong> Implementation support for key management, containerization, and migration</li>
+    <li><strong>Training & Skills Development:</strong> Workshops and certifications for internal teams</li>
+    <li><strong>Managed Services:</strong> Sovereign-compliant managed cloud services with domestic operations</li>
+    <li><strong>Ongoing Advisory:</strong> Quarterly maturity reviews and continuous improvement support</li>
+  </ul>
+
+  <div class="info-box" style="background: #e8f4fd;">
+    <p><strong>Recommended Engagement:</strong></p>
+    <p><span class="placeholder">[Specific Red Hat offering/service recommendation based on gaps identified - e.g., "Given the critical gaps in key management and container security, we recommend a 2-week Architecture Workshop focused on implementing External Key Management with Red Hat Advanced Cluster Security for sovereign Kubernetes environments."]</span></p>
+  </div>
+
+  <div class="footer">
+    <p><strong>For questions or to discuss this assessment:</strong></p>
+    <p><span class="placeholder">[Facilitator Name]</span> | <span class="placeholder">[Email]</span> | <span class="placeholder">[Phone]</span></p>
+    <p style="margin-top: 15px;">© 2026 Red Hat, Inc. | Digital Sovereignty Maturity Assessment</p>
+    <p>This document contains confidential information prepared for <span class="placeholder">[Customer Organization]</span></p>
+  </div>
+
+</body>
+</html>

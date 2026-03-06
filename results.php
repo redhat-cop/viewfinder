@@ -294,28 +294,30 @@ foreach ($controls as $control) {
 <div class="container">
 
 <div class="tab">
-  <button class="tablinks" onclick="openTab(event, 'Radar')" id="defaultOpen">Radar Chart & Maturity Levels</button>
-  <button class="tablinks" onclick="openTab(event, 'Recommendations')">Recommendations</button>
-  <button class="tablinks" onclick="openTab(event, 'TableOutput')">Maturity Table</button> 
+  <button class="tablinks" onclick="openTab(event, 'Radar')" id="defaultOpen"><i class="fa-solid fa-gauge"></i> Overview</button>
+  <button class="tablinks" onclick="openTab(event, 'Strengths')"><i class="fa-solid fa-chart-line"></i> Strengths</button>
+  <button class="tablinks" onclick="openTab(event, 'Gaps')"><i class="fa-solid fa-exclamation-triangle"></i> Gaps</button>
+  <button class="tablinks" onclick="openTab(event, 'Recommendations')"><i class="fa-solid fa-list-check"></i> Details</button>
+  <button class="tablinks" onclick="openTab(event, 'TableOutput')"><i class="fa-solid fa-table"></i> Table</button> 
   <?php
   if (isset($_REQUEST['framework'])) {
-	print '<button class="tablinks" onclick="openTab(event, \'Frameworks\')">Security Frameworks</button>';
+	print '<button class="tablinks" onclick="openTab(event, \'Frameworks\')"><i class="fa-solid fa-shield-halved"></i> Frameworks</button>';
 }
   ?>
   <?php
   // Validate and display LOB tab
   $lob = Security::validateLOB($_REQUEST['lob'] ?? '');
   if ($lob !== null && $lob !== 'Other') {
-      print '<button class="tablinks" onclick="openTab(event, \'LineOfBusiness\')">' . Security::escape($lob) . ' Specifics</button>';
+      print '<button class="tablinks" onclick="openTab(event, \'LineOfBusiness\')"><i class="fa-solid fa-building"></i> ' . Security::escape($lob) . '</button>';
   }
   ?>
   <?php
   // Display Workshop Notes tab if notes exist
   if ($hasNotes) {
-      print '<button class="tablinks" onclick="openTab(event, \'WorkshopNotes\')"></i> Workshop Notes</button>';
+      print '<button class="tablinks" onclick="openTab(event, \'WorkshopNotes\')"><i class="fa-solid fa-note-sticky"></i> Notes</button>';
   }
   ?>
-  <button class="tablinks""><a href="<?php print $urlData; ?>" target= _blank>Detailed Output</a>&nbsp; <i class='fas fa-external-link-alt'></i></button>
+  <button class="tablinks""><a href="<?php print $urlData; ?>" target= _blank><i class='fas fa-file-alt'></i> Report</a>&nbsp; <i class='fas fa-external-link-alt'></i></button>
 
 </div>
 
@@ -327,19 +329,6 @@ foreach ($controls as $control) {
 
 <div class="bigtableLeft">
 <h1 class="profileHeader">Profile: <?php print Security::escape(Config::getProfileDisplayName($data['profile']));?> </h1>
-
-<?php
-// Display selected LOB profile info
-if (isset($lobWeights[$profile][$selectedLob])) {
-    $lobData = $lobWeights[$profile][$selectedLob];
-    print '<div style="background: #1a1a1a; border-left: 3px solid #0d60f8; padding: 0.75rem; margin-bottom: 1rem; border-radius: 4px;">';
-    print '<i class="fa-solid ' . htmlspecialchars($lobData['icon']) . '" style="color: #0d60f8; margin-right: 0.5rem;"></i>';
-    print '<strong style="color: #9ec7fc;">Industry Profile:</strong> ';
-    print '<span style="color: #fff;">' . Security::escape($lobData['name']) . '</span><br>';
-    print '<span style="color: #999; font-size: 0.9rem; margin-left: 1.5rem;">' . Security::escape($lobData['description']) . '</span>';
-    print '</div>';
-}
-?>
 
 <table class="spacedTable">
 	<thead>
@@ -388,9 +377,210 @@ $overallRating = MaturityRating::getTotalRating($displayTotalScore);
 $overallRatingClass = MaturityRating::getRatingClass($overallRating);
 print "<br><table class='spacedTable' style='margin-top: 0.5rem;'><tr><td class='" . $overallRatingClass . "' style='padding: 0.5rem;'>Overall rating: " . $overallRating . " (" . $displayTotalScore . " weighted out of 252)</td></tr></table>";
 
+// ==========================================
+// KEY STRENGTHS AND CRITICAL GAPS ANALYSIS
+// (Data preparation for separate tabs)
+// ==========================================
+
+// Analyze domain performance
+$domainAnalysis = [];
+foreach ($controls as $control) {
+    $qnum = $json[$control]["qnum"];
+    $title = $json[$control]["title"];
+    $score = $controlTotal[$qnum];
+    $maxScore = 36;
+    $percentage = round(($score / $maxScore) * 100);
+    $rating = MaturityRating::getRating($score);
+    $weight = isset($domainWeights[$title]) ? $domainWeights[$title] : 1.0;
+
+    $domainAnalysis[] = [
+        "title" => $title,
+        "score" => $score,
+        "percentage" => $percentage,
+        "rating" => $rating,
+        "weight" => $weight
+    ];
+}
+
+// Sort by score to find strengths and gaps
+usort($domainAnalysis, function($a, $b) {
+    return $b["score"] <=> $a["score"];
+});
+
+$strengths = array_slice($domainAnalysis, 0, 2); // Top 2 domains
+$gaps = array_slice($domainAnalysis, -3); // Bottom 3 domains
+
+// Filter gaps to prioritize high-weighted domains
+usort($gaps, function($a, $b) {
+    // Sort by weight first, then by low score
+    if ($b["weight"] != $a["weight"]) {
+        return $b["weight"] <=> $a["weight"];
+    }
+    return $a["score"] <=> $b["score"];
+});
+
+// Domain-specific quick wins
+$quickWins = [
+    'Data Sovereignty' => 'Implement automated data flow monitoring and quarterly audits of vendor data access to advance toward Level 4 quantitative management.',
+    'Technical Sovereignty' => 'Document exit strategies for all critical systems and conduct annual portability drills to strengthen vendor independence.',
+    'Operational Sovereignty' => 'Establish a Center of Excellence for sovereign technologies and implement quarterly DR testing scenarios including geopolitical isolation.',
+    'Assurance Sovereignty' => 'Expand continuous security validation with automated compliance reporting and establish formal vendor transparency requirements in all contracts.',
+    'Open Source' => 'Formalize contribution policies and establish metrics tracking for community engagement and project influence.',
+    'Executive Oversight' => 'Implement sovereignty KPI dashboards for Board reporting and establish quarterly reviews with regulatory authorities.',
+    'Managed Services' => 'Develop comprehensive transition playbooks for all critical managed services and conduct annual vendor alternative assessments.'
+];
+
+// Domain-specific business impacts
+$businessImpacts = [
+    'Data Sovereignty' => 'Exposes organization to foreign government data access demands, violates data residency regulations (GDPR, NIS2), and creates legal liability for cross-border data transfers.',
+    'Technical Sovereignty' => 'Creates vendor lock-in preventing migration, increases costs through proprietary dependencies, and exposes organization to supply chain disruption risks.',
+    'Operational Sovereignty' => 'Inability to maintain critical operations during vendor outages or geopolitical conflicts; excessive reliance on external expertise threatens business continuity.',
+    'Assurance Sovereignty' => 'Limits ability to verify security claims, prevents independent compliance validation, and creates blind spots in third-party risk management.',
+    'Open Source' => 'Increases dependency on proprietary software vendors, limits ability to audit code for security vulnerabilities, and reduces long-term technology flexibility.',
+    'Executive Oversight' => 'Lack of strategic direction and budget allocation for sovereignty initiatives; inability to demonstrate compliance to regulators and stakeholders.',
+    'Managed Services' => 'Third-party access to sensitive systems without adequate controls; inability to quickly transition services if vendor relationship deteriorates or sovereignty requirements change.'
+];
+
+// Domain-specific first steps
+$firstSteps = [
+    'Data Sovereignty' => [
+        'Implement external key management (HSM) to ensure cryptographic sovereignty within 90 days',
+        'Audit and renegotiate cloud contracts to include data residency guarantees and foreign access notification clauses'
+    ],
+    'Technical Sovereignty' => [
+        'Conduct vendor lock-in assessment identifying proprietary dependencies and migration risks',
+        'Develop 12-month roadmap for containerizing applications using Kubernetes for portability'
+    ],
+    'Operational Sovereignty' => [
+        'Create documented "break-glass" procedures for operating critical systems without vendor support',
+        'Establish skills development plan and begin cross-training staff on sovereign technology alternatives'
+    ],
+    'Assurance Sovereignty' => [
+        'Negotiate "right to audit" clauses in all vendor contracts with sovereignty-critical providers',
+        'Implement sovereign-controlled SIEM for independent security monitoring within 6 months'
+    ],
+    'Open Source' => [
+        'Develop open source strategy policy defining when to prefer OSS over proprietary alternatives',
+        'Implement software composition analysis tools to track and manage open source dependencies'
+    ],
+    'Executive Oversight' => [
+        'Establish dedicated sovereignty governance committee with Board reporting and quarterly reviews',
+        'Develop sovereignty KPIs and allocate dedicated budget line for sovereignty initiatives'
+    ],
+    'Managed Services' => [
+        'Implement Just-in-Time (JIT) access controls and session recording for all third-party vendor access',
+        'Develop transition playbooks with defined exit criteria and alternative provider options for critical services'
+    ]
+];
+
 ?>
 </div>
 </div>
+
+<!-- Key Strengths Tab -->
+<div id="Strengths" class="tabcontent">
+<div style="max-width: 1400px; margin: 0 auto; padding: 2rem;">
+<h1 style="color: #9ec7fc; font-size: 2rem; margin: 0 0 1.5rem 0;"><i class="fa-solid fa-chart-line"></i> Key Strengths</h1>
+
+<div style="padding: 1.5rem; background: #1a1a1a; border: 1px solid #444; border-radius: 8px;">
+<p style="color: #ccc; margin-bottom: 1.5rem; font-size: 1.1rem;">The assessment identified the following areas of strong maturity. These strengths can be leveraged to build momentum and accelerate improvements in other domains.</p>
+
+<?php
+foreach ($strengths as $strength) {
+    $quickWin = isset($quickWins[$strength["title"]]) ? $quickWins[$strength["title"]] : 'Continue to refine and optimize processes, and consider sharing best practices with other domains.';
+
+    print '<div style="margin-bottom: 2rem; padding: 1.5rem; background: #2a2a2a; border-left: 4px solid #2aaa04; border-radius: 6px;">';
+    print '<h3 style="color: #fff; margin-top: 0; font-size: 1.4rem;">' . Security::escape($strength["title"]) . '</h3>';
+    print '<div style="margin-bottom: 1rem;">';
+    print '<span style="color: #2aaa04; font-weight: 600; font-size: 1.1rem;">' . Security::escape($strength["rating"]) . ' Level</span>';
+    print ' <span style="color: #999;">(' . $strength["percentage"] . '%)</span>';
+    print '</div>';
+    print '<p style="color: #ccc; margin-bottom: 1rem;">Demonstrating well-established capabilities in this domain.</p>';
+
+    print '<div style="margin-top: 1rem; padding: 1rem; background: #1a1a1a; border: 1px solid #444; border-radius: 4px;">';
+    print '<div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">';
+    print '<i class="fa-solid fa-lightbulb" style="color: #12bbd4; font-size: 1.2rem;"></i>';
+    print '<strong style="color: #12bbd4; font-size: 1.1rem;">Quick Win to Advance Further</strong>';
+    print '</div>';
+    print '<p style="color: #ccc; margin: 0;">' . Security::escape($quickWin) . '</p>';
+    print '</div>';
+    print '</div>';
+}
+?>
+
+<div style="margin-top: 2rem; padding: 1.5rem; background: #0d60f8; border-radius: 6px;">
+<p style="color: #fff; margin: 0; font-size: 1rem;"><i class="fa-solid fa-info-circle"></i> <strong>Tip:</strong> Use these strong domains as templates for improving weaker areas. Share processes, tools, and lessons learned across teams.</p>
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- Critical Gaps Tab -->
+<div id="Gaps" class="tabcontent">
+<div style="max-width: 1400px; margin: 0 auto; padding: 2rem;">
+<h1 style="color: #9ec7fc; font-size: 2rem; margin: 0 0 1.5rem 0;"><i class="fa-solid fa-exclamation-triangle"></i> Critical Gaps</h1>
+
+<div style="padding: 1.5rem; background: #1a1a1a; border: 1px solid #444; border-radius: 8px;">
+<p style="color: #ccc; margin-bottom: 0.5rem; font-size: 1.1rem;">Priority areas requiring immediate attention<?php if ($selectedLob !== "General") { print ' (based on ' . Security::escape($selectedLob) . ' industry priorities)'; } ?>:</p>
+<p style="color: #999; font-size: 0.95rem; margin-bottom: 1.5rem;">Each gap includes business impact analysis and concrete first steps to begin addressing the deficiency.</p>
+
+<?php
+foreach ($gaps as $gap) {
+    $priorityBadge = "";
+    if ($gap["weight"] >= 1.5) {
+        $priorityBadge = '<span style="background: #f0ab00; color: #000; padding: 0.25rem 0.75rem; border-radius: 3px; font-size: 0.85rem; font-weight: 600; margin-left: 0.75rem;">HIGH PRIORITY</span>';
+    }
+
+    $impact = isset($businessImpacts[$gap["title"]]) ? $businessImpacts[$gap["title"]] : 'Reduces overall sovereignty maturity and organizational resilience.';
+    $steps = isset($firstSteps[$gap["title"]]) ? $firstSteps[$gap["title"]] : ['Review domain-specific recommendations in detailed assessment.'];
+
+    print '<div style="margin-bottom: 2.5rem; padding: 1.5rem; background: #2a2a2a; border-left: 4px solid #c9190b; border-radius: 6px;">';
+
+    print '<h3 style="color: #fff; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; flex-wrap: wrap;">';
+    print Security::escape($gap["title"]);
+    print $priorityBadge;
+    print '</h3>';
+
+    print '<div style="margin-bottom: 1.5rem;">';
+    print '<span style="color: #c9190b; font-weight: 600; font-size: 1.1rem;">' . Security::escape($gap["rating"]) . ' Level</span>';
+    print ' <span style="color: #999;">(' . $gap["percentage"] . '%)</span>';
+    print '</div>';
+
+    // Business Impact
+    print '<div style="margin-bottom: 1.5rem; padding: 1.25rem; background: #1a1a1a; border: 1px solid #f0ab00; border-radius: 4px;">';
+    print '<div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">';
+    print '<i class="fa-solid fa-exclamation-circle" style="color: #f0ab00; font-size: 1.2rem;"></i>';
+    print '<strong style="color: #f0ab00; font-size: 1.1rem;">Business Impact</strong>';
+    print '</div>';
+    print '<p style="color: #ccc; margin: 0; line-height: 1.6;">' . Security::escape($impact) . '</p>';
+    print '</div>';
+
+    // First Steps
+    print '<div style="padding: 1.25rem; background: #1a1a1a; border: 1px solid #12bbd4; border-radius: 4px;">';
+    print '<div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">';
+    print '<i class="fa-solid fa-list-check" style="color: #12bbd4; font-size: 1.2rem;"></i>';
+    print '<strong style="color: #12bbd4; font-size: 1.1rem;">First Steps</strong>';
+    print '</div>';
+    print '<ol style="margin: 0; padding-left: 1.5rem; color: #ccc; line-height: 1.8;">';
+    foreach ($steps as $step) {
+        print '<li style="margin-bottom: 0.5rem;">' . Security::escape($step) . '</li>';
+    }
+    print '</ol>';
+    print '</div>';
+
+    print '</div>';
+}
+?>
+
+<div style="margin-top: 2rem; padding: 1.5rem; background: #c9190b; border-radius: 6px;">
+<p style="color: #fff; margin: 0; font-size: 1rem;"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Action Required:</strong> Review the detailed recommendations in the "Recommendations" tab for comprehensive guidance on addressing each gap.</p>
+</div>
+
+</div>
+</div>
+</div>
+
 <!-- Detailed Output -->
 <div id="Recommendations" class="tabcontent">
 <div id="accordion">

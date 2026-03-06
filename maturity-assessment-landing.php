@@ -24,6 +24,7 @@
 
     .pf-c-page__header {
       padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
       background: #1a1a1a;
       border-bottom: 1px solid #444;
     }
@@ -319,6 +320,7 @@
     <div class="pf-c-page__header-tools">
       <div class="widget">
         <a href="index.php"><button><i class="fa fa-home"></i> Home</button></a>
+        <a href="facilitator-guide.php" target="_blank"><button><i class="fa fa-book-open"></i> Facilitator Guide</button></a>
         <a href="import-results.php"><button><i class="fa fa-upload"></i> Import Results</button></a>
       </div>
     </div>

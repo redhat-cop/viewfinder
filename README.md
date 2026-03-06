@@ -27,17 +27,57 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 
 ### Visualization & Reporting
 - **Interactive Radar Charts**: D3.js-powered visualizations of maturity across domains
+- **Enhanced Results Tabs**: ✨ Icon-based tab navigation with comprehensive views
+  - **Overview**: Radar charts and executive summary with QR code for sharing
+  - **Strengths**: Domain strengths analysis with quick wins and leverage opportunities
+  - **Gaps**: Critical gaps analysis with business impacts and first steps for remediation
+  - **Details**: Comprehensive recommendations and improvement roadmap
+  - **Table**: Tabular view of all domain scores and maturity levels
 - **Dynamic Executive Summary**: ✨ Personalized one-page summary showing:
   - Overall maturity level and score
   - Top 2 strengths to celebrate
   - Critical gaps prioritized by industry weight
   - Strategic recommendations tailored to assessment results
+- **Actionable Insights**: ✨ Business-focused analysis for each domain
+  - **Business Impact**: Consequences of gaps in each domain
+  - **First Steps**: Specific 90-day action plans for addressing critical gaps
+  - **Quick Wins**: Tactical improvements to leverage existing strengths
 - **Detailed Recommendations**: HTML-formatted guidance for improving maturity levels
 - **Workshop Notes in Reports**: ✨ Facilitator notes displayed in both results page and detailed PDF reports
 - **Compliance Mapping**: Link capabilities to compliance framework controls
 - **Maturity Tables**: Tabular view of scores and recommendations with 5-level color coding
 - **Framework-Specific Views**: Detailed compliance guidance per selected framework
 - **Industry-Specific Views**: Sector-specific recommendations
+
+### Workshop Facilitation Materials ✨ NEW
+- **Comprehensive Facilitator Guide**: Professional guide for conducting Digital Sovereignty assessments
+  - Interactive web version (`facilitator-guide.php`) with collapsible sections
+  - Downloadable PDF version (`Facilitator-Guide.pdf`) for offline reference
+  - Complete coverage of all 7 Digital Sovereignty domains with detailed guidance
+  - Assessment methodology and scoring approach
+  - Facilitation best practices and tips
+  - Dark theme consistent with application styling
+- **Workshop Templates Library**: Professional templates accessible via `templates/index.html`
+  - **Full-Day Workshop Agenda**: 6-7 hour comprehensive assessment format
+    - Pre-workshop preparation checklist
+    - Detailed timeline with breaks and activities
+    - Post-workshop deliverables and follow-up
+  - **Short Workshop Agenda**: 2-hour quick assessment format
+    - Condensed timeline for rapid evaluations
+    - Focus on high-priority domains
+  - **Email Templates**: 5 professional templates for workshop communication
+    - Workshop invitation with preparation requirements
+    - Pre-workshop preparation reminder
+    - Post-assessment thank you with next steps
+    - Roadmap planning session invitation
+    - Quarterly check-in for progress tracking
+  - **Executive Summary Template**: One-page format for C-suite presentation
+    - Key findings and maturity overview
+    - Top strengths and critical gaps
+    - Strategic recommendations
+    - Visual charts and metrics
+- **Red Hat Branding**: Professional logo integration throughout materials
+- **Print-Optimized Design**: All templates formatted for professional printing
 
 ### Landing Page Dashboard ✨ NEW
 - **Unified Entry Point**: Clean, professional landing page at root URL
@@ -341,8 +381,10 @@ You'll see the **Landing Page Dashboard** with four main sections:
 - **profile-deleter.php**: Profile deletion interface
 - **import-results.php**: ✨ Assessment results import interface
 - **export-results.php**: ✨ Security assessment results export handler
+- **facilitator-guide.php**: ✨ Interactive facilitator guide for workshops
 - **index.php**: Main assessment interface
-- **results.php**: Results dashboard with visualizations
+- **results.php**: ✨ Enhanced results dashboard with Strengths and Gaps tabs
+- **test-random-results.php**: ✨ Random results generator for testing
 
 #### JavaScript Modules (`js/`)
 - **profile-admin.js**: ✨ Admin dashboard, export/import logic
@@ -930,6 +972,21 @@ tail -f /var/log/nginx/error.log  # Nginx
 
 ## Development
 
+### Testing Tools ✨ NEW
+
+**Random Results Generator** (`test-random-results.php`):
+- Generates random assessment data for testing without completing full assessments
+- Simulates realistic maturity distributions across all domains
+- Randomly selects Line of Business and compliance frameworks
+- Creates sample facilitator notes for select domains
+- Displays debug information in HTML comments
+- Usage: Visit `http://your-server/test-random-results.php` in browser
+- Perfect for testing:
+  - Enhanced results tabs (Strengths, Gaps, Details)
+  - PDF export functionality
+  - UI/UX changes to results page
+  - Results import/export workflows
+
 ### Adding a New Profile Manually
 
 1. **Create JSON file**: `controls-NewProfile.json` following the standard format
@@ -974,6 +1031,52 @@ Extend `includes/ProfileExporter.php` with new export methods
 - Update UI to include new framework option
 
 ## Version History
+
+### Version 3.0.0 (March 2026) ✨ LATEST
+- ✨ **NEW**: Comprehensive Facilitator Guide for Workshop Delivery
+  - Interactive web version (`facilitator-guide.php`) with collapsible sections
+  - Downloadable PDF version (`Facilitator-Guide.pdf`) - 8 pages, 252KB
+  - Complete guidance for all 7 Digital Sovereignty domains
+  - Assessment methodology and scoring approach
+  - Facilitation best practices and workshop tips
+  - Dark theme consistent with application styling
+- ✨ **NEW**: Professional Workshop Templates Library
+  - Full-day workshop agenda (6-7 hours) with detailed timeline
+  - Short workshop agenda (2 hours) for quick assessments
+  - 5 email templates for workshop communication lifecycle
+  - Executive summary template for C-suite presentations
+  - Templates hub with visual card navigation
+  - Red Hat branding integration throughout
+  - Print-optimized design for professional materials
+- ✨ **NEW**: Enhanced Results Page with Actionable Insights
+  - New **Strengths** tab showing domain strengths analysis
+    - Quick wins for leveraging existing capabilities
+    - Tactical improvements to enhance strengths
+  - New **Gaps** tab with critical gaps analysis
+    - Business impact explanations for each gap
+    - Specific first steps for 90-day action plans
+  - Icon-based tab navigation with FontAwesome icons
+  - Improved tab layout - all tabs fit on single row
+  - Shortened tab names for better UX (Overview, Strengths, Gaps, Details, Table)
+  - Enhanced visual hierarchy and spacing
+- ✨ **NEW**: Detailed Report Enhancements
+  - Red Hat logo integration in PDF reports (centered, professional)
+  - Business impact analysis for critical gaps
+  - First steps guidance for addressing gaps
+  - Quick wins recommendations for leveraging strengths
+- ✨ **NEW**: Testing Tools for Development
+  - Random results generator (`test-random-results.php`)
+  - Generates realistic assessment data across all domains
+  - Simulates LOB selection and framework choices
+  - Creates sample facilitator notes
+  - Perfect for testing UI/UX changes without full assessments
+- 🔧 **IMPROVED**: UI/UX Polish
+  - Optimized tab button sizing and spacing
+  - Added header padding to maturity assessment landing page
+  - Facilitator Guide button in header navigation
+  - Consistent dark theme throughout all new components
+- 📖 **DOCS**: Updated README with workshop facilitation materials
+- 📖 **DOCS**: Added testing tools documentation
 
 ### Version 2.9.0 (March 2026)
 - ✨ **NEW**: Workshop Facilitator Notes - Capture domain-specific notes during assessments

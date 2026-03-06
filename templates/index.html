@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en-us" class="pf-theme-dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Facilitator Templates - Digital Sovereignty Maturity Assessment</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tab-dark.css">
+  <link rel="stylesheet" href="../css/patternfly.css">
+  <link rel="stylesheet" href="../css/patternfly-addons.css">
+
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://kit.fontawesome.com/8a8c57f9cf.js" crossorigin="anonymous"></script>
+
+  <style>
+    body {
+      background-color: #151515 !important;
+      color: #ccc !important;
+      min-height: 100vh;
+    }
+
+    .pf-c-page__header {
+      padding-top: 1.5rem;
+      background: #1a1a1a;
+      border-bottom: 1px solid #444;
+    }
+
+    .pf-c-page__header-tools button {
+      margin-right: 1rem;
+      background: #0d60f8;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .pf-c-page__header-tools button:hover {
+      background: #0a4fc5;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(13, 96, 248, 0.4);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid #444;
+    }
+
+    .page-title h1 {
+      color: #9ec7fc;
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin: 0 0 1rem 0;
+    }
+
+    .page-title p {
+      color: #999;
+      font-size: 1.1rem;
+    }
+
+    .template-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .template-card {
+      background: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .template-card:hover {
+      transform: translateY(-4px);
+      border-color: #0d60f8;
+      box-shadow: 0 6px 20px rgba(13, 96, 248, 0.3);
+    }
+
+    .template-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #0d60f8 0%, #12bbd4 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .template-icon i {
+      font-size: 1.8rem;
+      color: white;
+    }
+
+    .template-card h3 {
+      color: #fff;
+      font-size: 1.3rem;
+      margin: 0 0 1rem 0;
+    }
+
+    .template-card p {
+      color: #999;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .template-meta {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      color: #999;
+    }
+
+    .template-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .template-meta i {
+      color: #0d60f8;
+    }
+
+    .template-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: none;
+    }
+
+    .btn-primary {
+      background: #0d60f8;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #0a4fc5;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(13, 96, 248, 0.4);
+    }
+
+    .btn-secondary {
+      background: #2a2a2a;
+      color: #9ec7fc;
+      border: 1px solid #444;
+    }
+
+    .btn-secondary:hover {
+      background: #333;
+      border-color: #0d60f8;
+    }
+
+    .info-box {
+      background: #1a1a1a;
+      border-left: 4px solid #0d60f8;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 4px;
+    }
+
+    .info-box h4 {
+      color: #9ec7fc;
+      margin: 0 0 0.75rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .info-box h4 i {
+      color: #0d60f8;
+    }
+
+    .info-box p {
+      color: #ccc;
+      margin: 0;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="pf-c-page__header">
+    <div class="pf-c-page__header-brand">
+      <div class="pf-c-page__header-brand-toggle"></div>
+    </div>
+    <div class="pf-c-page__header-tools">
+      <div class="widget">
+        <a href="../index.php"><button><i class="fa fa-home"></i> Home</button></a>
+        <a href="../facilitator-guide.php"><button><i class="fa fa-book-open"></i> Facilitator Guide</button></a>
+        <a href="../maturity-assessment-landing.php"><button><i class="fa fa-chart-line"></i> Start Assessment</button></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="page-title">
+      <h1><i class="fa-solid fa-file-alt"></i> Facilitator Templates</h1>
+      <p>Ready-to-use templates for conducting Digital Sovereignty maturity assessments</p>
+    </div>
+
+    <div class="info-box">
+      <h4><i class="fa-solid fa-info-circle"></i> About These Templates</h4>
+      <p>
+        These templates are designed to support facilitators in delivering consistent, high-quality Digital Sovereignty Maturity Assessments.
+        Each template can be customized for your specific engagement. Simply open the template, replace the placeholders with actual information,
+        and save or print as needed.
+      </p>
+    </div>
+
+    <div class="template-grid">
+      <!-- Workshop Agenda - Full Day -->
+      <div class="template-card">
+        <div class="template-icon">
+          <i class="fa-solid fa-calendar-days"></i>
+        </div>
+        <h3>Full-Day Workshop Agenda</h3>
+        <p>Comprehensive one-day workshop format including sovereignty education, complete assessment, and results analysis.</p>
+        <div class="template-meta">
+          <span><i class="fa-solid fa-clock"></i> 6-7 hours</span>
+          <span><i class="fa-solid fa-file"></i> HTML</span>
+        </div>
+        <div class="template-actions">
+          <a href="workshop-agenda-full-day.html" target="_blank" class="btn btn-primary">
+            <i class="fa-solid fa-eye"></i> View
+          </a>
+          <a href="workshop-agenda-full-day.html" download class="btn btn-secondary">
+            <i class="fa-solid fa-download"></i> Download
+          </a>
+        </div>
+      </div>
+
+      <!-- Workshop Agenda - Short -->
+      <div class="template-card">
+        <div class="template-icon">
+          <i class="fa-solid fa-clock"></i>
+        </div>
+        <h3>Short Assessment Agenda (2 Hours)</h3>
+        <p>Condensed assessment format focusing on rapid domain evaluation with brief introduction and results review.</p>
+        <div class="template-meta">
+          <span><i class="fa-solid fa-clock"></i> 2 hours</span>
+          <span><i class="fa-solid fa-file"></i> HTML</span>
+        </div>
+        <div class="template-actions">
+          <a href="workshop-agenda-short.html" target="_blank" class="btn btn-primary">
+            <i class="fa-solid fa-eye"></i> View
+          </a>
+          <a href="workshop-agenda-short.html" download class="btn btn-secondary">
+            <i class="fa-solid fa-download"></i> Download
+          </a>
+        </div>
+      </div>
+
+      <!-- Email Templates -->
+      <div class="template-card">
+        <div class="template-icon">
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+        <h3>Email Templates</h3>
+        <p>Complete set of email templates covering invitation, preparation, follow-up, roadmap planning, and quarterly check-ins.</p>
+        <div class="template-meta">
+          <span><i class="fa-solid fa-envelopes-bulk"></i> 5 templates</span>
+          <span><i class="fa-solid fa-file"></i> HTML</span>
+        </div>
+        <div class="template-actions">
+          <a href="email-templates.html" target="_blank" class="btn btn-primary">
+            <i class="fa-solid fa-eye"></i> View
+          </a>
+          <a href="email-templates.html" download class="btn btn-secondary">
+            <i class="fa-solid fa-download"></i> Download
+          </a>
+        </div>
+      </div>
+
+      <!-- Executive Summary -->
+      <div class="template-card">
+        <div class="template-icon">
+          <i class="fa-solid fa-file-invoice"></i>
+        </div>
+        <h3>Executive Summary Template</h3>
+        <p>One-page executive summary for presenting assessment results to C-suite and Board, including scores, findings, and recommendations.</p>
+        <div class="template-meta">
+          <span><i class="fa-solid fa-file-alt"></i> 1-2 pages</span>
+          <span><i class="fa-solid fa-print"></i> Print-ready</span>
+        </div>
+        <div class="template-actions">
+          <a href="executive-summary-template.html" target="_blank" class="btn btn-primary">
+            <i class="fa-solid fa-eye"></i> View
+          </a>
+          <a href="executive-summary-template.html" download class="btn btn-secondary">
+            <i class="fa-solid fa-download"></i> Download
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box" style="margin-top: 3rem; border-left-color: #12bbd4;">
+      <h4><i class="fa-solid fa-lightbulb"></i> Template Usage Tips</h4>
+      <p>
+        <strong>Customization:</strong> All templates contain placeholders (highlighted in yellow when viewed) that should be replaced with customer-specific information.
+        Search for [brackets] to find all placeholders.<br><br>
+        <strong>Printing:</strong> Templates are optimized for both screen viewing and printing. Use your browser's print function (Ctrl+P / Cmd+P) to generate PDFs.<br><br>
+        <strong>Branding:</strong> Templates include Red Hat branding. Modify as needed for co-branded deliverables with partners.
+      </p>
+    </div>
+
+    <div style="margin-top: 3rem; padding: 2rem; background: #2a2a2a; border-radius: 8px; border: 1px solid #444; text-align: center;">
+      <h3 style="color: #9ec7fc; margin-top: 0;">Need Help?</h3>
+      <p style="color: #ccc;">For questions about using these templates or conducting assessments, refer to the comprehensive
+        <a href="../facilitator-guide.php" style="color: #0d60f8; text-decoration: none; font-weight: 600;">Facilitator Guide</a>.
+      </p>
+    </div>
+  </div>
+
+</body>
+</html>

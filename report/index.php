@@ -214,8 +214,9 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * (count($control
                   <div class="row">
                         <div class="full">
                            <div class="center-desk">
-                              <div class="logo">
-                                 
+                              <div class="logo" style="text-align: center; margin-bottom: 30px;">
+                                 <img src="../images/Logo-Red_Hat-C-Standard-RGB.svg" alt="Red Hat" style="height: 80px;">
+                              </div>
                         <div class="text-bg">
                            <h1><?php
                            // Dynamically get the profile display name from Config
@@ -364,11 +365,28 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * (count($control
                               <div class="section-header">
                                   <h3><i class="fa-solid fa-chart-line"></i> Key Strengths</h3>
                                   <p>The assessment identified the following areas of strong maturity:</p>
-                                  <ul class="action-list">
-                                  <?php foreach ($strengths as $strength): ?>
-                                      <li><strong><?php echo Security::escape($strength["title"]); ?></strong>: <?php echo Security::escape($strength["rating"]); ?> level (<?php echo $strength["percentage"]; ?>%) - demonstrating well-established capabilities in this domain.</li>
+                                  <?php
+                                  // Domain-specific quick wins
+                                  $quickWins = [
+                                      'Data Sovereignty' => 'Implement automated data flow monitoring and quarterly audits of vendor data access to advance toward Level 4 quantitative management.',
+                                      'Technical Sovereignty' => 'Document exit strategies for all critical systems and conduct annual portability drills to strengthen vendor independence.',
+                                      'Operational Sovereignty' => 'Establish a Center of Excellence for sovereign technologies and implement quarterly DR testing scenarios including geopolitical isolation.',
+                                      'Assurance Sovereignty' => 'Expand continuous security validation with automated compliance reporting and establish formal vendor transparency requirements in all contracts.',
+                                      'Open Source' => 'Formalize contribution policies and establish metrics tracking for community engagement and project influence.',
+                                      'Executive Oversight' => 'Implement sovereignty KPI dashboards for Board reporting and establish quarterly reviews with regulatory authorities.',
+                                      'Managed Services' => 'Develop comprehensive transition playbooks for all critical managed services and conduct annual vendor alternative assessments.'
+                                  ];
+
+                                  foreach ($strengths as $strength):
+                                      $quickWin = isset($quickWins[$strength["title"]]) ? $quickWins[$strength["title"]] : 'Continue to refine and optimize processes, and consider sharing best practices with other domains.';
+                                  ?>
+                                      <li style="margin-bottom: 1.5rem;">
+                                          <strong><?php echo Security::escape($strength["title"]); ?></strong>: <?php echo Security::escape($strength["rating"]); ?> level (<?php echo $strength["percentage"]; ?>%) - demonstrating well-established capabilities in this domain.
+                                          <div style="margin-top: 0.5rem; padding-left: 1.5rem; color: #0d60f8;">
+                                              <strong>Quick Win:</strong> <?php echo Security::escape($quickWin); ?>
+                                          </div>
+                                      </li>
                                   <?php endforeach; ?>
-                                  </ul>
                               </div>
 
                               <div class="section-header">
@@ -377,17 +395,78 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * (count($control
                                   <?php if ($assessmentLob !== "General"): ?>
                                   (based on <?php echo Security::escape($assessmentLob); ?> industry priorities)
                                   <?php endif; ?>:</p>
-                                  <ul class="action-list">
-                                  <?php foreach ($gaps as $gap): ?>
-                                      <?php
+                                  <?php
+                                  // Domain-specific business impacts and first steps
+                                  $businessImpacts = [
+                                      'Data Sovereignty' => 'Exposes organization to foreign government data access demands, violates data residency regulations (GDPR, NIS2), and creates legal liability for cross-border data transfers.',
+                                      'Technical Sovereignty' => 'Creates vendor lock-in preventing migration, increases costs through proprietary dependencies, and exposes organization to supply chain disruption risks.',
+                                      'Operational Sovereignty' => 'Inability to maintain critical operations during vendor outages or geopolitical conflicts; excessive reliance on external expertise threatens business continuity.',
+                                      'Assurance Sovereignty' => 'Limits ability to verify security claims, prevents independent compliance validation, and creates blind spots in third-party risk management.',
+                                      'Open Source' => 'Increases dependency on proprietary software vendors, limits ability to audit code for security vulnerabilities, and reduces long-term technology flexibility.',
+                                      'Executive Oversight' => 'Lack of strategic direction and budget allocation for sovereignty initiatives; inability to demonstrate compliance to regulators and stakeholders.',
+                                      'Managed Services' => 'Third-party access to sensitive systems without adequate controls; inability to quickly transition services if vendor relationship deteriorates or sovereignty requirements change.'
+                                  ];
+
+                                  $firstSteps = [
+                                      'Data Sovereignty' => [
+                                          'Implement external key management (HSM) to ensure cryptographic sovereignty within 90 days',
+                                          'Audit and renegotiate cloud contracts to include data residency guarantees and foreign access notification clauses'
+                                      ],
+                                      'Technical Sovereignty' => [
+                                          'Conduct vendor lock-in assessment identifying proprietary dependencies and migration risks',
+                                          'Develop 12-month roadmap for containerizing applications using Kubernetes for portability'
+                                      ],
+                                      'Operational Sovereignty' => [
+                                          'Create documented "break-glass" procedures for operating critical systems without vendor support',
+                                          'Establish skills development plan and begin cross-training staff on sovereign technology alternatives'
+                                      ],
+                                      'Assurance Sovereignty' => [
+                                          'Negotiate "right to audit" clauses in all vendor contracts with sovereignty-critical providers',
+                                          'Implement sovereign-controlled SIEM for independent security monitoring within 6 months'
+                                      ],
+                                      'Open Source' => [
+                                          'Develop open source strategy policy defining when to prefer OSS over proprietary alternatives',
+                                          'Implement software composition analysis tools to track and manage open source dependencies'
+                                      ],
+                                      'Executive Oversight' => [
+                                          'Establish dedicated sovereignty governance committee with Board reporting and quarterly reviews',
+                                          'Develop sovereignty KPIs and allocate dedicated budget line for sovereignty initiatives'
+                                      ],
+                                      'Managed Services' => [
+                                          'Implement Just-in-Time (JIT) access controls and session recording for all third-party vendor access',
+                                          'Develop transition playbooks with defined exit criteria and alternative provider options for critical services'
+                                      ]
+                                  ];
+
+                                  foreach ($gaps as $gap):
                                       $priorityNote = "";
                                       if ($gap["weight"] >= 1.5) {
                                           $priorityNote = " <strong>(High Priority for " . Security::escape($assessmentLob) . ")</strong>";
                                       }
-                                      ?>
-                                      <li><strong><?php echo Security::escape($gap["title"]); ?></strong>: <?php echo Security::escape($gap["rating"]); ?> level (<?php echo $gap["percentage"]; ?>%)<?php echo $priorityNote; ?></li>
+
+                                      $impact = isset($businessImpacts[$gap["title"]]) ? $businessImpacts[$gap["title"]] : 'Reduces overall sovereignty maturity and organizational resilience.';
+                                      $steps = isset($firstSteps[$gap["title"]]) ? $firstSteps[$gap["title"]] : ['Review domain-specific recommendations in detailed assessment.'];
+                                  ?>
+                                      <li style="margin-bottom: 2rem;">
+                                          <strong><?php echo Security::escape($gap["title"]); ?></strong>: <?php echo Security::escape($gap["rating"]); ?> level (<?php echo $gap["percentage"]; ?>%)<?php echo $priorityNote; ?>
+
+                                          <div style="margin-top: 0.75rem; padding: 1rem; background: #fff3cd; border-left: 3px solid #ffc107; border-radius: 4px;">
+                                              <div style="margin-bottom: 0.75rem;">
+                                                  <strong style="color: #856404;"><i class="fa-solid fa-exclamation-circle"></i> Business Impact:</strong>
+                                                  <div style="margin-top: 0.25rem; color: #333;"><?php echo Security::escape($impact); ?></div>
+                                              </div>
+
+                                              <div>
+                                                  <strong style="color: #0d60f8;"><i class="fa-solid fa-list-check"></i> First Steps:</strong>
+                                                  <ol style="margin: 0.5rem 0 0 1.5rem; padding: 0; color: #333;">
+                                                      <?php foreach ($steps as $step): ?>
+                                                          <li style="margin-bottom: 0.25rem;"><?php echo Security::escape($step); ?></li>
+                                                      <?php endforeach; ?>
+                                                  </ol>
+                                              </div>
+                                          </div>
+                                      </li>
                                   <?php endforeach; ?>
-                                  </ul>
                               </div>
 
                               <div class="section-header">
