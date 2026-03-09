@@ -3,8 +3,8 @@ FROM registry.access.redhat.com/ubi9/php-83:latest
 
 # Metadata
 LABEL maintainer="Chris Jenkins <chrisj@redhat.com>" \
-      version="2.8.0" \
-      description="Viewfinder Maturity Assessment Tool - Production Ready with Landing Page, Profile Management, DS Readiness Assessment with PDF Export, Operation Sovereign Shield Escape Room, Digital Sovereignty Quiz, Assessment Results Export/Import"
+      version="3.0.0" \
+      description="Viewfinder Maturity Assessment Tool - Production Ready with Landing Page, Profile Management, DS Readiness Assessment with PDF Export, Operation Sovereign Shield Escape Room, Digital Sovereignty Quiz, Assessment Results Export/Import, Workshop Enablement Guides (101/201), Templates Library"
 
 # Set working directory
 WORKDIR /opt/app-root/src
@@ -40,6 +40,8 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-di
 # Includes Digital Sovereignty Readiness Assessment with PDF export (Dompdf)
 # Includes Digital Sovereignty Quiz with certificates and leaderboard
 # Includes Assessment Results Export/Import for preserving and sharing completed assessments
+# Includes Workshop Enablement Guides (101 - Executive, 201 - Full Assessment) with PDFs
+# Includes Templates Library (agendas, email templates, executive summaries)
 COPY --chown=1001:0 *.php ./
 COPY --chown=1001:0 includes/ ./includes/
 COPY --chown=1001:0 css/ ./css/
@@ -51,7 +53,9 @@ COPY --chown=1001:0 report/ ./report/
 COPY --chown=1001:0 ds-qualifier/ ./ds-qualifier/
 COPY --chown=1001:0 quiz/ ./quiz/
 COPY --chown=1001:0 *.json ./
+COPY --chown=1001:0 *.pdf ./
 COPY --chown=1001:0 error-pages/ ./error-pages/
+COPY --chown=1001:0 templates/ ./templates/
 COPY --chown=1001:0 README.md ./
 
 # Create logs and quiz data directories
