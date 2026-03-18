@@ -5102,12 +5102,14 @@ a {
   width: auto;
 }
 
+/* Commented out - using FontAwesome CDN instead (kit.fontawesome.com)
 @font-face {
   font-family: "Font Awesome 5 Free";
   font-style: normal;
   font-weight: 900;
   src: url("./assets/fonts/webfonts/fa-solid-900.woff2") format("woff2"), url("./assets/fonts/webfonts/fa-solid-900.woff") format("woff");
 }
+*/
 .fa,
 .fas {
   font-family: "Font Awesome 5 Free";

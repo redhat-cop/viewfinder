@@ -1,0 +1,814 @@
+# Digital Sovereignty Controls
+
+## Domain 1: Data Sovereignty
+
+This domain assesses an organisation's ultimate control over its data, independent of external jurisdictions or political influences. It goes beyond basic data residency by focusing on legal control, access, and encryption management. Maturity here confirms that data location is actively governed by the organisation's legal and business requirements, rather than dictated solely by a cloud provider or foreign law. Achieving high maturity ensures the organisation can unilaterally secure, access, and move its data while remaining compliant with domestic regulations, particularly regarding cross-border transfers and governmental data access requests.
+
+### Control 1.1: Data Residency & Location
+
+**Summary:** Defines and enforces where data is physically stored based on legal and business requirements.
+
+**Tier:** Foundation
+
+**Points:** 1
+
+**Recommendation:**
+
+<h2 class='why-what'>What is Data Residency & Location?</h2><p>Data Residency & Location is the foundational principle of maintaining explicit control over the physical and legal jurisdiction where organizational data is stored. This capability ensures data location decisions are driven by legal requirements and business needs, not merely by cloud provider infrastructure convenience. Different jurisdictions have varying legal frameworks regarding government access to data, privacy protections, and cross-border transfer restrictions, making residency control essential for compliance and sovereignty.</p><h2 class='why-what'>Executive Recommendations</h2><p>Establish a formal <b>Data Residency Policy</b> that clearly mandates the specific geographic and jurisdictional locations for data storage based on its classification and corresponding legal requirements. This policy must be integrated into all vendor procurement rules, and senior management must mandate an annual audit of all cloud provider contracts to verify full compliance with these residency requirements, including detailed logging of data movement.</p><p><strong>Key Actions:</strong> Obtain Board-level approval for the policy; require legally binding vendor attestations of data storage locations with contractual penalties for violations; commission annual third-party audits; and establish formal exception approval processes requiring risk assessment and compensating controls.</p><h2 class='why-what'>Technical Recommendations</h2><p>Utilise <b>Sovereign Cloud regions</b> or private, hybrid cloud infrastructure where the physical location of the data centers is certified and auditable within the required jurisdiction. Implement technical controls like <b>geo-fencing</b> and <b>data-at-rest encryption</b> with keys managed separately to prevent accidental or unauthorised data movement outside designated zones, irrespective of the service provider's global footprint.</p><p><strong>Implementation Guidelines:</strong> Configure cloud service policies (AWS SCPs, Azure Policy) to restrict resource creation to approved sovereign regions; implement network geo-fencing controls; deploy data-at-rest encryption with customer-managed keys stored in sovereign infrastructure; configure real-time monitoring and alerting for resource creation outside approved regions; ensure backups are also stored in sovereign locations; and deploy automated data discovery tools to flag data residing outside approved boundaries.</p>
+
+---
+
+### Control 1.2: Data Protection & Privacy
+
+**Summary:** Basic compliance with common data protection and privacy regulations.
+
+**Tier:** Foundation
+
+**Points:** 2
+
+**Recommendation:**
+
+<h2 class='why-what'>What is Data Protection & Privacy?</h2><p>Data Protection & Privacy encompasses the policies, processes, and technical controls required to safeguard personal and sensitive information throughout its lifecycle. This capability extends beyond regulatory compliance to include proactive privacy architecture, data minimization, and user rights management. Privacy regulations worldwide (GDPR, CCPA, PIPL) impose substantial fines for non-compliance and privacy breaches erode customer trust, making robust privacy controls essential for both legal compliance and sovereignty.</p><h2 class='why-what'>Executive Recommendations</h2><p>Integrate <b>Privacy-by-Design</b> and <b>Security-by-Design</b> principles into the architecture review board for all new digital initiatives, ensuring privacy requirements are met from the inception of a project. Senior leaders must allocate dedicated budget for ongoing legal consultation to proactively adapt operational procedures to evolving international and regional data protection regulations (e.g., GDPR, CCPA, PIPL).</p><p><strong>Key Actions:</strong> Appoint a senior Data Protection Officer with Board reporting authority; mandate formal Privacy Impact Assessments for all new systems; establish dedicated budget for legal monitoring of privacy regulations; ensure legally compliant cross-border transfer mechanisms (SCCs, BCRs); implement enterprise-wide processes for data subject rights (access, erasure, portability); and require privacy compliance certification from all vendors with contractual liability clauses.</p><h2 class='why-what'>Technical Recommendations</h2><p>Implement strong <b>pseudonymization and anonymization techniques</b> for non-essential personal data to limit its sensitivity. Deploy robust <b>Role-Based Access Control (RBAC)</b> across all data repositories and enforce strict need-to-know policies, especially for cross-border data access and processing activities, ensuring sensitive attributes are masked wherever possible.</p><p><strong>Implementation Guidelines:</strong> Implement automated data lifecycle management with defined retention and deletion; deploy tokenization and hashing for PII; implement dynamic data masking based on user role; deploy fine-grained RBAC with least-privilege principles; implement consent management platforms with audit trails; deploy tools to locate individual's data across systems for subject rights requests; and evaluate privacy-enhancing technologies like differential privacy for sensitive analytics.</p>
+
+---
+
+### Control 1.3: Data Classification and Inventory
+
+**Summary:** Systematic identification and tagging of all data assets by sensitivity and compliance needs.
+
+**Tier:** Foundation
+
+**Points:** 3
+
+**Recommendation:**
+
+<h2 class='why-what'>What is Data Classification and Inventory?</h2><p>Data Classification and Inventory is the systematic process of identifying, categorizing, and tracking all data assets based on their sensitivity, business value, and regulatory requirements. Organizations cannot protect what they cannot see—classification enables risk-based security controls, regulatory compliance, and informed decisions about data residency and sovereignty. In sovereignty contexts, classification identifies which data assets must remain under sovereign control and which can tolerate less stringent restrictions.</p><h2 class='why-what'>Executive Recommendations</h2><p>Mandate the creation of a definitive <b>Data Inventory Register</b> that logs all data assets, their precise location, their designated owner, and their classification level (e.g., public, internal, confidential, restricted). Hold data owners directly accountable for maintaining the accuracy and completeness of their data records, with executive sign-off required for classification changes.</p><p><strong>Key Actions:</strong> Establish and approve an enterprise-wide classification framework; implement formal data ownership assigning named business owners for each major asset; require annual certification of inventory accuracy; allocate budget for classification tools and training; integrate classification into procurement and development processes; and establish KPIs for classification coverage with regular executive reporting.</p><h2 class='why-what'>Technical Recommendations</h2><p>Deploy <b>Automated Data Discovery and Classification Tools</b> across all environments (on-premise, cloud, and endpoints) to continuously scan, tag, and enforce classification policies. Use these classification tags to automatically drive security protection controls, such as enforcing encryption, configuring firewall rules, and applying appropriate access restrictions.</p><p><strong>Implementation Guidelines:</strong> Deploy data discovery solutions that scan databases, file shares, cloud storage, and SaaS applications; implement ML-based content classification using pattern matching and models to identify sensitive data; apply consistent metadata tags; implement user-driven classification workflows at data creation; configure automated security controls responsive to classification tags; implement data lineage tracking; maintain centralized CMDB or data catalog; and configure automated scanning with alerts for policy violations.</p>
+
+---
+
+### Control 1.4: Legal & Jurisdictional Control
+
+**Summary:** Ability to resist extra-territorial data requests and maintain control under home jurisdiction.
+
+**Tier:** Strategic
+
+**Points:** 4
+
+**Recommendation:**
+
+<h2 class='why-what'>What is Legal & Jurisdictional Control?</h2><p>Legal & Jurisdictional Control ensures data access, processing, and legal disputes are governed exclusively by domestic law, insulated from extra-territorial legal demands. Conflicting frameworks like the US CLOUD Act and China's Data Security Law create sovereignty risks where compliance with one jurisdiction violates another's laws. This capability includes both contractual terms and technical enforcement mechanisms making foreign legal access technically infeasible.</p><h2 class='why-what'>Executive Recommendations</h2><p>Seek explicit legal guarantees and mandatory contractual clauses that define the <b>governing law and exclusive jurisdiction</b> for data access, legal disputes, and responding to data requests, particularly with non-domestic cloud providers. Maintain a high-priority risk register that documents potential conflicts between foreign legal frameworks (e.g., CLOUD Act) and domestic data protection laws.</p><p><strong>Key Actions:</strong> Require contracts specifying domestic governing law and exclusive jurisdiction for disputes; establish vendor notification protocols for foreign government data requests with requirements to challenge before compliance; maintain executive-level risk register of jurisdictional conflicts; retain specialized legal counsel in international data sovereignty law; establish relationships with domestic data protection authorities; and evaluate insurance coverage for jurisdictional conflict scenarios.</p><h2 class='why-what'>Technical Recommendations</h2><p>Implement <b>Technical Isolation Measures</b> like <b>External Key Management (EKM)</b>, where the root encryption keys are stored and controlled by a domestic entity separate from the primary cloud provider. This technical separation ensures data cannot be accessed, even under a foreign subpoena, without the organisation's explicit jurisdictional control and consent.</p><p><strong>Implementation Guidelines:</strong> Deploy sovereign-controlled HSMs outside cloud provider control; implement client-side encryption with keys never shared with providers; consider data sharding across jurisdictionally-isolated systems; architect network topology to avoid transiting aggressive extra-territorial jurisdictions; minimally require BYOK where organization generates encryption keys; implement tamper-proof audit logging in sovereign-controlled SIEM; and design kill switch capabilities to revoke keys if faced with sovereignty-violating access demands.</p>
+
+---
+
+### Control 1.5: Cryptographic Key Management Control
+
+**Summary:** Ownership and exclusive control over all encryption keys for sensitive data, independent of vendors.
+
+**Tier:** Strategic
+
+**Points:** 6
+
+**Recommendation:**
+
+<h2 class='why-what'>What is Cryptographic Key Management Control?</h2><p>Cryptographic Key Management Control is the capability to exclusively generate, store, rotate, and manage all encryption keys independent of vendors or cloud providers. Encryption is only as sovereign as key management—if providers hold keys, they can be compelled to decrypt data. Whoever controls the keys controls data access, making sovereign key management the technical mechanism that enforces data sovereignty in hostile legal or threat environments.</p><h2 class='why-what'>Executive Recommendations</h2><p>Establish an overarching <b>internal Cryptographic Policy</b> mandating the use of approved, high-assurance algorithms and key lengths across the enterprise. Critically, require that the <b>Master Keys</b> for all sensitive data and critical workloads are generated and controlled exclusively by the organisation, thereby eliminating single points of cryptographic control by vendors.</p><p><strong>Key Actions:</strong> Approve enterprise cryptographic policy specifying approved algorithms (AES-256, RSA-2048+) and key lengths; allocate capital for sovereign key management infrastructure (HSMs); mandate contractual clauses prohibiting vendor access to encryption keys; establish key management governance board; engage with domestic regulators to align with national cryptographic standards; and develop incident response procedures for key compromise scenarios including immediate rotation capabilities.</p><h2 class='why-what'>Technical Recommendations</h2><p>Deploy a <b>cloud-agnostic External Key Management (EKM) solution</b> Utilising dedicated Hardware Security Modules (HSMs) operated by the organisation or a highly vetted, locally-controlled third party. Implement strict key rotation schedules, detailed audit logs for all key access events, and strict separation of duties for key operators to prevent unauthorised key export.</p><p><strong>Implementation Guidelines:</strong> Deploy FIPS 140-2 Level 3 certified HSMs in sovereign data centers with multi-party control; implement EKM solutions that integrate with cloud services while maintaining sovereign control; design multi-tier key hierarchies; ensure keys are generated using sovereign-controlled true random number generators; implement automated rotation policies (90-day for sensitive data); configure comprehensive audit logging in immutable repositories; enforce cryptographic separation of duties; implement key backup in geographically separate sovereign locations; and utilize KMIP or cloud-specific integrations for compatibility.</p>
+
+---
+
+### Control 1.6: Workload Data Protection & Privacy
+
+**Summary:** Mechanisms to protect data during processing within critical applications and workloads.
+
+**Tier:** Strategic
+
+**Points:** 5
+
+**Recommendation:**
+
+<h2 class='why-what'>What is Workload Data Protection & Privacy?</h2><p>Workload Data Protection & Privacy protects sensitive data during active processing—the most vulnerable phase. Traditional encryption protects stored and transmitted data but leaves it exposed in plaintext memory during processing, accessible to administrators, hypervisors, and malware. Confidential computing technologies maintain encryption during processing, ensuring data sovereignty extends through the entire compute lifecycle, not just storage and transmission.</p><h2 class='why-what'>Executive Recommendations</h2><p>Require development teams to adopt <b>Confidential Computing</b> standards for highly sensitive data processing environments, actively isolating data while it is in use. Mandate a full review of all application architectures to ensure sensitive data is never unnecessarily exposed, logged, or temporarily stored in unprotected environments during processing flows.</p><p><strong>Key Actions:</strong> Develop confidential computing adoption strategy identifying high-value workloads requiring data-in-use protection; require security architecture reviews for all new applications handling sensitive data; budget for confidential computing infrastructure (Intel SGX, AMD SEV, AWS Nitro Enclaves) and developer training; include confidential computing in cloud services RFPs; establish policies prohibiting plaintext logging with automated detection; and integrate with compliance teams to address regulatory requirements (HIPAA, PCI-DSS).</p><h2 class='why-what'>Technical Recommendations</h2><p>Utilise <b>Trusted Execution Environments (TEEs)</b> and modern CPU capabilities to run code and process data in an isolated, encrypted enclave. This technical isolation protects the data from the underlying operating system, hypervisor, and cloud provider administrators. Furthermore, enforce <b>end-to-end encryption</b> throughout the entire workload lifecycle (at rest, in transit, and in use).</p><p><strong>Implementation Guidelines:</strong> Evaluate and deploy appropriate TEEs (Intel SGX, AMD SEV, AWS Nitro Enclaves) based on workload requirements; refactor sensitive processing logic into secure enclaves; implement remote attestation protocols to verify enclave integrity; deploy full memory encryption using CPU features (AMD SEV-SNP, Intel TDX); establish encrypted channels between enclaves and external systems; integrate with sovereign key management infrastructure; implement automated log sanitization; provide developers with secure coding frameworks; and minimize performance overhead through selective enclave usage.</p>
+
+---
+
+### Control 1.7: Data Flow and Transfer Auditing
+
+**Summary:** Real-time monitoring and immutable logging of all data flows, transfers, and access events.
+
+**Tier:** Advanced
+
+**Points:** 7
+
+**Recommendation:**
+
+<h2 class='why-what'>What is Data Flow and Transfer Auditing?</h2><p>Data Flow and Transfer Auditing tracks, monitors, and validates every data movement within and beyond organizational boundaries. Unmonitored data flows can cross jurisdictional boundaries or enter insecure systems without detection. Real-time flow monitoring enables detection and blocking of sovereignty-violating transfers, while immutable audit trails provide forensic evidence for incident investigation and regulatory compliance verification (GDPR Article 30).</p><h2 class='why-what'>Executive Recommendations</h2><p>Mandate the implementation of <b>data flow mapping and visualisation tools</b> for all critical applications to provide an immediate, clear picture of where data travels and is stored. Require compliance teams to perform quarterly, unannounced audits on all data transfer logs and cross-border data sharing agreements against established organisational policy.</p><p><strong>Key Actions:</strong> Launch enterprise program to document data flows for critical systems with visual maps; establish executive approval for cross-border transfer mechanisms with legal review; mandate quarterly audits of transfer activities; develop incident response playbooks for unauthorized transfers; require annual reviews of data sharing agreements; and establish executive dashboards showing transfer volumes, destinations, and DLP violation trends.</p><h2 class='why-what'>Technical Recommendations</h2><p>Implement <b>Data Loss Prevention (DLP) tools</b> at all network egress points to monitor, alert, and block unauthorised data egress or suspicious transfer attempts. Use <b>network segmentation and micro-segmentation</b> principles to restrict data flows to only essential, approved paths and endpoints, strictly enforcing a Zero Trust architecture.</p><p><strong>Implementation Guidelines:</strong> Deploy enterprise DLP across network perimeters, endpoints, email gateways, and cloud applications; configure policies to automatically block unauthorized transfers; implement network traffic analysis (NetFlow, sFlow); enable comprehensive application audit logging; store audit logs in WORM storage; implement Zero Trust micro-segmentation; deploy data lineage tracking; configure NGFWs for egress filtering; implement real-time alerting for suspicious patterns; and mandate encrypted channels (TLS 1.3+) for all transfers.</p>
+
+---
+
+### Control 1.8: Data Access by Third Parties Policies
+
+**Summary:** Strict, audited, and revocable control over any third-party access to organisational data.
+
+**Tier:** Advanced
+
+**Points:** 8
+
+**Recommendation:**
+
+<h2 class='why-what'>What is Data Access by Third Parties?</h2><p>Third-Party Data Access regulates when and how external vendors, partners, or contractors can access organizational data. Vendors with privileged access can become vectors for foreign legal demands, state-sponsored espionage, or accidental data exposure across jurisdictions. Without strict controls, third-party access can undermine sovereignty protections—even sovereign-stored, encrypted data becomes vulnerable if vendor administrators can access it.</p><h2 class='why-what'>Executive Recommendations</h2><p>Develop and strictly enforce a <b>Third-Party Data Access Policy</b> that defines clear, time-limited thresholds for what data can be accessed, by whom, and under what circumstances (e.g., maintenance, support, legal request). Require a comprehensive annual re-vetting of all vendors that retain privileged access to sensitive data or systems.</p><p><strong>Key Actions:</strong> Develop and Board-approve comprehensive third-party access policy; implement formal vendor risk assessments evaluating personnel locations and legal jurisdictions; require contractual clauses specifying geographic restrictions and notification of foreign legal demands; mandate annual security re-assessments including background checks; require business justification and executive approval for privileged access; include vendor access scenarios in incident response plans; and ensure vendor contracts include liability clauses and indemnification.</p><h2 class='why-what'>Technical Recommendations</h2><p>Enforce <b>Just-in-Time (JIT) access</b> and <b>Ephemeral Credentials</b> for all third-party access, ensuring permissions automatically expire after a defined short period. Require all external administrative access to be channeled through a monitored and recorded <b>Jump Box</b> or privileged access management (PAM) solution to ensure full audibility of all vendor actions.</p><p><strong>Implementation Guidelines:</strong> Implement JIT access granting permissions only for approved time windows with automatic revocation; generate temporary, single-use ephemeral credentials; deploy PAM solutions with session recording and activity monitoring; require vendor access through hardened jump boxes in sovereign infrastructure; implement full session recording stored in immutable storage; mandate strong MFA using hardware tokens; isolate vendor access networks using strict segmentation; deploy UEBA to detect anomalous activities; implement automated access request workflows; establish automated revocation triggered by contract expiration or incidents; and provide masked or synthetic test data where possible.</p>
+
+---
+
+## Domain 2: Technical Sovereignty
+
+Technical Sovereignty evaluates the degree of control an organisation maintains over the foundational components of its technology stack—from the underlying hardware and firmware to the application source code and runtime environments. High maturity in this domain signifies a deliberate reduction in reliance on proprietary interfaces and single-vendor ecosystems. The organisation actively manages vendor lock-in risk by prioritising portability and open standards, ensuring they possess the ability to rebuild or migrate their critical functions onto a different technology platform if necessary, mitigating risks posed by geopolitical shifts or vendor failures.
+
+### Control 2.1: Technology Stack Ownership & Control
+
+**Summary:** Basic knowledge and documentation of the technology components currently in use.
+
+**Tier:** Foundation
+
+**Points:** 1
+
+**Recommendation:**
+
+<h2 class='why-what'>What is Technology Stack Ownership & Control?</h2><p>Technology Stack Ownership & Control ensures the organization can independently operate, modify, and troubleshoot its technology foundation without mandatory vendor dependence. Dependence on proprietary, closed-source components creates risks: product discontinuation, forced upgrades, license changes, or inability to audit security. Stack ownership enables operations even if vendors cease support, refuse service due to geopolitical conflicts, or are acquired by conflicting entities.</p><h2 class='why-what'>Executive Recommendations</h2><p>Prioritise and mandate strategic investment in developing or acquiring <b>technology components that grant full stack transparency and control</b>, especially for critical infrastructure like databases, identity management, and application runtimes. Senior leaders should proactively evaluate the long-term strategic benefit of contributing to or adopting high-priority open-source software (OSS) over proprietary alternatives.</p><p><strong>Key Actions:</strong> Conduct comprehensive inventory categorizing components by source and vendor dependence; adopt 'open-source first' procurement policy requiring justification for proprietary alternatives; allocate budget for deep technical expertise in core open-source technologies; develop multi-year roadmap for replacing proprietary components; evaluate build-in-house options for strategic capabilities; and establish policies preventing over-concentration with single vendors.</p><h2 class='why-what'>Technical Recommendations</h2><p>Favor solutions that allow for <b>multi-vendor deployment (IaaS, PaaS)</b> and explicitly avoid deeply integrated proprietary services tied to a single vendor. Critically, maintain internal expertise capable of operating, modifying, and troubleshooting the core technology stack without relying solely on a single vendor's support engineers.</p><p><strong>Implementation Guidelines:</strong> Prioritize mature open-source projects (Apache, Linux Foundation, CNCF) for core infrastructure; design architectures deployable across multiple cloud providers avoiding vendor-specific APIs; negotiate source code access through escrow for critical proprietary components; establish internal teams capable of forking and maintaining open-source projects; maintain comprehensive documentation of all components and configurations; establish testing environments validating independent deployment and management; implement abstraction layers decoupling applications from infrastructure; and create continuous learning programs for technical staff.</p>
+
+---
+
+### Control 2.2: Vendor Lock-in Risk Mitigation
+
+**Summary:** Basic analysis of proprietary dependencies and initial efforts to diversify technology providers.
+
+**Tier:** Foundation
+
+**Points:** 2
+
+**Recommendation:**
+
+<h2 class='why-what'>What is Vendor Lock-in Risk Mitigation?</h2><p>Vendor Lock-in Risk Mitigation reduces dependency on single technology providers that could restrict future flexibility, increase costs, or limit sovereignty. Lock-in occurs through proprietary APIs, data formats, specialized features, or contractual terms making migration costly or infeasible. Mitigating lock-in preserves strategic optionality, enabling organizations to switch providers if needed due to price increases, service degradation, geopolitical conflicts, or sovereignty requirements.</p><h2 class='why-what'>Executive Recommendations</h2><p>Integrate <b>Vendor Lock-in Risk</b> as a formal and weighted criterion in all major technology procurement decisions, assigning a quantifiable risk score to potential contracts. Negotiate contracts that explicitly include favorable data portability clauses, defined and reasonable exit assistance services, and the right to use abstracted layers.</p><p><strong>Key Actions:</strong> Include lock-in risk scoring in procurement evaluations weighting portability and standardization; negotiate contracts with data portability clauses, exit assistance provisions, and migration support commitments; require evaluation of total cost of switching vendors before procurement decisions; establish policy favoring standards-based over proprietary solutions; mandate abstraction layer usage rights in contracts; and conduct regular vendor dependency assessments quantifying switching costs.</p><h2 class='why-what'>Technical Recommendations</h2><p>Adopt <b>Abstracted Infrastructure Layers</b> (e.g., using Kubernetes for container orchestration or platform-agnostic APIs) and API-first designs to decouple applications from specific cloud platforms. Regularly perform <b>"exit drills" or proof-of-concept migrations</b> of non-critical workloads to alternative providers to maintain technical readiness and refine migration playbooks.</p><p><strong>Implementation Guidelines:</strong> Deploy Kubernetes for container orchestration providing cloud-agnostic abstraction; use platform-agnostic APIs and avoid vendor-specific service integrations; implement infrastructure-as-code using provider-neutral tools (Terraform, Ansible); design applications using standard protocols (HTTP, SQL, AMQP) rather than proprietary interfaces; maintain data in open formats avoiding vendor-specific encodings; conduct quarterly exit drills migrating non-production workloads to alternative providers; document and test complete migration procedures; and maintain multi-cloud compatibility for critical applications.</p>
+
+---
+
+### Control 2.3: Standardised Technical Framework Adoption
+
+**Summary:** Use of widely accepted, non-proprietary industry standards for core technical components.
+
+**Tier:** Foundation
+
+**Points:** 3
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Approve and mandate a set of <b>Standardised Technical Frameworks</b> (e.g., for APIs, authentication, networking, data formats) that align with global open industry standards and explicitly prohibit proprietary, vendor-specific integration paths. Compliance with this framework must be a mandatory prerequisite for all new technology projects.</p><h2 class='why-what'>Technical</h2><p>Utilise <b>Interoperability Standards</b> (e.g., OAuth 2.0, OpenID Connect) to ensure seamless communication and identity federation between services from different providers. Implement all infrastructure using <b>Infrastructure as Code (IaC)</b> templates based on provider-agnostic tools (like Terraform) to ensure environments can be consistently and quickly deployed elsewhere.</p>
+
+---
+
+### Control 2.4: Interoperability and Portability Strategy
+
+**Summary:** A defined plan and architecture enabling easy migration between different technical environments.
+
+**Tier:** Strategic
+
+**Points:** 4
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Develop a formal, documented <b>Portability Strategy</b> that clearly outlines the organisation's technical capability to move data, applications, and core processes between different operating environments (e.g., cloud-to-cloud, cloud-to-on-prem). Ensure the annual budget includes funds for maintaining multi-cloud compatibility layers and portability tooling.</p><h2 class='why-what'>Technical</h2><p>Containerize all new applications using <b>Docker and Kubernetes</b> to maximize portability across hosting environments. Ensure critical data formats are Standardised and non-proprietary (e.g., avoiding vendor-specific database features), and establish frequent, automated backup processes that allow data restoration and application restart on a technically different platform.</p>
+
+---
+
+### Control 2.5: Hardware and Infrastructure Source Verification
+
+**Summary:** Verification and control over the origin and integrity of core computing hardware and firmware.
+
+**Tier:** Strategic
+
+**Points:** 5
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Require and rigorously review <b>Source and Provenance Vetting</b> documentation for all critical hardware and infrastructure components (e.g., network gear, servers, specialized HSMs). Procurement must prioritise suppliers that provide full transparency regarding the manufacturing and supply chain origin, especially for components sourced from high-risk geopolitical regions.</p><h2 class='why-what'>Technical</h2><p>Implement <b>Trusted Platform Modules (TPMs)</b> and secure boot mechanisms to cryptographically verify hardware and firmware integrity at startup. Use digital signing and checksums to validate that all software and firmware updates originate from approved, verified sources within the supply chain before deployment.</p>
+
+---
+
+### Control 2.6: Self-Hosted Application Runtime Control
+
+**Summary:** Hosting and control of application execution environments (runtime) on owned or controlled platforms.
+
+**Tier:** Strategic
+
+**Points:** 6
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>For mission-critical applications (e.g., core IP, regulatory compliance systems), mandate a <b>self-hosted or trusted sovereign-partner-hosted runtime model</b> to retain direct administrative control over the underlying operating system and application environment. Invest strategically in the tooling and personnel required to manage these environments effectively.</p><h2 class='why-what'>Technical</h2><p>Deploy application runtimes on <b>dedicated hardware or fully controlled Virtual Private Clouds (VPCs)</b> with minimal interaction from the hosting provider's control plane. Favor <b>open-source application servers and databases</b> to eliminate reliance on proprietary vendor-specific licenses and operational frameworks, thereby ensuring operational freedom.</p>
+
+---
+
+### Control 2.7: Code and Intellectual Property Control
+
+**Summary:** Full control, ownership, and independent hosting of all critical application source code and IP.
+
+**Tier:** Advanced
+
+**Points:** 7
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Establish clear, legally watertight <b>Intellectual Property (IP) ownership clauses</b> in all contracts with development vendors, contractors, and cloud providers, explicitly confirming organisational ownership of custom code and derived works. Implement a centralized, regularly audited IP registration and monitoring process.</p><h2 class='why-what'>Technical</h2><p>Implement <b>Source Code Version Control Systems (VCS)</b> that are either entirely self-hosted or provided by a highly vetted, local partner. Utilise mandatory <b>code escrow arrangements</b> for all outsourced application development, which guarantees access to the source code should the vendor fail or a dispute arise.</p>
+
+---
+
+### Control 2.8: Future-Proofing Technology Roadmaps
+
+**Summary:** Strategic planning to ensure technological choices are resilient to geopolitical or vendor shifts.
+
+**Tier:** Advanced
+
+**Points:** 8
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Develop a proactive <b>3-5 year technology roadmap</b> that explicitly identifies and tracks dependencies on external technologies, with a goal of replacing high-risk proprietary components with sovereign-compliant alternatives. Budget for <b>sunset clauses</b> and associated migration costs for legacy, non-compliant systems.</p><h2 class='why-what'>Technical</h2><p>Adopt a <b>'Next-Gen' Architecture Review Board</b> composed of senior engineers and architects to vet all new technology choices against the long-term sovereignty roadmap. prioritise technologies that are <b>platform-neutral</b> and benefit from robust, continuous community support to ensure longevity and avoid future forced upgrades.</p>
+
+---
+
+## Domain 3: Operational Sovereignty
+
+This domain examines the organisation's autonomy and independence in executing critical business and IT operations. It ensures that essential functions can be performed without reliance on external human expertise or infrastructure outside of the organisation's direct control or trusted sovereign borders. Key areas include internal skill development, resilience planning (e.g., Disaster Recovery that withstands geopolitical isolation), and transparent supply chain vetting. High maturity confirms that the organisation has robust, locally managed processes and personnel ready to maintain operations and execute incident response free from external interference.
+
+### Control 3.1: Operational Process Documentation
+
+**Summary:** Documented procedures for routine and critical IT operations.
+
+**Tier:** Foundation
+
+**Points:** 1
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Mandate that all critical operational procedures—including deployment, maintenance, and incident response—be fully documented, reviewed by internal subject matter experts, and updated quarterly. Crucially, ensure this documentation is stored in a <b>sovereign-controlled repository</b> separate from primary vendor infrastructure.</p><h2 class='why-what'>Technical</h2><p>Implement a centralized <b>Knowledge Management System (KMS)</b> linked to the Configuration Management Database (CMDB) to store and version-control all operational runbooks and procedures. Use automation tools (e.g., Ansible, Chef) that embed documentation directly within the Infrastructure-as-Code, ensuring a single source of truth for deployment and recovery.</p>
+
+---
+
+### Control 3.2: Dependency on External Managed Services
+
+**Summary:** Identification of key external operational dependencies (e.g., outsourced functions and functions).
+
+**Tier:** Foundation
+
+**Points:** 2
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Conduct a thorough <b>Managed Service Dependency Audit</b> to identify all third-party services that have persistent or privileged access to critical systems. Develop a strategic plan to either <b>insource</b> the management of high-risk functions or implement stringent technical controls to severely restrict vendor access and operational scope.</p><h2 class='why-what'>Technical</h2><p>Implement <b>"break-glass" procedures</b> for all critical managed services, allowing internal staff to take manual control and perform essential functions in an emergency without vendor intervention. Utilise <b>zero-trust network access (ZTNA)</b> principles to severely limit the external attack surface exposed by vendor connections.</p>
+
+---
+
+### Control 3.3: Access Control and Identity Management
+
+**Summary:** Basic policies and systems to manage user access to resources.
+
+**Tier:** Foundation
+
+**Points:** 3
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Establish a robust <b>Identity and Access Management (IAM) framework</b> with strict policies for privileged access and service accounts. Mandate mandatory, annual re-certification of all user and service accounts to ensure permissions are still necessary, appropriate, and strictly comply with the least-privilege principle.</p><h2 class='why-what'>Technical</h2><p>Implement mandatory <b>Multi-Factor Authentication (MFA)</b> for all internal and external access to sensitive data and systems. Enforce <b>Role-Based Access Control (RBAC)</b> across all cloud and on-premise resources, limiting permissions to the absolute minimum required for each specific role.</p>
+
+---
+
+### Control 3.4: Internal Skills and Competency Development
+
+**Summary:** Active programs to build and retain in-house expertise for critical sovereign technologies.
+
+**Tier:** Strategic
+
+**Points:** 4
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Develop a <b>Sovereignty Skills Development Plan</b> that identifies technical and operational competency gaps in managing self-hosted or sovereign-compliant technologies. Allocate dedicated and recurring funding for internal training, certification, and targeted recruitment in essential areas like open-source cloud, hardware maintenance, and key management.</p><h2 class='why-what'>Technical</h2><p>Establish an <b>internal Center of Excellence (CoE)</b> focused on sovereign technologies and best practices to drive knowledge sharing and mentorship. Implement a cross-training program to ensure technical staff are proficient on multiple infrastructure platforms, thereby reducing dependency on individual vendor expertise.</p>
+
+---
+
+### Control 3.5: Disaster Recovery and Business Continuity
+
+**Summary:** Full, tested ability to recover and maintain operations without relying on foreign infrastructure.
+
+**Tier:** Strategic
+
+**Points:** 5
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Mandate regular, realistic testing of the <b>Disaster Recovery (DR) and Business Continuity (BC)</b> plans, specifically simulating worst-case scenarios such as geopolitical isolation or a major vendor outage. The executive team must ensure the DR environment resides in a geographically and jurisdictionally separate, sovereign-compliant zone.</p><h2 class='why-what'>Technical</h2><p>Implement <b>immutable backups</b> that cannot be modified or deleted, even by system administrators, to protect against malicious encryption. Utilise a <b>cloud-agnostic data replication strategy</b> to maintain synchronized copies of critical data in a failover environment controlled exclusively by the organisation's domestic operations.</p>
+
+---
+
+### Control 3.6: Supply Chain Transparency and Vetting
+
+**Summary:** Formal program to vet and monitor the security and geopolitical risk of all key technology suppliers.
+
+**Tier:** Strategic
+
+**Points:** 6
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Establish a rigorous <b>Supply Chain Vetting Program</b> that requires critical vendors to disclose their sub-contractors and the geographic location of all support operations. Mandate contractual clauses granting the organisation the right to audit and inspect vendor security controls and data access policies.</p><h2 class='why-what'>Technical</h2><p>Use <b>Software Composition Analysis (SCA)</b> tools to continuously scan all third-party software components for known vulnerabilities and license compliance issues. Implement a strict <b>Secure Software Development Life Cycle (SSDLC)</b> that governs the integration and use of all external code libraries.</p>
+
+---
+
+### Control 3.7: Sovereign Incident Response Plan
+
+**Summary:** A dedicated and tested incident response plan that limits external interference during crises.
+
+**Tier:** Advanced
+
+**Points:** 7
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Develop a specialized <b>Sovereign Incident Response Plan</b> that details clear procedures for responding to a legal access request from a foreign government or a politically motivated cyberattack. This plan must include explicit steps for immediate engagement with domestic legal counsel and the designated national security authority.</p><h2 class='why-what'>Technical</h2><p>Ensure all security monitoring logs and evidence-gathering tools are <b>self-hosted and legally protected</b> within the sovereign jurisdiction. Implement automated data encryption and system lockdown capabilities that can be rapidly triggered in response to an identified external legal or coercive threat, limiting data availability.</p>
+
+---
+
+### Control 3.8: Operational Autonomy in Critical Functions
+
+**Summary:** Ability to perform all critical business and technical operations entirely within controlled boundaries.
+
+**Tier:** Advanced
+
+**Points:** 8
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Identify and formally list all <b>Critical Business Functions (CBFs)</b> and mandate a plan to achieve <b>Operational Autonomy</b> for each, ensuring they can operate for a defined period (e.g., 30 days) without external managed services or proprietary vendor inputs. This requires dedicated budget and executive oversight.</p><h2 class='why-what'>Technical</h2><p>Establish <b>Air-Gapped or Fully Isolated Network Segments</b> for hosting CBFs. Implement internal tooling and automation to manage and patch these environments independently, minimizing the need for external network connectivity or reliance on vendor-provided updates.</p>
+
+---
+
+## Domain 4: Assurance Sovereignty
+
+Assurance Sovereignty addresses the right, capability, and transparency required to verify the security and compliance claims of both internal systems and external vendors. It's the mechanism by which trust is verified, not assumed. This domain covers control over all audit and security monitoring data, ensuring logs are retained locally for independent analysis. Advanced maturity means the organisation has contractual rights to mandate independent, sovereign-led inspections of provider environments and Utilises continuous technical validation to ensure that security controls remain effective against defined sovereign risks.
+
+### Control 4.1: Regular Security Audits Conducted
+
+**Summary:** Periodic internal or external assessments of security controls.
+
+**Tier:** Foundation
+
+**Points:** 1
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Mandate that <b>Regular Security Audits</b> (including penetration testing and vulnerability scanning) be conducted by an <b>independent, sovereign-compliant third party</b> against a recognized international standard. The CISO must be required to report the audit results and subsequent remediation progress directly to the Board.</p><h2 class='why-what'>Technical</h2><p>Establish a comprehensive <b>Vulnerability Management Program</b> to track, prioritise, and manage the remediation lifecycle of all identified security gaps. Automate vulnerability scanning during the Continuous Integration/Continuous Delivery (CI/CD) pipeline to identify and fix code-level issues before deployment.</p>
+
+---
+
+### Control 4.2: Control over Security Monitoring Data
+
+**Summary:** Logging and storage of basic security events and alerts.
+
+**Tier:** Foundation
+
+**Points:** 2
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Enforce a strict policy that all <b>Security Monitoring Data</b> (raw logs, SIEM data, security alerts) for critical systems must be collected and stored immediately within a <b>sovereign-controlled repository</b>. Contractually prohibit external vendors from deleting, modifying, or exporting this data without explicit, documented internal authorization.</p><h2 class='why-what'>Technical</h2><p>Deploy a <b>Self-Hosted Security Information and Event Management (SIEM) solution</b> or a hybrid solution where raw logs for sensitive workloads are processed and stored locally. Implement strong encryption and immutable storage for all security logs to maintain their integrity and chain of custody for legal purposes.</p>
+
+---
+
+### Control 4.3: Risk Management Framework
+
+**Summary:** A basic framework for identifying and assessing geopolitical and sovereignty-related risks.
+
+**Tier:** Foundation
+
+**Points:** 3
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Adopt a formal, internationally recognized <b>Risk Management Framework</b> (e.g., NIST, ISO 31000) and formally integrate digital sovereignty risks (legal, geopolitical, vendor lock-in) into the core enterprise risk matrix. Mandate quarterly risk review meetings with senior leadership to address high-scoring sovereignty risks.</p><h2 class='why-what'>Technical</h2><p>Implement <b>Governance, Risk, and Compliance (GRC) tools</b> to automate the tracking of identified risks against policy controls and remediation efforts. Use the framework to drive the allocation of the security budget toward the highest-sovereignty-risk areas, ensuring investment aligns with strategic control objectives.</p>
+
+---
+
+### Control 4.4: Compliance with Local Security Standards
+
+**Summary:** Certification against national or local industry-specific security and sovereign standards.
+
+**Tier:** Strategic
+
+**Points:** 4
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Ensure the organisation's security policies are <b>explicitly mapped to and compliant with all local security standards</b> (e.g., national cyber security agency guidelines, mandated cloud security levels). Require annual third-party compliance verification against these local standards, going beyond basic international certifications.</p><h2 class='why-what'>Technical</h2><p>Utilise <b>Compliance-as-Code</b> tools (e.g., OpenSCAP, specialized cloud security posture management) to embed compliance requirements directly into infrastructure deployment configurations. Automate continuous monitoring of the environment against local security baselines, generating immediate alerts for any configuration drift.</p>
+
+---
+
+### Control 4.5: Transparency in Vendor Security Practices
+
+**Summary:** Contractual obligation for vendors to provide detailed, auditable reports on their security posture.
+
+**Tier:** Strategic
+
+**Points:** 5
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Require all major technology vendors to provide <b>documented transparency</b> regarding their internal security practices, including comprehensive audit reports (e.g., SOC 2, ISO 27001) and explicit details on how they handle external legal data access requests. Integrate a robust 'right to information' clause into all new contracts.</p><h2 class='why-what'>Technical</h2><p>Implement <b>Vendor Risk Management (VRM) solutions</b> to centralize, track, and score the security posture and transparency of all third-party providers. Focus the technical vetting process on the vendor's controls designed to resist non-sovereign legal access to customer data.</p>
+
+---
+
+### Control 4.6: Independent Certification and Vetting
+
+**Summary:** The right and ability to mandate independent third-party audits of all critical vendors/platforms.
+
+**Tier:** Advanced
+
+**Points:** 6
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Mandate that all critical third-party services and cloud environments hold <b>independent, sovereign-recognized security certifications</b> (e.g., specific national cloud security labels, high-level ISO certifications). prioritise partners that Utilise local, independent auditors whose jurisdiction aligns with the organisation's sovereignty requirements.</p><h2 class='why-what'>Technical</h2><p>Do not rely solely on vendor certifications; implement layered internal security controls (like encryption with self-managed keys and micro-segmentation) to provide an <b>additional layer of sovereign protection</b> independent of the provider’s certification scope.</p>
+
+---
+
+### Control 4.7: Ability to Invoke Sovereign Inspections
+
+**Summary:** Contractual and legal rights to perform on-demand, deep technical inspections of provider platforms.
+
+**Tier:** Advanced
+
+**Points:** 7
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Establish a formal process, vetted by legal and executive management, that details the procedures and legal grounds for the organisation to <b>invoke sovereign inspections</b> (audits, data access) over a critical vendor. Ensure explicit and legally sound clauses granting the right to inspect are included in every contract.</p><h2 class='why-what'>Technical</h2><p>Maintain <b>detailed audit trails and logging</b> of all administrative activity by the cloud vendor's personnel, allowing internal security teams to effectively perform a technical inspection when the sovereign right to inspect is invoked. Test the ability to access this data rapidly during DR drills.</p>
+
+---
+
+### Control 4.8: Continuous Security Control Validation
+
+**Summary:** Automated, ongoing testing and validation of the effectiveness of security and sovereign controls.
+
+**Tier:** Advanced
+
+**Points:** 8
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Implement a program for <b>Continuous Security Control Validation (CSCV)</b> to ensure that security measures are not only implemented but remain effective against current threats over time. Link CSCV results directly to the risk management framework to ensure high-risk control failures are immediately escalated to the executive level.</p><h2 class='why-what'>Technical</h2><p>Deploy <b>Breach and Attack Simulation (BAS)</b> tools to continuously test the efficacy of security controls against real-world threats. Use automated scanning tools to verify that security configurations (e.g., firewall rules, encryption settings) align with the documented sovereign policy baseline.</p>
+
+---
+
+## Domain 5: Open Source
+
+This domain focuses on the strategic adoption and engagement with Open Source Software (OSS) as a tool for mitigating vendor dependency and strengthening technical control. Using OSS is a powerful way to eliminate proprietary lock-in, but maturity requires more than just consumption. A mature organisation actively assesses the stability and health of its OSS dependencies, develops internal expertise to audit and modify the code, and strategically contributes to critical projects. This engagement ensures the organisation has the necessary influence and a viable 'forking' contingency plan should a vital OSS project become unstable or commercially compromised.
+
+### Control 5.1: OSS Policy and Usage Guidelines
+
+**Summary:** Established rules for the procurement, use, and license compliance of Open Source Software.
+
+**Tier:** Foundation
+
+**Points:** 1
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Develop and enforce a clear <b>Open Source Software (OSS) Policy</b> that defines approved components, acceptable licensing terms, and the mandatory process for conducting security and dependency risk reviews before deployment. Formally appoint a senior manager responsible for OSS governance.</p><h2 class='why-what'>Technical</h2><p>Utilise <b>Software Composition Analysis (SCA)</b> tools integrated into the CI/CD pipeline to maintain a comprehensive inventory of all OSS components used. These tools must track license compliance and continuously monitor for newly disclosed vulnerabilities in those components.</p>
+
+---
+
+### Control 5.2: Internal OSS Skills and Expertise
+
+**Summary:** Basic internal training and awareness of Open Source technologies.
+
+**Tier:** Foundation
+
+**Points:** 2
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Allocate resources for <b>Internal OSS Skills Development</b> through dedicated training, internal workshops, and time for engineers to work on upstream open-source projects. Recognize and reward engineers for contributing expertise to strategic OSS components, fostering internal ownership.</p><h2 class='why-what'>Technical</h2><p>Establish an internal <b>Code Review Board or Team</b> dedicated to understanding, customizing, and maintaining core OSS components. Encourage engineers to transition from being mere OSS consumers to being active contributors to critical projects to deepen internal knowledge.</p>
+
+---
+
+### Control 5.3: Source Code Escrow Arrangements
+
+**Summary:** Legal agreements to hold critical proprietary source code in escrow.
+
+**Tier:** Foundation
+
+**Points:** 3
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>For all third-party proprietary software that is deemed critical and cannot be easily replaced, mandate a <b>Source Code Escrow Agreement</b> with a neutral third party. The contract must define clear release conditions based on vendor failure, acquisition, or legal/geopolitical events that compromise service delivery.</p><h2 class='why-what'>Technical</h2><p>Regularly <b>verify the integrity and buildability</b> of the code held in escrow to ensure that the source code is indeed usable and matches the deployed version of the application. This readiness check ensures the escrow serves as a viable continuity option.</p>
+
+---
+
+### Control 5.4: Dependency Risk Assessment
+
+**Summary:** Formal process for analysing the security and stability risks of third-party OSS libraries used.
+
+**Tier:** Strategic
+
+**Points:** 4
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Implement a formal <b>Dependency Risk Assessment</b> for all technology components (OSS, commercial, cloud services) focusing specifically on the <b>single point of failure risk</b> and the likelihood of geopolitical disruption to the source project or vendor. prioritise mitigation for components with a high-risk score.</p><h2 class='why-what'>Technical</h2><p>Utilise <b>Dependency Mapping tools</b> to visualise the supply chain of all software and infrastructure components. For high-risk components, establish a <b>dual-source strategy</b> where alternative technologies are identified and partially integrated to allow for rapid switching.</p>
+
+---
+
+### Control 5.5: Forking Strategy for Critical OSS
+
+**Summary:** A prepared plan to take over and maintain critical OSS dependencies if the original project fails.
+
+**Tier:** Strategic
+
+**Points:** 5
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Identify critical OSS components that are absolutely essential for operational autonomy and develop a detailed <b>Forking Strategy</b>. This strategy must define the executive triggers for an internal fork (e.g., loss of core maintainers, introduction of hostile code) and allocate guaranteed resources to maintain the independent code base.</p><h2 class='why-what'>Technical</h2><p>Maintain an <b>internal mirror repository</b> of the critical OSS codebase that includes all necessary build toolchains. Establish an automated patching and testing pipeline for the forked codebase to ensure the organisation can continue to deploy updates without relying on the upstream project.</p>
+
+---
+
+### Control 5.6: Contribution to Strategic OSS Projects
+
+**Summary:** Active, strategic contribution of code and resources to OSS projects critical to the organisation.
+
+**Tier:** Advanced
+
+**Points:** 6
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Allocate a portion of the development budget to <b>Contribute Code, Documentation, or Funding</b> to strategic OSS projects that underpin the organisation's sovereignty goals. This builds influence, ensures technology alignment, and strengthens the viability of the open ecosystem.</p><h2 class='why-what'>Technical</h2><p>Designate internal engineers to serve as <b>maintainers or core contributors</b> to key OSS projects. Establish a clear process for efficiently reviewing and submitting internal code improvements back to the upstream projects, maintaining strong community relations.</p>
+
+---
+
+### Control 5.7: Active OSS Community Engagement
+
+**Summary:** Deep involvement in key Open Source communities to influence development direction.
+
+**Tier:** Advanced
+
+**Points:** 7
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Sponsor or actively participate in <b>strategic OSS Community Engagement</b> by hosting events, joining governance boards, and collaborating with like-minded organisations. This ensures the organisation has a direct voice and early visibility into the direction of the ecosystems it relies upon.</p><h2 class='why-what'>Technical</h2><p>Encourage technical staff to be active in community forums, mailing lists, and special interest groups (SIGs) related to core OSS. Ensure the organisation is notified immediately of any major shifts in project governance, licensing, or personnel.</p>
+
+---
+
+### Control 5.8: Ability to Influence OSS Roadmaps
+
+**Summary:** Strategic engagement with Open Source foundations to steer future software development.
+
+**Tier:** Advanced
+
+**Points:** 8
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Develop a structured approach to <b>Influence OSS Roadmaps</b> by sponsoring new features, providing detailed use cases, and establishing contractual relationships with companies that are major contributors to relevant projects. Use financial backing to steer development toward sovereign-compatible features.</p><h2 class='why-what'>Technical</h2><p>Assign lead architects to develop and submit <b>formal proposals and Requests for Comments (RFCs)</b> to the OSS communities, guiding the evolution of the software to meet the organisation's long-term autonomy and feature requirements.</p>
+
+---
+
+## Domain 6: Executive Oversight
+
+Executive Oversight assesses the formal governance, sponsorship, and strategic integration of Digital Sovereignty principles across the entire organisation. This ensures that sovereignty is not just an IT concern, but a core business strategy driven from the top. Maturity is measured by the establishment of clear policies, dedicated budget allocation, and the creation of a formal Sovereignty Governance Board with decision-making authority. High maturity indicates that sovereignty metrics are defined as Key Performance Indicators (KPIs) and regularly reported to the executive board, fostering a pervasive organisational culture of sovereign awareness.
+
+### Control 6.1: Designated Executive Sponsor 
+
+**Summary:** A senior executive has been officially assigned responsibility for Digital Sovereignty.
+
+**Tier:** Foundation
+
+**Points:** 1
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Appoint a <b>Designated Executive Sponsor</b> (e.g., the COO, CIO, or a specific Board Member) to champion digital sovereignty initiatives. This sponsor must provide high-level visibility, clear organisational roadblocks, and ensure cross-departmental accountability. The role should be formally defined in the corporate governance charter.</p><h2 class='why-what'>Technical</h2><p>The Executive Sponsor should commit to <b>regular, dedicated meetings</b> with the technical and legal teams to fully understand implementation challenges, geopolitical risk exposure, and ensure the sovereignty technical roadmap is directly supported by executive decisions on resourcing and procurement.</p>
+
+---
+
+### Control 6.2: Defined Digital Sovereignty Policy
+
+**Summary:** A written policy outlining the organisation's stance and requirements on digital sovereignty.
+
+**Tier:** Foundation
+
+**Points:** 2
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Draft, approve, and publicly communicate a comprehensive <b>Defined Digital Sovereignty Policy</b> that clearly articulates the organisation's commitment to control over its data, technology, and operations. This policy must be ratified by the Board and serve as the foundational document for all subsequent IT, legal, and procurement decisions.</p><h2 class='why-what'>Technical</h2><p>The IT and Security teams must translate the high-level policy principles into <b>enforceable standards and controls</b> within the governance framework. Every new project initiation document (PID) should require a formal sign-off confirming alignment with the Sovereignty Policy before execution.</p>
+
+---
+
+### Control 6.3: Budget Allocation for Sovereignty Initiatives
+
+**Summary:** Dedicated financial resources are allocated to implement sovereignty controls and programs.
+
+**Tier:** Foundation
+
+**Points:** 3
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Allocate a <b>Dedicated Budget</b> line item specifically for Digital Sovereignty Initiatives (e.g., sovereign cloud migration, External Key Management deployment, talent development). This budget must be protected from discretionary cuts and its effectiveness measured based on quantified risk reduction achieved, not just cost savings.</p><h2 class='why-what'>Technical</h2><p>Use the dedicated budget to fund the premium costs often associated with highly sovereign infrastructure and services, recognizing that autonomy and control represent a <b>strategic value</b> that outweighs short-term cost savings on commodity global cloud resources.</p>
+
+---
+
+### Control 6.4: Integration into Organisational Strategy
+
+**Summary:** Digital Sovereignty objectives are formally included in the overall business and technology strategy.
+
+**Tier:** Strategic
+
+**Points:** 4
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Ensure Digital Sovereignty is formally <b>Integrated into the organisation's Overall Corporate Strategy</b>, sitting alongside core objectives like financial stability and market growth. The C-suite should communicate sovereignty not merely as a compliance burden, but as a source of <b>competitive advantage and enduring business resilience</b>.</p><h2 class='why-what'>Technical</h2><p>The enterprise architecture team must use the sovereignty strategy as a <b>core design constraint</b> for all major platform and application architecture decisions, favoring sovereign-compatible designs by default, and requiring justification for any non-sovereign choices.</p>
+
+---
+
+### Control 6.5: Regular Reporting to the Board
+
+**Summary:** Consistent, periodic reporting of digital sovereignty risks and status to the executive board.
+
+**Tier:** Strategic
+
+**Points:** 5
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Mandate <b>Regular Reporting to the Board</b> on the organisation's digital sovereignty maturity, Utilising the results of this assessment and defined KPIs. The report should focus on residual risk, critical dependencies, and strategic investment recommendations necessary to close identified control gaps.</p><h2 class='why-what'>Technical</h2><p>Provide the Board with clear, <b>non-technical visualisations</b> (e.g., heatmaps, spider charts) that accurately illustrate the progress made in the key pillars of data, technology, and operational sovereignty, ensuring technical complexity does not obscure strategic risk.</p>
+
+---
+
+### Control 6.6: Sovereignty Culture and Awareness Program
+
+**Summary:** Ongoing training and communication ensure all staff understand their role in maintaining DS.
+
+**Tier:** Strategic
+
+**Points:** 6
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Launch a formal <b>Sovereignty Culture and Awareness Program</b> across all departments (Legal, Procurement, IT, HR) to ensure a shared, universal understanding of digital risks and responsibilities. Procurement staff, in particular, must be rigorously trained on recognizing and negotiating sovereign-compliant contracting requirements.</p><h2 class='why-what'>Technical</h2><p>Integrate sovereignty principles into the <b>onboarding and annual compliance training</b> for all technical and administrative staff, highlighting their individual role in protecting data location, maintaining key control, and preventing unauthorised access.</p>
+
+---
+
+### Control 6.7: Dedicated Sovereignty Governance Board
+
+**Summary:** A formal, cross-functional committee regularly monitors and directs sovereignty initiatives.
+
+**Tier:** Advanced
+
+**Points:** 7
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Establish a <b>Dedicated Sovereignty Governance Board</b> composed of senior representatives from Legal, IT, Security, and Procurement. This board will be responsible for policy enforcement, budget oversight, and resolving high-level inter-departmental conflicts related to sovereignty implementation.</p><h2 class='why-what'>Technical</h2><p>The Governance Board must be empowered to enforce sovereign controls, even if they incur short-term performance or complexity costs, ensuring the strategic imperative is prioritised over minor operational inconveniences. They should approve all waivers for non-sovereign solutions.</p>
+
+---
+
+### Control 6.8: Key Performance Indicators (KPIs) Defined
+
+**Summary:** Specific, measurable metrics are used to track and assess the success of sovereignty goals.
+
+**Tier:** Advanced
+
+**Points:** 8
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Define clear, quantifiable <b>Key Performance Indicators (KPIs)</b> for digital sovereignty, such as 'Percentage of Critical Data under Sovereign Key Control' or 'Time to Recover Critical Functions in an Autonomy Event'. These KPIs should be tracked monthly and ideally linked to executive compensation.</p><h2 class='why-what'>Technical</h2><p>Implement <b>automated measurement tools</b> and dashboards to gather data for these KPIs directly from the technical environment (e.g., cloud API calls, EKM system logs), ensuring objective, consistent, and low-latency reporting on maturity progress.</p>
+
+---
+
+## Domain 7: Managed Services
+
+This technically focused domain scrutinises the specific control and configuration mechanisms within public and private cloud environments. As modern organisations rely heavily on cloud infrastructure, this domain ensures the organisation is sovereign within its rented space. It measures the ability to enforce strict local residency for resources and network traffic, manage encryption keys independently, and audit the provider's control plane activity. Achieving Advanced maturity means the organisation has a fully tested multi-cloud exit strategy, ensuring no single cloud vendor can hold critical workloads hostage.
+
+### Control 7.1: Region and Zoning Control
+
+**Summary:** The ability to select and enforce specific sovereign physical regions and availability zones for all resources.
+
+**Tier:** Foundation
+
+**Points:** 1
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Mandate <b>strict Region and Zoning Control</b> for all critical workloads. This requires contractual agreements with the provider that specify the exact geographic and availability zones for resource deployment and includes negotiating penalties for any unauthorised data or workload movement outside these zones.</p><h2 class='why-what'>Technical</h2><p>Utilise <b>cloud provider policies (e.g., organisation Policies, Service Control Policies)</b> to programmatically restrict the creation of resources to approved sovereign regions. Implement continuous auditing and alerting tools to flag any non-compliant resource creation immediately after it is attempted.</p>
+
+---
+
+### Control 7.2: Sovereign Image and Container Registry
+
+**Summary:** Use of internal or locally hosted repositories for all virtual machine images and application containers.
+
+**Tier:** Foundation
+
+**Points:** 2
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Establish a <b>Sovereign Image and Container Registry</b> hosted within the organisation's controlled jurisdiction (on-premise or a sovereign partner). Mandate that all production deployments must source their base images and application containers exclusively from this vetted, internal registry.</p><h2 class='why-what'>Technical</h2><p>Integrate <b>security scanning and vulnerability management</b> directly into the sovereign registry pipeline. Implement a formal process to pull, vet, and cryptographically sign all external images before they are placed in the sovereign registry for use by development teams.</p>
+
+---
+
+### Control 7.3: Resource Dependency Mapping
+
+**Summary:** A clear inventory and mapping of all cloud resources and their specific dependencies on vendor-managed services.
+
+**Tier:** Foundation
+
+**Points:** 3
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Conduct a comprehensive <b>Resource Dependency Mapping</b> exercise to identify all internal and external services required for critical application operation (e.g., DNS, CDN, logging). prioritise the replacement or isolation of non-sovereign dependencies that could lead to a single point of failure or foreign interference.</p><h2 class='why-what'>Technical</h2><p>Use <b>observability and tracing tools</b> to visualise application call graphs and dependency chains in real time. Model the impact of a failure or loss of control over each dependency to determine the required level of sovereign mitigation (e.g., replacing a vendor PaaS with an internal OSS solution).</p>
+
+---
+
+### Control 7.4: Hyperscaler Data Access Vetting
+
+**Summary:** Formal review and control over the specific access rights of the Cloud Provider's technical staff to your environment.
+
+**Tier:** Strategic
+
+**Points:** 4
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Develop a rigorous <b>Hyperscaler Data Access Vetting</b> protocol, requiring contractual assurance that cloud provider staff cannot access customer data except under defined, auditable, and customer-approved circumstances. Seek public documentation on the vendor's policy for resisting foreign legal access.</p><h2 class='why-what'>Technical</h2><p>Implement <b>Client-Side Encryption</b> and use <b>External Key Management (EKM)</b> to ensure that the hyperscaler's administrators technically cannot decrypt or access the customer's data, even if compelled by law. Utilise features like 'Customer Lockbox' for non-encrypted metadata access.</p>
+
+---
+
+### Control 7.5: Network Egress/Ingress Path Control
+
+**Summary:** Ownership and enforcement of all network routing, ensuring data enters and leaves via sovereign gateways.
+
+**Tier:** Strategic
+
+**Points:** 5
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Define a policy that mandates the implementation of <b>Network Egress/Ingress Path Control</b> to ensure all outbound and inbound traffic for critical data remains within the defined sovereign network boundaries. Review all network architecture diagrams for unmonitored external connections.</p><h2 class='why-what'>Technical</h2><p>Utilise <b>Network Virtual Appliances (NVAs)</b> and <b>Next-Generation Firewalls (NGFWs)</b> controlled by the organisation to strictly filter and monitor all external connections. Route all internet-bound traffic through a <b>sovereign-jurisdiction exit point</b> for full visibility and control before it hits the open internet.</p>
+
+---
+
+### Control 7.6: Configuration-as-Code Ownership
+
+**Summary:** Exclusive control and independent hosting of all Infrastructure-as-Code (IaC) templates and configuration files.
+
+**Tier:** Strategic
+
+**Points:** 6
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Establish an internal policy mandating <b>Configuration-as-Code (CaC) Ownership</b> by dedicated internal teams. This means all infrastructure definitions (Terraform, CloudFormation, Ansible) must be owned, versioned, and managed in an internal, sovereign-controlled Git repository.</p><h2 class='why-what'>Technical</h2><p>Implement <b>Guardrails and Automated Enforcement</b> to prevent manual configuration changes (Configuration Drift). The only path for infrastructure changes must be through the internal, auditable CaC pipeline, ensuring the organisation retains full control over the environment definition.</p>
+
+---
+
+### Control 7.7: Control Plane Audit and Integrity
+
+**Summary:** Continuous, independent monitoring and verification of the cloud provider's underlying management plane integrity.
+
+**Tier:** Advanced
+
+**Points:** 7
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Mandate independent, periodic <b>Control Plane Audit and Integrity</b> checks for the cloud environments, focusing on the configuration of core services (IAM, networking, key management). Ensure audit logs for control plane activities are retained in a sovereign location for forensic analysis.</p><h2 class='why-what'>Technical</h2><p>Configure <b>Cloud Auditing Services</b> (e.g., CloudTrail, Azure Activity Log) to continuously monitor the control plane for any changes or unusual activity. Use specialized tooling to look for patterns that might indicate unauthorised external access or provider misuse.</p>
+
+---
+
+### Control 7.8: Multi-Cloud Exit Strategy Testing
+
+**Summary:** Regularly tested, automated mechanisms to quickly migrate critical workloads to a different cloud or on-premises environment.
+
+**Tier:** Advanced
+
+**Points:** 8
+
+**Recommendation:**
+
+<h2 class='why-what'>Executive </h2><p>Develop and regularly <b>Test a Multi-Cloud Exit Strategy</b> that includes formal criteria for triggering a migration (e.g., major geopolitical event, vendor failure), a fully costed plan, and a dedicated executive team to manage the process.</p><h2 class='why-what'>Technical</h2><p>Perform <b>simulated migration exercises</b> on non-production environments annually. Maintain automated tools and playbooks that can efficiently package, transfer, and redeploy critical workloads and their data to an alternative sovereign-compliant target platform in a time-bound manner.</p>
+
+---
+

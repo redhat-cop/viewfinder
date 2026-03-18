@@ -23,6 +23,8 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 - **Framework Mapping**: Map assessments to NIST 800-53, PCI DSS, ISO 27001, FedRAMP, NIS2, DORA, DISA STIG
 - **Industry-Specific Guidance**: Tailored recommendations for Finance, Government, Healthcare, Manufacturing, Telecommunications
 - **Workshop Facilitator Notes**: ✨ Capture domain-specific notes during facilitated workshops - notes flow through results, detailed reports, and export/import
+- **Interactive Tooltips**: ✨ Hover-activated "Key questions to ask" for each capability, sourced from the Level 201 Enablement Guide
+- **Concise Domain Overviews**: ✨ Punchy, scannable domain descriptions with bolded key sovereignty terms
 - **Export/Import Results**: ✨ Save and restore completed assessment results for record-keeping, sharing, and comparison
 
 ### Visualization & Reporting
@@ -442,7 +444,7 @@ You'll see the **Landing Page Dashboard** with four main sections:
    - Navigate through 7 domain tabs
    - For each domain, select your current maturity level (1-8 capabilities)
    - ✨ Add workshop facilitator notes for each domain (optional)
-   - Use info icons for detailed control descriptions
+   - ✨ Hover over info icons to see "Key questions to ask" tooltips from the Enablement Guide
    - Real-time scoring updates as you progress
 
 4. **Submit Assessment**:

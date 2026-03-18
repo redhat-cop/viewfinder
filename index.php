@@ -5,6 +5,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Viewfinder Maturity Assessment</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="alternate icon" href="favicon.ico">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/brands.css" />
@@ -65,6 +67,51 @@
     display: inline-block;
     color: inherit;
     opacity: 1;
+  }
+
+  /* Custom Capability Tooltips with HTML support */
+  .custom-capability-tooltip {
+    position: absolute;
+    display: none;
+    max-width: 500px;
+    min-width: 400px;
+    background: #2a2a2a;
+    border: 2px solid #0d60f8;
+    border-radius: 6px;
+    color: #e0e0e0;
+    font-size: 0.9rem;
+    padding: 1rem;
+    box-shadow: 0 4px 20px rgba(13, 96, 248, 0.4);
+    z-index: 10000;
+    pointer-events: none;
+  }
+
+  .custom-capability-tooltip strong {
+    color: #9ec7fc;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+  }
+
+  .custom-capability-tooltip ul {
+    margin: 0.5rem 0 0 0;
+    padding-left: 1.5rem;
+    list-style-type: disc;
+  }
+
+  .custom-capability-tooltip ul li {
+    color: #e0e0e0;
+    margin-bottom: 0.4rem;
+    line-height: 1.5;
+  }
+
+  .tooltip-icon {
+    color: #0d60f8;
+    transition: color 0.2s ease;
+  }
+
+  .tooltip-icon:hover {
+    color: #4d90fe;
   }
 </style>
 
@@ -466,7 +513,8 @@ while( $i < 9) {
    ## If a summary in there, use it as a tooltip
   if ($json[$area][$summary] != "") {
   
-  $itemSummary = '&nbsp; <i class="fa-solid fa-circle-info" style="display: inline-block;max-width: 100px;" title="' . $json[$area][$summary] . '"></i>';
+  $tooltipContent = htmlspecialchars($json[$area][$summary], ENT_QUOTES, 'UTF-8');
+  $itemSummary = '&nbsp; <i class="fa-solid fa-circle-info tooltip-icon" style="display: inline-block;max-width: 100px; cursor: help;" data-tooltip="' . $tooltipContent . '"></i>';
   } else {
     $itemSummary = "";
   }
@@ -589,6 +637,46 @@ function openCity(evt, cityName) {
 </script>
 <script type="text/javascript" >
 document.getElementById("defaultOpen").click();
+
+// Custom tooltip implementation with HTML support
+$(document).ready(function() {
+	console.log("Found tooltip icons:", $(".tooltip-icon").length);
+
+	// Create tooltip container
+	var $tooltip = $('<div class="custom-capability-tooltip"></div>').appendTo('body');
+
+	$(".tooltip-icon").on('mouseenter', function(e) {
+		var htmlContent = $(this).attr('data-tooltip');
+		if (!htmlContent) return;
+
+		// Decode HTML entities
+		var txt = document.createElement("textarea");
+		txt.innerHTML = htmlContent;
+		var decoded = txt.value;
+
+		// Set tooltip content and show it
+		$tooltip.html(decoded).fadeIn(200);
+
+		// Position tooltip
+		var iconOffset = $(this).offset();
+		$tooltip.css({
+			top: iconOffset.top + 25,
+			left: iconOffset.left - 200
+		});
+	});
+
+	$(".tooltip-icon").on('mouseleave', function() {
+		$tooltip.fadeOut(200);
+	});
+
+	// Move tooltip with mouse for better UX
+	$(".tooltip-icon").on('mousemove', function(e) {
+		$tooltip.css({
+			top: e.pageY + 15,
+			left: e.pageX - 250
+		});
+	});
+});
 </script>
 <?php endif; ?>
 
