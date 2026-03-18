@@ -505,7 +505,7 @@ $qnum = $json[$area]['qnum'];
 $infoId = $qnum . "-" . $i;
 $title = $json[$area]['title'];
 $control = $area;
-print "<p>" . $json[$area]['overview'] . "</p>";
+print "<div>" . $json[$area]['overview'] . "</div>";
 print "<ul class='ks-cboxtags'>\n";
 while( $i < 9) {
   //$infoButton = '<i class="fa-solid fa-circle-info"></i>';
