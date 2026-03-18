@@ -640,7 +640,7 @@ foreach ($gaps as $gap) {
 
 <!-- Pie Chart -->
 <div style="background: #2a2a2a; border-radius: 8px; padding: 2rem; margin-bottom: 2rem;">
-<h3 style="color: #9ec7fc; text-align: center; margin-bottom: 1.5rem; font-size: 1.2rem;">Capability Maturity Distribution</h3>
+<h3 style="color: #9ec7fc; text-align: center; margin-bottom: 1.5rem; font-size: 1.2rem;">Capability Status Distribution</h3>
 <div id="statusPieChart" style="text-align: center;"></div>
 </div>
 
@@ -996,7 +996,7 @@ print '<th class="table-header">' . $title .'</th>';
 
 </tr></thead>
 <tr>
-<td class="optimizing">Optimizing</td>
+<td class="optimizing"><strong>Optimizing</strong></td>
 <?php
 MaturityRating::putDomainStatus("8",$controlDetails,$json);
 ?>
@@ -1011,7 +1011,7 @@ MaturityRating::putDomainStatus("7",$controlDetails,$json);
 </tr>
 
 <tr>
-<td class="quantitative">Quantitatively Managed</td>
+<td class="quantitative"><strong>Quantitatively Managed</strong></td>
 <?php
 MaturityRating::putDomainStatus("6",$controlDetails,$json);
 ?>
@@ -1025,7 +1025,7 @@ MaturityRating::putDomainStatus("5",$controlDetails,$json);
 </tr>
 
 <tr>
-<td class="defined">Defined</td>
+<td class="defined"><strong>Defined</strong></td>
 <?php
 MaturityRating::putDomainStatus("4",$controlDetails,$json);
 ?>
@@ -1039,14 +1039,14 @@ MaturityRating::putDomainStatus("3",$controlDetails,$json);
 </tr>
 
 <tr>
-<td class="managed">Managed</td>
+<td class="managed"><strong>Managed</strong></td>
 <?php
 MaturityRating::putDomainStatus("2",$controlDetails,$json);
 ?>
 </tr>
 
 <tr>
-<td class="initial">Initial</td>
+<td class="initial"><strong>Initial</strong></td>
 <?php
 MaturityRating::putDomainStatus("1",$controlDetails,$json);
 ?>

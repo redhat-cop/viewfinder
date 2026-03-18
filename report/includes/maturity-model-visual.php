@@ -299,23 +299,28 @@ $maturityLevels = [
         <div class="progression-items">
             <div class="progression-item level-1">
                 <strong>Level 1 - Initial</strong>
-                <span>Ad-hoc processes, unpredictable results</span>
+                <span>Ad-hoc and chaotic processes with unpredictable results. Success depends on individual heroics rather than established processes.</span>
+                <span style="margin-top: 0.5rem; font-weight: 600; color: #c9190b !important;"><em>Key Characteristics:</em> Ad-hoc approach, unpredictable processes, hero-dependent, reactive firefighting</span>
             </div>
             <div class="progression-item level-2">
                 <strong>Level 2 - Managed</strong>
-                <span>Project-level management, repeatable processes</span>
+                <span>Basic processes established and managed at project level. Requirements and controls are tracked, but implementation varies by team.</span>
+                <span style="margin-top: 0.5rem; font-weight: 600; color: #ec7a08 !important;"><em>Key Characteristics:</em> Requirements tracking, basic controls, project-level planning, reactive management</span>
             </div>
             <div class="progression-item level-3">
                 <strong>Level 3 - Defined</strong>
-                <span>Organization-wide standards, proactive approach</span>
+                <span>Standardized processes documented and understood organization-wide. Consistent implementation across all teams and projects.</span>
+                <span style="margin-top: 0.5rem; font-weight: 600; color: #c58c00 !important;"><em>Key Characteristics:</em> Documented procedures, standardized approach, organization-wide consistency, process tailoring</span>
             </div>
             <div class="progression-item level-4">
                 <strong>Level 4 - Quantitatively Managed</strong>
-                <span>Measured and controlled processes</span>
+                <span>Data-driven approach with measurable KPIs and metrics. Performance is quantitatively understood and controlled within defined limits.</span>
+                <span style="margin-top: 0.5rem; font-weight: 600; color: #5a8c2a !important;"><em>Key Characteristics:</em> Statistical process control, metrics-driven decisions, predictable outcomes, variance analysis</span>
             </div>
             <div class="progression-item level-5">
                 <strong>Level 5 - Optimizing</strong>
-                <span>Continuous improvement, innovation focus</span>
+                <span>Continuous improvement culture with proactive optimization. Organization leads industry in sovereignty practices and innovates new approaches.</span>
+                <span style="margin-top: 0.5rem; font-weight: 600; color: #2aaa04 !important;"><em>Key Characteristics:</em> Automated monitoring, predictive analytics, continuous innovation, industry leadership</span>
             </div>
         </div>
     </div>
