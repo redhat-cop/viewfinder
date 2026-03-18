@@ -82,20 +82,32 @@ try {
     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
     $currentPageUrl = $protocol . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-    // Build the QR code using fluent builder pattern (v5.x API)
-    $qrCodeResult = Builder::create()
-        ->writer(new PngWriter())
-        ->data($currentPageUrl)
-        ->encoding(new Encoding('UTF-8'))
-        ->errorCorrectionLevel(ErrorCorrectionLevel::High)
-        ->size(300)
-        ->margin(10)
-        ->roundBlockSizeMode(RoundBlockSizeMode::Margin)
-        ->validateResult(false)
-        ->build();
+    // Try to build the QR code - if URL is too long, skip QR code generation
+    $qrCodeDataUri = null;
+    try {
+        // Build the QR code using fluent builder pattern (v5.x API)
+        // Use Low error correction to maximize data capacity
+        $qrCodeResult = Builder::create()
+            ->writer(new PngWriter())
+            ->data($currentPageUrl)
+            ->encoding(new Encoding('UTF-8'))
+            ->errorCorrectionLevel(ErrorCorrectionLevel::Low)
+            ->size(300)
+            ->margin(10)
+            ->roundBlockSizeMode(RoundBlockSizeMode::Margin)
+            ->validateResult(false)
+            ->build();
 
-    // Convert to base64 for inline display
-    $qrCodeDataUri = $qrCodeResult->getDataUri();
+        // Convert to base64 for inline display
+        $qrCodeDataUri = $qrCodeResult->getDataUri();
+    } catch (\Exception $qrException) {
+        // URL too long for QR code - log but continue without QR code
+        Logger::warning('QR code generation skipped - data too large', [
+            'url_length' => strlen($currentPageUrl),
+            'error' => $qrException->getMessage()
+        ]);
+        $qrCodeDataUri = null;
+    }
 
 } catch (ViewfinderException $e) {
     Logger::logException($e);
@@ -129,8 +141,24 @@ $controlDetails = array(array_fill(0,8,0));
 
 foreach($data as $field=>$value){
 	if (strpos($field,"control") !== false){
-    $controlNumber = substr($field,7,1);
-	$controlTotal[$controlNumber] += $value;
+    // Extract domain number and capability number from field name (e.g., "control1-3")
+    $parts = explode('-', substr($field, 7)); // Remove "control" prefix and split
+    $controlNumber = $parts[0]; // Domain number (1-7)
+    $capabilityNumber = $parts[1]; // Capability number (1-8)
+
+    // Get the control area key (e.g., "Domain-1")
+    $domainKey = "Domain-" . $controlNumber;
+
+    // Get max points for this capability from JSON
+    $pointsKey = $capabilityNumber . "-points";
+    $maxPoints = isset($json[$domainKey][$pointsKey]) ? $json[$domainKey][$pointsKey] : 0;
+
+    // Calculate partial credit: slider value (0-3) / 3 * max points
+    // 0 = No capability (0%), 1 = In Planning (33%), 2 = Work in Progress (67%), 3 = Fully Complete (100%)
+    $sliderValue = intval($value);
+    $partialScore = ($sliderValue / 3) * $maxPoints;
+
+    $controlTotal[$controlNumber] += $partialScore;
 }
 }
 
@@ -308,12 +336,37 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * (count($control
                                   $rating = MaturityRating::getRating($score);
                                   $weight = isset($domainWeights[$title]) ? $domainWeights[$title] : 1.0;
 
+                                  // Calculate average maturity level for this domain
+                                  $totalSliderValue = 0;
+                                  $capabilityCount = 0;
+                                  for ($j = 1; $j <= 8; $j++) {
+                                      $controlId = "control{$qnum}-{$j}";
+                                      if (isset($data[$controlId])) {
+                                          $totalSliderValue += intval($data[$controlId]);
+                                          $capabilityCount++;
+                                      }
+                                  }
+                                  $avgMaturity = $capabilityCount > 0 ? $totalSliderValue / $capabilityCount : 0;
+
+                                  // Map average to maturity label
+                                  $maturityLabels = ['No Capability', 'In Planning', 'Work in Progress', 'Fully Complete'];
+                                  if ($avgMaturity < 0.5) {
+                                      $maturityLevel = $maturityLabels[0];
+                                  } elseif ($avgMaturity < 1.5) {
+                                      $maturityLevel = $maturityLabels[1];
+                                  } elseif ($avgMaturity < 2.5) {
+                                      $maturityLevel = $maturityLabels[2];
+                                  } else {
+                                      $maturityLevel = $maturityLabels[3];
+                                  }
+
                                   $domainAnalysis[] = [
                                       "title" => $title,
                                       "score" => $score,
                                       "percentage" => $percentage,
                                       "rating" => $rating,
-                                      "weight" => $weight
+                                      "weight" => $weight,
+                                      "maturityLevel" => $maturityLevel
                                   ];
                               }
 
@@ -353,7 +406,7 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * (count($control
                                       </tr>
                                       <tr>
                                           <td style="padding: 0.5rem; font-weight: 600;">Total Score:</td>
-                                          <td style="padding: 0.5rem;"><?php echo $totalMaturityScore; ?> / <?php echo $maxPossible; ?> points</td>
+                                          <td style="padding: 0.5rem;"><?php echo ceil($totalMaturityScore); ?> / <?php echo $maxPossible; ?> points</td>
                                       </tr>
                                       <tr style="background: #f5f5f5;">
                                           <td style="padding: 0.5rem; font-weight: 600;">Assessment Date:</td>
@@ -381,7 +434,7 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * (count($control
                                       $quickWin = isset($quickWins[$strength["title"]]) ? $quickWins[$strength["title"]] : 'Continue to refine and optimize processes, and consider sharing best practices with other domains.';
                                   ?>
                                       <li style="margin-bottom: 1.5rem;">
-                                          <strong><?php echo Security::escape($strength["title"]); ?></strong>: <?php echo Security::escape($strength["rating"]); ?> level (<?php echo $strength["percentage"]; ?>%) - demonstrating well-established capabilities in this domain.
+                                          <strong><?php echo Security::escape($strength["title"]); ?></strong>: <?php echo Security::escape($strength["rating"]); ?> level (<?php echo $strength["percentage"]; ?>%)<?php if (isset($strength["maturityLevel"])): ?> • <span style="color: #2aaa04;"><?php echo Security::escape($strength["maturityLevel"]); ?></span><?php endif; ?> - demonstrating well-established capabilities in this domain.
                                           <div style="margin-top: 0.5rem; padding-left: 1.5rem; color: #0d60f8;">
                                               <strong>Quick Win:</strong> <?php echo Security::escape($quickWin); ?>
                                           </div>
@@ -448,7 +501,7 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * (count($control
                                       $steps = isset($firstSteps[$gap["title"]]) ? $firstSteps[$gap["title"]] : ['Review domain-specific recommendations in detailed assessment.'];
                                   ?>
                                       <li style="margin-bottom: 2rem;">
-                                          <strong><?php echo Security::escape($gap["title"]); ?></strong>: <?php echo Security::escape($gap["rating"]); ?> level (<?php echo $gap["percentage"]; ?>%)<?php echo $priorityNote; ?>
+                                          <strong><?php echo Security::escape($gap["title"]); ?></strong>: <?php echo Security::escape($gap["rating"]); ?> level (<?php echo $gap["percentage"]; ?>%)<?php if (isset($gap["maturityLevel"])): ?> • <span style="color: #f0ab00;"><?php echo Security::escape($gap["maturityLevel"]); ?></span><?php endif; ?><?php echo $priorityNote; ?>
 
                                           <div style="margin-top: 0.75rem; padding: 1rem; background: #fff3cd; border-left: 3px solid #ffc107; border-radius: 4px;">
                                               <div style="margin-bottom: 0.75rem;">
@@ -467,6 +520,90 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * (count($control
                                           </div>
                                       </li>
                                   <?php endforeach; ?>
+                              </div>
+
+                              <div class="section-header" style="page-break-before: always;">
+                                  <h3><i class="fa-solid fa-chart-pie"></i> Capability Status</h3>
+                                  <p>Distribution of all capabilities across maturity levels:</p>
+
+                                  <?php
+                                  // Group capabilities by maturity level, then by domain
+                                  $statusGroups = [
+                                      '3' => ['label' => 'Fully Complete', 'color' => '#2aaa04', 'icon' => 'check-circle', 'domains' => []],
+                                      '2' => ['label' => 'Work in Progress', 'color' => '#ec7a08', 'icon' => 'spinner', 'domains' => []],
+                                      '1' => ['label' => 'In Planning', 'color' => '#f0ab00', 'icon' => 'clipboard-list', 'domains' => []],
+                                      '0' => ['label' => 'No Capability', 'color' => '#6a6e73', 'icon' => 'circle', 'domains' => []]
+                                  ];
+
+                                  // Collect all capabilities and their statuses, grouped by domain
+                                  foreach ($controls as $control) {
+                                      $qnum = $json[$control]['qnum'];
+                                      $domainTitle = $json[$control]['title'];
+
+                                      for ($i = 1; $i <= 8; $i++) {
+                                          $controlId = "control{$qnum}-{$i}";
+                                          $capabilityName = $json[$control][$i];
+                                          $maturityValue = isset($data[$controlId]) ? intval($data[$controlId]) : 0;
+
+                                          // Initialize domain array if it doesn't exist
+                                          if (!isset($statusGroups[strval($maturityValue)]['domains'][$domainTitle])) {
+                                              $statusGroups[strval($maturityValue)]['domains'][$domainTitle] = [];
+                                          }
+
+                                          // Add capability to domain
+                                          $statusGroups[strval($maturityValue)]['domains'][$domainTitle][] = $capabilityName;
+                                      }
+                                  }
+
+                                  // Calculate counts for each status level (for pie chart)
+                                  $statusCounts = [];
+                                  foreach ($statusGroups as $level => $group) {
+                                      $totalCount = 0;
+                                      foreach ($group['domains'] as $capabilities) {
+                                          $totalCount += count($capabilities);
+                                      }
+                                      $statusCounts[$level] = $totalCount;
+                                  }
+                                  ?>
+
+                                  <!-- Pie Chart -->
+                                  <div style="text-align: center; background: #f9f9f9; padding: 2rem; border-radius: 8px; margin: 1.5rem 0;">
+                                      <h4 style="color: #0d60f8; margin-bottom: 1.5rem;">Capability Status Distribution</h4>
+                                      <div id="statusPieChart"></div>
+                                  </div>
+
+                                  <script type="text/javascript">
+                                  var statusChartData = [
+                                      {"label": "Fully Complete", "value": <?php echo $statusCounts['3']; ?>, "color": "#2aaa04"},
+                                      {"label": "Work in Progress", "value": <?php echo $statusCounts['2']; ?>, "color": "#ec7a08"},
+                                      {"label": "In Planning", "value": <?php echo $statusCounts['1']; ?>, "color": "#f0ab00"},
+                                      {"label": "No Capability", "value": <?php echo $statusCounts['0']; ?>, "color": "#6a6e73"}
+                                  ];
+                                  </script>
+
+                                  <?php
+                                  // Display each status group
+                                  foreach ($statusGroups as $level => $group) {
+                                      $totalCount = $statusCounts[$level];
+                                      $percentage = round(($totalCount / 56) * 100);
+
+                                      if ($totalCount > 0) {
+                                          echo '<div style="margin-bottom: 1.5rem; padding: 1rem; background: #f9f9f9; border-left: 4px solid ' . $group['color'] . '; border-radius: 4px;">';
+                                          echo '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">';
+                                          echo '<strong style="color: #333; font-size: 1.1rem;"><i class="fa-solid fa-' . $group['icon'] . '" style="color: ' . $group['color'] . ';"></i> ' . $group['label'] . '</strong>';
+                                          echo '<span style="color: ' . $group['color'] . '; font-weight: 600;">' . $totalCount . ' / 56 (' . $percentage . '%)</span>';
+                                          echo '</div>';
+
+                                          foreach ($group['domains'] as $domainName => $capabilities) {
+                                              echo '<div style="margin-bottom: 0.5rem;">';
+                                              echo '<strong style="color: #0d60f8;">' . Security::escape($domainName) . ':</strong> ';
+                                              echo implode(', ', array_map(function($cap) { return Security::escape($cap); }, $capabilities));
+                                              echo '</div>';
+                                          }
+                                          echo '</div>';
+                                      }
+                                  }
+                                  ?>
                               </div>
 
                               <div class="section-header">
@@ -511,7 +648,7 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * (count($control
 
 <?php
 // Use the weighted totalScore calculated earlier
-$displayTotalScore = round($totalScore);
+$displayTotalScore = ceil($totalScore);
 
 ## Work out all the stuff for the table
 foreach ($controls as $control) {
@@ -524,7 +661,8 @@ foreach ($controls as $control) {
 	print "<td>" . $title . "</td>";
 	$rating = MaturityRating::getRating($score);
 	$ratingClass = MaturityRating::getRatingClass($rating);
-	print "<td class='" . $ratingClass . "'>" . $rating . " ($score out of 36)</td>";
+	$displayScore = ceil($score);
+	print "<td class='" . $ratingClass . "'>" . $rating . " ($displayScore out of 36)</td>";
 	print "</tr>";
 }
 print '</table>';
@@ -836,10 +974,15 @@ foreach ($controls as $control) {
             <div class="row">
                <div class="col-md-12">
                   <div class="Testimonial_box" style="text-align: center;">
+                     <?php if ($qrCodeDataUri !== null): ?>
                      <div style="display: flex; justify-content: center; margin: 20px 0;">
                         <img src="<?php echo $qrCodeDataUri; ?>" alt="QR Code for Report Page" style="border: 2px solid #ccc; padding: 10px; background: white; display: block;" />
                      </div>
- 
+                     <?php else: ?>
+                     <div style="padding: 20px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px; margin: 20px auto; max-width: 600px;">
+                        <p style="margin: 0; color: #856404;"><i class="fa-solid fa-info-circle"></i> <strong>Note:</strong> QR code not available - assessment data is too large to encode. Please bookmark or share the URL directly.</p>
+                     </div>
+                     <?php endif; ?>
                   </div>
                </div>
             </div>
@@ -936,6 +1079,87 @@ foreach ($controls as $control) {
 			};
 			//Call function to draw the Radar chart
 			RadarChart(".radarChart", data, radarChartOptions);
+
+			// Render Status Pie Chart using D3.js
+			(function() {
+			    if (typeof statusChartData === 'undefined') return;
+
+			    var width = 400;
+			    var height = 400;
+			    var radius = Math.min(width, height) / 2;
+
+			    var svg = d3.select("#statusPieChart")
+			        .append("svg")
+			        .attr("width", width)
+			        .attr("height", height)
+			        .append("g")
+			        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+			    var pie = d3.layout.pie()
+			        .value(function(d) { return d.value; })
+			        .sort(null);
+
+			    var arc = d3.svg.arc()
+			        .innerRadius(0)
+			        .outerRadius(radius - 20);
+
+			    var labelArc = d3.svg.arc()
+			        .innerRadius(radius - 60)
+			        .outerRadius(radius - 60);
+
+			    var arcs = svg.selectAll(".arc")
+			        .data(pie(statusChartData))
+			        .enter()
+			        .append("g")
+			        .attr("class", "arc");
+
+			    arcs.append("path")
+			        .attr("d", arc)
+			        .style("fill", function(d) { return d.data.color; })
+			        .style("stroke", "#fff")
+			        .style("stroke-width", "2px");
+
+			    arcs.append("text")
+			        .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+			        .attr("text-anchor", "middle")
+			        .style("fill", "#fff")
+			        .style("font-size", "14px")
+			        .style("font-weight", "600")
+			        .style("pointer-events", "none")
+			        .text(function(d) {
+			            if (d.data.value > 0) {
+			                return d.data.value;
+			            }
+			            return "";
+			        });
+
+			    // Legend
+			    var legend = d3.select("#statusPieChart")
+			        .append("div")
+			        .style("margin-top", "1.5rem")
+			        .style("display", "flex")
+			        .style("justify-content", "center")
+			        .style("gap", "1.5rem")
+			        .style("flex-wrap", "wrap");
+
+			    statusChartData.forEach(function(d) {
+			        var item = legend.append("div")
+			            .style("display", "flex")
+			            .style("align-items", "center")
+			            .style("gap", "0.5rem");
+
+			        item.append("div")
+			            .style("width", "16px")
+			            .style("height", "16px")
+			            .style("background-color", d.color)
+			            .style("border-radius", "3px");
+
+			        item.append("span")
+			            .style("color", "#333")
+			            .style("font-size", "0.9rem")
+			            .text(d.label + ": " + d.value + " (" + Math.round((d.value / 56) * 100) + "%)");
+			    });
+			})();
 </script>
    </body>
 </html>

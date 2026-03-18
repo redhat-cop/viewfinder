@@ -33,33 +33,48 @@ if ($numFrameworks > 0) {
     $_REQUEST['framework'] = $selectedFrameworks;
 }
 
-// Generate random responses for all 56 questions (7 domains × 8 questions each)
-$totalChecked = 0;
+// Generate random responses for all 56 capabilities (7 domains × 8 capabilities each)
+// Using new maturity slider values: 0=No Capability, 1=In Planning, 2=Work in Progress, 3=Fully Complete
+$totalWithMaturity = 0;
 $domainScores = [];
 
 for ($domain = 1; $domain <= 7; $domain++) {
     $domainScore = 0;
-    $domainChecked = 0;
+    $domainWithMaturity = 0;
 
     for ($item = 1; $item <= 8; $item++) {
         $controlId = "control{$domain}-{$item}";
 
-        // Randomly decide if this checkbox should be checked
-        // Higher items (higher points) have lower probability of being checked
-        // This creates more realistic distribution across maturity levels
-        $probability = 100 - ($item * 10); // Item 1: 90%, Item 2: 80%, ... Item 8: 20%
-
-        if (rand(1, 100) <= $probability) {
-            $_REQUEST[$controlId] = $item; // Value is the point value
-            $domainScore += $item;
-            $domainChecked++;
-            $totalChecked++;
+        // Generate random maturity level (0-3)
+        // Weight towards realistic maturity distribution:
+        // - Most capabilities have some progress (1-2)
+        // - Fewer fully complete (3)
+        // - Some have no capability yet (0)
+        $rand = rand(1, 100);
+        if ($rand <= 15) {
+            $maturityLevel = 0; // 15% No Capability
+        } elseif ($rand <= 40) {
+            $maturityLevel = 1; // 25% In Planning
+        } elseif ($rand <= 75) {
+            $maturityLevel = 2; // 35% Work in Progress
+        } else {
+            $maturityLevel = 3; // 25% Fully Complete
         }
+
+        $_REQUEST[$controlId] = $maturityLevel;
+
+        if ($maturityLevel > 0) {
+            $domainWithMaturity++;
+            $totalWithMaturity++;
+        }
+
+        // Track approximate score for display (not exact but representative)
+        $domainScore += $maturityLevel * $item;
     }
 
     $domainScores[$domain] = [
-        'score' => $domainScore,
-        'checked' => $domainChecked
+        'avgMaturity' => $domainWithMaturity > 0 ? round(array_sum(array_slice($_REQUEST, -8)) / 8, 1) : 0,
+        'withProgress' => $domainWithMaturity
     ];
 
     // Randomly add facilitator notes for some domains (50% chance)
@@ -87,8 +102,8 @@ echo "LOB: " . $_REQUEST['lob'] . "\n";
 if (isset($_REQUEST['framework'])) {
     echo "Frameworks: " . implode(', ', $_REQUEST['framework']) . "\n";
 }
-echo "\nTotal Controls Selected: $totalChecked / 56\n";
-echo "\nDomain Scores:\n";
+echo "\nCapabilities with Maturity: $totalWithMaturity / 56\n";
+echo "\nDomain Maturity Overview:\n";
 
 $domainNames = [
     1 => 'Data Sovereignty',
@@ -102,7 +117,7 @@ $domainNames = [
 
 foreach ($domainScores as $domainNum => $stats) {
     $domainName = $domainNames[$domainNum] ?? "Domain $domainNum";
-    echo "  $domainName: {$stats['score']} points ({$stats['checked']}/8 controls)\n";
+    echo "  $domainName: {$stats['withProgress']}/8 capabilities with progress\n";
 }
 echo "-->\n\n";
 

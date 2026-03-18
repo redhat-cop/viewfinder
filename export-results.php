@@ -41,12 +41,23 @@ try {
         $controlScore = 0;
         for ($j = 1; $j <= 8; $j++) {
             $controlId = "control{$i}-{$j}";
-            $value = isset($data[$controlId]) ? (int)$data[$controlId] : 0;
+            $sliderValue = isset($data[$controlId]) ? (int)$data[$controlId] : 0;
+
             // Only include non-zero controls to match expected behavior
-            if ($value > 0) {
-                $controls[$controlId] = $value;
+            if ($sliderValue > 0) {
+                $controls[$controlId] = $sliderValue;
             }
-            $controlScore += $value;
+
+            // Get the control area key (e.g., "Domain-1")
+            $domainKey = "Domain-" . $i;
+
+            // Get max points for this capability from JSON
+            $pointsKey = $j . "-points";
+            $maxPoints = isset($json[$domainKey][$pointsKey]) ? $json[$domainKey][$pointsKey] : 0;
+
+            // Calculate partial credit: slider value (0-3) / 3 * max points
+            $partialScore = ($sliderValue / 3) * $maxPoints;
+            $controlScore += $partialScore;
         }
         $controlScores[$i] = $controlScore;
         $rawTotalScore += $controlScore;

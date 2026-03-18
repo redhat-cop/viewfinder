@@ -113,6 +113,114 @@
   .tooltip-icon:hover {
     color: #4d90fe;
   }
+
+  /* Capability Slider Grid - 4 columns */
+  .capability-slider-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding: 1.5rem;
+    background: #1f1f1f;
+    border-radius: 8px;
+    margin-top: 1rem;
+  }
+
+  .capability-slider-item {
+    background: #2a2a2a;
+    padding: 0.85rem;
+    border-radius: 6px;
+    border: 1px solid #444;
+    transition: border-color 0.3s ease;
+  }
+
+  .capability-slider-item:hover {
+    border-color: #0d60f8;
+  }
+
+  .capability-name {
+    color: #e0e0e0;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Maturity Slider Styling */
+  .maturity-slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(to right,
+      #6a6e73 0%,
+      #6a6e73 33%,
+      #f0ab00 33%,
+      #f0ab00 66%,
+      #ec7a08 66%,
+      #ec7a08 100%);
+    outline: none;
+    -webkit-appearance: none;
+    margin: 0.5rem 0;
+    cursor: pointer;
+  }
+
+  /* Slider thumb styling for WebKit browsers */
+  .maturity-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--slider-color, #6a6e73);
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s ease;
+  }
+
+  .maturity-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Slider thumb styling for Firefox */
+  .maturity-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--slider-color, #6a6e73);
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s ease;
+  }
+
+  .maturity-slider::-moz-range-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Slider label */
+  .slider-label {
+    text-align: center;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    color: #6a6e73;
+    font-weight: 400;
+  }
+
+  /* Responsive: Adjust columns on smaller screens */
+  @media (max-width: 1400px) {
+    .capability-slider-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .capability-slider-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
 
 <script>
@@ -506,30 +614,47 @@ $infoId = $qnum . "-" . $i;
 $title = $json[$area]['title'];
 $control = $area;
 print "<div>" . $json[$area]['overview'] . "</div>";
-print "<ul class='ks-cboxtags'>\n";
+
+// Create 2-column grid for sliders
+print "<div class='capability-slider-grid'>\n";
+
 while( $i < 9) {
-  //$infoButton = '<i class="fa-solid fa-circle-info"></i>';
   $summary= $i . '-summary';
    ## If a summary in there, use it as a tooltip
   if ($json[$area][$summary] != "") {
-  
+
   $tooltipContent = htmlspecialchars($json[$area][$summary], ENT_QUOTES, 'UTF-8');
-  $itemSummary = '&nbsp; <i class="fa-solid fa-circle-info tooltip-icon" style="display: inline-block;max-width: 100px; cursor: help;" data-tooltip="' . $tooltipContent . '"></i>';
+  $itemSummary = '&nbsp; <i class="fa-solid fa-circle-info tooltip-icon" style="cursor: help;" data-tooltip="' . $tooltipContent . '"></i>';
   } else {
     $itemSummary = "";
   }
-  // Removed tier display (Foundation/Strategic/Advanced) - now using 5-Level Maturity Model
+
   $points = $i . "-points";
-  print '<li><input type="checkbox" name="' . "control" . $qnum . "-" . $i . "\" id=\"" . "control" . "$qnum" . "-" . $i . '" value="' . $json[$area][$points] . '"><label for="' . "control" . $qnum . "-" . $i . '">' . $json[$area][$i] . "$itemSummary &nbsp </label></li>". "\n";
+  $controlId = "control" . $qnum . "-" . $i;
+
+  print '<div class="capability-slider-item">';
+  print '<div class="capability-name">' . $json[$area][$i] . $itemSummary . '</div>';
+  print '<input type="range"
+         min="0"
+         max="3"
+         value="0"
+         step="1"
+         class="maturity-slider"
+         name="' . $controlId . '"
+         id="' . $controlId . '"
+         data-points="' . $json[$area][$points] . '"
+         oninput="updateSliderLabel(this)">';
+  print '<div class="slider-label" id="label-' . $controlId . '">No Capability</div>';
+  print '</div>'. "\n";
   $i++;
 }
-print "</ul>";
+print "</div>"; // Close grid
 
 // Add facilitator notes textarea for this domain
 print '<div style="margin-top: 1.5rem; padding: 1rem; background: #1f1f1f; border-left: 3px solid #0d60f8; border-radius: 4px;">';
 print '<label for="domain_notes_' . $qnum . '" style="display: block; color: #9ec7fc; font-weight: 600; margin-bottom: 0.5rem;">';
 print '</i> Facilitator Notes for ' . $title . ':</label>';
-print '<textarea name="domain_notes_' . $qnum . '" id="domain_notes_' . $qnum . '" rows="4" style="width: 100%; padding: 0.5rem; background: #2a2a2a; border: 1px solid #444; border-radius: 4px; color: #ccc; font-family: inherit; resize: vertical;" placeholder="Add workshop notes, observations, or context for this domain..."></textarea>';
+print '<textarea name="domain_notes_' . $qnum . '" id="domain_notes_' . $qnum . '" rows="2" style="width: 100%; padding: 0.5rem; background: #2a2a2a; border: 1px solid #444; border-radius: 4px; color: #ccc; font-family: inherit; resize: vertical;" placeholder="Add workshop notes, observations, or context for this domain..."></textarea>';
 print '</div>';
 }
 ?>
@@ -634,6 +759,36 @@ function openCity(evt, cityName) {
   document.getElementById(cityName).style.display = "block";
   evt.currentTarget.className += " active";
 }
+
+// Update slider label and visual state based on value
+function updateSliderLabel(slider) {
+  const labels = ['No Capability', 'In Planning', 'Work in Progress', 'Fully Complete'];
+  const colors = ['#6a6e73', '#f0ab00', '#ec7a08', '#2aaa04'];
+  const value = parseInt(slider.value);
+  const labelId = 'label-' + slider.id;
+  const labelElement = document.getElementById(labelId);
+
+  console.log('Updating slider:', slider.id, 'value:', value, 'labelId:', labelId);
+
+  if (labelElement) {
+    labelElement.textContent = labels[value];
+    labelElement.style.setProperty('color', colors[value], 'important');
+    labelElement.style.setProperty('font-weight', value > 0 ? '600' : '400', 'important');
+  } else {
+    console.error('Label element not found:', labelId);
+  }
+
+  // Update slider color
+  slider.style.setProperty('--slider-color', colors[value]);
+}
+
+// Initialize all sliders on page load
+window.addEventListener('DOMContentLoaded', function() {
+  const sliders = document.querySelectorAll('.maturity-slider');
+  sliders.forEach(slider => {
+    updateSliderLabel(slider);
+  });
+});
 </script>
 <script type="text/javascript" >
 document.getElementById("defaultOpen").click();
