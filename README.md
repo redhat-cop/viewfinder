@@ -32,6 +32,8 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
   - **Overview**: Radar charts and executive summary with QR code for sharing
   - **Strengths**: Domain strengths analysis with quick wins and leverage opportunities
   - **Gaps**: Critical gaps analysis with business impacts and first steps for remediation
+  - **Status**: Capability status distribution with pie chart visualization
+  - **Themes**: ✨ Thematic capability view showing cross-domain patterns organized by concept (Governance, Data Privacy, Technical Control, etc.)
   - **Details**: Comprehensive recommendations and improvement roadmap
   - **Table**: Tabular view of all domain scores and maturity levels
 - **Dynamic Executive Summary**: ✨ Personalized one-page summary showing:
@@ -43,6 +45,20 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
   - **Business Impact**: Consequences of gaps in each domain
   - **First Steps**: Specific 90-day action plans for addressing critical gaps
   - **Quick Wins**: Tactical improvements to leverage existing strengths
+- **Thematic Capability View**: ✨ Revolutionary cross-domain analysis organizing capabilities by theme
+  - **Visual Summary Dashboard**: 8 interactive theme cards showing maturity percentages at-a-glance
+  - **Thematic Groupings**: Capabilities organized by concept rather than domain
+    - Governance & Policy (8 capabilities across Data, Open Source, Executive domains)
+    - Data & Privacy (6 capabilities focused on data protection lifecycle)
+    - Risk & Compliance (7 capabilities covering audits, certifications, KPIs)
+    - Technical Control (8 capabilities for stack ownership and portability)
+    - Operational Resilience (7 capabilities for autonomy and business continuity)
+    - Vendor & Dependencies (7 capabilities managing external relationships)
+    - Monitoring & Security (7 capabilities for visibility and control)
+    - Open Source (6 capabilities for OSS strategy and engagement)
+  - **Interactive Overview Display**: Dedicated panel showing thematic context when hovering over theme cards
+  - **Cross-Domain Pattern Recognition**: Identify if weaknesses are organizational (e.g., weak governance everywhere) or domain-specific
+  - **Color-Coded Visual Indicators**: Instant recognition of theme maturity with status dot visualization
 - **Detailed Recommendations**: HTML-formatted guidance for improving maturity levels
 - **Workshop Notes in Reports**: ✨ Facilitator notes displayed in both results page and detailed PDF reports
 - **Compliance Mapping**: Link capabilities to compliance framework controls

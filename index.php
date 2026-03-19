@@ -221,6 +221,13 @@
       grid-template-columns: 1fr;
     }
   }
+
+  /* Hide progress counter on small screens */
+  @media (max-width: 768px) {
+    #progressCounter {
+      display: none !important;
+    }
+  }
 </style>
 
 <script>
@@ -660,7 +667,13 @@ print '</div>';
 ?>
 <div class="tab">
   <div id="centerDivLine">
-<h2><?php echo Security::escape(Config::getProfileDisplayName($profile));?> Profile</h2>
+<h2 style="display: flex; justify-content: space-between; align-items: center;">
+  <span><?php echo Security::escape(Config::getProfileDisplayName($profile));?> Profile</span>
+  <span id="progressCounter" style="font-size: 0.85rem; color: #9ec7fc; font-weight: 500;">
+    <i class="fa-solid fa-chart-line" style="margin-right: 0.5rem;"></i>
+    <span id="ratedCount">0</span> of <span id="totalCount">56</span> capabilities rated
+  </span>
+</h2>
 
 </div>
 <?php
@@ -698,7 +711,7 @@ if ($selectedLobFromUrl === 'Balanced') {
 <input type="hidden" name="lob" value="<?php echo Security::escape($selectedLob); ?>">
 
 <div class="container">
-  
+
 <fieldset>
 <!-- Tab content -->
 <?php
@@ -780,6 +793,36 @@ function updateSliderLabel(slider) {
 
   // Update slider color
   slider.style.setProperty('--slider-color', colors[value]);
+
+  // Update progress indicator
+  updateProgressIndicator();
+}
+
+// Update progress counter in header
+function updateProgressIndicator() {
+  const sliders = document.querySelectorAll('.maturity-slider');
+  const totalCapabilities = sliders.length;
+
+  // Count how many sliders have been moved from 0 (rated)
+  let ratedCount = 0;
+  sliders.forEach(slider => {
+    const value = parseInt(slider.value);
+    if (value > 0) {
+      ratedCount++;
+    }
+  });
+
+  // Update the counter in the header
+  const ratedCountElement = document.getElementById('ratedCount');
+  const totalCountElement = document.getElementById('totalCount');
+
+  if (ratedCountElement) {
+    ratedCountElement.textContent = ratedCount;
+  }
+
+  if (totalCountElement) {
+    totalCountElement.textContent = totalCapabilities;
+  }
 }
 
 // Initialize all sliders on page load
@@ -788,6 +831,9 @@ window.addEventListener('DOMContentLoaded', function() {
   sliders.forEach(slider => {
     updateSliderLabel(slider);
   });
+
+  // Initialize progress indicator
+  updateProgressIndicator();
 });
 </script>
 <script type="text/javascript" >

@@ -50,6 +50,64 @@
     background: transparent !important;
     border: none !important;
   }
+
+  /* Custom Capability Tooltips with HTML support */
+  .custom-capability-tooltip {
+    position: absolute;
+    display: none;
+    max-width: 500px;
+    min-width: 400px;
+    background: #2a2a2a;
+    border: 2px solid #0d60f8;
+    border-radius: 6px;
+    color: #e0e0e0;
+    font-size: 0.9rem;
+    padding: 1rem;
+    box-shadow: 0 4px 20px rgba(13, 96, 248, 0.4);
+    z-index: 10000;
+    pointer-events: none;
+  }
+
+  .custom-capability-tooltip strong {
+    color: #9ec7fc;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+  }
+
+  .custom-capability-tooltip ul {
+    margin: 0.5rem 0 0 0;
+    padding-left: 1.5rem;
+    list-style-type: disc;
+  }
+
+  .custom-capability-tooltip ul li {
+    color: #e0e0e0;
+    margin-bottom: 0.4rem;
+    line-height: 1.5;
+  }
+
+  .tooltip-icon {
+    color: #0d60f8;
+    transition: color 0.2s ease;
+  }
+
+  .tooltip-icon:hover {
+    color: #4d90fe;
+  }
+
+  /* Responsive layout for theme cards */
+  @media (max-width: 1200px) {
+    .theme-cards-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .theme-cards-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
 </style>
 
 <script>
@@ -314,6 +372,7 @@ foreach ($controls as $control) {
   <button class="tablinks" onclick="openTab(event, 'Strengths')"><i class="fa-solid fa-chart-line"></i> Strengths</button>
   <button class="tablinks" onclick="openTab(event, 'Gaps')"><i class="fa-solid fa-exclamation-triangle"></i> Gaps</button>
   <button class="tablinks" onclick="openTab(event, 'Status')"><i class="fa-solid fa-chart-pie"></i> Status</button>
+  <button class="tablinks" onclick="openTab(event, 'ThematicView')"><i class="fa-solid fa-grip"></i> Themes</button>
   <button class="tablinks" onclick="openTab(event, 'Recommendations')"><i class="fa-solid fa-list-check"></i> Details</button>
   <button class="tablinks" onclick="openTab(event, 'TableOutput')"><i class="fa-solid fa-table"></i> Table</button> 
   <?php
@@ -870,6 +929,345 @@ foreach ($statusGroups as $level => $group) {
             .text(d.label + ": " + d.value + " (" + Math.round((d.value / 56) * 100) + "%)");
     });
 })();
+</script>
+
+<!-- Thematic View Tab -->
+<div id="ThematicView" class="tabcontent">
+<div style="max-width: 1600px; margin: 0 auto; padding: 2rem;">
+<h1 style="color: #9ec7fc; font-size: 2rem; margin: 0 0 1.5rem 0;"><i class="fa-solid fa-grip"></i> Thematic Capability View</h1>
+
+<?php
+// Define thematic groupings - mapping capabilities to themes
+$thematicGroups = [
+    'Governance & Policy' => [
+        'icon' => 'gavel',
+        'color' => '#0d60f8',
+        'overview' => 'This theme addresses formal governance structures, policy frameworks, and strategic integration of Digital Sovereignty principles across your organization. It evaluates executive accountability, board-level oversight, and the legal/jurisdictional controls ensuring data sovereignty. Key aspects include designated executive sponsorship, formal sovereignty policies with dedicated budgets, and legal frameworks controlling data access and jurisdictional authority.',
+        'capabilities' => [
+            ['domain' => 'Data Sovereignty', 'capability' => 4, 'name' => 'Legal & Jurisdictional Control'],
+            ['domain' => 'Data Sovereignty', 'capability' => 8, 'name' => 'Data Access by Third Parties Policies'],
+            ['domain' => 'Open Source', 'capability' => 1, 'name' => 'OSS Policy and Usage Guidelines'],
+            ['domain' => 'Executive Oversight', 'capability' => 1, 'name' => 'Designated Executive Sponsor'],
+            ['domain' => 'Executive Oversight', 'capability' => 2, 'name' => 'Defined Digital Sovereignty Policy'],
+            ['domain' => 'Executive Oversight', 'capability' => 3, 'name' => 'Budget Allocation for Sovereignty Initiatives'],
+            ['domain' => 'Executive Oversight', 'capability' => 4, 'name' => 'Integration into Organisational Strategy'],
+            ['domain' => 'Executive Oversight', 'capability' => 7, 'name' => 'Dedicated Sovereignty Governance Board'],
+        ]
+    ],
+    'Data & Privacy' => [
+        'icon' => 'shield-halved',
+        'color' => '#2aaa04',
+        'overview' => 'This theme focuses on comprehensive data protection across its entire lifecycle—from classification and residency to encryption and privacy compliance. It ensures your organization maintains ultimate control over data independent of external jurisdictions, implements robust cryptographic key management, and verifies that security monitoring data remains under sovereign control. Core elements include data residency policies, privacy-by-design principles, and workload data protection during processing.',
+        'capabilities' => [
+            ['domain' => 'Data Sovereignty', 'capability' => 1, 'name' => 'Data Residency & Location'],
+            ['domain' => 'Data Sovereignty', 'capability' => 2, 'name' => 'Data Protection & Privacy'],
+            ['domain' => 'Data Sovereignty', 'capability' => 3, 'name' => 'Data Classification and Inventory'],
+            ['domain' => 'Data Sovereignty', 'capability' => 5, 'name' => 'Cryptographic Key Management Control'],
+            ['domain' => 'Data Sovereignty', 'capability' => 6, 'name' => 'Workload Data Protection & Privacy'],
+            ['domain' => 'Assurance Sovereignty', 'capability' => 2, 'name' => 'Control over Security Monitoring Data'],
+        ]
+    ],
+    'Risk & Compliance' => [
+        'icon' => 'clipboard-check',
+        'color' => '#ec7a08',
+        'overview' => 'This theme addresses your ability to verify security and compliance claims through independent audits, certifications, and continuous validation—ensuring trust is verified, not assumed. It encompasses formal risk management frameworks, compliance with local security standards, and dependency risk assessment for open source components. Key capabilities include regular security audits, independent certification and vetting processes, and defined KPIs for measuring sovereignty performance.',
+        'capabilities' => [
+            ['domain' => 'Assurance Sovereignty', 'capability' => 1, 'name' => 'Regular Security Audits Conducted'],
+            ['domain' => 'Assurance Sovereignty', 'capability' => 3, 'name' => 'Risk Management Framework'],
+            ['domain' => 'Assurance Sovereignty', 'capability' => 4, 'name' => 'Compliance with Local Security Standards'],
+            ['domain' => 'Assurance Sovereignty', 'capability' => 6, 'name' => 'Independent Certification and Vetting'],
+            ['domain' => 'Assurance Sovereignty', 'capability' => 8, 'name' => 'Continuous Security Control Validation'],
+            ['domain' => 'Open Source', 'capability' => 4, 'name' => 'Dependency Risk Assessment'],
+            ['domain' => 'Executive Oversight', 'capability' => 8, 'name' => 'Key Performance Indicators (KPIs) Defined'],
+        ]
+    ],
+    'Technical Control' => [
+        'icon' => 'microchip',
+        'color' => '#12bbd4',
+        'overview' => 'This theme evaluates your control over foundational technology components—from hardware and firmware to application runtime environments. It prioritizes open standards, platform portability, and vendor independence while minimizing technical dependencies that restrict flexibility. Core aspects include technology stack ownership, vendor lock-in mitigation, standardized framework adoption, and control over cloud infrastructure placement including sovereign image registries and regional zoning.',
+        'capabilities' => [
+            ['domain' => 'Technical Sovereignty', 'capability' => 1, 'name' => 'Technology Stack Ownership & Control'],
+            ['domain' => 'Technical Sovereignty', 'capability' => 2, 'name' => 'Vendor Lock-in Risk Mitigation'],
+            ['domain' => 'Technical Sovereignty', 'capability' => 3, 'name' => 'Standardised Technical Framework Adoption'],
+            ['domain' => 'Technical Sovereignty', 'capability' => 4, 'name' => 'Interoperability and Portability Strategy'],
+            ['domain' => 'Technical Sovereignty', 'capability' => 5, 'name' => 'Hardware and Infrastructure Source Verification'],
+            ['domain' => 'Technical Sovereignty', 'capability' => 6, 'name' => 'Self-Hosted Application Runtime Control'],
+            ['domain' => 'Managed Services', 'capability' => 1, 'name' => 'Region and Zoning Control'],
+            ['domain' => 'Managed Services', 'capability' => 2, 'name' => 'Sovereign Image and Container Registry'],
+        ]
+    ],
+    'Operational Resilience' => [
+        'icon' => 'server',
+        'color' => '#f0ab00',
+        'overview' => 'This theme examines your autonomy and independence in executing critical business and IT operations without mandatory reliance on external expertise or infrastructure. It ensures business continuity through locally managed processes, internal capability development, and independent incident response. Key elements include comprehensive operational documentation, disaster recovery planning, internal skills development, future-proofing technology roadmaps, and fostering a sovereignty-aware organizational culture.',
+        'capabilities' => [
+            ['domain' => 'Operational Sovereignty', 'capability' => 1, 'name' => 'Operational Process Documentation'],
+            ['domain' => 'Operational Sovereignty', 'capability' => 4, 'name' => 'Internal Skills and Competency Development'],
+            ['domain' => 'Operational Sovereignty', 'capability' => 5, 'name' => 'Disaster Recovery and Business Continuity'],
+            ['domain' => 'Operational Sovereignty', 'capability' => 8, 'name' => 'Operational Autonomy in Critical Functions'],
+            ['domain' => 'Technical Sovereignty', 'capability' => 8, 'name' => 'Future-Proofing Technology Roadmaps'],
+            ['domain' => 'Managed Services', 'capability' => 8, 'name' => 'Multi-Cloud Exit Strategy Testing'],
+            ['domain' => 'Executive Oversight', 'capability' => 6, 'name' => 'Sovereignty Culture and Awareness Program'],
+        ]
+    ],
+    'Vendor & Dependencies' => [
+        'icon' => 'handshake',
+        'color' => '#c9190b',
+        'overview' => 'This theme addresses management of external dependencies including cloud providers, managed service vendors, and open source software components. It evaluates transparency requirements for vendor security practices, supply chain vetting processes, and contingency strategies such as code escrow and forking capabilities. Key aspects include dependency mapping, hyperscaler data access controls, and maintaining the ability to operate independently if vendor relationships change or terminate.',
+        'capabilities' => [
+            ['domain' => 'Operational Sovereignty', 'capability' => 2, 'name' => 'Dependency on External Managed Services'],
+            ['domain' => 'Operational Sovereignty', 'capability' => 6, 'name' => 'Supply Chain Transparency and Vetting'],
+            ['domain' => 'Assurance Sovereignty', 'capability' => 5, 'name' => 'Transparency in Vendor Security Practices'],
+            ['domain' => 'Open Source', 'capability' => 3, 'name' => 'Source Code Escrow Arrangements'],
+            ['domain' => 'Open Source', 'capability' => 5, 'name' => 'Forking Strategy for Critical OSS'],
+            ['domain' => 'Managed Services', 'capability' => 3, 'name' => 'Resource Dependency Mapping'],
+            ['domain' => 'Managed Services', 'capability' => 4, 'name' => 'Hyperscaler Data Access Vetting'],
+        ]
+    ],
+    'Monitoring & Security' => [
+        'icon' => 'binoculars',
+        'color' => '#a18fff',
+        'overview' => 'This theme focuses on continuous security monitoring, access control, and audit capabilities ensuring you maintain visibility and control over your infrastructure. It encompasses data flow auditing, identity and access management, incident response planning, and the ability to invoke sovereign inspections. Critical components include network egress/ingress controls, configuration-as-code ownership, control plane audit capabilities, and comprehensive logging with independent forensic analysis.',
+        'capabilities' => [
+            ['domain' => 'Data Sovereignty', 'capability' => 7, 'name' => 'Data Flow and Transfer Auditing'],
+            ['domain' => 'Operational Sovereignty', 'capability' => 3, 'name' => 'Access Control and Identity Management'],
+            ['domain' => 'Operational Sovereignty', 'capability' => 7, 'name' => 'Sovereign Incident Response Plan'],
+            ['domain' => 'Assurance Sovereignty', 'capability' => 7, 'name' => 'Ability to Invoke Sovereign Inspections'],
+            ['domain' => 'Managed Services', 'capability' => 5, 'name' => 'Network Egress/Ingress Path Control'],
+            ['domain' => 'Managed Services', 'capability' => 6, 'name' => 'Configuration-as-Code Ownership'],
+            ['domain' => 'Managed Services', 'capability' => 7, 'name' => 'Control Plane Audit and Integrity'],
+        ]
+    ],
+    'Open Source' => [
+        'icon' => 'code-branch',
+        'color' => '#7d1007',
+        'overview' => 'This theme focuses on strategic adoption of Open Source Software (OSS) to eliminate vendor dependency and strengthen technical control through code transparency and community engagement. It goes beyond consumption to active contribution, ensuring influence over project direction and maintaining fork capabilities as contingency plans. Key elements include internal OSS expertise development, intellectual property control, community engagement, and the ability to audit, modify, and self-maintain critical open source components.',
+        'capabilities' => [
+            ['domain' => 'Open Source', 'capability' => 2, 'name' => 'Internal OSS Skills and Expertise'],
+            ['domain' => 'Open Source', 'capability' => 6, 'name' => 'Contribution to Strategic OSS Projects'],
+            ['domain' => 'Open Source', 'capability' => 7, 'name' => 'Active OSS Community Engagement'],
+            ['domain' => 'Open Source', 'capability' => 8, 'name' => 'Ability to Influence OSS Roadmaps'],
+            ['domain' => 'Technical Sovereignty', 'capability' => 7, 'name' => 'Code and Intellectual Property Control'],
+            ['domain' => 'Executive Oversight', 'capability' => 5, 'name' => 'Regular Reporting to the Board'],
+        ]
+    ],
+];
+
+// Map domain names to qnum
+$domainNameToQnum = [];
+foreach ($controls as $control) {
+    $domainNameToQnum[$json[$control]['title']] = $json[$control]['qnum'];
+}
+
+$statusLabels = ['No Capability', 'In Planning', 'Work in Progress', 'Fully Complete'];
+$statusColors = ['#6a6e73', '#f0ab00', '#ec7a08', '#2aaa04'];
+
+// Calculate statistics for each theme first
+$themeStatistics = [];
+foreach ($thematicGroups as $themeName => $themeData) {
+    $themeStats = ['total' => 0, 'complete' => 0, 'inprogress' => 0, 'planning' => 0, 'none' => 0, 'maturityScore' => 0];
+
+    foreach ($themeData['capabilities'] as $capInfo) {
+        $qnum = $domainNameToQnum[$capInfo['domain']];
+        $capNum = $capInfo['capability'];
+        $controlId = "control{$qnum}-{$capNum}";
+        $sliderValue = isset($data[$controlId]) ? intval($data[$controlId]) : 0;
+
+        $themeStats['total']++;
+        $themeStats['maturityScore'] += $sliderValue;
+        if ($sliderValue == 3) $themeStats['complete']++;
+        elseif ($sliderValue == 2) $themeStats['inprogress']++;
+        elseif ($sliderValue == 1) $themeStats['planning']++;
+        else $themeStats['none']++;
+    }
+
+    $themeStatistics[$themeName] = $themeStats;
+}
+?>
+
+<!-- Summary Dashboard -->
+<div style="background: #1a1a1a; border: 1px solid #444; border-radius: 8px; padding: 2rem; margin-bottom: 2rem;">
+<h2 style="color: #9ec7fc; margin: 0 0 1.5rem 0; font-size: 1.4rem;"><i class="fa-solid fa-chart-bar"></i> Thematic Summary</h2>
+
+<!-- Theme Cards Grid - 4 per row -->
+<div class="theme-cards-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
+<?php
+foreach ($thematicGroups as $themeName => $themeData) {
+    $stats = $themeStatistics[$themeName];
+    $maturityPercent = $stats['total'] > 0 ? round(($stats['maturityScore'] / ($stats['total'] * 3)) * 100) : 0;
+
+    // Determine color based on maturity
+    $cardBorderColor = $themeData['color'];
+    if ($maturityPercent >= 75) $bgGradient = 'rgba(42, 170, 4, 0.1)';
+    elseif ($maturityPercent >= 50) $bgGradient = 'rgba(236, 122, 8, 0.1)';
+    elseif ($maturityPercent >= 25) $bgGradient = 'rgba(240, 171, 0, 0.1)';
+    else $bgGradient = 'rgba(106, 110, 115, 0.1)';
+
+    print '<div style="background: linear-gradient(135deg, ' . $bgGradient . ' 0%, #2a2a2a 100%); border: 2px solid ' . $cardBorderColor . '; border-radius: 8px; padding: 1.25rem; text-align: center; transition: transform 0.2s ease, box-shadow 0.2s ease; cursor: pointer;" onclick="scrollToTheme(\'' . str_replace(' ', '', $themeName) . '\')" onmouseover="this.style.transform=\'translateY(-4px)\'; this.style.boxShadow=\'0 6px 20px rgba(13, 96, 248, 0.3)\';" onmouseout="this.style.transform=\'translateY(0)\'; this.style.boxShadow=\'none\';">';
+
+    // Icon
+    print '<div style="font-size: 2.5rem; color: ' . $cardBorderColor . '; margin-bottom: 0.75rem;"><i class="fa-solid fa-' . $themeData['icon'] . '"></i></div>';
+
+    // Theme name with info icon
+    print '<div style="color: #fff; font-weight: 600; font-size: 0.95rem; margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">';
+    print '<span>' . $themeName . '</span>';
+    print '<i class="fa-solid fa-info-circle tooltip-icon theme-tooltip" style="font-size: 0.75rem; cursor: help;" data-tooltip="' . htmlspecialchars($themeData['overview'], ENT_QUOTES, 'UTF-8') . '" data-theme-name="' . htmlspecialchars($themeName, ENT_QUOTES, 'UTF-8') . '" data-theme-icon="' . $themeData['icon'] . '" data-theme-color="' . $cardBorderColor . '"></i>';
+    print '</div>';
+
+    // Maturity percentage (large)
+    print '<div style="font-size: 2.5rem; font-weight: 700; color: ' . $cardBorderColor . '; margin-bottom: 0.5rem;">' . $maturityPercent . '%</div>';
+
+    // Capability count
+    print '<div style="color: #999; font-size: 0.85rem; margin-bottom: 0.75rem;">' . $stats['total'] . ' capabilities</div>';
+
+    // Mini progress bar
+    $completePercent = $stats['total'] > 0 ? ($stats['complete'] / $stats['total']) * 100 : 0;
+    $inprogressPercent = $stats['total'] > 0 ? ($stats['inprogress'] / $stats['total']) * 100 : 0;
+    $planningPercent = $stats['total'] > 0 ? ($stats['planning'] / $stats['total']) * 100 : 0;
+
+    print '<div style="height: 6px; background: #444; border-radius: 3px; overflow: hidden; display: flex;">';
+    if ($completePercent > 0) print '<div style="width: ' . $completePercent . '%; background: #2aaa04;"></div>';
+    if ($inprogressPercent > 0) print '<div style="width: ' . $inprogressPercent . '%; background: #ec7a08;"></div>';
+    if ($planningPercent > 0) print '<div style="width: ' . $planningPercent . '%; background: #f0ab00;"></div>';
+    print '</div>';
+
+    print '</div>';
+}
+?>
+</div>
+<!-- End of Theme Cards Grid -->
+
+<!-- Theme Overview Display Area - Full Width Below Cards -->
+<div id="themeOverviewDisplay" style="background: #2a2a2a; border: 2px solid #444; border-radius: 8px; padding: 1.25rem; min-height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+<div id="themeOverviewContent" style="display: none; width: 100%;">
+<div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+<div id="themeOverviewIcon" style="font-size: 2rem;"></div>
+<h3 id="themeOverviewTitle" style="color: #9ec7fc; margin: 0; font-size: 1.2rem;"></h3>
+</div>
+<div id="themeOverviewText" style="color: #ccc; line-height: 1.6; font-size: 0.95rem;"></div>
+</div>
+<div id="themeOverviewPlaceholder" style="text-align: center; color: #666;">
+<i class="fa-solid fa-info-circle" style="font-size: 2.5rem; margin-bottom: 0.75rem; opacity: 0.3;"></i>
+<p style="margin: 0; font-size: 0.9rem;">Hover over any theme's <i class="fa-solid fa-info-circle" style="font-size: 0.85rem;"></i> icon to view its overview</p>
+</div>
+</div>
+
+<div style="margin-top: 1.5rem; padding: 1rem; background: rgba(13, 96, 248, 0.1); border-left: 3px solid #0d60f8; border-radius: 4px;">
+<p style="color: #9ec7fc; margin: 0; font-size: 0.9rem;"><i class="fa-solid fa-info-circle"></i> <strong>Tip:</strong> Click any theme card to jump to its details below. Themes show cross-cutting patterns across all domains.</p>
+</div>
+</div>
+
+<!-- Detailed Thematic Groups -->
+<?php
+foreach ($thematicGroups as $themeName => $themeData) {
+    $stats = $themeStatistics[$themeName];
+    $maturityPercent = $stats['total'] > 0 ? round(($stats['maturityScore'] / ($stats['total'] * 3)) * 100) : 0;
+
+    print '<div id="' . str_replace(' ', '', $themeName) . '" style="margin-bottom: 1.5rem; padding: 1.5rem; background: #2a2a2a; border-left: 4px solid ' . $themeData['color'] . '; border-radius: 6px;">';
+
+    // Header with icon and percentage
+    print '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">';
+    print '<h3 style="color: #fff; margin: 0; font-size: 1.3rem;">';
+    print '<i class="fa-solid fa-' . $themeData['icon'] . '" style="color: ' . $themeData['color'] . '; margin-right: 0.5rem;"></i>';
+    print $themeName;
+    print '</h3>';
+    print '<div style="font-size: 1.8rem; font-weight: 700; color: ' . $themeData['color'] . ';">' . $maturityPercent . '%</div>';
+    print '</div>';
+
+    // Thematic overview
+    print '<div style="padding: 1rem; background: rgba(13, 96, 248, 0.05); border-left: 3px solid ' . $themeData['color'] . '; border-radius: 4px; margin-bottom: 1rem;">';
+    print '<p style="color: #ccc; margin: 0; font-size: 0.9rem; line-height: 1.6;">' . $themeData['overview'] . '</p>';
+    print '</div>';
+
+    // Compact capability grid with color-coded dots
+    print '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0.5rem; margin-bottom: 1rem;">';
+
+    foreach ($themeData['capabilities'] as $capInfo) {
+        $qnum = $domainNameToQnum[$capInfo['domain']];
+        $capNum = $capInfo['capability'];
+        $controlId = "control{$qnum}-{$capNum}";
+        $sliderValue = isset($data[$controlId]) ? intval($data[$controlId]) : 0;
+
+        print '<div style="display: flex; align-items: center; padding: 0.5rem; background: #1a1a1a; border-radius: 4px; border: 1px solid #444;">';
+
+        // Color dot
+        print '<div style="width: 12px; height: 12px; border-radius: 50%; background: ' . $statusColors[$sliderValue] . '; margin-right: 0.75rem; flex-shrink: 0;"></div>';
+
+        // Capability name and domain
+        print '<div style="flex: 1; min-width: 0;">';
+        print '<div style="color: #e0e0e0; font-size: 0.85rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' . Security::escape($capInfo['name']) . '</div>';
+        print '<div style="color: #888; font-size: 0.75rem;">' . Security::escape($capInfo['domain']) . '</div>';
+        print '</div>';
+
+        print '</div>';
+    }
+
+    print '</div>';
+
+    // Compact summary bar
+    $completePercent = $stats['total'] > 0 ? round(($stats['complete'] / $stats['total']) * 100) : 0;
+    $inprogressPercent = $stats['total'] > 0 ? round(($stats['inprogress'] / $stats['total']) * 100) : 0;
+    $planningPercent = $stats['total'] > 0 ? round(($stats['planning'] / $stats['total']) * 100) : 0;
+
+    print '<div style="display: flex; align-items: center; gap: 1rem;">';
+    print '<div style="flex: 1; height: 24px; background: #444; border-radius: 4px; overflow: hidden; display: flex;">';
+    if ($completePercent > 0) print '<div style="width: ' . $completePercent . '%; background: #2aaa04;"></div>';
+    if ($inprogressPercent > 0) print '<div style="width: ' . $inprogressPercent . '%; background: #ec7a08;"></div>';
+    if ($planningPercent > 0) print '<div style="width: ' . $planningPercent . '%; background: #f0ab00;"></div>';
+    print '</div>';
+    print '<div style="color: #ccc; font-size: 0.85rem; white-space: nowrap;">';
+    print '<span style="color: #2aaa04;">●</span> ' . $stats['complete'] . ' ';
+    print '<span style="color: #ec7a08;">●</span> ' . $stats['inprogress'] . ' ';
+    print '<span style="color: #f0ab00;">●</span> ' . $stats['planning'] . ' ';
+    print '<span style="color: #6a6e73;">●</span> ' . $stats['none'];
+    print '</div>';
+    print '</div>';
+
+    print '</div>';
+}
+?>
+
+</div>
+</div>
+
+<script>
+function scrollToTheme(themeId) {
+    document.getElementById(themeId).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Theme overview display in dedicated panel
+$(document).ready(function() {
+    $(".theme-tooltip").on('mouseenter', function(e) {
+        var overviewText = $(this).attr('data-tooltip');
+        var themeName = $(this).attr('data-theme-name');
+        var themeIcon = $(this).attr('data-theme-icon');
+        var themeColor = $(this).attr('data-theme-color');
+
+        if (!overviewText) return;
+
+        // Decode HTML entities
+        var txt = document.createElement("textarea");
+        txt.innerHTML = overviewText;
+        var decoded = txt.value;
+
+        // Update the overview display
+        $('#themeOverviewIcon').html('<i class="fa-solid fa-' + themeIcon + '" style="color: ' + themeColor + ';"></i>');
+        $('#themeOverviewTitle').text(themeName);
+        $('#themeOverviewText').text(decoded);
+
+        // Show content, hide placeholder
+        $('#themeOverviewPlaceholder').fadeOut(200, function() {
+            $('#themeOverviewContent').fadeIn(200);
+        });
+    });
+
+    $(".theme-tooltip").on('mouseleave', function() {
+        // Show placeholder, hide content
+        $('#themeOverviewContent').fadeOut(200, function() {
+            $('#themeOverviewPlaceholder').fadeIn(200);
+        });
+    });
+});
 </script>
 
 <!-- Detailed Output -->

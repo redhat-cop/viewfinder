@@ -2116,6 +2116,34 @@
         <p>Reassure customers that these results are normal starting points, not failures.</p>
       </div>
 
+      <h4>New: Thematic Capability View</h4>
+      <p>The results page now includes a revolutionary <strong>Themes</strong> tab that reorganizes all 56 capabilities by concept rather than domain:</p>
+      <ul>
+        <li><strong>8 Thematic Groups:</strong> Governance & Policy, Data & Privacy, Risk & Compliance, Technical Control, Operational Resilience, Vendor & Dependencies, Monitoring & Security, Open Source</li>
+        <li><strong>Visual Summary Dashboard:</strong> Interactive cards showing maturity percentage for each theme at-a-glance</li>
+        <li><strong>Cross-Domain Pattern Recognition:</strong> Identify if weaknesses are organizational (e.g., weak governance everywhere) vs domain-specific</li>
+        <li><strong>Interactive Overview Display:</strong> Hover over theme cards to see detailed thematic context</li>
+      </ul>
+
+      <div class="info-box tip">
+        <h4><i class="fa-solid fa-lightbulb"></i> Using Thematic View in Workshops</h4>
+        <p>The thematic view reveals patterns that domain-based views miss:</p>
+        <ul>
+          <li><strong>"You score 67% on Governance & Policy across all domains"</strong> - Shows executive buy-in exists</li>
+          <li><strong>"Technical Control is only 50%"</strong> - Reveals implementation gaps despite good policy</li>
+          <li><strong>"Vendor & Dependencies is 52%"</strong> - Highlights systemic vendor management issues</li>
+        </ul>
+        <p>Use this view to have strategic conversations: "Your governance is strong, but technical implementation lags—let's discuss resourcing."</p>
+      </div>
+
+      <h4>Progress Tracking During Assessment</h4>
+      <p>The assessment interface now displays a real-time progress counter in the header:</p>
+      <ul>
+        <li><strong>Live counter:</strong> "X of 56 capabilities rated" updates as you move sliders</li>
+        <li><strong>Completion visibility:</strong> Helps facilitators ensure all capabilities are reviewed</li>
+        <li><strong>Workshop pacing:</strong> Monitor progress to stay on schedule during facilitated sessions</li>
+      </ul>
+
       <h4>Score Discussion Points</h4>
       <ul>
         <li><strong>Celebrate strengths:</strong> "You're scoring well in [domain]—let's talk about how you achieved that"</li>

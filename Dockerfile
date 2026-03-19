@@ -3,8 +3,8 @@ FROM registry.access.redhat.com/ubi9/php-83:latest
 
 # Metadata
 LABEL maintainer="Chris Jenkins <chrisj@redhat.com>" \
-      version="3.0.0" \
-      description="Viewfinder Maturity Assessment Tool - Production Ready with Landing Page, Profile Management, DS Readiness Assessment with PDF Export, Operation Sovereign Shield Escape Room, Digital Sovereignty Quiz, Assessment Results Export/Import, Workshop Enablement Guides (101/201), Templates Library"
+      version="3.1.0" \
+      description="Viewfinder Maturity Assessment Tool - Production Ready with Landing Page, Profile Management, DS Readiness Assessment with PDF Export, Operation Sovereign Shield Escape Room, Digital Sovereignty Quiz, Assessment Results Export/Import, Workshop Enablement Guides (101/201), Templates Library, Thematic Capability View with Cross-Domain Pattern Analysis, Real-Time Progress Tracking"
 
 # Set working directory
 WORKDIR /opt/app-root/src
