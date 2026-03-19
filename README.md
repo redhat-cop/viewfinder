@@ -9,7 +9,7 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 ## Screenshots
 
 ### Main Assessment Interface
-![Main Page](./images/main-page.png)
+![Main Page](./images/viewfinder-main-interface-full-assessment.png)
 
 ## Key Features
 
@@ -17,14 +17,13 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 - **Multi-Profile Assessments**: Security, Digital Sovereignty, AI Readiness, OpenShift, RHEL, and custom profiles
 - **Multi-Domain Evaluation**: 7 control domains per profile
 - **5-Level Maturity Model**: ✨ Initial, Managed, Defined, Quantitatively Managed, Optimizing (industry-standard progressive framework)
-- **8 Capability Levels**: Progressive maturity scoring from 1-8 points per domain
+- **Slider-Based Capability Rating**: Each of 8 capabilities per domain rated on a 4-level slider (0-3) - No Capability, In Planning, Work in Progress, Fully Complete
 - **Real-time Scoring**: Dynamic calculation of maturity scores as assessments are completed
 - **Industry-Weighted Scoring**: ✨ Domain weights adjusted based on Line of Business (Finance, Healthcare, Government, etc.)
 - **Framework Mapping**: Map assessments to NIST 800-53, PCI DSS, ISO 27001, FedRAMP, NIS2, DORA, DISA STIG
 - **Industry-Specific Guidance**: Tailored recommendations for Finance, Government, Healthcare, Manufacturing, Telecommunications
 - **Workshop Facilitator Notes**: ✨ Capture domain-specific notes during facilitated workshops - notes flow through results, detailed reports, and export/import
-- **Interactive Tooltips**: ✨ Hover-activated "Key questions to ask" for each capability, sourced from the Level 201 Enablement Guide
-- **Concise Domain Overviews**: ✨ Punchy, scannable domain descriptions with bolded key sovereignty terms
+- **Enhanced Interactive Tooltips**: ✨ "Points to Consider" for each capability with bullet-point questions to guide evidence-based assessment, sourced from the Level 201 Enablement Guide
 - **Export/Import Results**: ✨ Save and restore completed assessment results for record-keeping, sharing, and comparison
 
 ### Visualization & Reporting
@@ -269,15 +268,7 @@ podman build -t viewfinder:latest .
 podman run -p 8080:8080 localhost/viewfinder
 ```
 
-#### Option 2: Use Pre-built Image
-
-```bash
-# Pull and run the pre-built image
-podman pull quay.io/rhn_gps_cjenkins/viewfinder
-podman run -p 8080:8080 quay.io/rhn_gps_cjenkins/viewfinder
-```
-
-#### Option 3: Direct Installation
+#### Option 2: Direct Installation
 
 **Prerequisites:**
 ```bash
@@ -442,9 +433,9 @@ You'll see the **Landing Page Dashboard** with four main sections:
 
 3. **Complete Domain Assessment**:
    - Navigate through 7 domain tabs
-   - For each domain, select your current maturity level (1-8 capabilities)
+   - For each domain, rate 8 capabilities using the maturity slider (0-3 implementation status)
    - ✨ Add workshop facilitator notes for each domain (optional)
-   - ✨ Hover over info icons to see "Key questions to ask" tooltips from the Enablement Guide
+   - ✨ Hover over info icons to see "Points to Consider" tooltips from the Enablement Guide
    - Real-time scoring updates as you progress
 
 4. **Submit Assessment**:
@@ -461,7 +452,7 @@ You'll see the **Landing Page Dashboard** with four main sections:
 - **Level 5 - Optimizing (81-100%)**: Continuous improvement, innovation focus
 
 #### Scoring
-- Per domain: 36 points (9 capabilities × 0-4 points each)
+- Per domain: 36 points maximum (8 capabilities with weighted point values 1-8, each rated 0-3 on slider for partial credit)
 - Total assessment: 252 points (7 domains × 36 points)
 - ✨ Industry-weighted scoring adjusts final score based on domain importance for your sector
 
