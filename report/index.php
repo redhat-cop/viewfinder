@@ -606,6 +606,238 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * (count($control
                                   ?>
                               </div>
 
+                              <div class="section-header" style="page-break-before: always;">
+                                  <h3><i class="fa-solid fa-grip"></i> Thematic Analysis</h3>
+                                  <p>Cross-domain analysis organizing capabilities by strategic theme to identify organizational patterns:</p>
+
+                                  <?php
+                                  // Define thematic groupings - same as results.php
+                                  $thematicGroups = [
+                                      'Governance & Policy' => [
+                                          'icon' => 'gavel',
+                                          'color' => '#0d60f8',
+                                          'overview' => 'Formal governance structures, policy frameworks, and strategic integration of Digital Sovereignty principles including executive accountability and legal controls.',
+                                          'capabilities' => [
+                                              ['domain' => 'Data Sovereignty', 'capability' => 4],
+                                              ['domain' => 'Data Sovereignty', 'capability' => 8],
+                                              ['domain' => 'Open Source', 'capability' => 1],
+                                              ['domain' => 'Executive Oversight', 'capability' => 1],
+                                              ['domain' => 'Executive Oversight', 'capability' => 2],
+                                              ['domain' => 'Executive Oversight', 'capability' => 3],
+                                              ['domain' => 'Executive Oversight', 'capability' => 4],
+                                              ['domain' => 'Executive Oversight', 'capability' => 7],
+                                          ]
+                                      ],
+                                      'Data & Privacy' => [
+                                          'icon' => 'shield-halved',
+                                          'color' => '#2aaa04',
+                                          'overview' => 'Comprehensive data protection across its lifecycle including classification, residency, encryption, and privacy compliance.',
+                                          'capabilities' => [
+                                              ['domain' => 'Data Sovereignty', 'capability' => 1],
+                                              ['domain' => 'Data Sovereignty', 'capability' => 2],
+                                              ['domain' => 'Data Sovereignty', 'capability' => 3],
+                                              ['domain' => 'Data Sovereignty', 'capability' => 5],
+                                              ['domain' => 'Data Sovereignty', 'capability' => 6],
+                                              ['domain' => 'Assurance Sovereignty', 'capability' => 2],
+                                          ]
+                                      ],
+                                      'Risk & Compliance' => [
+                                          'icon' => 'clipboard-check',
+                                          'color' => '#ec7a08',
+                                          'overview' => 'Independent verification through audits, certifications, and continuous validation with formal risk management frameworks.',
+                                          'capabilities' => [
+                                              ['domain' => 'Assurance Sovereignty', 'capability' => 1],
+                                              ['domain' => 'Assurance Sovereignty', 'capability' => 3],
+                                              ['domain' => 'Assurance Sovereignty', 'capability' => 4],
+                                              ['domain' => 'Assurance Sovereignty', 'capability' => 6],
+                                              ['domain' => 'Assurance Sovereignty', 'capability' => 8],
+                                              ['domain' => 'Open Source', 'capability' => 4],
+                                              ['domain' => 'Executive Oversight', 'capability' => 8],
+                                          ]
+                                      ],
+                                      'Technical Control' => [
+                                          'icon' => 'microchip',
+                                          'color' => '#12bbd4',
+                                          'overview' => 'Control over foundational technology components prioritizing open standards, platform portability, and vendor independence.',
+                                          'capabilities' => [
+                                              ['domain' => 'Technical Sovereignty', 'capability' => 1],
+                                              ['domain' => 'Technical Sovereignty', 'capability' => 2],
+                                              ['domain' => 'Technical Sovereignty', 'capability' => 3],
+                                              ['domain' => 'Technical Sovereignty', 'capability' => 4],
+                                              ['domain' => 'Technical Sovereignty', 'capability' => 5],
+                                              ['domain' => 'Technical Sovereignty', 'capability' => 6],
+                                              ['domain' => 'Managed Services', 'capability' => 1],
+                                              ['domain' => 'Managed Services', 'capability' => 2],
+                                          ]
+                                      ],
+                                      'Operational Resilience' => [
+                                          'icon' => 'server',
+                                          'color' => '#f0ab00',
+                                          'overview' => 'Autonomy in executing critical operations without external reliance including business continuity and internal capability development.',
+                                          'capabilities' => [
+                                              ['domain' => 'Operational Sovereignty', 'capability' => 1],
+                                              ['domain' => 'Operational Sovereignty', 'capability' => 4],
+                                              ['domain' => 'Operational Sovereignty', 'capability' => 5],
+                                              ['domain' => 'Operational Sovereignty', 'capability' => 8],
+                                              ['domain' => 'Technical Sovereignty', 'capability' => 8],
+                                              ['domain' => 'Managed Services', 'capability' => 8],
+                                              ['domain' => 'Executive Oversight', 'capability' => 6],
+                                          ]
+                                      ],
+                                      'Vendor & Dependencies' => [
+                                          'icon' => 'handshake',
+                                          'color' => '#c9190b',
+                                          'overview' => 'Management of external dependencies including transparency requirements, supply chain vetting, and contingency strategies.',
+                                          'capabilities' => [
+                                              ['domain' => 'Operational Sovereignty', 'capability' => 2],
+                                              ['domain' => 'Operational Sovereignty', 'capability' => 6],
+                                              ['domain' => 'Assurance Sovereignty', 'capability' => 5],
+                                              ['domain' => 'Open Source', 'capability' => 3],
+                                              ['domain' => 'Open Source', 'capability' => 5],
+                                              ['domain' => 'Managed Services', 'capability' => 3],
+                                              ['domain' => 'Managed Services', 'capability' => 4],
+                                          ]
+                                      ],
+                                      'Monitoring & Security' => [
+                                          'icon' => 'binoculars',
+                                          'color' => '#a18fff',
+                                          'overview' => 'Continuous security monitoring, access control, and audit capabilities ensuring visibility and control over infrastructure.',
+                                          'capabilities' => [
+                                              ['domain' => 'Data Sovereignty', 'capability' => 7],
+                                              ['domain' => 'Operational Sovereignty', 'capability' => 3],
+                                              ['domain' => 'Operational Sovereignty', 'capability' => 7],
+                                              ['domain' => 'Assurance Sovereignty', 'capability' => 7],
+                                              ['domain' => 'Managed Services', 'capability' => 5],
+                                              ['domain' => 'Managed Services', 'capability' => 6],
+                                              ['domain' => 'Managed Services', 'capability' => 7],
+                                          ]
+                                      ],
+                                      'Open Source' => [
+                                          'icon' => 'code-branch',
+                                          'color' => '#7d1007',
+                                          'overview' => 'Strategic OSS adoption for vendor independence through code transparency, community engagement, and fork capabilities.',
+                                          'capabilities' => [
+                                              ['domain' => 'Open Source', 'capability' => 2],
+                                              ['domain' => 'Open Source', 'capability' => 6],
+                                              ['domain' => 'Open Source', 'capability' => 7],
+                                              ['domain' => 'Open Source', 'capability' => 8],
+                                              ['domain' => 'Technical Sovereignty', 'capability' => 7],
+                                              ['domain' => 'Executive Oversight', 'capability' => 5],
+                                          ]
+                                      ],
+                                  ];
+
+                                  // Map domain names to qnum
+                                  $domainNameToQnum = [];
+                                  foreach ($controls as $control) {
+                                      $domainNameToQnum[$json[$control]['title']] = $json[$control]['qnum'];
+                                  }
+
+                                  // Calculate statistics for each theme
+                                  $themeStatistics = [];
+                                  foreach ($thematicGroups as $themeName => $themeData) {
+                                      $themeStats = ['total' => 0, 'maturityScore' => 0, 'complete' => 0, 'inprogress' => 0, 'planning' => 0, 'none' => 0];
+
+                                      foreach ($themeData['capabilities'] as $capInfo) {
+                                          $qnum = $domainNameToQnum[$capInfo['domain']];
+                                          $capNum = $capInfo['capability'];
+                                          $controlId = "control{$qnum}-{$capNum}";
+                                          $sliderValue = isset($data[$controlId]) ? intval($data[$controlId]) : 0;
+
+                                          $themeStats['total']++;
+                                          $themeStats['maturityScore'] += $sliderValue;
+                                          if ($sliderValue == 3) $themeStats['complete']++;
+                                          elseif ($sliderValue == 2) $themeStats['inprogress']++;
+                                          elseif ($sliderValue == 1) $themeStats['planning']++;
+                                          else $themeStats['none']++;
+                                      }
+
+                                      $themeStatistics[$themeName] = $themeStats;
+                                  }
+                                  ?>
+
+                                  <div style="background: #f9f9f9; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                                      <table style="width: 100%; border-collapse: collapse;">
+                                          <thead>
+                                              <tr style="border-bottom: 2px solid #0d60f8;">
+                                                  <th style="text-align: left; padding: 0.75rem; color: #0d60f8; font-weight: 600;">Theme</th>
+                                                  <th style="text-align: center; padding: 0.75rem; color: #0d60f8; font-weight: 600;">Maturity</th>
+                                                  <th style="text-align: center; padding: 0.75rem; color: #0d60f8; font-weight: 600;">Complete</th>
+                                                  <th style="text-align: center; padding: 0.75rem; color: #0d60f8; font-weight: 600;">In Progress</th>
+                                                  <th style="text-align: center; padding: 0.75rem; color: #0d60f8; font-weight: 600;">Planning</th>
+                                                  <th style="text-align: center; padding: 0.75rem; color: #0d60f8; font-weight: 600;">Not Started</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <?php
+                                              foreach ($thematicGroups as $themeName => $themeData) {
+                                                  $stats = $themeStatistics[$themeName];
+                                                  $maturityPercent = $stats['total'] > 0 ? round(($stats['maturityScore'] / ($stats['total'] * 3)) * 100) : 0;
+
+                                                  echo '<tr style="border-bottom: 1px solid #ddd;">';
+                                                  echo '<td style="padding: 0.75rem;"><strong><i class="fa-solid fa-' . $themeData['icon'] . '" style="color: ' . $themeData['color'] . ';"></i> ' . $themeName . '</strong></td>';
+                                                  echo '<td style="text-align: center; padding: 0.75rem; font-weight: 600; color: ' . $themeData['color'] . ';">' . $maturityPercent . '%</td>';
+                                                  echo '<td style="text-align: center; padding: 0.75rem;">' . $stats['complete'] . '</td>';
+                                                  echo '<td style="text-align: center; padding: 0.75rem;">' . $stats['inprogress'] . '</td>';
+                                                  echo '<td style="text-align: center; padding: 0.75rem;">' . $stats['planning'] . '</td>';
+                                                  echo '<td style="text-align: center; padding: 0.75rem;">' . $stats['none'] . '</td>';
+                                                  echo '</tr>';
+                                              }
+                                              ?>
+                                          </tbody>
+                                      </table>
+                                  </div>
+
+                                  <?php
+                                  // Identify highest and lowest scoring themes for insights
+                                  $themeScores = [];
+                                  foreach ($thematicGroups as $themeName => $themeData) {
+                                      $stats = $themeStatistics[$themeName];
+                                      $maturityPercent = $stats['total'] > 0 ? round(($stats['maturityScore'] / ($stats['total'] * 3)) * 100) : 0;
+                                      $themeScores[$themeName] = $maturityPercent;
+                                  }
+                                  arsort($themeScores);
+                                  $topThemes = array_slice($themeScores, 0, 2, true);
+                                  $bottomThemes = array_slice($themeScores, -2, 2, true);
+                                  ?>
+
+                                  <div style="background: #e8f4fd; border-left: 4px solid #0d60f8; padding: 1.25rem; border-radius: 4px; margin-bottom: 1.5rem;">
+                                      <h4 style="color: #0d60f8; margin-top: 0;"><i class="fa-solid fa-lightbulb"></i> Key Thematic Insights</h4>
+
+                                      <p style="margin-bottom: 0.75rem;"><strong>Strongest Themes:</strong></p>
+                                      <ul style="margin-top: 0; margin-bottom: 1rem;">
+                                          <?php
+                                          foreach ($topThemes as $theme => $score) {
+                                              echo '<li><strong>' . $theme . '</strong> (' . $score . '%) - Shows strong capability across ' . $thematicGroups[$theme]['overview'] . '</li>';
+                                          }
+                                          ?>
+                                      </ul>
+
+                                      <p style="margin-bottom: 0.75rem;"><strong>Areas Requiring Focus:</strong></p>
+                                      <ul style="margin-top: 0; margin-bottom: 1rem;">
+                                          <?php
+                                          foreach ($bottomThemes as $theme => $score) {
+                                              echo '<li><strong>' . $theme . '</strong> (' . $score . '%) - Indicates systemic gaps in ' . $thematicGroups[$theme]['overview'] . '</li>';
+                                          }
+                                          ?>
+                                      </ul>
+
+                                      <p style="margin: 0;"><strong>Pattern Analysis:</strong>
+                                      <?php
+                                      // Analyze if it's organizational vs domain-specific
+                                      $scoreVariance = max($themeScores) - min($themeScores);
+                                      if ($scoreVariance > 40) {
+                                          echo 'Wide variation (' . $scoreVariance . ' points) between themes suggests <strong>domain-specific strengths and weaknesses</strong> rather than organizational-wide maturity levels. Focus improvement efforts on specific thematic areas.';
+                                      } elseif ($scoreVariance > 20) {
+                                          echo 'Moderate variation (' . $scoreVariance . ' points) indicates a mix of <strong>organizational capabilities with some domain-specific gaps</strong>. Consider both broad organizational initiatives and targeted domain improvements.';
+                                      } else {
+                                          echo 'Consistent maturity (' . $scoreVariance . ' points variance) across themes suggests <strong>organization-wide maturity level</strong>. Systematic enterprise-wide improvement programs will be most effective.';
+                                      }
+                                      ?>
+                                      </p>
+                                  </div>
+                              </div>
+
                               <div class="section-header">
                                   <h3><i class="fa-solid fa-route"></i> Strategic Recommendations</h3>
                                   <p class="imperative">To advance digital sovereignty maturity, executive leadership should:</p>
