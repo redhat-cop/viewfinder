@@ -898,52 +898,71 @@
 
       <h3>Question-by-Question Guidance</h3>
 
-      <h4>How to Score Each Question</h4>
-      <p>Each question has multiple-choice answers corresponding to maturity levels. Guide participants through this process:</p>
+      <h4>How to Score Each Capability</h4>
+      <p>Each capability is rated using a slider with four implementation status levels. Guide participants through this process:</p>
+
+      <div class="info-box tip">
+        <h4><i class="fa-solid fa-sliders"></i> Capability Rating Scale</h4>
+        <p>Each capability uses a 0-3 slider to indicate implementation status:</p>
+        <ul style="margin: 0.5rem 0 0 1.5rem;">
+          <li><strong>0 - No Capability:</strong> Not implemented, no plans, or not applicable</li>
+          <li><strong>1 - In Planning:</strong> Being planned or early-stage consideration</li>
+          <li><strong>2 - Work in Progress:</strong> Partially implemented or in active deployment</li>
+          <li><strong>3 - Fully Complete:</strong> Fully implemented, documented, and operational</li>
+        </ul>
+        <p style="margin-top: 0.75rem;"><em>Note: These capability ratings contribute to the overall 5-level maturity score for each domain.</em></p>
+      </div>
 
       <ol>
-        <li><strong>Read the question aloud</strong> - Ensure everyone understands what's being asked</li>
-        <li><strong>Review all options</strong> - Read through all maturity levels before deciding</li>
+        <li><strong>Read the capability aloud</strong> - Ensure everyone understands what's being assessed</li>
+        <li><strong>Discuss current state</strong> - Ask about current implementation status</li>
         <li><strong>Ask for evidence</strong> - "Can you show me documentation/tools/policies that demonstrate this?"</li>
         <li><strong>Probe deeper</strong> - "Walk me through how this actually works in practice"</li>
         <li><strong>Watch for inflation</strong> - Organizations often overestimate; look for concrete proof</li>
+        <li><strong>Use the slider</strong> - Select the appropriate implementation status (0-3) based on evidence</li>
         <li><strong>Seek consensus</strong> - If participants disagree, facilitate discussion to reach agreement</li>
-        <li><strong>Document notes</strong> - Use the notes field to capture important context</li>
+        <li><strong>Document notes</strong> - Use the notes field to capture important context and evidence</li>
       </ol>
 
       <h4>Evidence-Based Assessment</h4>
-      <p>Always ask for evidence to support maturity claims. Here are examples of acceptable evidence:</p>
+      <p>Always ask for evidence to support capability ratings. Here are examples of acceptable evidence for each implementation status:</p>
 
       <table class="maturity-table">
         <thead>
           <tr>
-            <th>Level</th>
+            <th>Status</th>
+            <th>Slider Value</th>
             <th>Acceptable Evidence Examples</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><span class="level-badge level-1">Level 1</span></td>
-            <td>Verbal confirmation, acknowledgment of gaps, plans to implement</td>
+            <td><strong>No Capability</strong></td>
+            <td>0</td>
+            <td>Verbal confirmation of gap, acknowledgment that capability doesn't exist, no current plans</td>
           </tr>
           <tr>
-            <td><span class="level-badge level-2">Level 2</span></td>
-            <td>Draft policies, project plans, pilot implementations, partial rollouts</td>
+            <td><strong>In Planning</strong></td>
+            <td>1</td>
+            <td>Project proposals, budget requests, initial requirements gathering, vendor evaluations, roadmap items</td>
           </tr>
           <tr>
-            <td><span class="level-badge level-3">Level 3</span></td>
-            <td>Approved policies, documented standards, widespread implementation, training records</td>
+            <td><strong>Work in Progress</strong></td>
+            <td>2</td>
+            <td>Draft policies, active projects, pilot implementations, partial rollouts, some teams using it, configuration in progress</td>
           </tr>
           <tr>
-            <td><span class="level-badge level-4">Level 4</span></td>
-            <td>Metrics dashboards, KPI reports, audit logs, automated compliance reporting</td>
-          </tr>
-          <tr>
-            <td><span class="level-badge level-5">Level 5</span></td>
-            <td>Continuous improvement programs, innovation initiatives, industry leadership, published case studies</td>
+            <td><strong>Fully Complete</strong></td>
+            <td>3</td>
+            <td>Approved policies, documented procedures, organization-wide implementation, training completed, metrics being collected, regular reviews occurring</td>
           </tr>
         </tbody>
       </table>
+
+      <div class="info-box warning">
+        <h4><i class="fa-solid fa-exclamation-triangle"></i> Common Pitfall</h4>
+        <p><strong>Don't confuse capability status with overall maturity:</strong> A single capability rated "Fully Complete" (3) doesn't mean the organization is at "Optimizing" maturity level (Level 5). The overall maturity rating is calculated across all capabilities in a domain based on the percentage of possible points achieved.</p>
+      </div>
 
       <h4>Handling Difficult Conversations</h4>
 
@@ -1000,8 +1019,10 @@
       </ul>
 
       <div class="info-box">
-        <h4><i class="fa-solid fa-info-circle"></i> Understanding Points</h4>
-        <p>Each question is assigned points (1-8) reflecting its importance within the domain. Higher point values indicate more critical capabilities for achieving sovereignty. The assessment automatically calculates domain scores based on selected maturity levels and point values.</p>
+        <h4><i class="fa-solid fa-info-circle"></i> Understanding Points & Scoring</h4>
+        <p>Each capability is assigned points (1-8) reflecting its importance within the domain. Higher point values indicate more critical capabilities for achieving sovereignty.</p>
+        <p><strong>How scores are calculated:</strong> Each capability's slider value (0-3) is converted to a percentage (0%, 33%, 67%, or 100% of implementation), then multiplied by the capability's point value. For example, a 5-point capability rated "Work in Progress" (slider value 2) contributes 67% × 5 = 3.33 points.</p>
+        <p>The assessment automatically calculates domain scores by summing all capability contributions, then converts the total to an overall maturity level (Initial, Managed, Defined, Quantitatively Managed, or Optimizing).</p>
       </div>
 
       <!-- Domain 1: Data Sovereignty -->
@@ -1188,6 +1209,144 @@
       <p><strong>Key Focus Areas:</strong> Technology stack ownership, vendor lock-in mitigation, standardized frameworks, interoperability, hardware provenance, self-hosted runtimes, IP control, future-proofing</p>
       <p><strong>Common Discussion Topics:</strong> Open source adoption, Kubernetes and containerization, multi-cloud strategies, escrow agreements, supply chain security</p>
 
+      <h4>Domain 2 Question Guide</h4>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-1"></i> Q1: Technology Stack Ownership & Control (1 point - Foundation)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> The extent to which the organization controls its foundational technology components</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"What percentage of your technology stack is open source vs. proprietary?"</li>
+          <li>"Can you independently operate and troubleshoot your core systems without vendor support?"</li>
+          <li>"Do you have internal expertise in the technologies running your critical infrastructure?"</li>
+          <li>"Could you rebuild your infrastructure from scratch if needed?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Technology inventory, internal skills matrix, documentation of core systems</p>
+        <p><strong>Red flags:</strong> Heavy reliance on proprietary systems, lack of internal technical expertise, "vendor handles everything" mentality</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-2"></i> Q2: Vendor Lock-in Risk Mitigation (2 points - Foundation)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Assessment and mitigation of vendor lock-in risks</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Have you assessed the effort required to switch to a different cloud provider?"</li>
+          <li>"Do your contracts include data portability and exit assistance clauses?"</li>
+          <li>"Are you using vendor-specific features that would be difficult to replace?"</li>
+          <li>"Have you calculated the total cost of vendor lock-in?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Lock-in risk assessment, vendor contracts with exit clauses, list of vendor-specific dependencies</p>
+        <p><strong>Red flags:</strong> No exit strategy, heavy use of proprietary APIs, contracts without portability provisions</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-3"></i> Q3: Standardised Technical Framework Adoption (3 points - Foundation)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Use of industry-standard, non-proprietary technical frameworks</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you have a list of approved technical standards for new projects?"</li>
+          <li>"Are you using industry-standard APIs and protocols?"</li>
+          <li>"How do you ensure new systems follow non-proprietary standards?"</li>
+          <li>"Can your systems interoperate with multiple vendors' products?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Technical standards documentation, API specifications, architecture review guidelines</p>
+        <p><strong>Red flags:</strong> No standards policy, heavy reliance on vendor-specific APIs, systems that can't interoperate</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-4"></i> Q4: Interoperability and Portability Strategy (4 points - Strategic)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Ability to migrate workloads between platforms</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Can you migrate a workload between cloud providers within a defined timeframe?"</li>
+          <li>"Are your applications containerized for portability?"</li>
+          <li>"Do you use Infrastructure-as-Code for reproducible deployments?"</li>
+          <li>"Have you tested migration procedures in a non-production environment?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Container adoption metrics, IaC repositories, migration test results</p>
+        <p><strong>Red flags:</strong> No containerization strategy, manual infrastructure management, untested migration procedures</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-5"></i> Q5: Hardware and Infrastructure Source Verification (5 points - Strategic)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Control over hardware supply chain and verification</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you know the origin and manufacturing location of your critical hardware?"</li>
+          <li>"Do you verify hardware integrity before deployment (TPM, secure boot)?"</li>
+          <li>"How do you validate firmware and hardware updates?"</li>
+          <li>"Do you have supply chain attestation for critical components?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Hardware procurement policies, supply chain verification procedures, TPM/secure boot configurations</p>
+        <p><strong>Red flags:</strong> No hardware provenance tracking, unverified firmware updates, no supply chain validation</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-6"></i> Q6: Self-Hosted Application Runtime Control (6 points - Strategic)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Direct control over application runtime environments</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Where are your critical applications hosted?"</li>
+          <li>"Do you have direct administrative control over the runtime environment?"</li>
+          <li>"Are you using self-hosted or sovereign-partner-hosted application servers?"</li>
+          <li>"Can the cloud provider access or modify your application runtime?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Hosting architecture diagrams, administrative access controls, runtime configuration</p>
+        <p><strong>Red flags:</strong> Fully managed PaaS with no underlying access, provider-controlled runtimes, limited administrative rights</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-7"></i> Q7: Code and Intellectual Property Control (7 points - Advanced)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Ownership and control of source code and intellectual property</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you own all custom application source code?"</li>
+          <li>"Where is your source code version control system hosted?"</li>
+          <li>"Do you have code escrow arrangements for vendor-developed software?"</li>
+          <li>"Are IP ownership rights clearly defined in all development contracts?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Source code repository locations, code escrow agreements, development contracts with IP clauses</p>
+        <p><strong>Red flags:</strong> Vendor-owned custom code, third-party hosted version control, unclear IP ownership</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-8"></i> Q8: Future-Proofing Technology Roadmaps (8 points - Advanced)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Strategic planning to address sovereignty risks in technology evolution</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you have a 3-5 year technology roadmap addressing sovereignty risks?"</li>
+          <li>"Have you identified high-risk technology dependencies?"</li>
+          <li>"Are you planning to replace proprietary components with sovereign alternatives?"</li>
+          <li>"How do you evaluate new technologies for sovereignty compliance?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Technology roadmap documents, dependency risk register, sovereignty evaluation criteria</p>
+        <p><strong>Red flags:</strong> No long-term planning, reactive approach to sovereignty, no evaluation framework for new tech</p>
+      </div>
+
       <h3 style="border-top: 2px solid #0d60f8; padding-top: 2rem; margin-top: 2rem;">
         <i class="fa-solid fa-gears"></i> Domain 3: Operational Sovereignty
       </h3>
@@ -1197,6 +1356,144 @@
       </div>
       <p><strong>Key Focus Areas:</strong> Process documentation, managed service dependencies, IAM, internal skills, disaster recovery, supply chain vetting, incident response, operational autonomy</p>
       <p><strong>Common Discussion Topics:</strong> Break-glass procedures, in-house vs. outsourced operations, business continuity planning, geopolitical isolation scenarios</p>
+
+      <h4>Domain 3 Question Guide</h4>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-1"></i> Q1: Operational Process Documentation (1 point - Foundation)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Documentation of critical operational procedures for independence</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Are all critical operational procedures documented?"</li>
+          <li>"Can your team execute operations without vendor documentation?"</li>
+          <li>"Where are operational runbooks stored?"</li>
+          <li>"How often are operational procedures reviewed and updated?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Operational runbooks, procedure documentation, documentation update logs</p>
+        <p><strong>Red flags:</strong> Reliance on vendor documentation, undocumented critical procedures, tribal knowledge</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-2"></i> Q2: Dependency on External Managed Services (2 points - Foundation)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Internal operational capability vs. external dependencies</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you have internal staff capable of performing all critical operations?"</li>
+          <li>"What percentage of operations require vendor involvement?"</li>
+          <li>"Have you identified skills gaps in your operations team?"</li>
+          <li>"Do you have training programs for sovereign operations?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Skills matrix, training programs, vendor dependency assessment</p>
+        <p><strong>Red flags:</strong> Heavy vendor dependency, no internal capability, no skills development program</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-3"></i> Q3: Access Control and Identity Management (3 points - Foundation)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Operational resilience and recovery capabilities</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Can you recover operations without vendor assistance?"</li>
+          <li>"Are disaster recovery plans tested regularly?"</li>
+          <li>"Do backup systems reside in sovereign infrastructure?"</li>
+          <li>"Can you maintain operations during a vendor outage?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> DR test results, backup infrastructure documentation, continuity plans</p>
+        <p><strong>Red flags:</strong> Untested DR plans, backup dependency on same vendor, no failover capability</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-4"></i> Q4: Internal Skills and Competency Development (4 points - Strategic)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Control over incident response processes</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you control incident response processes end-to-end?"</li>
+          <li>"Can you investigate security incidents without vendor access to logs?"</li>
+          <li>"Where are security logs stored?"</li>
+          <li>"Do you have an internal Security Operations Center (SOC)?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Incident response playbooks, SOC operations, log management infrastructure</p>
+        <p><strong>Red flags:</strong> Vendor-controlled incident response, logs only accessible via vendor, no internal SOC</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-5"></i> Q5: Disaster Recovery and Business Continuity (5 points - Strategic)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Control over deployment processes</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Who manages your production deployment processes?"</li>
+          <li>"Can you deploy updates without vendor involvement?"</li>
+          <li>"Do you control CI/CD pipelines independently?"</li>
+          <li>"Where are deployment automation tools hosted?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> CI/CD pipeline architecture, deployment automation tools, release management processes</p>
+        <p><strong>Red flags:</strong> Vendor-managed deployments, external CI/CD platforms, no automated deployment capability</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-6"></i> Q6: Supply Chain Transparency and Vetting (6 points - Strategic)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Operational continuity through staff development</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"How quickly can you onboard new operational staff?"</li>
+          <li>"Do you have succession planning for critical operational roles?"</li>
+          <li>"Are operational skills concentrated with specific individuals?"</li>
+          <li>"Do you cross-train team members on critical functions?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Succession plans, cross-training programs, knowledge transfer documentation</p>
+        <p><strong>Red flags:</strong> Single points of failure in staffing, no succession planning, concentrated expertise</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-7"></i> Q7: Sovereign Incident Response Plan (7 points - Advanced)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Independent infrastructure monitoring capability</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you control infrastructure monitoring tools?"</li>
+          <li>"Where is operational telemetry data stored?"</li>
+          <li>"Can you detect anomalies without vendor-provided tools?"</li>
+          <li>"Do you have independent visibility into infrastructure health?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Monitoring tool architecture, telemetry data storage, alerting systems</p>
+        <p><strong>Red flags:</strong> Vendor-provided monitoring only, no independent telemetry, limited visibility</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-8"></i> Q8: Operational Autonomy in Critical Functions (8 points - Advanced)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Ability to exit infrastructure and migrate workloads</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Can you exit your current infrastructure within a defined timeframe?"</li>
+          <li>"Have you tested workload migration to alternative platforms?"</li>
+          <li>"Do you have automated tools for infrastructure migration?"</li>
+          <li>"What is your RTO (Recovery Time Objective) for a forced migration?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Migration test results, automated migration tools, documented RTO/RPO</p>
+        <p><strong>Red flags:</strong> No exit strategy, untested migration, undefined RTO, manual migration processes</p>
+      </div>
 
       <h3 style="border-top: 2px solid #0d60f8; padding-top: 2rem; margin-top: 2rem;">
         <i class="fa-solid fa-shield-halved"></i> Domain 4: Assurance Sovereignty
@@ -1208,6 +1505,144 @@
       <p><strong>Key Focus Areas:</strong> Audit rights, sovereign SIEM, compliance verification, transparency requirements, sovereign certifications, continuous monitoring, security testing, vulnerability management</p>
       <p><strong>Common Discussion Topics:</strong> Right to audit clauses, SOC 2 Type II, penetration testing, third-party attestations, domestic vs. foreign auditors</p>
 
+      <h4>Domain 4 Question Guide</h4>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-1"></i> Q1: Regular Security Audits Conducted (1 point - Foundation)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Right and capability to audit service providers</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you have the right to audit your service providers?"</li>
+          <li>"When was the last time you conducted a provider audit?"</li>
+          <li>"Can you perform unannounced audits?"</li>
+          <li>"Do you verify vendor compliance claims independently?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Audit rights in contracts, recent audit reports, audit schedules</p>
+        <p><strong>Red flags:</strong> No audit rights, relying solely on vendor attestations, never conducted an audit</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-2"></i> Q2: Control over Security Monitoring Data (2 points - Foundation)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Compliance framework implementation and verification</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Which compliance frameworks apply to your operations?"</li>
+          <li>"Do you have current compliance certifications (ISO 27001, SOC 2, etc.)?"</li>
+          <li>"How do you verify vendor compliance certifications?"</li>
+          <li>"Can you demonstrate continuous compliance?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Compliance certifications, compliance monitoring systems, verification procedures</p>
+        <p><strong>Red flags:</strong> Unclear compliance requirements, expired certifications, no verification process</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-3"></i> Q3: Risk Management Framework (3 points - Foundation)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Control over security monitoring infrastructure</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you control security monitoring tools?"</li>
+          <li>"Where are security logs aggregated and analyzed?"</li>
+          <li>"Can you detect threats without vendor-provided visibility?"</li>
+          <li>"Do you use sovereign-based security operations tools?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> SIEM architecture, log aggregation infrastructure, monitoring tool ownership</p>
+        <p><strong>Red flags:</strong> Vendor-controlled SIEM, logs not accessible independently, foreign-hosted security tools</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-4"></i> Q4: Compliance with Local Security Standards (4 points - Strategic)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Infrastructure integrity verification capabilities</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"How do you verify the integrity of your infrastructure?"</li>
+          <li>"Do you have tamper-detection mechanisms in place?"</li>
+          <li>"Can you detect unauthorized changes to your environment?"</li>
+          <li>"Do you use cryptographic verification for system integrity?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Integrity monitoring systems, tamper detection tools, baseline configurations</p>
+        <p><strong>Red flags:</strong> No integrity verification, unable to detect tampering, no baseline management</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-5"></i> Q5: Transparency in Vendor Security Practices (5 points - Strategic)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Independent security testing and validation</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you conduct regular penetration testing?"</li>
+          <li>"Are security assessments performed by independent third parties?"</li>
+          <li>"How do you validate security controls effectiveness?"</li>
+          <li>"Can you demonstrate security posture to regulators?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Penetration test reports, third-party assessment results, validation methodology</p>
+        <p><strong>Red flags:</strong> No independent testing, relying on vendor testing only, unvalidated controls</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-6"></i> Q6: Independent Certification and Vetting (6 points - Strategic)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Compliance audit trail management</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Where are compliance audit trails stored?"</li>
+          <li>"Are audit logs immutable and tamper-proof?"</li>
+          <li>"Can you produce compliance evidence on demand?"</li>
+          <li>"How long do you retain audit records?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Audit log infrastructure, immutability controls, retention policies</p>
+        <p><strong>Red flags:</strong> Mutable audit logs, no retention policy, inability to produce evidence quickly</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-7"></i> Q7: Ability to Invoke Sovereign Inspections (7 points - Advanced)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Control plane security and monitoring</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you control access to the cloud management plane?"</li>
+          <li>"Can you detect unauthorized control plane access?"</li>
+          <li>"Are control plane activities continuously monitored?"</li>
+          <li>"Do you have alerts for suspicious control plane operations?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Control plane access controls, monitoring configuration, alerting rules</p>
+        <p><strong>Red flags:</strong> No control plane visibility, unmonitored access, no alerting for anomalies</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-8"></i> Q8: Continuous Security Control Validation (8 points - Advanced)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Tested capability to migrate due to assurance failures</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Have you tested migration to alternative providers?"</li>
+          <li>"Do you have exit criteria that would trigger migration?"</li>
+          <li>"Can you migrate critical workloads within your defined timeframe?"</li>
+          <li>"Do you maintain automated migration playbooks?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Migration test results, exit criteria documentation, automated playbooks</p>
+        <p><strong>Red flags:</strong> No tested migration capability, undefined exit criteria, manual migration only</p>
+      </div>
+
       <h3 style="border-top: 2px solid #0d60f8; padding-top: 2rem; margin-top: 2rem;">
         <i class="fa-solid fa-code-branch"></i> Domain 5: Open Source
       </h3>
@@ -1217,6 +1652,144 @@
       </div>
       <p><strong>Key Focus Areas:</strong> Open source strategy, community participation, license compliance, vulnerability management, sovereign distributions, contribution policies, internal expertise, project governance</p>
       <p><strong>Common Discussion Topics:</strong> Red Hat Enterprise Linux, Kubernetes, Apache projects, InnerSource, security scanning, open source vs. commercial support</p>
+
+      <h4>Domain 5 Question Guide</h4>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-1"></i> Q1: OSS Policy and Usage Guidelines (1 point - Foundation)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Strategic approach to open source software adoption</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"What percentage of your stack uses open source software?"</li>
+          <li>"Do you have a policy favoring open source adoption?"</li>
+          <li>"Can you justify proprietary software choices?"</li>
+          <li>"Have you evaluated open source alternatives for proprietary tools?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> OSS adoption policy, software inventory showing OSS vs proprietary, justification process</p>
+        <p><strong>Red flags:</strong> No OSS policy, default to proprietary solutions, no evaluation of alternatives</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-2"></i> Q2: Internal OSS Skills and Expertise (2 points - Foundation)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Governance and tracking of open source components</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you have an OSS governance framework?"</li>
+          <li>"How do you track open source components and their licenses?"</li>
+          <li>"Do you have processes for OSS security vulnerability management?"</li>
+          <li>"Can you identify all OSS dependencies in your applications?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> OSS governance documentation, dependency tracking tools (SBOM), vulnerability scanning</p>
+        <p><strong>Red flags:</strong> No OSS governance, unknown dependencies, no vulnerability tracking</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-3"></i> Q3: Source Code Escrow Arrangements (3 points - Foundation)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Active participation in open source communities</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you contribute code, documentation, or resources to OSS projects?"</li>
+          <li>"Are developers encouraged to participate in OSS communities?"</li>
+          <li>"Do you sponsor or support critical OSS projects you depend on?"</li>
+          <li>"Have you open-sourced any internal tools or projects?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> OSS contribution records, community participation metrics, sponsorship agreements</p>
+        <p><strong>Red flags:</strong> No contributions, developers not allowed to participate, only consuming OSS</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-4"></i> Q4: Dependency Risk Assessment (4 points - Strategic)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Internal capability to support critical OSS</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you have internal expertise to support critical OSS components?"</li>
+          <li>"Can you fork and maintain OSS projects if needed?"</li>
+          <li>"Do you have developers skilled in the OSS technologies you use?"</li>
+          <li>"Can you provide emergency support for OSS issues?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Skills matrix for OSS technologies, fork capability demonstration, support procedures</p>
+        <p><strong>Red flags:</strong> No internal OSS expertise, unable to support critical components, total reliance on community</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-5"></i> Q5: Forking Strategy for Critical OSS (5 points - Strategic)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> OSS security and vulnerability management</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"How do you monitor OSS security advisories?"</li>
+          <li>"Do you have a process for patching OSS vulnerabilities?"</li>
+          <li>"Can you assess OSS security independently?"</li>
+          <li>"Do you perform security scanning of OSS components?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Vulnerability monitoring systems, patching processes, security scanning tools</p>
+        <p><strong>Red flags:</strong> No security monitoring for OSS, reactive patching only, no scanning capability</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-6"></i> Q6: Contribution to Strategic OSS Projects (6 points - Strategic)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Assessment of OSS project health and sustainability</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Have you evaluated the maturity and sustainability of OSS projects you depend on?"</li>
+          <li>"Do you assess OSS project governance and community health?"</li>
+          <li>"What happens if a critical OSS project becomes unmaintained?"</li>
+          <li>"Do you have contingency plans for OSS project failures?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Project health assessments, sustainability criteria, contingency plans</p>
+        <p><strong>Red flags:</strong> No project assessment, dependency on unmaintained projects, no contingency planning</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-7"></i> Q7: Active OSS Community Engagement (7 points - Advanced)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> OSS supply chain security</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you verify the integrity and provenance of OSS components?"</li>
+          <li>"Do you use signed releases and verify signatures?"</li>
+          <li>"Can you trace OSS components back to official sources?"</li>
+          <li>"Do you protect against OSS supply chain attacks?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Signature verification processes, provenance tracking, supply chain security controls</p>
+        <p><strong>Red flags:</strong> No signature verification, unverified sources, no supply chain security</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-8"></i> Q8: Ability to Influence OSS Roadmaps (8 points - Advanced)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Strategic use of OSS for sovereignty goals</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you leverage OSS for strategic sovereignty goals?"</li>
+          <li>"Have you replaced proprietary tools with OSS alternatives?"</li>
+          <li>"Is OSS adoption part of your sovereignty roadmap?"</li>
+          <li>"How do you measure the sovereignty benefits of OSS?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Sovereignty roadmap showing OSS initiatives, replacement projects, metrics</p>
+        <p><strong>Red flags:</strong> No strategic OSS approach, no measurable sovereignty benefits, OSS not in roadmap</p>
+      </div>
 
       <h3 style="border-top: 2px solid #0d60f8; padding-top: 2rem; margin-top: 2rem;">
         <i class="fa-solid fa-users-gear"></i> Domain 6: Executive Oversight
@@ -1228,6 +1801,144 @@
       <p><strong>Key Focus Areas:</strong> Board awareness, dedicated governance, budget allocation, sovereignty policies, risk management, accountability, strategic planning, regulatory engagement</p>
       <p><strong>Common Discussion Topics:</strong> Board reporting, sovereignty champions, dedicated budgets vs. embedded costs, KPIs and metrics, regulatory relationships</p>
 
+      <h4>Domain 6 Question Guide</h4>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-1"></i> Q1: Designated Executive Sponsor (1 point - Foundation)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Executive and board-level awareness of sovereignty</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Is digital sovereignty on the board's risk agenda?"</li>
+          <li>"Do executives understand sovereignty risks and opportunities?"</li>
+          <li>"Is there a designated executive owner for sovereignty?"</li>
+          <li>"How often is sovereignty discussed at the executive level?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Board meeting agendas, executive sponsor designation, governance documentation</p>
+        <p><strong>Red flags:</strong> No board discussion, no executive ownership, sovereignty relegated to IT only</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-2"></i> Q2: Defined Digital Sovereignty Policy (2 points - Foundation)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Formal sovereignty strategy and alignment</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you have a formal digital sovereignty strategy?"</li>
+          <li>"Is the strategy aligned with business objectives?"</li>
+          <li>"Does the strategy include measurable goals and timelines?"</li>
+          <li>"Is the strategy reviewed and updated regularly?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Sovereignty strategy document, goals and metrics, review schedules</p>
+        <p><strong>Red flags:</strong> No formal strategy, unclear goals, no alignment with business objectives</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-3"></i> Q3: Budget Allocation for Sovereignty Initiatives (3 points - Foundation)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Financial commitment to sovereignty</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Is there dedicated budget for sovereignty initiatives?"</li>
+          <li>"How much are you investing in sovereignty improvements?"</li>
+          <li>"Are sovereignty costs tracked separately?"</li>
+          <li>"Do you measure ROI on sovereignty investments?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Budget allocation, investment tracking, ROI measurements</p>
+        <p><strong>Red flags:</strong> No dedicated budget, costs buried in general IT spend, no ROI tracking</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-4"></i> Q4: Integration into Organisational Strategy (4 points - Strategic)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Sovereignty maturity tracking and KPIs</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"How do you track sovereignty maturity over time?"</li>
+          <li>"Do you have KPIs for sovereignty progress?"</li>
+          <li>"Are sovereignty metrics reported to executives?"</li>
+          <li>"How do you benchmark against industry peers?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> KPI dashboards, tracking systems, benchmark reports</p>
+        <p><strong>Red flags:</strong> No tracking, no defined KPIs, no benchmarking</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-5"></i> Q5: Regular Reporting to the Board (5 points - Strategic)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Sovereignty integration into procurement</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Is sovereignty integrated into procurement processes?"</li>
+          <li>"Do vendor selection criteria include sovereignty requirements?"</li>
+          <li>"Are contracts reviewed for sovereignty compliance?"</li>
+          <li>"Do you negotiate sovereignty terms with vendors?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Procurement policies, vendor selection criteria, contract templates</p>
+        <p><strong>Red flags:</strong> No sovereignty in procurement, standard vendor contracts accepted, no negotiation</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-6"></i> Q6: Sovereignty Culture and Awareness Program (6 points - Strategic)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Employee awareness and training</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do employees understand sovereignty requirements?"</li>
+          <li>"Is sovereignty training provided to relevant staff?"</li>
+          <li>"Is sovereignty awareness part of onboarding?"</li>
+          <li>"How do you promote a culture of sovereignty?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Training programs, onboarding materials, awareness campaigns</p>
+        <p><strong>Red flags:</strong> No training, employees unaware, sovereignty not in culture</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-7"></i> Q7: Dedicated Sovereignty Governance Board (7 points - Advanced)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Regulatory engagement and awareness</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you engage with regulators on sovereignty topics?"</li>
+          <li>"Are you monitoring regulatory developments?"</li>
+          <li>"Do you participate in industry sovereignty initiatives?"</li>
+          <li>"How do you stay ahead of sovereignty regulations?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Regulatory engagement records, monitoring systems, industry participation</p>
+        <p><strong>Red flags:</strong> No regulatory engagement, reactive to regulations, no industry participation</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-8"></i> Q8: Key Performance Indicators (KPIs) Defined (8 points - Advanced)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> External communication of sovereignty posture</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you communicate sovereignty posture to stakeholders?"</li>
+          <li>"Is sovereignty part of customer value propositions?"</li>
+          <li>"How do you demonstrate sovereignty to clients?"</li>
+          <li>"Do you publish sovereignty commitments publicly?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Public commitments, customer materials, stakeholder communications</p>
+        <p><strong>Red flags:</strong> No external communication, sovereignty not mentioned to customers, no public commitments</p>
+      </div>
+
       <h3 style="border-top: 2px solid #0d60f8; padding-top: 2rem; margin-top: 2rem;">
         <i class="fa-solid fa-handshake"></i> Domain 7: Managed Services
       </h3>
@@ -1237,6 +1948,145 @@
       </div>
       <p><strong>Key Focus Areas:</strong> Vendor selection criteria, contractual controls, geographic restrictions, data access limitations, performance monitoring, transition planning, alternatives evaluation, insourcing capabilities</p>
       <p><strong>Common Discussion Topics:</strong> Domestic vs. foreign MSPs, data center locations, support personnel jurisdictions, exit strategies, dual-source strategies</p>
+
+      <h4>Domain 7 Question Guide</h4>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-1"></i> Q1: Region and Zoning Control (1 point - Foundation)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Inventory and classification of managed service providers</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you have an inventory of all managed service providers?"</li>
+          <li>"What critical functions are outsourced?"</li>
+          <li>"Do you understand the sovereignty implications of each service?"</li>
+          <li>"Have you classified managed services by sovereignty risk?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> MSP inventory, outsourced functions list, risk classifications</p>
+        <p><strong>Red flags:</strong> No MSP inventory, unknown sovereignty risks, unclassified services</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-2"></i> Q2: Sovereign Image and Container Registry (2 points - Foundation)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Contractual data ownership and portability</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do contracts define data ownership unambiguously?"</li>
+          <li>"Can you access and export your data at any time?"</li>
+          <li>"Do you retain control over encryption keys?"</li>
+          <li>"Are data portability rights contractually guaranteed?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> MSP contracts showing data ownership clauses, portability provisions</p>
+        <p><strong>Red flags:</strong> Ambiguous ownership, limited data access, vendor-controlled keys, no portability guarantee</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-3"></i> Q3: Resource Dependency Mapping (3 points - Foundation)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Geographic and jurisdictional control of MSPs</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Where are managed service providers located?"</li>
+          <li>"What is the legal jurisdiction governing service contracts?"</li>
+          <li>"Are service personnel located in trusted jurisdictions?"</li>
+          <li>"Can providers access your data from foreign locations?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Provider locations, contract governing law, personnel jurisdiction documentation</p>
+        <p><strong>Red flags:</strong> Foreign-based providers, foreign jurisdiction contracts, unrestricted access locations</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-4"></i> Q4: Hyperscaler Data Access Vetting (4 points - Strategic)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Exit planning and transition capabilities</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do contracts include service exit and transition assistance?"</li>
+          <li>"How long would it take to migrate from a managed service?"</li>
+          <li>"Have you tested exit procedures?"</li>
+          <li>"Do you have alternatives identified for critical managed services?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Exit clauses in contracts, transition plans, alternative provider evaluations</p>
+        <p><strong>Red flags:</strong> No exit provisions, undefined transition time, untested procedures, no alternatives</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-5"></i> Q5: Network Egress/Ingress Path Control (5 points - Strategic)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Visibility into managed service operations</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you have visibility into managed service operations?"</li>
+          <li>"Can you audit provider activities independently?"</li>
+          <li>"Do you receive detailed operational logs?"</li>
+          <li>"Can you detect provider security incidents?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Audit capabilities, operational logs access, monitoring dashboards</p>
+        <p><strong>Red flags:</strong> No visibility, unable to audit, limited logging, no incident detection</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-6"></i> Q6: Configuration-as-Code Ownership (6 points - Strategic)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Service level agreements and accountability</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do contracts define SLAs and penalties clearly?"</li>
+          <li>"Are sovereignty requirements included in SLAs?"</li>
+          <li>"How do you monitor SLA compliance?"</li>
+          <li>"What recourse do you have for SLA violations?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> SLA documentation, sovereignty requirements in contracts, compliance monitoring</p>
+        <p><strong>Red flags:</strong> Weak SLAs, no sovereignty requirements, no monitoring, limited recourse</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-7"></i> Q7: Control Plane Audit and Integrity (7 points - Advanced)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Provider security and compliance verification</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Have you verified provider security certifications?"</li>
+          <li>"Do you conduct regular provider risk assessments?"</li>
+          <li>"Are providers subject to the same security requirements as internal teams?"</li>
+          <li>"How do you ensure provider compliance with your standards?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Provider certifications, risk assessment reports, security requirements</p>
+        <p><strong>Red flags:</strong> Unverified certifications, no risk assessments, different standards for providers</p>
+      </div>
+
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h4><i class="fa-solid fa-8"></i> Q8: Multi-Cloud Exit Strategy Testing (8 points - Advanced)</h4>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>What this measures:</strong> Multi-provider strategy for resilience</p>
+        <p><strong>Key questions to ask:</strong></p>
+        <ul>
+          <li>"Do you use multiple providers to avoid dependency on a single vendor?"</li>
+          <li>"Can critical services failover to alternative providers?"</li>
+          <li>"Have you tested multi-provider resilience?"</li>
+          <li>"Do you have geographic diversity in service providers?"</li>
+        </ul>
+        <p><strong>Evidence to request:</strong> Multi-provider architecture, failover tests, geographic distribution</p>
+        <p><strong>Red flags:</strong> Single provider dependency, no failover capability, untested resilience, no geographic diversity</p>
+      </div>
+
     </div>
 
     <!-- Post-Assessment -->
