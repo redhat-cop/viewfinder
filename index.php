@@ -366,22 +366,6 @@
       </div>
     </div>
 
-    <!-- EU Cloud Sovereignty Framework Card -->
-    <div class="landing-card">
-      <div class="landing-card-header">
-        <div class="eu-flag">🇪🇺</div>
-        <h2>EU Cloud Sovereignty Assessment</h2>
-      </div>
-      <p class="landing-card-description">
-        Evaluate your organization against the European Commission's Cloud Sovereignty Framework (v1.2.1). 24 questions across 8 SOV objectives with SEAL 0-4 rating levels.
-      </p>
-      <div class="landing-card-buttons">
-        <a href="eu-sovereignty/" class="landing-button" style="background: linear-gradient(135deg, #003399 0%, #0051A5 100%); color: #fff;">
-          <i class="fa-solid fa-certificate"></i> Start EU Assessment
-        </a>
-      </div>
-    </div>
-
     <!-- Digital Sovereignty Quiz Card -->
     <div class="landing-card">
       <div class="landing-card-header">
