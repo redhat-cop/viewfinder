@@ -937,121 +937,240 @@ foreach ($statusGroups as $level => $group) {
 <h1 style="color: #9ec7fc; font-size: 2rem; margin: 0 0 1.5rem 0;"><i class="fa-solid fa-grip"></i> Thematic Capability View</h1>
 
 <?php
-// Define thematic groupings - mapping capabilities to themes
-$thematicGroups = [
-    'Governance & Policy' => [
-        'icon' => 'gavel',
-        'color' => '#0d60f8',
-        'overview' => 'This theme addresses formal governance structures, policy frameworks, and strategic integration of Digital Sovereignty principles across your organization. It evaluates executive accountability, board-level oversight, and the legal/jurisdictional controls ensuring data sovereignty. Key aspects include designated executive sponsorship, formal sovereignty policies with dedicated budgets, and legal frameworks controlling data access and jurisdictional authority.',
-        'capabilities' => [
-            ['domain' => 'Data Sovereignty', 'capability' => 4, 'name' => 'Legal & Jurisdictional Control'],
-            ['domain' => 'Data Sovereignty', 'capability' => 8, 'name' => 'Data Access by Third Parties Policies'],
-            ['domain' => 'Open Source', 'capability' => 1, 'name' => 'OSS Policy and Usage Guidelines'],
-            ['domain' => 'Executive Oversight', 'capability' => 1, 'name' => 'Designated Executive Sponsor'],
-            ['domain' => 'Executive Oversight', 'capability' => 2, 'name' => 'Defined Digital Sovereignty Policy'],
-            ['domain' => 'Executive Oversight', 'capability' => 3, 'name' => 'Budget Allocation for Sovereignty Initiatives'],
-            ['domain' => 'Executive Oversight', 'capability' => 4, 'name' => 'Integration into Organisational Strategy'],
-            ['domain' => 'Executive Oversight', 'capability' => 7, 'name' => 'Dedicated Sovereignty Governance Board'],
-        ]
-    ],
-    'Data & Privacy' => [
-        'icon' => 'shield-halved',
-        'color' => '#2aaa04',
-        'overview' => 'This theme focuses on comprehensive data protection across its entire lifecycle—from classification and residency to encryption and privacy compliance. It ensures your organization maintains ultimate control over data independent of external jurisdictions, implements robust cryptographic key management, and verifies that security monitoring data remains under sovereign control. Core elements include data residency policies, privacy-by-design principles, and workload data protection during processing.',
-        'capabilities' => [
-            ['domain' => 'Data Sovereignty', 'capability' => 1, 'name' => 'Data Residency & Location'],
-            ['domain' => 'Data Sovereignty', 'capability' => 2, 'name' => 'Data Protection & Privacy'],
-            ['domain' => 'Data Sovereignty', 'capability' => 3, 'name' => 'Data Classification and Inventory'],
-            ['domain' => 'Data Sovereignty', 'capability' => 5, 'name' => 'Cryptographic Key Management Control'],
-            ['domain' => 'Data Sovereignty', 'capability' => 6, 'name' => 'Workload Data Protection & Privacy'],
-            ['domain' => 'Assurance Sovereignty', 'capability' => 2, 'name' => 'Control over Security Monitoring Data'],
-        ]
-    ],
-    'Risk & Compliance' => [
-        'icon' => 'clipboard-check',
-        'color' => '#ec7a08',
-        'overview' => 'This theme addresses your ability to verify security and compliance claims through independent audits, certifications, and continuous validation—ensuring trust is verified, not assumed. It encompasses formal risk management frameworks, compliance with local security standards, and dependency risk assessment for open source components. Key capabilities include regular security audits, independent certification and vetting processes, and defined KPIs for measuring sovereignty performance.',
-        'capabilities' => [
-            ['domain' => 'Assurance Sovereignty', 'capability' => 1, 'name' => 'Regular Security Audits Conducted'],
-            ['domain' => 'Assurance Sovereignty', 'capability' => 3, 'name' => 'Risk Management Framework'],
-            ['domain' => 'Assurance Sovereignty', 'capability' => 4, 'name' => 'Compliance with Local Security Standards'],
-            ['domain' => 'Assurance Sovereignty', 'capability' => 6, 'name' => 'Independent Certification and Vetting'],
-            ['domain' => 'Assurance Sovereignty', 'capability' => 8, 'name' => 'Continuous Security Control Validation'],
-            ['domain' => 'Open Source', 'capability' => 4, 'name' => 'Dependency Risk Assessment'],
-            ['domain' => 'Executive Oversight', 'capability' => 8, 'name' => 'Key Performance Indicators (KPIs) Defined'],
-        ]
-    ],
-    'Technical Control' => [
-        'icon' => 'microchip',
-        'color' => '#12bbd4',
-        'overview' => 'This theme evaluates your control over foundational technology components—from hardware and firmware to application runtime environments. It prioritizes open standards, platform portability, and vendor independence while minimizing technical dependencies that restrict flexibility. Core aspects include technology stack ownership, vendor lock-in mitigation, standardized framework adoption, and control over cloud infrastructure placement including sovereign image registries and regional zoning.',
-        'capabilities' => [
-            ['domain' => 'Technical Sovereignty', 'capability' => 1, 'name' => 'Technology Stack Ownership & Control'],
-            ['domain' => 'Technical Sovereignty', 'capability' => 2, 'name' => 'Vendor Lock-in Risk Mitigation'],
-            ['domain' => 'Technical Sovereignty', 'capability' => 3, 'name' => 'Standardised Technical Framework Adoption'],
-            ['domain' => 'Technical Sovereignty', 'capability' => 4, 'name' => 'Interoperability and Portability Strategy'],
-            ['domain' => 'Technical Sovereignty', 'capability' => 5, 'name' => 'Hardware and Infrastructure Source Verification'],
-            ['domain' => 'Technical Sovereignty', 'capability' => 6, 'name' => 'Self-Hosted Application Runtime Control'],
-            ['domain' => 'Managed Services', 'capability' => 1, 'name' => 'Region and Zoning Control'],
-            ['domain' => 'Managed Services', 'capability' => 2, 'name' => 'Sovereign Image and Container Registry'],
-        ]
-    ],
-    'Operational Resilience' => [
-        'icon' => 'server',
-        'color' => '#f0ab00',
-        'overview' => 'This theme examines your autonomy and independence in executing critical business and IT operations without mandatory reliance on external expertise or infrastructure. It ensures business continuity through locally managed processes, internal capability development, and independent incident response. Key elements include comprehensive operational documentation, disaster recovery planning, internal skills development, future-proofing technology roadmaps, and fostering a sovereignty-aware organizational culture.',
-        'capabilities' => [
-            ['domain' => 'Operational Sovereignty', 'capability' => 1, 'name' => 'Operational Process Documentation'],
-            ['domain' => 'Operational Sovereignty', 'capability' => 4, 'name' => 'Internal Skills and Competency Development'],
-            ['domain' => 'Operational Sovereignty', 'capability' => 5, 'name' => 'Disaster Recovery and Business Continuity'],
-            ['domain' => 'Operational Sovereignty', 'capability' => 8, 'name' => 'Operational Autonomy in Critical Functions'],
-            ['domain' => 'Technical Sovereignty', 'capability' => 8, 'name' => 'Future-Proofing Technology Roadmaps'],
-            ['domain' => 'Managed Services', 'capability' => 8, 'name' => 'Multi-Cloud Exit Strategy Testing'],
-            ['domain' => 'Executive Oversight', 'capability' => 6, 'name' => 'Sovereignty Culture and Awareness Program'],
-        ]
-    ],
-    'Vendor & Dependencies' => [
-        'icon' => 'handshake',
-        'color' => '#c9190b',
-        'overview' => 'This theme addresses management of external dependencies including cloud providers, managed service vendors, and open source software components. It evaluates transparency requirements for vendor security practices, supply chain vetting processes, and contingency strategies such as code escrow and forking capabilities. Key aspects include dependency mapping, hyperscaler data access controls, and maintaining the ability to operate independently if vendor relationships change or terminate.',
-        'capabilities' => [
-            ['domain' => 'Operational Sovereignty', 'capability' => 2, 'name' => 'Dependency on External Managed Services'],
-            ['domain' => 'Operational Sovereignty', 'capability' => 6, 'name' => 'Supply Chain Transparency and Vetting'],
-            ['domain' => 'Assurance Sovereignty', 'capability' => 5, 'name' => 'Transparency in Vendor Security Practices'],
-            ['domain' => 'Open Source', 'capability' => 3, 'name' => 'Source Code Escrow Arrangements'],
-            ['domain' => 'Open Source', 'capability' => 5, 'name' => 'Forking Strategy for Critical OSS'],
-            ['domain' => 'Managed Services', 'capability' => 3, 'name' => 'Resource Dependency Mapping'],
-            ['domain' => 'Managed Services', 'capability' => 4, 'name' => 'Hyperscaler Data Access Vetting'],
-        ]
-    ],
-    'Monitoring & Security' => [
-        'icon' => 'binoculars',
-        'color' => '#a18fff',
-        'overview' => 'This theme focuses on continuous security monitoring, access control, and audit capabilities ensuring you maintain visibility and control over your infrastructure. It encompasses data flow auditing, identity and access management, incident response planning, and the ability to invoke sovereign inspections. Critical components include network egress/ingress controls, configuration-as-code ownership, control plane audit capabilities, and comprehensive logging with independent forensic analysis.',
-        'capabilities' => [
-            ['domain' => 'Data Sovereignty', 'capability' => 7, 'name' => 'Data Flow and Transfer Auditing'],
-            ['domain' => 'Operational Sovereignty', 'capability' => 3, 'name' => 'Access Control and Identity Management'],
-            ['domain' => 'Operational Sovereignty', 'capability' => 7, 'name' => 'Sovereign Incident Response Plan'],
-            ['domain' => 'Assurance Sovereignty', 'capability' => 7, 'name' => 'Ability to Invoke Sovereign Inspections'],
-            ['domain' => 'Managed Services', 'capability' => 5, 'name' => 'Network Egress/Ingress Path Control'],
-            ['domain' => 'Managed Services', 'capability' => 6, 'name' => 'Configuration-as-Code Ownership'],
-            ['domain' => 'Managed Services', 'capability' => 7, 'name' => 'Control Plane Audit and Integrity'],
-        ]
-    ],
-    'Open Source' => [
-        'icon' => 'code-branch',
-        'color' => '#7d1007',
-        'overview' => 'This theme focuses on strategic adoption of Open Source Software (OSS) to eliminate vendor dependency and strengthen technical control through code transparency and community engagement. It goes beyond consumption to active contribution, ensuring influence over project direction and maintaining fork capabilities as contingency plans. Key elements include internal OSS expertise development, intellectual property control, community engagement, and the ability to audit, modify, and self-maintain critical open source components.',
-        'capabilities' => [
-            ['domain' => 'Open Source', 'capability' => 2, 'name' => 'Internal OSS Skills and Expertise'],
-            ['domain' => 'Open Source', 'capability' => 6, 'name' => 'Contribution to Strategic OSS Projects'],
-            ['domain' => 'Open Source', 'capability' => 7, 'name' => 'Active OSS Community Engagement'],
-            ['domain' => 'Open Source', 'capability' => 8, 'name' => 'Ability to Influence OSS Roadmaps'],
-            ['domain' => 'Technical Sovereignty', 'capability' => 7, 'name' => 'Code and Intellectual Property Control'],
-            ['domain' => 'Executive Oversight', 'capability' => 5, 'name' => 'Regular Reporting to the Board'],
-        ]
-    ],
-];
+// Define thematic groupings - mapping capabilities to themes (profile-specific)
+if ($profile === 'Security') {
+    $thematicGroups = [
+        'Configuration & Compliance' => [
+            'icon' => 'cog',
+            'color' => '#0d60f8',
+            'overview' => 'This theme focuses on establishing and maintaining consistent security configurations across your infrastructure through automated policy enforcement and continuous compliance monitoring. It encompasses configuration management, policy automation, and security posture validation—ensuring systems remain in a known-good state that aligns with organizational security standards and regulatory requirements.',
+            'capabilities' => [
+                ['domain' => 'Secure Infrastructure', 'capability' => 1, 'name' => 'Config Management'],
+                ['domain' => 'Secure Infrastructure', 'capability' => 4, 'name' => 'Automated Policy / Enforcement'],
+                ['domain' => 'Secure Data', 'capability' => 6, 'name' => 'Automated Posture Management'],
+                ['domain' => 'Secure Application', 'capability' => 3, 'name' => 'Secure Code Practices'],
+                ['domain' => 'Secure Recovery', 'capability' => 5, 'name' => 'Lifecycle Management'],
+            ]
+        ],
+        'Data Protection' => [
+            'icon' => 'shield-halved',
+            'color' => '#2aaa04',
+            'overview' => 'This theme addresses comprehensive data protection throughout its lifecycle—from classification and encryption to loss prevention and immutable storage. It ensures sensitive data is properly identified, encrypted at rest and in transit, protected from unauthorized access or exfiltration, and stored in tamper-proof formats for compliance and forensic purposes.',
+            'capabilities' => [
+                ['domain' => 'Secure Data', 'capability' => 1, 'name' => 'Classification'],
+                ['domain' => 'Secure Data', 'capability' => 2, 'name' => 'Encryption'],
+                ['domain' => 'Secure Data', 'capability' => 3, 'name' => 'Access Control'],
+                ['domain' => 'Secure Data', 'capability' => 4, 'name' => 'Tokenization'],
+                ['domain' => 'Secure Data', 'capability' => 5, 'name' => 'Loss Prevention'],
+                ['domain' => 'Secure Data', 'capability' => 7, 'name' => 'Immutable Storage'],
+                ['domain' => 'Secure Infrastructure', 'capability' => 5, 'name' => 'Secrets Management'],
+                ['domain' => 'Secure Recovery', 'capability' => 7, 'name' => 'Advanced Key Management'],
+            ]
+        ],
+        'Identity & Access Management' => [
+            'icon' => 'user-shield',
+            'color' => '#ec7a08',
+            'overview' => 'This theme evaluates your organization\'s ability to authenticate users, authorize access, and manage privileged accounts across the enterprise. It covers the full spectrum from basic password policies to advanced contextual access controls, encompassing MFA, SSO, PAM, identity federation, and risk-based authentication mechanisms that adapt to threat context.',
+            'capabilities' => [
+                ['domain' => 'Secure Identity', 'capability' => 1, 'name' => 'Passwords'],
+                ['domain' => 'Secure Identity', 'capability' => 2, 'name' => 'Role-Based Access Control'],
+                ['domain' => 'Secure Identity', 'capability' => 3, 'name' => 'Multi-Factor Authentication'],
+                ['domain' => 'Secure Identity', 'capability' => 4, 'name' => 'Single Sign On'],
+                ['domain' => 'Secure Identity', 'capability' => 5, 'name' => 'Privileged Access Management'],
+                ['domain' => 'Secure Identity', 'capability' => 6, 'name' => 'Identity Federation'],
+                ['domain' => 'Secure Identity', 'capability' => 8, 'name' => 'Contextual / Risk Based Access'],
+                ['domain' => 'Secure Operations', 'capability' => 3, 'name' => 'Access Control and Identity Management'],
+            ]
+        ],
+        'Application Security' => [
+            'icon' => 'code',
+            'color' => '#12bbd4',
+            'overview' => 'This theme addresses security throughout the software development lifecycle—from managing dependencies and scanning code for vulnerabilities to protecting applications at runtime. It encompasses secure coding practices, static and dynamic testing, container scanning, web application firewalls, and runtime application self-protection (RASP) for comprehensive application defense.',
+            'capabilities' => [
+                ['domain' => 'Secure Application', 'capability' => 1, 'name' => 'Dependency Management'],
+                ['domain' => 'Secure Application', 'capability' => 2, 'name' => 'Static Application Security Testing'],
+                ['domain' => 'Secure Application', 'capability' => 4, 'name' => 'Dynamic Application Security Testing'],
+                ['domain' => 'Secure Application', 'capability' => 5, 'name' => 'Web Application Firewall'],
+                ['domain' => 'Secure Application', 'capability' => 6, 'name' => 'Container Scanning'],
+                ['domain' => 'Secure Application', 'capability' => 7, 'name' => 'Runtime Application Self Protection'],
+                ['domain' => 'Secure Application', 'capability' => 8, 'name' => 'Interactive Application Security Testing'],
+                ['domain' => 'Secure Infrastructure', 'capability' => 6, 'name' => 'Container Runtime Security'],
+            ]
+        ],
+        'Network Security' => [
+            'icon' => 'network-wired',
+            'color' => '#f0ab00',
+            'overview' => 'This theme focuses on securing network communications and implementing defense-in-depth through segmentation, encryption, and access controls. It covers traditional perimeter defenses like firewalls and IDS/IPS, as well as modern zero-trust architectures including microsegmentation, service mesh security, and identity-based perimeters that minimize implicit trust.',
+            'capabilities' => [
+                ['domain' => 'Secure Network', 'capability' => 1, 'name' => 'Firewalls & Segmentation'],
+                ['domain' => 'Secure Network', 'capability' => 2, 'name' => 'Secure Protocols'],
+                ['domain' => 'Secure Network', 'capability' => 3, 'name' => 'Access Control Lists'],
+                ['domain' => 'Secure Network', 'capability' => 4, 'name' => 'Intrusion Detection / Prevention'],
+                ['domain' => 'Secure Network', 'capability' => 5, 'name' => 'Traffic Analysis'],
+                ['domain' => 'Secure Network', 'capability' => 6, 'name' => 'Secure Connections'],
+                ['domain' => 'Secure Network', 'capability' => 7, 'name' => 'Microsegmentation'],
+                ['domain' => 'Secure Network', 'capability' => 8, 'name' => 'Zero Trust Network Access'],
+                ['domain' => 'Secure Infrastructure', 'capability' => 2, 'name' => 'Segmentation / Isolation'],
+                ['domain' => 'Secure Infrastructure', 'capability' => 7, 'name' => 'Service Mesh Security'],
+                ['domain' => 'Secure Infrastructure', 'capability' => 8, 'name' => 'Identity-Based Perimeter'],
+            ]
+        ],
+        'Detection & Monitoring' => [
+            'icon' => 'binoculars',
+            'color' => '#c9190b',
+            'overview' => 'This theme examines your organization\'s ability to detect security threats through continuous monitoring, log analysis, and anomaly detection. It encompasses logging and monitoring infrastructure, SIEM platforms for correlation and analysis, endpoint detection and response (EDR), threat intelligence integration, and advanced AI/ML-based anomaly detection across identity, data, and operations.',
+            'capabilities' => [
+                ['domain' => 'Secure Infrastructure', 'capability' => 3, 'name' => 'Logging & Monitoring'],
+                ['domain' => 'Secure Operations', 'capability' => 3, 'name' => 'Security Information & Event Management'],
+                ['domain' => 'Secure Operations', 'capability' => 4, 'name' => 'Endpoint Detection & Response'],
+                ['domain' => 'Secure Operations', 'capability' => 6, 'name' => 'Threat Intelligence Integration'],
+                ['domain' => 'Secure Data', 'capability' => 8, 'name' => 'Anomaly Detection'],
+                ['domain' => 'Secure Identity', 'capability' => 7, 'name' => 'AI/ML Anomaly Detection'],
+                ['domain' => 'Secure Recovery', 'capability' => 6, 'name' => 'Storage Scanning & Monitoring'],
+                ['domain' => 'Secure Operations', 'capability' => 2, 'name' => 'Anti-Virus scan'],
+            ]
+        ],
+        'Incident Response & Recovery' => [
+            'icon' => 'life-ring',
+            'color' => '#a18fff',
+            'overview' => 'This theme addresses organizational resilience through comprehensive incident response planning, disaster recovery capabilities, and business continuity measures. It covers incident response plans, backup and redundancy strategies, disaster recovery procedures, automated failovers, consistent versioning, predictive recovery capabilities, and security orchestration, automation, and response (SOAR) for rapid incident handling.',
+            'capabilities' => [
+                ['domain' => 'Secure Operations', 'capability' => 1, 'name' => 'Incident Response Plan'],
+                ['domain' => 'Secure Operations', 'capability' => 5, 'name' => 'Orchestration, Automation, Response'],
+                ['domain' => 'Secure Recovery', 'capability' => 1, 'name' => 'Backup & Redundancy'],
+                ['domain' => 'Secure Recovery', 'capability' => 2, 'name' => 'Disaster Recovery Plan'],
+                ['domain' => 'Secure Recovery', 'capability' => 3, 'name' => 'Consistent Versioning'],
+                ['domain' => 'Secure Recovery', 'capability' => 4, 'name' => 'Automated Failovers'],
+                ['domain' => 'Secure Recovery', 'capability' => 8, 'name' => 'Predictive Recovery'],
+            ]
+        ],
+        'Advanced Threat Defense' => [
+            'icon' => 'shield-virus',
+            'color' => '#7d1007',
+            'overview' => 'This theme focuses on defending against sophisticated adversaries through advanced threat detection, hunting, and validation. It encompasses Advanced Persistent Threat (APT) detection and response capabilities, purple team exercises combining offensive and defensive security, and proactive threat hunting. These capabilities go beyond basic detection to identify and respond to nation-state actors, organized cybercrime, and advanced attack techniques.',
+            'capabilities' => [
+                ['domain' => 'Secure Operations', 'capability' => 7, 'name' => 'APT Detection & Response'],
+                ['domain' => 'Secure Operations', 'capability' => 8, 'name' => 'Purple Teaming'],
+            ]
+        ],
+    ];
+} else {
+    // Digital Sovereignty profile thematic groups (default)
+    $thematicGroups = [
+        'Governance & Policy' => [
+            'icon' => 'gavel',
+            'color' => '#0d60f8',
+            'overview' => 'This theme addresses formal governance structures, policy frameworks, and strategic integration of Digital Sovereignty principles across your organization. It evaluates executive accountability, board-level oversight, and the legal/jurisdictional controls ensuring data sovereignty. Key aspects include designated executive sponsorship, formal sovereignty policies with dedicated budgets, and legal frameworks controlling data access and jurisdictional authority.',
+            'capabilities' => [
+                ['domain' => 'Data Sovereignty', 'capability' => 4, 'name' => 'Legal & Jurisdictional Control'],
+                ['domain' => 'Data Sovereignty', 'capability' => 8, 'name' => 'Data Access by Third Parties Policies'],
+                ['domain' => 'Open Source', 'capability' => 1, 'name' => 'OSS Policy and Usage Guidelines'],
+                ['domain' => 'Executive Oversight', 'capability' => 1, 'name' => 'Designated Executive Sponsor'],
+                ['domain' => 'Executive Oversight', 'capability' => 2, 'name' => 'Defined Digital Sovereignty Policy'],
+                ['domain' => 'Executive Oversight', 'capability' => 3, 'name' => 'Budget Allocation for Sovereignty Initiatives'],
+                ['domain' => 'Executive Oversight', 'capability' => 4, 'name' => 'Integration into Organisational Strategy'],
+                ['domain' => 'Executive Oversight', 'capability' => 7, 'name' => 'Dedicated Sovereignty Governance Board'],
+            ]
+        ],
+        'Data & Privacy' => [
+            'icon' => 'shield-halved',
+            'color' => '#2aaa04',
+            'overview' => 'This theme focuses on comprehensive data protection across its entire lifecycle—from classification and residency to encryption and privacy compliance. It ensures your organization maintains ultimate control over data independent of external jurisdictions, implements robust cryptographic key management, and verifies that security monitoring data remains under sovereign control. Core elements include data residency policies, privacy-by-design principles, and workload data protection during processing.',
+            'capabilities' => [
+                ['domain' => 'Data Sovereignty', 'capability' => 1, 'name' => 'Data Residency & Location'],
+                ['domain' => 'Data Sovereignty', 'capability' => 2, 'name' => 'Data Protection & Privacy'],
+                ['domain' => 'Data Sovereignty', 'capability' => 3, 'name' => 'Data Classification and Inventory'],
+                ['domain' => 'Data Sovereignty', 'capability' => 5, 'name' => 'Cryptographic Key Management Control'],
+                ['domain' => 'Data Sovereignty', 'capability' => 6, 'name' => 'Workload Data Protection & Privacy'],
+                ['domain' => 'Assurance Sovereignty', 'capability' => 2, 'name' => 'Control over Security Monitoring Data'],
+            ]
+        ],
+        'Risk & Compliance' => [
+            'icon' => 'clipboard-check',
+            'color' => '#ec7a08',
+            'overview' => 'This theme addresses your ability to verify security and compliance claims through independent audits, certifications, and continuous validation—ensuring trust is verified, not assumed. It encompasses formal risk management frameworks, compliance with local security standards, and dependency risk assessment for open source components. Key capabilities include regular security audits, independent certification and vetting processes, and defined KPIs for measuring sovereignty performance.',
+            'capabilities' => [
+                ['domain' => 'Assurance Sovereignty', 'capability' => 1, 'name' => 'Regular Security Audits Conducted'],
+                ['domain' => 'Assurance Sovereignty', 'capability' => 3, 'name' => 'Risk Management Framework'],
+                ['domain' => 'Assurance Sovereignty', 'capability' => 4, 'name' => 'Compliance with Local Security Standards'],
+                ['domain' => 'Assurance Sovereignty', 'capability' => 6, 'name' => 'Independent Certification and Vetting'],
+                ['domain' => 'Assurance Sovereignty', 'capability' => 8, 'name' => 'Continuous Security Control Validation'],
+                ['domain' => 'Open Source', 'capability' => 4, 'name' => 'Dependency Risk Assessment'],
+                ['domain' => 'Executive Oversight', 'capability' => 8, 'name' => 'Key Performance Indicators (KPIs) Defined'],
+            ]
+        ],
+        'Technical Control' => [
+            'icon' => 'microchip',
+            'color' => '#12bbd4',
+            'overview' => 'This theme evaluates your control over foundational technology components—from hardware and firmware to application runtime environments. It prioritizes open standards, platform portability, and vendor independence while minimizing technical dependencies that restrict flexibility. Core aspects include technology stack ownership, vendor lock-in mitigation, standardized framework adoption, and control over cloud infrastructure placement including sovereign image registries and regional zoning.',
+            'capabilities' => [
+                ['domain' => 'Technical Sovereignty', 'capability' => 1, 'name' => 'Technology Stack Ownership & Control'],
+                ['domain' => 'Technical Sovereignty', 'capability' => 2, 'name' => 'Vendor Lock-in Risk Mitigation'],
+                ['domain' => 'Technical Sovereignty', 'capability' => 3, 'name' => 'Standardised Technical Framework Adoption'],
+                ['domain' => 'Technical Sovereignty', 'capability' => 4, 'name' => 'Interoperability and Portability Strategy'],
+                ['domain' => 'Technical Sovereignty', 'capability' => 5, 'name' => 'Hardware and Infrastructure Source Verification'],
+                ['domain' => 'Technical Sovereignty', 'capability' => 6, 'name' => 'Self-Hosted Application Runtime Control'],
+                ['domain' => 'Managed Services', 'capability' => 1, 'name' => 'Region and Zoning Control'],
+                ['domain' => 'Managed Services', 'capability' => 2, 'name' => 'Sovereign Image and Container Registry'],
+            ]
+        ],
+        'Operational Resilience' => [
+            'icon' => 'server',
+            'color' => '#f0ab00',
+            'overview' => 'This theme examines your autonomy and independence in executing critical business and IT operations without mandatory reliance on external expertise or infrastructure. It ensures business continuity through locally managed processes, internal capability development, and independent incident response. Key elements include comprehensive operational documentation, disaster recovery planning, internal skills development, future-proofing technology roadmaps, and fostering a sovereignty-aware organizational culture.',
+            'capabilities' => [
+                ['domain' => 'Operational Sovereignty', 'capability' => 1, 'name' => 'Operational Process Documentation'],
+                ['domain' => 'Operational Sovereignty', 'capability' => 4, 'name' => 'Internal Skills and Competency Development'],
+                ['domain' => 'Operational Sovereignty', 'capability' => 5, 'name' => 'Disaster Recovery and Business Continuity'],
+                ['domain' => 'Operational Sovereignty', 'capability' => 8, 'name' => 'Operational Autonomy in Critical Functions'],
+                ['domain' => 'Technical Sovereignty', 'capability' => 8, 'name' => 'Future-Proofing Technology Roadmaps'],
+                ['domain' => 'Managed Services', 'capability' => 8, 'name' => 'Multi-Cloud Exit Strategy Testing'],
+                ['domain' => 'Executive Oversight', 'capability' => 6, 'name' => 'Sovereignty Culture and Awareness Program'],
+            ]
+        ],
+        'Vendor & Dependencies' => [
+            'icon' => 'handshake',
+            'color' => '#c9190b',
+            'overview' => 'This theme addresses management of external dependencies including cloud providers, managed service vendors, and open source software components. It evaluates transparency requirements for vendor security practices, supply chain vetting processes, and contingency strategies such as code escrow and forking capabilities. Key aspects include dependency mapping, hyperscaler data access controls, and maintaining the ability to operate independently if vendor relationships change or terminate.',
+            'capabilities' => [
+                ['domain' => 'Operational Sovereignty', 'capability' => 2, 'name' => 'Dependency on External Managed Services'],
+                ['domain' => 'Operational Sovereignty', 'capability' => 6, 'name' => 'Supply Chain Transparency and Vetting'],
+                ['domain' => 'Assurance Sovereignty', 'capability' => 5, 'name' => 'Transparency in Vendor Security Practices'],
+                ['domain' => 'Open Source', 'capability' => 3, 'name' => 'Source Code Escrow Arrangements'],
+                ['domain' => 'Open Source', 'capability' => 5, 'name' => 'Forking Strategy for Critical OSS'],
+                ['domain' => 'Managed Services', 'capability' => 3, 'name' => 'Resource Dependency Mapping'],
+                ['domain' => 'Managed Services', 'capability' => 4, 'name' => 'Hyperscaler Data Access Vetting'],
+            ]
+        ],
+        'Monitoring & Security' => [
+            'icon' => 'binoculars',
+            'color' => '#a18fff',
+            'overview' => 'This theme focuses on continuous security monitoring, access control, and audit capabilities ensuring you maintain visibility and control over your infrastructure. It encompasses data flow auditing, identity and access management, incident response planning, and the ability to invoke sovereign inspections. Critical components include network egress/ingress controls, configuration-as-code ownership, control plane audit capabilities, and comprehensive logging with independent forensic analysis.',
+            'capabilities' => [
+                ['domain' => 'Data Sovereignty', 'capability' => 7, 'name' => 'Data Flow and Transfer Auditing'],
+                ['domain' => 'Operational Sovereignty', 'capability' => 3, 'name' => 'Access Control and Identity Management'],
+                ['domain' => 'Operational Sovereignty', 'capability' => 7, 'name' => 'Sovereign Incident Response Plan'],
+                ['domain' => 'Assurance Sovereignty', 'capability' => 7, 'name' => 'Ability to Invoke Sovereign Inspections'],
+                ['domain' => 'Managed Services', 'capability' => 5, 'name' => 'Network Egress/Ingress Path Control'],
+                ['domain' => 'Managed Services', 'capability' => 6, 'name' => 'Configuration-as-Code Ownership'],
+                ['domain' => 'Managed Services', 'capability' => 7, 'name' => 'Control Plane Audit and Integrity'],
+            ]
+        ],
+        'Open Source' => [
+            'icon' => 'code-branch',
+            'color' => '#7d1007',
+            'overview' => 'This theme focuses on strategic adoption of Open Source Software (OSS) to eliminate vendor dependency and strengthen technical control through code transparency and community engagement. It goes beyond consumption to active contribution, ensuring influence over project direction and maintaining fork capabilities as contingency plans. Key elements include internal OSS expertise development, intellectual property control, community engagement, and the ability to audit, modify, and self-maintain critical open source components.',
+            'capabilities' => [
+                ['domain' => 'Open Source', 'capability' => 2, 'name' => 'Internal OSS Skills and Expertise'],
+                ['domain' => 'Open Source', 'capability' => 6, 'name' => 'Contribution to Strategic OSS Projects'],
+                ['domain' => 'Open Source', 'capability' => 7, 'name' => 'Active OSS Community Engagement'],
+                ['domain' => 'Open Source', 'capability' => 8, 'name' => 'Ability to Influence OSS Roadmaps'],
+                ['domain' => 'Technical Sovereignty', 'capability' => 7, 'name' => 'Code and Intellectual Property Control'],
+                ['domain' => 'Executive Oversight', 'capability' => 5, 'name' => 'Regular Reporting to the Board'],
+            ]
+        ],
+    ];
+}
 
 // Map domain names to qnum
 $domainNameToQnum = [];
