@@ -252,7 +252,7 @@ This domain examines the organisation's autonomy and independence in executing c
 
 ### Control 3.2: Dependency on External Managed Services
 
-**Summary:** Identification of key external operational dependencies (e.g., outsourced functions and functions).
+**Summary:** Identification of key external operational dependencies (e.g., outsourced functions).
 
 **Tier:** Foundation
 
