@@ -419,16 +419,28 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * (count($control
                                   <h3><i class="fa-solid fa-chart-line"></i> Key Strengths</h3>
                                   <p>The assessment identified the following areas of strong maturity:</p>
                                   <?php
-                                  // Domain-specific quick wins
-                                  $quickWins = [
-                                      'Data Sovereignty' => 'Implement automated data flow monitoring and quarterly audits of vendor data access to advance toward Level 4 quantitative management.',
-                                      'Technical Sovereignty' => 'Document exit strategies for all critical systems and conduct annual portability drills to strengthen vendor independence.',
-                                      'Operational Sovereignty' => 'Establish a Center of Excellence for sovereign technologies and implement quarterly DR testing scenarios including geopolitical isolation.',
-                                      'Assurance Sovereignty' => 'Expand continuous security validation with automated compliance reporting and establish formal vendor transparency requirements in all contracts.',
-                                      'Open Source' => 'Formalize contribution policies and establish metrics tracking for community engagement and project influence.',
-                                      'Executive Oversight' => 'Implement sovereignty KPI dashboards for Board reporting and establish quarterly reviews with regulatory authorities.',
-                                      'Managed Services' => 'Develop comprehensive transition playbooks for all critical managed services and conduct annual vendor alternative assessments.'
-                                  ];
+                                  // Domain-specific quick wins (profile-aware)
+                                  if ($profile === 'Security') {
+                                      $quickWins = [
+                                          'Secure Infrastructure' => 'Implement Infrastructure-as-Code (IaC) scanning and automated policy enforcement to advance configuration management maturity.',
+                                          'Secure Data' => 'Deploy automated data classification tools and implement encryption-at-rest for all sensitive data repositories.',
+                                          'Secure Identity' => 'Roll out risk-based MFA across all user accounts and implement privileged access management for administrative functions.',
+                                          'Secure Application' => 'Integrate SAST/DAST into CI/CD pipelines and establish security champions program for development teams.',
+                                          'Secure Network' => 'Implement microsegmentation for critical workloads and deploy network traffic analysis for anomaly detection.',
+                                          'Secure Recovery' => 'Conduct quarterly disaster recovery drills and implement automated backup validation and restoration testing.',
+                                          'Secure Operations' => 'Deploy SOAR platform for automated incident response playbooks and establish threat hunting program.'
+                                      ];
+                                  } else {
+                                      $quickWins = [
+                                          'Data Sovereignty' => 'Implement automated data flow monitoring and quarterly audits of vendor data access to advance toward Level 4 quantitative management.',
+                                          'Technical Sovereignty' => 'Document exit strategies for all critical systems and conduct annual portability drills to strengthen vendor independence.',
+                                          'Operational Sovereignty' => 'Establish a Center of Excellence for sovereign technologies and implement quarterly DR testing scenarios including geopolitical isolation.',
+                                          'Assurance Sovereignty' => 'Expand continuous security validation with automated compliance reporting and establish formal vendor transparency requirements in all contracts.',
+                                          'Open Source' => 'Formalize contribution policies and establish metrics tracking for community engagement and project influence.',
+                                          'Executive Oversight' => 'Implement sovereignty KPI dashboards for Board reporting and establish quarterly reviews with regulatory authorities.',
+                                          'Managed Services' => 'Develop comprehensive transition playbooks for all critical managed services and conduct annual vendor alternative assessments.'
+                                      ];
+                                  }
 
                                   foreach ($strengths as $strength):
                                       $quickWin = isset($quickWins[$strength["title"]]) ? $quickWins[$strength["title"]] : 'Continue to refine and optimize processes, and consider sharing best practices with other domains.';
@@ -449,47 +461,90 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * (count($control
                                   (based on <?php echo Security::escape($assessmentLob); ?> industry priorities)
                                   <?php endif; ?>:</p>
                                   <?php
-                                  // Domain-specific business impacts and first steps
-                                  $businessImpacts = [
-                                      'Data Sovereignty' => 'Exposes organization to foreign government data access demands, violates data residency regulations (GDPR, NIS2), and creates legal liability for cross-border data transfers.',
-                                      'Technical Sovereignty' => 'Creates vendor lock-in preventing migration, increases costs through proprietary dependencies, and exposes organization to supply chain disruption risks.',
-                                      'Operational Sovereignty' => 'Inability to maintain critical operations during vendor outages or geopolitical conflicts; excessive reliance on external expertise threatens business continuity.',
-                                      'Assurance Sovereignty' => 'Limits ability to verify security claims, prevents independent compliance validation, and creates blind spots in third-party risk management.',
-                                      'Open Source' => 'Increases dependency on proprietary software vendors, limits ability to audit code for security vulnerabilities, and reduces long-term technology flexibility.',
-                                      'Executive Oversight' => 'Lack of strategic direction and budget allocation for sovereignty initiatives; inability to demonstrate compliance to regulators and stakeholders.',
-                                      'Managed Services' => 'Third-party access to sensitive systems without adequate controls; inability to quickly transition services if vendor relationship deteriorates or sovereignty requirements change.'
-                                  ];
+                                  // Domain-specific business impacts and first steps (profile-aware)
+                                  if ($profile === 'Security') {
+                                      $businessImpacts = [
+                                          'Secure Infrastructure' => 'Configuration drift and misconfigurations lead to vulnerabilities; lack of hardening exposes systems to exploitation and compliance violations.',
+                                          'Secure Data' => 'Unencrypted or poorly classified data exposes organization to data breaches, regulatory fines (GDPR, CCPA), and reputational damage.',
+                                          'Secure Identity' => 'Weak identity controls enable unauthorized access, privilege escalation, and insider threats; credential theft leads to account compromise.',
+                                          'Secure Application' => 'Vulnerable applications expose organization to OWASP Top 10 attacks including SQL injection, XSS, and remote code execution.',
+                                          'Secure Network' => 'Insufficient network segmentation allows lateral movement; unencrypted protocols expose data in transit to interception.',
+                                          'Secure Recovery' => 'Inadequate backup and recovery capabilities result in extended downtime during incidents; inability to meet RTO/RPO requirements.',
+                                          'Secure Operations' => 'Delayed threat detection and slow incident response increase breach impact; lack of security monitoring creates blind spots for attackers.'
+                                      ];
 
-                                  $firstSteps = [
-                                      'Data Sovereignty' => [
-                                          'Implement external key management (HSM) to ensure cryptographic sovereignty within 90 days',
-                                          'Audit and renegotiate cloud contracts to include data residency guarantees and foreign access notification clauses'
-                                      ],
-                                      'Technical Sovereignty' => [
-                                          'Conduct vendor lock-in assessment identifying proprietary dependencies and migration risks',
-                                          'Develop 12-month roadmap for containerizing applications using Kubernetes for portability'
-                                      ],
-                                      'Operational Sovereignty' => [
-                                          'Create documented "break-glass" procedures for operating critical systems without vendor support',
-                                          'Establish skills development plan and begin cross-training staff on sovereign technology alternatives'
-                                      ],
-                                      'Assurance Sovereignty' => [
-                                          'Negotiate "right to audit" clauses in all vendor contracts with sovereignty-critical providers',
-                                          'Implement sovereign-controlled SIEM for independent security monitoring within 6 months'
-                                      ],
-                                      'Open Source' => [
-                                          'Develop open source strategy policy defining when to prefer OSS over proprietary alternatives',
-                                          'Implement software composition analysis tools to track and manage open source dependencies'
-                                      ],
-                                      'Executive Oversight' => [
-                                          'Establish dedicated sovereignty governance committee with Board reporting and quarterly reviews',
-                                          'Develop sovereignty KPIs and allocate dedicated budget line for sovereignty initiatives'
-                                      ],
-                                      'Managed Services' => [
-                                          'Implement Just-in-Time (JIT) access controls and session recording for all third-party vendor access',
-                                          'Develop transition playbooks with defined exit criteria and alternative provider options for critical services'
-                                      ]
-                                  ];
+                                      $firstSteps = [
+                                          'Secure Infrastructure' => [
+                                              'Implement configuration management tool (Ansible, Puppet) and establish baseline hardening standards (CIS Benchmarks)',
+                                              'Deploy security scanning for container images and establish automated policy enforcement for infrastructure-as-code'
+                                          ],
+                                          'Secure Data' => [
+                                              'Conduct data discovery and classification exercise to identify sensitive data locations',
+                                              'Implement encryption-at-rest for databases and file storage; enable TLS 1.3 for all data in transit'
+                                          ],
+                                          'Secure Identity' => [
+                                              'Roll out MFA for all remote access and administrative accounts within 90 days',
+                                              'Implement centralized identity management (SSO) and establish RBAC policies aligned with least privilege'
+                                          ],
+                                          'Secure Application' => [
+                                              'Integrate SAST tools into development workflow and establish secure coding standards',
+                                              'Deploy web application firewall (WAF) for internet-facing applications and implement dependency scanning'
+                                          ],
+                                          'Secure Network' => [
+                                              'Document network segmentation strategy and implement firewall rules following zero-trust principles',
+                                              'Deploy network intrusion detection system (IDS) and enable logging for all firewall and network devices'
+                                          ],
+                                          'Secure Recovery' => [
+                                              'Establish backup schedule with 3-2-1 rule (3 copies, 2 media types, 1 offsite) and test restoration quarterly',
+                                              'Document disaster recovery plan with defined RTO/RPO targets and conduct tabletop exercise'
+                                          ],
+                                          'Secure Operations' => [
+                                              'Deploy centralized SIEM solution and establish security event monitoring with 24/7 alerting',
+                                              'Create incident response plan with defined roles, escalation procedures, and communication templates'
+                                          ]
+                                      ];
+                                  } else {
+                                      $businessImpacts = [
+                                          'Data Sovereignty' => 'Exposes organization to foreign government data access demands, violates data residency regulations (GDPR, NIS2), and creates legal liability for cross-border data transfers.',
+                                          'Technical Sovereignty' => 'Creates vendor lock-in preventing migration, increases costs through proprietary dependencies, and exposes organization to supply chain disruption risks.',
+                                          'Operational Sovereignty' => 'Inability to maintain critical operations during vendor outages or geopolitical conflicts; excessive reliance on external expertise threatens business continuity.',
+                                          'Assurance Sovereignty' => 'Limits ability to verify security claims, prevents independent compliance validation, and creates blind spots in third-party risk management.',
+                                          'Open Source' => 'Increases dependency on proprietary software vendors, limits ability to audit code for security vulnerabilities, and reduces long-term technology flexibility.',
+                                          'Executive Oversight' => 'Lack of strategic direction and budget allocation for sovereignty initiatives; inability to demonstrate compliance to regulators and stakeholders.',
+                                          'Managed Services' => 'Third-party access to sensitive systems without adequate controls; inability to quickly transition services if vendor relationship deteriorates or sovereignty requirements change.'
+                                      ];
+
+                                      $firstSteps = [
+                                          'Data Sovereignty' => [
+                                              'Implement external key management (HSM) to ensure cryptographic sovereignty within 90 days',
+                                              'Audit and renegotiate cloud contracts to include data residency guarantees and foreign access notification clauses'
+                                          ],
+                                          'Technical Sovereignty' => [
+                                              'Conduct vendor lock-in assessment identifying proprietary dependencies and migration risks',
+                                              'Develop 12-month roadmap for containerizing applications using Kubernetes for portability'
+                                          ],
+                                          'Operational Sovereignty' => [
+                                              'Create documented "break-glass" procedures for operating critical systems without vendor support',
+                                              'Establish skills development plan and begin cross-training staff on sovereign technology alternatives'
+                                          ],
+                                          'Assurance Sovereignty' => [
+                                              'Negotiate "right to audit" clauses in all vendor contracts with sovereignty-critical providers',
+                                              'Implement sovereign-controlled SIEM for independent security monitoring within 6 months'
+                                          ],
+                                          'Open Source' => [
+                                              'Develop open source strategy policy defining when to prefer OSS over proprietary alternatives',
+                                              'Implement software composition analysis tools to track and manage open source dependencies'
+                                          ],
+                                          'Executive Oversight' => [
+                                              'Establish dedicated sovereignty governance committee with Board reporting and quarterly reviews',
+                                              'Develop sovereignty KPIs and allocate dedicated budget line for sovereignty initiatives'
+                                          ],
+                                          'Managed Services' => [
+                                              'Implement Just-in-Time (JIT) access controls and session recording for all third-party vendor access',
+                                              'Develop transition playbooks with defined exit criteria and alternative provider options for critical services'
+                                          ]
+                                      ];
+                                  }
 
                                   foreach ($gaps as $gap):
                                       $priorityNote = "";
@@ -611,121 +666,238 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * (count($control
                                   <p>Cross-domain analysis organizing capabilities by strategic theme to identify organizational patterns:</p>
 
                                   <?php
-                                  // Define thematic groupings - same as results.php
-                                  $thematicGroups = [
-                                      'Governance & Policy' => [
-                                          'icon' => 'gavel',
-                                          'color' => '#0d60f8',
-                                          'overview' => 'Formal governance structures, policy frameworks, and strategic integration of Digital Sovereignty principles including executive accountability and legal controls.',
-                                          'capabilities' => [
-                                              ['domain' => 'Data Sovereignty', 'capability' => 4],
-                                              ['domain' => 'Data Sovereignty', 'capability' => 8],
-                                              ['domain' => 'Open Source', 'capability' => 1],
-                                              ['domain' => 'Executive Oversight', 'capability' => 1],
-                                              ['domain' => 'Executive Oversight', 'capability' => 2],
-                                              ['domain' => 'Executive Oversight', 'capability' => 3],
-                                              ['domain' => 'Executive Oversight', 'capability' => 4],
-                                              ['domain' => 'Executive Oversight', 'capability' => 7],
-                                          ]
-                                      ],
-                                      'Data & Privacy' => [
-                                          'icon' => 'shield-halved',
-                                          'color' => '#2aaa04',
-                                          'overview' => 'Comprehensive data protection across its lifecycle including classification, residency, encryption, and privacy compliance.',
-                                          'capabilities' => [
-                                              ['domain' => 'Data Sovereignty', 'capability' => 1],
-                                              ['domain' => 'Data Sovereignty', 'capability' => 2],
-                                              ['domain' => 'Data Sovereignty', 'capability' => 3],
-                                              ['domain' => 'Data Sovereignty', 'capability' => 5],
-                                              ['domain' => 'Data Sovereignty', 'capability' => 6],
-                                              ['domain' => 'Assurance Sovereignty', 'capability' => 2],
-                                          ]
-                                      ],
-                                      'Risk & Compliance' => [
-                                          'icon' => 'clipboard-check',
-                                          'color' => '#ec7a08',
-                                          'overview' => 'Independent verification through audits, certifications, and continuous validation with formal risk management frameworks.',
-                                          'capabilities' => [
-                                              ['domain' => 'Assurance Sovereignty', 'capability' => 1],
-                                              ['domain' => 'Assurance Sovereignty', 'capability' => 3],
-                                              ['domain' => 'Assurance Sovereignty', 'capability' => 4],
-                                              ['domain' => 'Assurance Sovereignty', 'capability' => 6],
-                                              ['domain' => 'Assurance Sovereignty', 'capability' => 8],
-                                              ['domain' => 'Open Source', 'capability' => 4],
-                                              ['domain' => 'Executive Oversight', 'capability' => 8],
-                                          ]
-                                      ],
-                                      'Technical Control' => [
-                                          'icon' => 'microchip',
-                                          'color' => '#12bbd4',
-                                          'overview' => 'Control over foundational technology components prioritizing open standards, platform portability, and vendor independence.',
-                                          'capabilities' => [
-                                              ['domain' => 'Technical Sovereignty', 'capability' => 1],
-                                              ['domain' => 'Technical Sovereignty', 'capability' => 2],
-                                              ['domain' => 'Technical Sovereignty', 'capability' => 3],
-                                              ['domain' => 'Technical Sovereignty', 'capability' => 4],
-                                              ['domain' => 'Technical Sovereignty', 'capability' => 5],
-                                              ['domain' => 'Technical Sovereignty', 'capability' => 6],
-                                              ['domain' => 'Managed Services', 'capability' => 1],
-                                              ['domain' => 'Managed Services', 'capability' => 2],
-                                          ]
-                                      ],
-                                      'Operational Resilience' => [
-                                          'icon' => 'server',
-                                          'color' => '#f0ab00',
-                                          'overview' => 'Autonomy in executing critical operations without external reliance including business continuity and internal capability development.',
-                                          'capabilities' => [
-                                              ['domain' => 'Operational Sovereignty', 'capability' => 1],
-                                              ['domain' => 'Operational Sovereignty', 'capability' => 4],
-                                              ['domain' => 'Operational Sovereignty', 'capability' => 5],
-                                              ['domain' => 'Operational Sovereignty', 'capability' => 8],
-                                              ['domain' => 'Technical Sovereignty', 'capability' => 8],
-                                              ['domain' => 'Managed Services', 'capability' => 8],
-                                              ['domain' => 'Executive Oversight', 'capability' => 6],
-                                          ]
-                                      ],
-                                      'Vendor & Dependencies' => [
-                                          'icon' => 'handshake',
-                                          'color' => '#c9190b',
-                                          'overview' => 'Management of external dependencies including transparency requirements, supply chain vetting, and contingency strategies.',
-                                          'capabilities' => [
-                                              ['domain' => 'Operational Sovereignty', 'capability' => 2],
-                                              ['domain' => 'Operational Sovereignty', 'capability' => 6],
-                                              ['domain' => 'Assurance Sovereignty', 'capability' => 5],
-                                              ['domain' => 'Open Source', 'capability' => 3],
-                                              ['domain' => 'Open Source', 'capability' => 5],
-                                              ['domain' => 'Managed Services', 'capability' => 3],
-                                              ['domain' => 'Managed Services', 'capability' => 4],
-                                          ]
-                                      ],
-                                      'Monitoring & Security' => [
-                                          'icon' => 'binoculars',
-                                          'color' => '#a18fff',
-                                          'overview' => 'Continuous security monitoring, access control, and audit capabilities ensuring visibility and control over infrastructure.',
-                                          'capabilities' => [
-                                              ['domain' => 'Data Sovereignty', 'capability' => 7],
-                                              ['domain' => 'Operational Sovereignty', 'capability' => 3],
-                                              ['domain' => 'Operational Sovereignty', 'capability' => 7],
-                                              ['domain' => 'Assurance Sovereignty', 'capability' => 7],
-                                              ['domain' => 'Managed Services', 'capability' => 5],
-                                              ['domain' => 'Managed Services', 'capability' => 6],
-                                              ['domain' => 'Managed Services', 'capability' => 7],
-                                          ]
-                                      ],
-                                      'Open Source' => [
-                                          'icon' => 'code-branch',
-                                          'color' => '#7d1007',
-                                          'overview' => 'Strategic OSS adoption for vendor independence through code transparency, community engagement, and fork capabilities.',
-                                          'capabilities' => [
-                                              ['domain' => 'Open Source', 'capability' => 2],
-                                              ['domain' => 'Open Source', 'capability' => 6],
-                                              ['domain' => 'Open Source', 'capability' => 7],
-                                              ['domain' => 'Open Source', 'capability' => 8],
-                                              ['domain' => 'Technical Sovereignty', 'capability' => 7],
-                                              ['domain' => 'Executive Oversight', 'capability' => 5],
-                                          ]
-                                      ],
-                                  ];
+                                  // Define thematic groupings (profile-aware)
+                                  if ($profile === 'Security') {
+                                      $thematicGroups = [
+                                          'Configuration & Compliance' => [
+                                              'icon' => 'cog',
+                                              'color' => '#0d60f8',
+                                              'overview' => 'Establishing and maintaining consistent security configurations through automated policy enforcement and continuous compliance monitoring.',
+                                              'capabilities' => [
+                                                  ['domain' => 'Secure Infrastructure', 'capability' => 1],
+                                                  ['domain' => 'Secure Infrastructure', 'capability' => 4],
+                                                  ['domain' => 'Secure Data', 'capability' => 6],
+                                                  ['domain' => 'Secure Application', 'capability' => 3],
+                                                  ['domain' => 'Secure Recovery', 'capability' => 5],
+                                              ]
+                                          ],
+                                          'Data Protection' => [
+                                              'icon' => 'shield-halved',
+                                              'color' => '#2aaa04',
+                                              'overview' => 'Comprehensive data protection throughout its lifecycle including classification, encryption, loss prevention, and immutable storage.',
+                                              'capabilities' => [
+                                                  ['domain' => 'Secure Data', 'capability' => 1],
+                                                  ['domain' => 'Secure Data', 'capability' => 2],
+                                                  ['domain' => 'Secure Data', 'capability' => 3],
+                                                  ['domain' => 'Secure Data', 'capability' => 4],
+                                                  ['domain' => 'Secure Data', 'capability' => 5],
+                                                  ['domain' => 'Secure Data', 'capability' => 7],
+                                                  ['domain' => 'Secure Infrastructure', 'capability' => 5],
+                                                  ['domain' => 'Secure Recovery', 'capability' => 7],
+                                              ]
+                                          ],
+                                          'Identity & Access Management' => [
+                                              'icon' => 'user-shield',
+                                              'color' => '#ec7a08',
+                                              'overview' => 'Authentication, authorization, and privileged account management from basic passwords to advanced risk-based controls.',
+                                              'capabilities' => [
+                                                  ['domain' => 'Secure Identity', 'capability' => 1],
+                                                  ['domain' => 'Secure Identity', 'capability' => 2],
+                                                  ['domain' => 'Secure Identity', 'capability' => 3],
+                                                  ['domain' => 'Secure Identity', 'capability' => 4],
+                                                  ['domain' => 'Secure Identity', 'capability' => 5],
+                                                  ['domain' => 'Secure Identity', 'capability' => 6],
+                                                  ['domain' => 'Secure Identity', 'capability' => 8],
+                                              ]
+                                          ],
+                                          'Application Security' => [
+                                              'icon' => 'code',
+                                              'color' => '#12bbd4',
+                                              'overview' => 'Security throughout the software development lifecycle from dependency management to runtime protection.',
+                                              'capabilities' => [
+                                                  ['domain' => 'Secure Application', 'capability' => 1],
+                                                  ['domain' => 'Secure Application', 'capability' => 2],
+                                                  ['domain' => 'Secure Application', 'capability' => 4],
+                                                  ['domain' => 'Secure Application', 'capability' => 5],
+                                                  ['domain' => 'Secure Application', 'capability' => 6],
+                                                  ['domain' => 'Secure Application', 'capability' => 7],
+                                                  ['domain' => 'Secure Application', 'capability' => 8],
+                                                  ['domain' => 'Secure Infrastructure', 'capability' => 6],
+                                              ]
+                                          ],
+                                          'Network Security' => [
+                                              'icon' => 'network-wired',
+                                              'color' => '#f0ab00',
+                                              'overview' => 'Securing network communications through segmentation, encryption, and zero-trust architectures.',
+                                              'capabilities' => [
+                                                  ['domain' => 'Secure Network', 'capability' => 1],
+                                                  ['domain' => 'Secure Network', 'capability' => 2],
+                                                  ['domain' => 'Secure Network', 'capability' => 3],
+                                                  ['domain' => 'Secure Network', 'capability' => 4],
+                                                  ['domain' => 'Secure Network', 'capability' => 5],
+                                                  ['domain' => 'Secure Network', 'capability' => 6],
+                                                  ['domain' => 'Secure Network', 'capability' => 7],
+                                                  ['domain' => 'Secure Network', 'capability' => 8],
+                                                  ['domain' => 'Secure Infrastructure', 'capability' => 2],
+                                                  ['domain' => 'Secure Infrastructure', 'capability' => 7],
+                                                  ['domain' => 'Secure Infrastructure', 'capability' => 8],
+                                              ]
+                                          ],
+                                          'Detection & Monitoring' => [
+                                              'icon' => 'binoculars',
+                                              'color' => '#c9190b',
+                                              'overview' => 'Continuous threat detection through monitoring, log analysis, and AI/ML-based anomaly detection.',
+                                              'capabilities' => [
+                                                  ['domain' => 'Secure Infrastructure', 'capability' => 3],
+                                                  ['domain' => 'Secure Operations', 'capability' => 3],
+                                                  ['domain' => 'Secure Operations', 'capability' => 4],
+                                                  ['domain' => 'Secure Operations', 'capability' => 6],
+                                                  ['domain' => 'Secure Data', 'capability' => 8],
+                                                  ['domain' => 'Secure Identity', 'capability' => 7],
+                                                  ['domain' => 'Secure Recovery', 'capability' => 6],
+                                                  ['domain' => 'Secure Operations', 'capability' => 2],
+                                              ]
+                                          ],
+                                          'Incident Response & Recovery' => [
+                                              'icon' => 'life-ring',
+                                              'color' => '#a18fff',
+                                              'overview' => 'Organizational resilience through incident response planning, disaster recovery, and SOAR capabilities.',
+                                              'capabilities' => [
+                                                  ['domain' => 'Secure Operations', 'capability' => 1],
+                                                  ['domain' => 'Secure Operations', 'capability' => 5],
+                                                  ['domain' => 'Secure Recovery', 'capability' => 1],
+                                                  ['domain' => 'Secure Recovery', 'capability' => 2],
+                                                  ['domain' => 'Secure Recovery', 'capability' => 3],
+                                                  ['domain' => 'Secure Recovery', 'capability' => 4],
+                                                  ['domain' => 'Secure Recovery', 'capability' => 8],
+                                              ]
+                                          ],
+                                          'Advanced Threat Defense' => [
+                                              'icon' => 'shield-virus',
+                                              'color' => '#7d1007',
+                                              'overview' => 'Defending against sophisticated adversaries through APT detection and purple team exercises.',
+                                              'capabilities' => [
+                                                  ['domain' => 'Secure Operations', 'capability' => 7],
+                                                  ['domain' => 'Secure Operations', 'capability' => 8],
+                                              ]
+                                          ],
+                                      ];
+                                  } else {
+                                      $thematicGroups = [
+                                          'Governance & Policy' => [
+                                              'icon' => 'gavel',
+                                              'color' => '#0d60f8',
+                                              'overview' => 'Formal governance structures, policy frameworks, and strategic integration of Digital Sovereignty principles including executive accountability and legal controls.',
+                                              'capabilities' => [
+                                                  ['domain' => 'Data Sovereignty', 'capability' => 4],
+                                                  ['domain' => 'Data Sovereignty', 'capability' => 8],
+                                                  ['domain' => 'Open Source', 'capability' => 1],
+                                                  ['domain' => 'Executive Oversight', 'capability' => 1],
+                                                  ['domain' => 'Executive Oversight', 'capability' => 2],
+                                                  ['domain' => 'Executive Oversight', 'capability' => 3],
+                                                  ['domain' => 'Executive Oversight', 'capability' => 4],
+                                                  ['domain' => 'Executive Oversight', 'capability' => 7],
+                                              ]
+                                          ],
+                                          'Data & Privacy' => [
+                                              'icon' => 'shield-halved',
+                                              'color' => '#2aaa04',
+                                              'overview' => 'Comprehensive data protection across its lifecycle including classification, residency, encryption, and privacy compliance.',
+                                              'capabilities' => [
+                                                  ['domain' => 'Data Sovereignty', 'capability' => 1],
+                                                  ['domain' => 'Data Sovereignty', 'capability' => 2],
+                                                  ['domain' => 'Data Sovereignty', 'capability' => 3],
+                                                  ['domain' => 'Data Sovereignty', 'capability' => 5],
+                                                  ['domain' => 'Data Sovereignty', 'capability' => 6],
+                                                  ['domain' => 'Assurance Sovereignty', 'capability' => 2],
+                                              ]
+                                          ],
+                                          'Risk & Compliance' => [
+                                              'icon' => 'clipboard-check',
+                                              'color' => '#ec7a08',
+                                              'overview' => 'Independent verification through audits, certifications, and continuous validation with formal risk management frameworks.',
+                                              'capabilities' => [
+                                                  ['domain' => 'Assurance Sovereignty', 'capability' => 1],
+                                                  ['domain' => 'Assurance Sovereignty', 'capability' => 3],
+                                                  ['domain' => 'Assurance Sovereignty', 'capability' => 4],
+                                                  ['domain' => 'Assurance Sovereignty', 'capability' => 6],
+                                                  ['domain' => 'Assurance Sovereignty', 'capability' => 8],
+                                                  ['domain' => 'Open Source', 'capability' => 4],
+                                                  ['domain' => 'Executive Oversight', 'capability' => 8],
+                                              ]
+                                          ],
+                                          'Technical Control' => [
+                                              'icon' => 'microchip',
+                                              'color' => '#12bbd4',
+                                              'overview' => 'Control over foundational technology components prioritizing open standards, platform portability, and vendor independence.',
+                                              'capabilities' => [
+                                                  ['domain' => 'Technical Sovereignty', 'capability' => 1],
+                                                  ['domain' => 'Technical Sovereignty', 'capability' => 2],
+                                                  ['domain' => 'Technical Sovereignty', 'capability' => 3],
+                                                  ['domain' => 'Technical Sovereignty', 'capability' => 4],
+                                                  ['domain' => 'Technical Sovereignty', 'capability' => 5],
+                                                  ['domain' => 'Technical Sovereignty', 'capability' => 6],
+                                                  ['domain' => 'Managed Services', 'capability' => 1],
+                                                  ['domain' => 'Managed Services', 'capability' => 2],
+                                              ]
+                                          ],
+                                          'Operational Resilience' => [
+                                              'icon' => 'server',
+                                              'color' => '#f0ab00',
+                                              'overview' => 'Autonomy in executing critical operations without external reliance including business continuity and internal capability development.',
+                                              'capabilities' => [
+                                                  ['domain' => 'Operational Sovereignty', 'capability' => 1],
+                                                  ['domain' => 'Operational Sovereignty', 'capability' => 4],
+                                                  ['domain' => 'Operational Sovereignty', 'capability' => 5],
+                                                  ['domain' => 'Operational Sovereignty', 'capability' => 8],
+                                                  ['domain' => 'Technical Sovereignty', 'capability' => 8],
+                                                  ['domain' => 'Managed Services', 'capability' => 8],
+                                                  ['domain' => 'Executive Oversight', 'capability' => 6],
+                                              ]
+                                          ],
+                                          'Vendor & Dependencies' => [
+                                              'icon' => 'handshake',
+                                              'color' => '#c9190b',
+                                              'overview' => 'Management of external dependencies including transparency requirements, supply chain vetting, and contingency strategies.',
+                                              'capabilities' => [
+                                                  ['domain' => 'Operational Sovereignty', 'capability' => 2],
+                                                  ['domain' => 'Operational Sovereignty', 'capability' => 6],
+                                                  ['domain' => 'Assurance Sovereignty', 'capability' => 5],
+                                                  ['domain' => 'Open Source', 'capability' => 3],
+                                                  ['domain' => 'Open Source', 'capability' => 5],
+                                                  ['domain' => 'Managed Services', 'capability' => 3],
+                                                  ['domain' => 'Managed Services', 'capability' => 4],
+                                              ]
+                                          ],
+                                          'Monitoring & Security' => [
+                                              'icon' => 'binoculars',
+                                              'color' => '#a18fff',
+                                              'overview' => 'Continuous security monitoring, access control, and audit capabilities ensuring visibility and control over infrastructure.',
+                                              'capabilities' => [
+                                                  ['domain' => 'Data Sovereignty', 'capability' => 7],
+                                                  ['domain' => 'Operational Sovereignty', 'capability' => 3],
+                                                  ['domain' => 'Operational Sovereignty', 'capability' => 7],
+                                                  ['domain' => 'Assurance Sovereignty', 'capability' => 7],
+                                                  ['domain' => 'Managed Services', 'capability' => 5],
+                                                  ['domain' => 'Managed Services', 'capability' => 6],
+                                                  ['domain' => 'Managed Services', 'capability' => 7],
+                                              ]
+                                          ],
+                                          'Open Source' => [
+                                              'icon' => 'code-branch',
+                                              'color' => '#7d1007',
+                                              'overview' => 'Strategic OSS adoption for vendor independence through code transparency, community engagement, and fork capabilities.',
+                                              'capabilities' => [
+                                                  ['domain' => 'Open Source', 'capability' => 2],
+                                                  ['domain' => 'Open Source', 'capability' => 6],
+                                                  ['domain' => 'Open Source', 'capability' => 7],
+                                                  ['domain' => 'Open Source', 'capability' => 8],
+                                                  ['domain' => 'Technical Sovereignty', 'capability' => 7],
+                                                  ['domain' => 'Executive Oversight', 'capability' => 5],
+                                              ]
+                                          ],
+                                      ];
+                                  }
 
                                   // Map domain names to qnum
                                   $domainNameToQnum = [];

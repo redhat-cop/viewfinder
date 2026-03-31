@@ -344,10 +344,26 @@
     $enabledProfiles = Config::getEnabledProfiles();
     $lobOptions = Config::LOB_OPTIONS;
 
-    // Get domain names for default profile (Digital Sovereignty is now first)
-    $defaultProfile = 'DigitalSovereignty';
-    // For Digital Sovereignty, use hardcoded domain names
-    $domainNames = ['Data Sovereignty', 'Technical Sovereignty', 'Operational Sovereignty', 'Assurance Sovereignty', 'Open Source', 'Executive Oversight', 'Managed Services'];
+    // Get domain names for each profile dynamically
+    $profileDomains = [];
+
+    // Digital Sovereignty domains
+    $profileDomains['DigitalSovereignty'] = ['Data Sovereignty', 'Technical Sovereignty', 'Operational Sovereignty', 'Assurance Sovereignty', 'Open Source', 'Executive Oversight', 'Managed Services'];
+
+    // Security domains - load from controls file
+    $securityControlsFile = Security::getControlsFilePath('Security');
+    $securityJson = Security::loadJSON($securityControlsFile);
+    if ($securityJson !== null) {
+        $profileDomains['Security'] = [];
+        foreach ($securityJson as $key => $value) {
+            if (strpos($key, 'Domain-') === 0 && isset($value['title'])) {
+                $profileDomains['Security'][] = $value['title'];
+            }
+        }
+    }
+
+    // Use Digital Sovereignty as default for initial page load
+    $domainNames = $profileDomains['DigitalSovereignty'];
     ?>
 
     <div class="assessment-selector-container">
@@ -511,10 +527,7 @@
     const lobWeightsData = <?php echo json_encode($lobWeights); ?>;
 
     // Profile to control file mapping
-    const profileControlsMap = {
-      'Security': <?php echo json_encode($domainNames); ?>,
-      'DigitalSovereignty': ['Data Sovereignty', 'Technical Sovereignty', 'Operational Sovereignty', 'Assurance Sovereignty', 'Open Source', 'Executive Oversight', 'Managed Services']
-    };
+    const profileControlsMap = <?php echo json_encode($profileDomains); ?>;
 
     // Icons for each LOB
     const lobIcons = {

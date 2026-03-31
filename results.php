@@ -521,59 +521,111 @@ usort($gaps, function($a, $b) {
     return $a["score"] <=> $b["score"];
 });
 
-// Domain-specific quick wins
-$quickWins = [
-    'Data Sovereignty' => 'Implement automated data flow monitoring and quarterly audits of vendor data access to advance toward Level 4 quantitative management.',
-    'Technical Sovereignty' => 'Document exit strategies for all critical systems and conduct annual portability drills to strengthen vendor independence.',
-    'Operational Sovereignty' => 'Establish a Center of Excellence for sovereign technologies and implement quarterly DR testing scenarios including geopolitical isolation.',
-    'Assurance Sovereignty' => 'Expand continuous security validation with automated compliance reporting and establish formal vendor transparency requirements in all contracts.',
-    'Open Source' => 'Formalize contribution policies and establish metrics tracking for community engagement and project influence.',
-    'Executive Oversight' => 'Implement sovereignty KPI dashboards for Board reporting and establish quarterly reviews with regulatory authorities.',
-    'Managed Services' => 'Develop comprehensive transition playbooks for all critical managed services and conduct annual vendor alternative assessments.'
-];
+// Domain-specific quick wins (profile-aware)
+if ($profile === 'Security') {
+    $quickWins = [
+        'Secure Infrastructure' => 'Implement Infrastructure-as-Code (IaC) scanning and automated policy enforcement to advance configuration management maturity.',
+        'Secure Data' => 'Deploy automated data classification tools and implement encryption-at-rest for all sensitive data repositories.',
+        'Secure Identity' => 'Roll out risk-based MFA across all user accounts and implement privileged access management for administrative functions.',
+        'Secure Application' => 'Integrate SAST/DAST into CI/CD pipelines and establish security champions program for development teams.',
+        'Secure Network' => 'Implement microsegmentation for critical workloads and deploy network traffic analysis for anomaly detection.',
+        'Secure Recovery' => 'Conduct quarterly disaster recovery drills and implement automated backup validation and restoration testing.',
+        'Secure Operations' => 'Deploy SOAR platform for automated incident response playbooks and establish threat hunting program.'
+    ];
 
-// Domain-specific business impacts
-$businessImpacts = [
-    'Data Sovereignty' => 'Exposes organization to foreign government data access demands, violates data residency regulations (GDPR, NIS2), and creates legal liability for cross-border data transfers.',
-    'Technical Sovereignty' => 'Creates vendor lock-in preventing migration, increases costs through proprietary dependencies, and exposes organization to supply chain disruption risks.',
-    'Operational Sovereignty' => 'Inability to maintain critical operations during vendor outages or geopolitical conflicts; excessive reliance on external expertise threatens business continuity.',
-    'Assurance Sovereignty' => 'Limits ability to verify security claims, prevents independent compliance validation, and creates blind spots in third-party risk management.',
-    'Open Source' => 'Increases dependency on proprietary software vendors, limits ability to audit code for security vulnerabilities, and reduces long-term technology flexibility.',
-    'Executive Oversight' => 'Lack of strategic direction and budget allocation for sovereignty initiatives; inability to demonstrate compliance to regulators and stakeholders.',
-    'Managed Services' => 'Third-party access to sensitive systems without adequate controls; inability to quickly transition services if vendor relationship deteriorates or sovereignty requirements change.'
-];
+    $businessImpacts = [
+        'Secure Infrastructure' => 'Configuration drift and misconfigurations lead to vulnerabilities; lack of hardening exposes systems to exploitation and compliance violations.',
+        'Secure Data' => 'Unencrypted or poorly classified data exposes organization to data breaches, regulatory fines (GDPR, CCPA), and reputational damage.',
+        'Secure Identity' => 'Weak identity controls enable unauthorized access, privilege escalation, and insider threats; credential theft leads to account compromise.',
+        'Secure Application' => 'Vulnerable applications expose organization to OWASP Top 10 attacks including SQL injection, XSS, and remote code execution.',
+        'Secure Network' => 'Insufficient network segmentation allows lateral movement; unencrypted protocols expose data in transit to interception.',
+        'Secure Recovery' => 'Inadequate backup and recovery capabilities result in extended downtime during incidents; inability to meet RTO/RPO requirements.',
+        'Secure Operations' => 'Delayed threat detection and slow incident response increase breach impact; lack of security monitoring creates blind spots for attackers.'
+    ];
 
-// Domain-specific first steps
-$firstSteps = [
-    'Data Sovereignty' => [
-        'Implement external key management (HSM) to ensure cryptographic sovereignty within 90 days',
-        'Audit and renegotiate cloud contracts to include data residency guarantees and foreign access notification clauses'
-    ],
-    'Technical Sovereignty' => [
-        'Conduct vendor lock-in assessment identifying proprietary dependencies and migration risks',
-        'Develop 12-month roadmap for containerizing applications using Kubernetes for portability'
-    ],
-    'Operational Sovereignty' => [
-        'Create documented "break-glass" procedures for operating critical systems without vendor support',
-        'Establish skills development plan and begin cross-training staff on sovereign technology alternatives'
-    ],
-    'Assurance Sovereignty' => [
-        'Negotiate "right to audit" clauses in all vendor contracts with sovereignty-critical providers',
-        'Implement sovereign-controlled SIEM for independent security monitoring within 6 months'
-    ],
-    'Open Source' => [
-        'Develop open source strategy policy defining when to prefer OSS over proprietary alternatives',
-        'Implement software composition analysis tools to track and manage open source dependencies'
-    ],
-    'Executive Oversight' => [
-        'Establish dedicated sovereignty governance committee with Board reporting and quarterly reviews',
-        'Develop sovereignty KPIs and allocate dedicated budget line for sovereignty initiatives'
-    ],
-    'Managed Services' => [
-        'Implement Just-in-Time (JIT) access controls and session recording for all third-party vendor access',
-        'Develop transition playbooks with defined exit criteria and alternative provider options for critical services'
-    ]
-];
+    $firstSteps = [
+        'Secure Infrastructure' => [
+            'Implement configuration management tool (Ansible, Puppet) and establish baseline hardening standards (CIS Benchmarks)',
+            'Deploy security scanning for container images and establish automated policy enforcement for infrastructure-as-code'
+        ],
+        'Secure Data' => [
+            'Conduct data discovery and classification exercise to identify sensitive data locations',
+            'Implement encryption-at-rest for databases and file storage; enable TLS 1.3 for all data in transit'
+        ],
+        'Secure Identity' => [
+            'Roll out MFA for all remote access and administrative accounts within 90 days',
+            'Implement centralized identity management (SSO) and establish RBAC policies aligned with least privilege'
+        ],
+        'Secure Application' => [
+            'Integrate SAST tools into development workflow and establish secure coding standards',
+            'Deploy web application firewall (WAF) for internet-facing applications and implement dependency scanning'
+        ],
+        'Secure Network' => [
+            'Document network segmentation strategy and implement firewall rules following zero-trust principles',
+            'Deploy network intrusion detection system (IDS) and enable logging for all firewall and network devices'
+        ],
+        'Secure Recovery' => [
+            'Establish backup schedule with 3-2-1 rule (3 copies, 2 media types, 1 offsite) and test restoration quarterly',
+            'Document disaster recovery plan with defined RTO/RPO targets and conduct tabletop exercise'
+        ],
+        'Secure Operations' => [
+            'Deploy centralized SIEM solution and establish security event monitoring with 24/7 alerting',
+            'Create incident response plan with defined roles, escalation procedures, and communication templates'
+        ]
+    ];
+} else {
+    // Digital Sovereignty profile
+    $quickWins = [
+        'Data Sovereignty' => 'Implement automated data flow monitoring and quarterly audits of vendor data access to advance toward Level 4 quantitative management.',
+        'Technical Sovereignty' => 'Document exit strategies for all critical systems and conduct annual portability drills to strengthen vendor independence.',
+        'Operational Sovereignty' => 'Establish a Center of Excellence for sovereign technologies and implement quarterly DR testing scenarios including geopolitical isolation.',
+        'Assurance Sovereignty' => 'Expand continuous security validation with automated compliance reporting and establish formal vendor transparency requirements in all contracts.',
+        'Open Source' => 'Formalize contribution policies and establish metrics tracking for community engagement and project influence.',
+        'Executive Oversight' => 'Implement sovereignty KPI dashboards for Board reporting and establish quarterly reviews with regulatory authorities.',
+        'Managed Services' => 'Develop comprehensive transition playbooks for all critical managed services and conduct annual vendor alternative assessments.'
+    ];
+
+    $businessImpacts = [
+        'Data Sovereignty' => 'Exposes organization to foreign government data access demands, violates data residency regulations (GDPR, NIS2), and creates legal liability for cross-border data transfers.',
+        'Technical Sovereignty' => 'Creates vendor lock-in preventing migration, increases costs through proprietary dependencies, and exposes organization to supply chain disruption risks.',
+        'Operational Sovereignty' => 'Inability to maintain critical operations during vendor outages or geopolitical conflicts; excessive reliance on external expertise threatens business continuity.',
+        'Assurance Sovereignty' => 'Limits ability to verify security claims, prevents independent compliance validation, and creates blind spots in third-party risk management.',
+        'Open Source' => 'Increases dependency on proprietary software vendors, limits ability to audit code for security vulnerabilities, and reduces long-term technology flexibility.',
+        'Executive Oversight' => 'Lack of strategic direction and budget allocation for sovereignty initiatives; inability to demonstrate compliance to regulators and stakeholders.',
+        'Managed Services' => 'Third-party access to sensitive systems without adequate controls; inability to quickly transition services if vendor relationship deteriorates or sovereignty requirements change.'
+    ];
+
+    $firstSteps = [
+        'Data Sovereignty' => [
+            'Implement external key management (HSM) to ensure cryptographic sovereignty within 90 days',
+            'Audit and renegotiate cloud contracts to include data residency guarantees and foreign access notification clauses'
+        ],
+        'Technical Sovereignty' => [
+            'Conduct vendor lock-in assessment identifying proprietary dependencies and migration risks',
+            'Develop 12-month roadmap for containerizing applications using Kubernetes for portability'
+        ],
+        'Operational Sovereignty' => [
+            'Create documented "break-glass" procedures for operating critical systems without vendor support',
+            'Establish skills development plan and begin cross-training staff on sovereign technology alternatives'
+        ],
+        'Assurance Sovereignty' => [
+            'Negotiate "right to audit" clauses in all vendor contracts with sovereignty-critical providers',
+            'Implement sovereign-controlled SIEM for independent security monitoring within 6 months'
+        ],
+        'Open Source' => [
+            'Develop open source strategy policy defining when to prefer OSS over proprietary alternatives',
+            'Implement software composition analysis tools to track and manage open source dependencies'
+        ],
+        'Executive Oversight' => [
+            'Establish dedicated sovereignty governance committee with Board reporting and quarterly reviews',
+            'Develop sovereignty KPIs and allocate dedicated budget line for sovereignty initiatives'
+        ],
+        'Managed Services' => [
+            'Implement Just-in-Time (JIT) access controls and session recording for all third-party vendor access',
+            'Develop transition playbooks with defined exit criteria and alternative provider options for critical services'
+        ]
+    ];
+}
 
 ?>
 </div>
