@@ -1253,11 +1253,17 @@ foreach ($controls as $control) {
     
     $qnum = $json[$control]['qnum'];
     $levelArray = array();
-    ## Get the highest score per capability & keep the results
+    ## Get capabilities with values > 0 (any maturity level)
     foreach ($data as $key => $value) {
     if (preg_match("/^control$qnum-[0-9]*/", $key)) {
-        array_push($levelArray, substr($key, -1));
-        $highest++;
+        // Extract capability number from field name (e.g., "control1-3" -> "3")
+        $parts = explode('-', $key);
+        $capabilityNum = $parts[1];
+        // Only add to array if slider value > 0
+        if ($value > 0) {
+            array_push($levelArray, $capabilityNum);
+            $highest++;
+        }
           }
     }
     $nextLevel = $highest + 1;
@@ -1274,9 +1280,28 @@ foreach ($controls as $control) {
             print "<p>" . $json[$control][$nextRecommendation] . "<p>";
 			array_push($nextSteps,$json[$control][$nextLevel]);
 			array_push($nextStepsHow,$json[$control][$nextSummary]);
+
+			// Display Red Hat Solution if available
+			$rhSolutionField = $nextLevel . '-redhat-solution';
+			$rhDescField = $nextLevel . '-redhat-description';
+			if (!empty($json[$control][$rhSolutionField])) {
+			    print '<div style="margin-top: 1.5rem; padding: 1.5rem; background: #fff5f5; border-left: 4px solid #EE0000; border-radius: 4px; border: 1px solid #ffcccc;">';
+			    print '<h3 style="color: #EE0000; margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">';
+			    print '<i class="fa-solid fa-cube"></i> Red Hat Solution';
+			    print '</h3>';
+			    print '<h4 style="color: #333; margin: 0.5rem 0;">' .
+			          Security::escape($json[$control][$rhSolutionField]) . '</h4>';
+			    print '<p style="color: #555; line-height: 1.6;">' .
+			          Security::escape($json[$control][$rhDescField]) . '</p>';
+			    print '</div>';
+			}
         } else {
         print "<p>You're doing great as you are!</p>";
     }
+   } else {
+       // All capabilities in this domain have some progress
+       print "<h3 style='color: #2aaa04; margin-top: 1rem;'>Excellent Work!</h3>";
+       print "<p>All capabilities in this domain have been initiated. Review the maturity levels and continue advancing capabilities toward full completion.</p>";
    }
 
    // Display workshop notes for this domain if they exist

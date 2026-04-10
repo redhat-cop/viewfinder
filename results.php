@@ -1487,9 +1487,28 @@ foreach ($controls as $control) {
             print "<p>" . $json[$control][$nextRecommendation] . "<p>";
 			array_push($nextSteps,$json[$control][$nextLevel]);
 			array_push($nextStepsHow,$json[$control][$nextSummary]);
+
+			// Display Red Hat Solution if available
+			$rhSolutionField = $nextLevel . '-redhat-solution';
+			$rhDescField = $nextLevel . '-redhat-description';
+			if (!empty($json[$control][$rhSolutionField])) {
+			    print '<div style="margin-top: 1.5rem; padding: 1.25rem; background: linear-gradient(135deg, rgba(238, 0, 0, 0.1) 0%, #2a2a2a 100%); border-left: 4px solid #EE0000; border-radius: 6px;">';
+			    print '<h4 style="color: #EE0000; margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">';
+			    print '<i class="fa-solid fa-cube"></i> Red Hat Solution';
+			    print '</h4>';
+			    print '<div style="font-weight: 600; color: #fff; font-size: 1.1rem; margin-bottom: 0.5rem;">' .
+			          Security::escape($json[$control][$rhSolutionField]) . '</div>';
+			    print '<p style="color: #e0e0e0; margin: 0; line-height: 1.6;">' .
+			          Security::escape($json[$control][$rhDescField]) . '</p>';
+			    print '</div>';
+			}
         } else {
         print "<p>You're doing great as you are!</p>";
     }
+} else {
+    // All capabilities in this domain have some progress
+    print "<h4 class=title-text>Excellent Work!</h4>";
+    print "<p>All capabilities in this domain have been initiated. Review the maturity levels and continue advancing capabilities toward full completion.</p>";
 }
 
 
