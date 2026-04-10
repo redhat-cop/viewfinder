@@ -244,5 +244,123 @@ return [
                 'Managed Services' => 1.0
             ]
         ]
+    ],
+
+    // ============================================
+    // AI SOVEREIGNTY PROFILE WEIGHTS
+    // ============================================
+    'AISovereignty' => [
+        'Balanced' => [
+            'name' => 'Balanced',
+            'description' => 'Equal weighting across all AI sovereignty domains',
+            'icon' => 'fa-balance-scale',
+            'weights' => [
+                'AI Data Sovereignty' => 1.0,
+                'AI Model Sovereignty' => 1.0,
+                'AI Infrastructure Sovereignty' => 1.0,
+                'AI Supply Chain Sovereignty' => 1.0,
+                'AI Governance & Compliance' => 1.0,
+                'AI Operations Sovereignty' => 1.0,
+                'AI Innovation Sovereignty' => 1.0
+            ]
+        ],
+        'General' => [
+            'name' => 'General',
+            'description' => 'Balanced approach suitable for general AI initiatives without specific industry focus',
+            'icon' => 'fa-building',
+            'weights' => [
+                'AI Data Sovereignty' => 1.0,
+                'AI Model Sovereignty' => 1.0,
+                'AI Infrastructure Sovereignty' => 1.0,
+                'AI Supply Chain Sovereignty' => 1.0,
+                'AI Governance & Compliance' => 1.0,
+                'AI Operations Sovereignty' => 1.0,
+                'AI Innovation Sovereignty' => 1.0
+            ]
+        ],
+        'Finance' => [
+            'name' => 'Finance',
+            'description' => 'Emphasizes AI governance, model transparency, and data protection for financial regulatory compliance',
+            'icon' => 'fa-building-columns',
+            'weights' => [
+                'AI Data Sovereignty' => 2.0,            // Critical: Financial data privacy
+                'AI Model Sovereignty' => 2.0,           // Critical: Explainability for regulators
+                'AI Infrastructure Sovereignty' => 1.5,  // Important: Secure processing
+                'AI Supply Chain Sovereignty' => 1.5,    // Important: Vendor risk
+                'AI Governance & Compliance' => 2.0,     // Critical: Financial regulations
+                'AI Operations Sovereignty' => 1.5,      // Important: Model monitoring
+                'AI Innovation Sovereignty' => 1.0       // Standard
+            ]
+        ],
+        'Healthcare' => [
+            'name' => 'Healthcare',
+            'description' => 'Focuses on patient data sovereignty, AI safety, and clinical governance for healthcare AI systems',
+            'icon' => 'fa-heart-pulse',
+            'weights' => [
+                'AI Data Sovereignty' => 2.0,            // Critical: HIPAA, patient privacy
+                'AI Model Sovereignty' => 2.0,           // Critical: Clinical explainability
+                'AI Infrastructure Sovereignty' => 1.5,  // Important: Healthcare systems
+                'AI Supply Chain Sovereignty' => 1.5,    // Important: Medical AI safety
+                'AI Governance & Compliance' => 2.0,     // Critical: FDA, clinical governance
+                'AI Operations Sovereignty' => 2.0,      // Critical: Patient safety monitoring
+                'AI Innovation Sovereignty' => 1.5       // Important: Medical research
+            ]
+        ],
+        'Government' => [
+            'name' => 'Government',
+            'description' => 'Comprehensive AI sovereignty for public sector including data residency, transparency, and accountability',
+            'icon' => 'fa-landmark',
+            'weights' => [
+                'AI Data Sovereignty' => 2.0,            // Critical: Citizen data
+                'AI Model Sovereignty' => 2.0,           // Critical: Public accountability
+                'AI Infrastructure Sovereignty' => 2.0,  // Critical: National infrastructure
+                'AI Supply Chain Sovereignty' => 2.0,    // Critical: National security
+                'AI Governance & Compliance' => 2.0,     // Critical: EU AI Act, transparency
+                'AI Operations Sovereignty' => 1.5,      // Important: Service delivery
+                'AI Innovation Sovereignty' => 1.5       // Important: Public sector innovation
+            ]
+        ],
+        'Manufacturing' => [
+            'name' => 'Manufacturing',
+            'description' => 'Emphasizes AI operations, edge deployment, and IP protection for industrial AI applications',
+            'icon' => 'fa-industry',
+            'weights' => [
+                'AI Data Sovereignty' => 1.5,            // Important: Industrial IP
+                'AI Model Sovereignty' => 1.5,           // Important: Proprietary models
+                'AI Infrastructure Sovereignty' => 2.0,  // Critical: Edge AI, OT integration
+                'AI Supply Chain Sovereignty' => 1.5,    // Important: Supply chain
+                'AI Governance & Compliance' => 1.0,     // Standard
+                'AI Operations Sovereignty' => 2.0,      // Critical: Production uptime
+                'AI Innovation Sovereignty' => 1.5       // Important: Competitive advantage
+            ]
+        ],
+        'Telecommunications' => [
+            'name' => 'Telecommunications',
+            'description' => 'Focuses on AI infrastructure, data sovereignty, and operational resilience for telecom AI systems',
+            'icon' => 'fa-tower-cell',
+            'weights' => [
+                'AI Data Sovereignty' => 2.0,            // Critical: Subscriber data
+                'AI Model Sovereignty' => 1.5,           // Important: Network optimization
+                'AI Infrastructure Sovereignty' => 2.0,  // Critical: Network AI infrastructure
+                'AI Supply Chain Sovereignty' => 1.5,    // Important: Vendor management
+                'AI Governance & Compliance' => 2.0,     // Critical: NIS2, telecom regulations
+                'AI Operations Sovereignty' => 2.0,      // Critical: Network reliability
+                'AI Innovation Sovereignty' => 1.0       // Standard
+            ]
+        ],
+        'Other' => [
+            'name' => 'Other',
+            'description' => 'Balanced approach suitable for general AI initiatives without specific regulatory constraints',
+            'icon' => 'fa-building',
+            'weights' => [
+                'AI Data Sovereignty' => 1.0,
+                'AI Model Sovereignty' => 1.0,
+                'AI Infrastructure Sovereignty' => 1.0,
+                'AI Supply Chain Sovereignty' => 1.0,
+                'AI Governance & Compliance' => 1.0,
+                'AI Operations Sovereignty' => 1.0,
+                'AI Innovation Sovereignty' => 1.0
+            ]
+        ]
     ]
 ];

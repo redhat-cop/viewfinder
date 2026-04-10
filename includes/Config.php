@@ -25,6 +25,11 @@ class Config {
             'display_name' => 'Digital Sovereignty',
             'enabled' => true
         ],
+        'AISovereignty' => [
+            'name' => 'AISovereignty',
+            'display_name' => 'AI Sovereignty',
+            'enabled' => true
+        ],
         'AI' => [
             'name' => 'AI',
             'display_name' => 'AI Readiness Assessment',

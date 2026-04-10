@@ -1250,24 +1250,27 @@ foreach ($controls as $control) {
 	$headerClass = str_replace('cell', 'cellHeader', $ratingClass);
     print "<br><h2>$title - <span class='" . $headerClass . "'>". $rating . " Level</span></h2><div>";
 
-    
+
     $qnum = $json[$control]['qnum'];
     $levelArray = array();
-    ## Get capabilities with values > 0 (any maturity level)
-    foreach ($data as $key => $value) {
-    if (preg_match("/^control$qnum-[0-9]*/", $key)) {
-        // Extract capability number from field name (e.g., "control1-3" -> "3")
-        $parts = explode('-', $key);
-        $capabilityNum = $parts[1];
-        // Only add to array if slider value > 0
-        if ($value > 0) {
-            array_push($levelArray, $capabilityNum);
-            $highest++;
+
+    // Find the first capability that is not fully complete (value < 3)
+    $nextLevel = null;
+    for ($cap = 1; $cap <= 8; $cap++) {
+        $controlId = "control{$qnum}-{$cap}";
+        $capValue = isset($data[$controlId]) ? intval($data[$controlId]) : 0;
+
+        if ($capValue > 0) {
+            array_push($levelArray, $cap);
         }
-          }
+
+        // Find first incomplete capability (value < 3)
+        if ($nextLevel === null && $capValue < 3) {
+            $nextLevel = $cap;
+        }
     }
-    $nextLevel = $highest + 1;
-    if ($nextLevel < 9) {
+
+    if ($nextLevel !== null) {
         ## Check if there is a recommendation for the next level
         $nextRecommendation = $nextLevel . '-recommendation';
         $nextSummary = $nextLevel . '-summary';
@@ -1299,9 +1302,9 @@ foreach ($controls as $control) {
         print "<p>You're doing great as you are!</p>";
     }
    } else {
-       // All capabilities in this domain have some progress
+       // All capabilities in this domain are fully complete
        print "<h3 style='color: #2aaa04; margin-top: 1rem;'>Excellent Work!</h3>";
-       print "<p>All capabilities in this domain have been initiated. Review the maturity levels and continue advancing capabilities toward full completion.</p>";
+       print "<p>All capabilities in this domain have reached full maturity (Fully Complete). Continue maintaining these capabilities and consider exploring advanced optimizations.</p>";
    }
 
    // Display workshop notes for this domain if they exist

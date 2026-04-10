@@ -367,6 +367,14 @@ foreach ($controls as $control) {
 
 <div class="container">
 
+<!-- Profile Header Banner -->
+<div style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); border-left: 4px solid #0d60f8; border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+  <h1 style="margin: 0; color: #9ec7fc; font-size: 1.75rem; font-weight: 600; display: flex; align-items: center; gap: 0.75rem;">
+    <i class="fa-solid fa-clipboard-check"></i>
+    <?php print Security::escape(Config::getProfileDisplayName($profile)); ?> Profile - Results
+  </h1>
+</div>
+
 <div class="tab">
   <button class="tablinks" onclick="openTab(event, 'Radar')" id="defaultOpen"><i class="fa-solid fa-gauge"></i> Overview</button>
   <button class="tablinks" onclick="openTab(event, 'Strengths')"><i class="fa-solid fa-chart-line"></i> Strengths</button>
@@ -432,8 +440,16 @@ foreach ($controls as $control) {
 	$weight = isset($domainWeights[$title]) ? $domainWeights[$title] : 1.0;
 	$isWeighted = $weight >= 1.5;
 
-	// Split multi-word titles to reduce column width (e.g., "Data Sovereignty" → "Data<br>Sovereignty")
-	$displayTitle = str_replace(' ', '<br>', $title);
+	// Split multi-word titles to reduce column width
+	// For AI Sovereignty domains, keep "AI" with the next word (e.g., "AI Data Sovereignty" → "AI Data<br>Sovereignty")
+	if (strpos($title, 'AI ') === 0) {
+	    // AI Sovereignty domain - replace first space with non-breaking space, then break on remaining spaces
+	    $displayTitle = preg_replace('/^AI /', 'AI&nbsp;', $title);
+	    $displayTitle = str_replace(' ', '<br>', $displayTitle);
+	} else {
+	    // Other profiles - break on all spaces (e.g., "Data Sovereignty" → "Data<br>Sovereignty")
+	    $displayTitle = str_replace(' ', '<br>', $title);
+	}
 
 	print "<td>" . $displayTitle . "</td>";
 
@@ -1106,6 +1122,77 @@ if ($profile === 'Security') {
             ]
         ],
     ];
+} elseif ($profile === 'AISovereignty') {
+    // AI Sovereignty profile thematic groups
+    $thematicGroups = [
+        'AI Data & Model Governance' => [
+            'icon' => 'database',
+            'color' => '#0d60f8',
+            'overview' => 'This theme ensures sovereign control over AI training data, model artifacts, and governance frameworks. It addresses data residency for AI workloads, model ownership and transparency, regulatory compliance (EU AI Act), and ethical AI practices including bias detection and fairness testing.',
+            'capabilities' => [
+                ['domain' => 'AI Data Sovereignty', 'capability' => 1, 'name' => 'AI Training Data Residency & Location'],
+                ['domain' => 'AI Data Sovereignty', 'capability' => 2, 'name' => 'AI Inference Data Protection & Privacy'],
+                ['domain' => 'AI Data Sovereignty', 'capability' => 6, 'name' => 'Training Data Provenance & Quality Control'],
+                ['domain' => 'AI Model Sovereignty', 'capability' => 1, 'name' => 'Model Architecture Ownership & Control'],
+                ['domain' => 'AI Model Sovereignty', 'capability' => 3, 'name' => 'Model Interpretability & Explainability'],
+                ['domain' => 'AI Model Sovereignty', 'capability' => 7, 'name' => 'Algorithmic Transparency & Auditability'],
+                ['domain' => 'AI Model Sovereignty', 'capability' => 8, 'name' => 'Model Governance Framework'],
+                ['domain' => 'AI Governance & Compliance', 'capability' => 1, 'name' => 'AI Governance Policy Framework'],
+                ['domain' => 'AI Governance & Compliance', 'capability' => 2, 'name' => 'Regulatory Compliance Tracking'],
+                ['domain' => 'AI Governance & Compliance', 'capability' => 3, 'name' => 'AI Ethics & Responsible AI Principles'],
+                ['domain' => 'AI Governance & Compliance', 'capability' => 4, 'name' => 'Bias Detection & Fairness Testing'],
+            ]
+        ],
+        'AI Infrastructure & Operations' => [
+            'icon' => 'server',
+            'color' => '#2aaa04',
+            'overview' => 'This theme focuses on independent control of AI compute resources, deployment platforms, and operational capabilities. It encompasses sovereign GPU infrastructure, model portability, inference independence, edge AI deployment, and production monitoring for AI systems.',
+            'capabilities' => [
+                ['domain' => 'AI Infrastructure Sovereignty', 'capability' => 1, 'name' => 'Sovereign GPU & Accelerator Resources'],
+                ['domain' => 'AI Infrastructure Sovereignty', 'capability' => 2, 'name' => 'AI Training Environment Isolation'],
+                ['domain' => 'AI Infrastructure Sovereignty', 'capability' => 3, 'name' => 'Model Registry & Artifact Control'],
+                ['domain' => 'AI Infrastructure Sovereignty', 'capability' => 6, 'name' => 'Inference Infrastructure Independence'],
+                ['domain' => 'AI Infrastructure Sovereignty', 'capability' => 7, 'name' => 'Edge AI Deployment Capabilities'],
+                ['domain' => 'AI Model Sovereignty', 'capability' => 6, 'name' => 'Model Portability & Export Capabilities'],
+                ['domain' => 'AI Operations Sovereignty', 'capability' => 1, 'name' => 'AI Model Performance Monitoring'],
+                ['domain' => 'AI Operations Sovereignty', 'capability' => 2, 'name' => 'AI System Observability & Logging'],
+                ['domain' => 'AI Operations Sovereignty', 'capability' => 5, 'name' => 'Model Retraining & Update Operations'],
+                ['domain' => 'AI Operations Sovereignty', 'capability' => 7, 'name' => 'AI Disaster Recovery & Business Continuity'],
+            ]
+        ],
+        'AI Supply Chain & Security' => [
+            'icon' => 'link',
+            'color' => '#ec7a08',
+            'overview' => 'This theme addresses the security and transparency of the AI supply chain from data sources through model deployment. It covers model provenance verification, third-party model risk assessment, dependency management, container scanning, and continuous supply chain monitoring.',
+            'capabilities' => [
+                ['domain' => 'AI Supply Chain Sovereignty', 'capability' => 1, 'name' => 'Model Provenance & Authenticity Verification'],
+                ['domain' => 'AI Supply Chain Sovereignty', 'capability' => 2, 'name' => 'Third-Party Model Risk Assessment'],
+                ['domain' => 'AI Supply Chain Sovereignty', 'capability' => 3, 'name' => 'AI Dependency & Library Management'],
+                ['domain' => 'AI Supply Chain Sovereignty', 'capability' => 4, 'name' => 'Training Data Supply Chain Security'],
+                ['domain' => 'AI Supply Chain Sovereignty', 'capability' => 5, 'name' => 'Model & Container Image Scanning'],
+                ['domain' => 'AI Supply Chain Sovereignty', 'capability' => 6, 'name' => 'AI Software Bill of Materials (SBOM)'],
+                ['domain' => 'AI Supply Chain Sovereignty', 'capability' => 8, 'name' => 'Continuous Supply Chain Monitoring'],
+                ['domain' => 'AI Data Sovereignty', 'capability' => 7, 'name' => 'Real-time Data Flow Monitoring for AI'],
+                ['domain' => 'AI Model Sovereignty', 'capability' => 4, 'name' => 'Model Versioning & Lineage Tracking'],
+            ]
+        ],
+        'AI Innovation & Competitive Advantage' => [
+            'icon' => 'lightbulb',
+            'color' => '#a18fff',
+            'overview' => 'This theme focuses on building independent AI innovation capabilities to maintain competitive advantage and reduce vendor dependency. It includes internal R&D, experimentation platforms, custom model development, AI talent development, and open-source AI engagement.',
+            'capabilities' => [
+                ['domain' => 'AI Innovation Sovereignty', 'capability' => 1, 'name' => 'Internal AI Research & Development'],
+                ['domain' => 'AI Innovation Sovereignty', 'capability' => 2, 'name' => 'AI Experimentation Platform & Tools'],
+                ['domain' => 'AI Innovation Sovereignty', 'capability' => 3, 'name' => 'Open Source AI Contribution & Participation'],
+                ['domain' => 'AI Innovation Sovereignty', 'capability' => 4, 'name' => 'Custom AI Model Development Capabilities'],
+                ['domain' => 'AI Innovation Sovereignty', 'capability' => 5, 'name' => 'AI Talent Development & Retention'],
+                ['domain' => 'AI Innovation Sovereignty', 'capability' => 6, 'name' => 'Proprietary AI Intellectual Property'],
+                ['domain' => 'AI Innovation Sovereignty', 'capability' => 7, 'name' => 'AI Academic & Industry Partnerships'],
+                ['domain' => 'AI Innovation Sovereignty', 'capability' => 8, 'name' => 'AI Innovation Culture & Practices'],
+                ['domain' => 'AI Infrastructure Sovereignty', 'capability' => 4, 'name' => 'Distributed Training Orchestration'],
+            ]
+        ],
+    ];
 } else {
     // Digital Sovereignty profile thematic groups (default)
     $thematicGroups = [
@@ -1457,24 +1544,27 @@ foreach ($controls as $control) {
 	$headerClass = str_replace('cell', 'cellHeader', $ratingClass);
     print "<h3>$title <span class='" . $headerClass . "'>". $rating . "</span></h3><div>";
 
-    
+
     $qnum = $json[$control]['qnum'];
     $levelArray = array();
-    ## Get capabilities with values > 0 (any maturity level)
-    foreach ($data as $key => $value) {
-    if (preg_match("/^control$qnum-[0-9]*/", $key)) {
-        // Extract capability number from field name (e.g., "control1-3" -> "3")
-        $parts = explode('-', $key);
-        $capabilityNum = $parts[1];
-        // Only add to array if slider value > 0
-        if ($value > 0) {
-            array_push($levelArray, $capabilityNum);
-            $highest++;
+
+    // Find the first capability that is not fully complete (value < 3)
+    $nextLevel = null;
+    for ($cap = 1; $cap <= 8; $cap++) {
+        $controlId = "control{$qnum}-{$cap}";
+        $capValue = isset($data[$controlId]) ? intval($data[$controlId]) : 0;
+
+        if ($capValue > 0) {
+            array_push($levelArray, $cap);
         }
-          }
+
+        // Find first incomplete capability (value < 3)
+        if ($nextLevel === null && $capValue < 3) {
+            $nextLevel = $cap;
+        }
     }
-    $nextLevel = $highest + 1;
-    if ($nextLevel < 9) {
+
+    if ($nextLevel !== null) {
         ## Check if there is a recommendation for the next level
         $nextRecommendation = $nextLevel . '-recommendation';
         $nextSummary = $nextLevel . '-summary';
@@ -1506,9 +1596,9 @@ foreach ($controls as $control) {
         print "<p>You're doing great as you are!</p>";
     }
 } else {
-    // All capabilities in this domain have some progress
+    // All capabilities in this domain are fully complete
     print "<h4 class=title-text>Excellent Work!</h4>";
-    print "<p>All capabilities in this domain have been initiated. Review the maturity levels and continue advancing capabilities toward full completion.</p>";
+    print "<p>All capabilities in this domain have reached full maturity (Fully Complete). Continue maintaining these capabilities and consider exploring advanced optimizations.</p>";
 }
 
 

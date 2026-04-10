@@ -301,6 +301,12 @@
       box-shadow: 0 4px 12px rgba(13, 96, 248, 0.4);
     }
 
+    .random-test-btn:hover {
+      background: #51575e !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(106, 110, 115, 0.4);
+    }
+
     .start-assessment-btn i {
       margin-right: 0.5rem;
     }
@@ -350,6 +356,9 @@
     // Digital Sovereignty domains
     $profileDomains['DigitalSovereignty'] = ['Data Sovereignty', 'Technical Sovereignty', 'Operational Sovereignty', 'Assurance Sovereignty', 'Open Source', 'Executive Oversight', 'Managed Services'];
 
+    // AI Sovereignty domains
+    $profileDomains['AISovereignty'] = ['AI Data Sovereignty', 'AI Model Sovereignty', 'AI Infrastructure Sovereignty', 'AI Supply Chain Sovereignty', 'AI Governance & Compliance', 'AI Operations Sovereignty', 'AI Innovation Sovereignty'];
+
     // Security domains - load from controls file
     $securityControlsFile = Security::getControlsFilePath('Security');
     $securityJson = Security::loadJSON($securityControlsFile);
@@ -376,8 +385,8 @@
             </label>
             <select id="maturity-profile-select" class="profile-dropdown">
               <?php
-              // Display in specific order: Digital Sovereignty first, then Security
-              $profileOrder = ['DigitalSovereignty', 'Security'];
+              // Display in specific order: Digital Sovereignty first, AI Sovereignty, then Security
+              $profileOrder = ['DigitalSovereignty', 'AISovereignty', 'Security'];
               foreach ($profileOrder as $profileKey):
                 if (isset($enabledProfiles[$profileKey])):
                   $profileData = $enabledProfiles[$profileKey];
@@ -461,6 +470,11 @@
                 </div>
               <?php endforeach; ?>
             </div>
+
+            <!-- Random Test Results Button -->
+            <button id="maturity-random-test-btn" class="random-test-btn" style="margin-top: 1.5rem; width: 100%; padding: 0.75rem 1.5rem; background: #6a6e73; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 0.95rem; transition: all 0.3s ease;">
+              <i class="fa-solid fa-flask"></i> Create Random Results
+            </button>
           </div>
         </div>
 
@@ -683,6 +697,16 @@
 
       if (startBtn) {
         startBtn.addEventListener('click', handleStartAssessment);
+      }
+
+      // Random test results button
+      const randomTestBtn = document.getElementById('maturity-random-test-btn');
+      if (randomTestBtn) {
+        randomTestBtn.addEventListener('click', function() {
+          const profileSelect = document.getElementById('maturity-profile-select');
+          const selectedProfile = profileSelect ? profileSelect.value : 'DigitalSovereignty';
+          window.location.href = 'test-random-profile.php?profile=' + selectedProfile;
+        });
       }
 
       // Initial display
