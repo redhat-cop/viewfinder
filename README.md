@@ -17,13 +17,12 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 - **Multi-Profile Assessments**: Security, Digital Sovereignty, AI Readiness, OpenShift, RHEL, and custom profiles
 - **Multi-Domain Evaluation**: 7 control domains per profile
 - **5-Level Maturity Model**: ✨ Initial, Managed, Defined, Quantitatively Managed, Optimizing (industry-standard progressive framework)
-- **Slider-Based Capability Rating**: Each of 8 capabilities per domain rated on a 4-level slider (0-3) - No Capability, In Planning, Work in Progress, Fully Complete
+- **8 Capability Levels**: Progressive maturity scoring from 1-8 points per domain
 - **Real-time Scoring**: Dynamic calculation of maturity scores as assessments are completed
 - **Industry-Weighted Scoring**: ✨ Domain weights adjusted based on Line of Business (Finance, Healthcare, Government, etc.)
 - **Framework Mapping**: Map assessments to NIST 800-53, PCI DSS, ISO 27001, FedRAMP, NIS2, DORA, DISA STIG
 - **Industry-Specific Guidance**: Tailored recommendations for Finance, Government, Healthcare, Manufacturing, Telecommunications
 - **Workshop Facilitator Notes**: ✨ Capture domain-specific notes during facilitated workshops - notes flow through results, detailed reports, and export/import
-- **Enhanced Interactive Tooltips**: ✨ "Points to Consider" for each capability with bullet-point questions to guide evidence-based assessment, sourced from the Level 201 Enablement Guide
 - **Export/Import Results**: ✨ Save and restore completed assessment results for record-keeping, sharing, and comparison
 
 ### Visualization & Reporting
@@ -32,8 +31,6 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
   - **Overview**: Radar charts and executive summary with QR code for sharing
   - **Strengths**: Domain strengths analysis with quick wins and leverage opportunities
   - **Gaps**: Critical gaps analysis with business impacts and first steps for remediation
-  - **Status**: Capability status distribution with pie chart visualization
-  - **Themes**: ✨ Thematic capability view showing cross-domain patterns organized by concept (Governance, Data Privacy, Technical Control, etc.)
   - **Details**: Comprehensive recommendations and improvement roadmap
   - **Table**: Tabular view of all domain scores and maturity levels
 - **Dynamic Executive Summary**: ✨ Personalized one-page summary showing:
@@ -45,26 +42,38 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
   - **Business Impact**: Consequences of gaps in each domain
   - **First Steps**: Specific 90-day action plans for addressing critical gaps
   - **Quick Wins**: Tactical improvements to leverage existing strengths
-- **Thematic Capability View**: ✨ Revolutionary cross-domain analysis organizing capabilities by theme
-  - **Visual Summary Dashboard**: 8 interactive theme cards showing maturity percentages at-a-glance
-  - **Thematic Groupings**: Capabilities organized by concept rather than domain
-    - Governance & Policy (8 capabilities across Data, Open Source, Executive domains)
-    - Data & Privacy (6 capabilities focused on data protection lifecycle)
-    - Risk & Compliance (7 capabilities covering audits, certifications, KPIs)
-    - Technical Control (8 capabilities for stack ownership and portability)
-    - Operational Resilience (7 capabilities for autonomy and business continuity)
-    - Vendor & Dependencies (7 capabilities managing external relationships)
-    - Monitoring & Security (7 capabilities for visibility and control)
-    - Open Source (6 capabilities for OSS strategy and engagement)
-  - **Interactive Overview Display**: Dedicated panel showing thematic context when hovering over theme cards
-  - **Cross-Domain Pattern Recognition**: Identify if weaknesses are organizational (e.g., weak governance everywhere) or domain-specific
-  - **Color-Coded Visual Indicators**: Instant recognition of theme maturity with status dot visualization
 - **Detailed Recommendations**: HTML-formatted guidance for improving maturity levels
 - **Workshop Notes in Reports**: ✨ Facilitator notes displayed in both results page and detailed PDF reports
 - **Compliance Mapping**: Link capabilities to compliance framework controls
 - **Maturity Tables**: Tabular view of scores and recommendations with 5-level color coding
 - **Framework-Specific Views**: Detailed compliance guidance per selected framework
 - **Industry-Specific Views**: Sector-specific recommendations
+
+### Red Hat Solutions Integration ✨ NEW
+- **Solution Recommendations**: Red Hat products mapped to specific capability gaps
+  - Automatically displays relevant Red Hat solutions for incomplete capabilities
+  - 14 solutions pre-configured for Digital Sovereignty profile
+  - 56 capability slots available for Security profile
+  - Solutions include product name and contextual description
+- **Visual Design**: Professional Red Hat branding with distinctive styling
+  - Red-bordered boxes with Red Hat logo (cube icon)
+  - Dark theme with red gradient for results page
+  - Light theme with pink background for PDF reports
+  - Consistent branding across all displays
+- **Flexible Architecture**: Easy to add, update, or remove solutions
+  - JSON-based configuration in controls files
+  - Empty placeholders provided for team to fill in
+  - Solutions only display when capability needs improvement
+  - No impact on capabilities without Red Hat solutions
+- **Testing Tools**: Dedicated test files for validation
+  - `test-redhat-quick.php` - Quick test showing 3 key solutions
+  - `test-redhat-solutions.php` - Comprehensive test of all 14 solutions
+  - Automated test data generation for realistic scenarios
+- **Team Documentation**: Complete guides for adding solutions
+  - `HOW-TO-ADD-REDHAT-SOLUTIONS.md` - Step-by-step guide for team
+  - `REDHAT-SOLUTIONS.md` - Technical reference
+  - `TESTING-REDHAT-SOLUTIONS.md` - Testing procedures
+  - `IMPLEMENTATION-SUMMARY.md` - Overview and statistics
 
 ### Workshop Facilitation Materials ✨ NEW
 - **Comprehensive Facilitator Guide**: Professional guide for conducting Digital Sovereignty assessments
@@ -284,7 +293,15 @@ podman build -t viewfinder:latest .
 podman run -p 8080:8080 localhost/viewfinder
 ```
 
-#### Option 2: Direct Installation
+#### Option 2: Use Pre-built Image
+
+```bash
+# Pull and run the pre-built image
+podman pull quay.io/rhn_gps_cjenkins/viewfinder
+podman run -p 8080:8080 quay.io/rhn_gps_cjenkins/viewfinder
+```
+
+#### Option 3: Direct Installation
 
 **Prerequisites:**
 ```bash
@@ -449,9 +466,9 @@ You'll see the **Landing Page Dashboard** with four main sections:
 
 3. **Complete Domain Assessment**:
    - Navigate through 7 domain tabs
-   - For each domain, rate 8 capabilities using the maturity slider (0-3 implementation status)
+   - For each domain, select your current maturity level (1-8 capabilities)
    - ✨ Add workshop facilitator notes for each domain (optional)
-   - ✨ Hover over info icons to see "Points to Consider" tooltips from the Enablement Guide
+   - Use info icons for detailed control descriptions
    - Real-time scoring updates as you progress
 
 4. **Submit Assessment**:
@@ -468,7 +485,7 @@ You'll see the **Landing Page Dashboard** with four main sections:
 - **Level 5 - Optimizing (81-100%)**: Continuous improvement, innovation focus
 
 #### Scoring
-- Per domain: 36 points maximum (8 capabilities with weighted point values 1-8, each rated 0-3 on slider for partial credit)
+- Per domain: 36 points (9 capabilities × 0-4 points each)
 - Total assessment: 252 points (7 domains × 36 points)
 - ✨ Industry-weighted scoring adjusts final score based on domain importance for your sector
 
@@ -724,6 +741,29 @@ Profiles follow a standardized JSON structure with 7 domains and 8 capabilities 
 - `{n}-points`: Points value as string (must match capability number: "1" through "8")
 - `{n}-recommendation`: HTML-formatted recommendations (string, can contain HTML tags)
 
+### Optional Fields per Capability ✨ NEW:
+- `{n}-redhat-solution`: Red Hat product/solution name (string)
+  - Example: `"Red Hat OpenShift Observability"`
+  - Displays in red-bordered box when capability needs improvement
+  - Empty string (`""`) if no solution available - will not display
+- `{n}-redhat-description`: Solution description (string)
+  - Example: `"Provides comprehensive monitoring, logging, and distributed tracing..."`
+  - 1-2 sentences explaining how the solution addresses the capability
+  - Empty string (`""`) if no solution available
+
+**Red Hat Solutions Structure:**
+```json
+"7": "Data Flow and Transfer Auditing",
+"7-summary": "...",
+"7-tier": "Advanced",
+"7-points": "7",
+"7-recommendation": "...",
+"7-redhat-solution": "Red Hat OpenShift Observability",
+"7-redhat-description": "Provides comprehensive monitoring, logging, and distributed tracing to track data flows across your sovereign infrastructure, ensuring complete visibility and audit trails for compliance."
+```
+
+**Note:** All Digital Sovereignty and Security profile JSON files have been reorganized to group capability fields together for easier editing. Each capability's fields (name, summary, tier, points, recommendation, and Red Hat solution fields) are now consecutive in the JSON structure.
+
 ### Validation Rules:
 - Must have exactly 7 domains (Domain-1 through Domain-7)
 - Each domain must have exactly 8 capabilities (1 through 8)
@@ -795,12 +835,25 @@ viewfinder/
 │   └── ...
 │
 ├── controls-*.json                    # Profile data files
-│   ├── controls-Security.json         # Security profile
-│   ├── controls-DigitalSovereignty.json
+│   ├── controls-Security.json         # ✨ Security profile (reorganized, Red Hat solution placeholders)
+│   ├── controls-DigitalSovereignty.json # ✨ Digital Sovereignty (reorganized, 14 Red Hat solutions)
 │   ├── controls-AI.json
 │   ├── controls-OpenShift.json
 │   ├── controls-RHEL.json
 │   └── controls-Template.json         # Template for new profiles
+│
+├── test-redhat-quick.php              # ✨ Quick test for Red Hat solutions (3 solutions)
+├── test-redhat-solutions.php          # ✨ Comprehensive test for Red Hat solutions (all 14)
+├── test-random-results.php            # Random assessment generator for testing
+│
+├── HOW-TO-ADD-REDHAT-SOLUTIONS.md     # ✨ Team guide for adding Red Hat solutions
+├── REDHAT-SOLUTIONS.md                # ✨ Technical reference for Red Hat solutions
+├── TESTING-REDHAT-SOLUTIONS.md        # ✨ Testing guide and procedures
+├── IMPLEMENTATION-SUMMARY.md          # ✨ Red Hat solutions implementation overview
+├── TEST-FILES-README.md               # ✨ Test file reference guide
+├── QUICK-TEST-GUIDE.txt               # ✨ 30-second visual testing guide
+├── BUGFIX-EMPTY-ACCORDION.md          # Bug fix documentation
+├── BUGFIX-REPORT-RECOMMENDATIONS.md   # Bug fix documentation
 │
 ├── compliance.json                    # Compliance framework mappings
 ├── lob.json                          # Line of business data
@@ -995,6 +1048,35 @@ tail -f /var/log/nginx/error.log  # Nginx
   - PDF export functionality
   - UI/UX changes to results page
   - Results import/export workflows
+
+**Red Hat Solutions Quick Test** ✨ NEW (`test-redhat-quick.php`):
+- Fastest way to test Red Hat solutions feature (30 seconds)
+- Displays 3 key Red Hat solutions for quick verification
+- Solutions included:
+  - Data Sovereignty: Red Hat OpenShift Observability
+  - Technical Sovereignty: Red Hat Trusted Software Supply Chain
+  - Managed Services: Red Hat OpenShift Service Mesh
+- Usage: Visit `http://your-server/test-redhat-quick.php` in browser
+- Perfect for:
+  - Quick verification that Red Hat solutions are displaying correctly
+  - Demonstrating the feature to stakeholders
+  - Testing styling changes to Red Hat solution boxes
+
+**Red Hat Solutions Comprehensive Test** ✨ NEW (`test-redhat-solutions.php`):
+- Comprehensive test showing all 14 Red Hat solutions across all 7 domains
+- Strategically sets maturity levels to trigger solution recommendations
+- Includes workshop notes for realistic context
+- Usage: Visit `http://your-server/test-redhat-solutions.php` in browser
+- Perfect for:
+  - Testing all Red Hat solutions at once
+  - Verifying consistent styling across domains
+  - Validating solution display logic
+  - Testing detailed report generation with solutions
+
+**Testing Documentation**:
+- `QUICK-TEST-GUIDE.txt`: 30-second visual guide with ASCII art
+- `TEST-FILES-README.md`: Complete test file reference
+- `TESTING-REDHAT-SOLUTIONS.md`: Detailed testing procedures and troubleshooting
 
 ### Adding a New Profile Manually
 
