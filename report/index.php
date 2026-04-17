@@ -243,7 +243,8 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * (count($control
                         <div class="full">
                            <div class="center-desk">
                               <div class="logo" style="text-align: center; margin-bottom: 30px;">
-                                 <img src="../images/Logo-Red_Hat-C-Standard-RGB.svg" alt="Red Hat" style="height: 80px;">
+                                 <!-- Vendor logo can be inserted here -->
+                                 <!-- Example: <img src="../images/your-logo.svg" alt="Your Company" style="height: 80px;"> -->
                               </div>
                         <div class="text-bg">
                            <h1><?php
@@ -1284,18 +1285,18 @@ foreach ($controls as $control) {
 			array_push($nextSteps,$json[$control][$nextLevel]);
 			array_push($nextStepsHow,$json[$control][$nextSummary]);
 
-			// Display Red Hat Solution if available
-			$rhSolutionField = $nextLevel . '-redhat-solution';
-			$rhDescField = $nextLevel . '-redhat-description';
-			if (!empty($json[$control][$rhSolutionField])) {
-			    print '<div style="margin-top: 1.5rem; padding: 1.5rem; background: #fff5f5; border-left: 4px solid #EE0000; border-radius: 4px; border: 1px solid #ffcccc;">';
-			    print '<h3 style="color: #EE0000; margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">';
-			    print '<i class="fa-solid fa-cube"></i> Red Hat Solution';
+			// Display Vendor Solution if available
+			$vendorSolutionField = $nextLevel . '-vendor-solution';
+			$vendorDescField = $nextLevel . '-vendor-description';
+			if (!empty($json[$control][$vendorSolutionField])) {
+			    print '<div style="margin-top: 1.5rem; padding: 1.5rem; background: #f0f7ff; border-left: 4px solid #0d60f8; border-radius: 4px; border: 1px solid #b3d9ff;">';
+			    print '<h3 style="color: #0d60f8; margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">';
+			    print '<i class="fa-solid fa-cube"></i> Vendor Solution';
 			    print '</h3>';
 			    print '<h4 style="color: #333; margin: 0.5rem 0;">' .
-			          Security::escape($json[$control][$rhSolutionField]) . '</h4>';
+			          Security::escape($json[$control][$vendorSolutionField]) . '</h4>';
 			    print '<p style="color: #555; line-height: 1.6;">' .
-			          Security::escape($json[$control][$rhDescField]) . '</p>';
+			          Security::escape($json[$control][$vendorDescField]) . '</p>';
 			    print '</div>';
 			}
         } else {
@@ -1382,7 +1383,7 @@ foreach ($controls as $control) {
                   </div>
                   <div class="col-md-9">
                      <div class="Testimonial_box">
-                        <p>Don't wait until it's too late. Take proactive steps and empower yourselves with Project Viewfinder and enable proactive digital sovereignty within your customer's organisation with the Viewfinder Maturity Assessment. Contact your Red Hat account team for more information and take the first step towards a more autonomous future.
+                        <p>Don't wait until it's too late. Take proactive steps and empower your organization with Project Viewfinder to enable proactive digital sovereignty. Use the Viewfinder Maturity Assessment to identify gaps, prioritize improvements, and take the first step towards a more autonomous and resilient future.
                         </p>
                      </div>
                   </div>

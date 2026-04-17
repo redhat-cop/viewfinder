@@ -2,9 +2,9 @@
 FROM registry.access.redhat.com/ubi9/php-83:latest
 
 # Metadata
-LABEL maintainer="Chris Jenkins <chrisj@redhat.com>" \
-      version="3.1.0" \
-      description="Viewfinder Maturity Assessment Tool - Production Ready with Landing Page, Profile Management, DS Readiness Assessment with PDF Export, Operation Sovereign Shield Escape Room, Digital Sovereignty Quiz, Assessment Results Export/Import, Workshop Enablement Guides (101/201), Templates Library, Thematic Capability View with Cross-Domain Pattern Analysis, Real-Time Progress Tracking"
+LABEL maintainer="Viewfinder Project" \
+      version="3.0.0" \
+      description="Viewfinder Maturity Assessment Tool - Production Ready with Landing Page, Profile Management, DS Readiness Assessment with PDF Export, Operation Sovereign Shield Escape Room, Digital Sovereignty Quiz, Assessment Results Export/Import, Workshop Enablement Guides (101/201), Templates Library"
 
 # Set working directory
 WORKDIR /opt/app-root/src
@@ -54,9 +54,6 @@ COPY --chown=1001:0 ds-qualifier/ ./ds-qualifier/
 COPY --chown=1001:0 quiz/ ./quiz/
 COPY --chown=1001:0 *.json ./
 COPY --chown=1001:0 *.pdf ./
-COPY --chown=1001:0 *.md ./
-COPY --chown=1001:0 *.docx ./
-COPY --chown=1001:0 favicon.ico favicon.svg ./
 COPY --chown=1001:0 error-pages/ ./error-pages/
 COPY --chown=1001:0 templates/ ./templates/
 COPY --chown=1001:0 README.md ./

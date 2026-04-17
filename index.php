@@ -635,7 +635,7 @@ while( $i < 9) {
          id="' . $controlId . '"
          data-points="' . $json[$area][$points] . '"
          oninput="updateSliderLabel(this)">';
-  print '<div class="slider-label" id="label-' . $controlId . '">No Capability</div>';
+  print '<div class="slider-label" id="label-' . $controlId . '">No Capability (0)</div>';
   print '</div>'. "\n";
   $i++;
 }
@@ -658,6 +658,86 @@ print '</div>';
     <span id="ratedCount">0</span> of <span id="totalCount">56</span> capabilities rated
   </span>
 </h2>
+
+<?php if ($profile === 'DigitalSovereignty'):
+  // Detect if running on localhost and set appropriate QR code URL
+  $currentHost = $_SERVER['HTTP_HOST'] ?? 'localhost';
+  $isLocalhost = (strpos($currentHost, 'localhost') !== false ||
+                  strpos($currentHost, '127.0.0.1') !== false ||
+                  strpos($currentHost, '::1') !== false);
+
+  if ($isLocalhost) {
+    // Running on localhost - use external public URL
+    $qrCodeUrl = 'http://chrisj.co.uk/viewfinder/dig-sov-domains.php';
+    $qrCodeDisplayUrl = 'chrisj.co.uk/viewfinder/dig-sov-domains.php';
+  } else {
+    // Running on public server - use current domain
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    $qrCodeUrl = $protocol . '://' . $currentHost . '/dig-sov-domains.php';
+    $qrCodeDisplayUrl = $currentHost . '/dig-sov-domains.php';
+  }
+?>
+<div style="margin: 1rem 0;">
+  <button id="toggleQRCode" type="button" style="width: 100%; padding: 0.75rem 1rem; background: #2a2a2a; border: 1px solid #444; border-radius: 6px; color: #9ec7fc; cursor: pointer; font-size: 0.95rem; font-weight: 600; display: flex; align-items: center; justify-content: space-between; transition: all 0.3s ease;" onmouseover="this.style.background='#333'; this.style.borderColor='#0d60f8';" onmouseout="this.style.background='#2a2a2a'; this.style.borderColor='#444';">
+    <span style="display: flex; align-items: center; gap: 0.5rem;">
+      <i class="fa-solid fa-qrcode" style="color: #0d60f8;"></i>
+      Explore Digital Sovereignty Domains
+    </span>
+    <i class="fa-solid fa-chevron-down" id="qrChevron" style="transition: transform 0.3s ease;"></i>
+  </button>
+
+  <div id="qrCodeContent" style="display: none; margin-top: 0.5rem; padding: 1.5rem; background: linear-gradient(135deg, #1f1f1f 0%, #2a2a2a 100%); border: 1px solid #0d60f8; border-radius: 8px; box-shadow: 0 4px 12px rgba(13, 96, 248, 0.2); overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.4s ease, opacity 0.4s ease, margin-top 0.4s ease;">
+    <div style="display: flex; align-items: center; gap: 2rem;">
+      <div style="flex: 1;">
+        <p style="color: #ccc; margin: 0 0 0.75rem 0; line-height: 1.6;">
+          Scan this QR code to access detailed information about each Digital Sovereignty domain, including all capabilities and key considerations.
+        </p>
+        <a href="<?php echo htmlspecialchars($qrCodeUrl); ?>" target="_blank" style="color: #0d60f8; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; transition: color 0.3s ease;">
+          <?php # echo htmlspecialchars($qrCodeDisplayUrl); ?>
+        </a>
+      </div>
+      <div style="background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); flex-shrink: 0;">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<?php echo urlencode($qrCodeUrl); ?>"
+             alt="QR Code for Digital Sovereignty Domains"
+             style="display: block; width: 150px; height: 150px;">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const toggleBtn = document.getElementById('toggleQRCode');
+  const qrContent = document.getElementById('qrCodeContent');
+  const chevron = document.getElementById('qrChevron');
+  let isOpen = false;
+
+  if (toggleBtn && qrContent && chevron) {
+    toggleBtn.addEventListener('click', function() {
+      isOpen = !isOpen;
+
+      if (isOpen) {
+        qrContent.style.display = 'block';
+        setTimeout(() => {
+          qrContent.style.maxHeight = '500px';
+          qrContent.style.opacity = '1';
+          qrContent.style.marginTop = '0.5rem';
+        }, 10);
+        chevron.style.transform = 'rotate(180deg)';
+      } else {
+        qrContent.style.maxHeight = '0';
+        qrContent.style.opacity = '0';
+        qrContent.style.marginTop = '0';
+        setTimeout(() => {
+          qrContent.style.display = 'none';
+        }, 400);
+        chevron.style.transform = 'rotate(0deg)';
+      }
+    });
+  }
+})();
+</script>
+<?php endif; ?>
 
 </div>
 <?php
@@ -759,7 +839,7 @@ function openCity(evt, cityName) {
 
 // Update slider label and visual state based on value
 function updateSliderLabel(slider) {
-  const labels = ['No Capability', 'In Planning', 'Work in Progress', 'Fully Complete'];
+  const labels = ['No Capability (0)', 'In Planning (1)', 'Work in Progress (2)', 'Fully Complete (3)'];
   const colors = ['#6a6e73', '#f0ab00', '#ec7a08', '#2aaa04'];
   const value = parseInt(slider.value);
   const labelId = 'label-' + slider.id;

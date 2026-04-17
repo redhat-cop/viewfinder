@@ -1,6 +1,6 @@
 # Viewfinder - Maturity Assessment Tool
 
-A comprehensive web-based assessment platform for evaluating organizational maturity across multiple domains including Security, Digital Sovereignty, AI Readiness, OpenShift, and RHEL capabilities.
+A comprehensive web-based assessment platform for evaluating organizational maturity across multiple domains including Security, Digital Sovereignty, AI Readiness, multiple technology and operational domains.
 
 ## Overview
 
@@ -62,14 +62,14 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 - **Framework-Specific Views**: Detailed compliance guidance per selected framework
 - **Industry-Specific Views**: Sector-specific recommendations
 
-### Red Hat Solutions Integration ✨ NEW
-- **Solution Recommendations**: Red Hat products mapped to specific capability gaps
-  - Automatically displays relevant Red Hat solutions for incomplete capabilities
+### Vendor Solutions Integration ✨ NEW
+- **Solution Recommendations**: vendor products mapped to specific capability gaps
+  - Automatically displays relevant vendor solutions for incomplete capabilities
   - 14 solutions pre-configured for Digital Sovereignty profile
   - 56 capability slots available for Security profile
   - Solutions include product name and contextual description
-- **Visual Design**: Professional Red Hat branding with distinctive styling
-  - Red-bordered boxes with Red Hat logo (cube icon)
+- **Visual Design**: Professional vendor branding with distinctive styling
+  - Red-bordered boxes with vendor logo (cube icon)
   - Dark theme with red gradient for results page
   - Light theme with pink background for PDF reports
   - Consistent branding across all displays
@@ -77,15 +77,15 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
   - JSON-based configuration in controls files
   - Empty placeholders provided for team to fill in
   - Solutions only display when capability needs improvement
-  - No impact on capabilities without Red Hat solutions
+  - No impact on capabilities without vendor solutions
 - **Testing Tools**: Dedicated test files for validation
-  - `test-redhat-quick.php` - Quick test showing 3 key solutions
-  - `test-redhat-solutions.php` - Comprehensive test of all 14 solutions
+  - `test-vendor-quick.php` - Quick test showing 3 key solutions
+  - `test-vendor-solutions.php` - Comprehensive test of all 14 solutions
   - Automated test data generation for realistic scenarios
 - **Team Documentation**: Complete guides for adding solutions
-  - `HOW-TO-ADD-REDHAT-SOLUTIONS.md` - Step-by-step guide for team
-  - `REDHAT-SOLUTIONS.md` - Technical reference
-  - `TESTING-REDHAT-SOLUTIONS.md` - Testing procedures
+  - `HOW-TO-ADD-VENDOR-SOLUTIONS.md` - Step-by-step guide for team
+  - `VENDOR-SOLUTIONS.md` - Technical reference
+  - `TESTING-VENDOR-SOLUTIONS.md` - Testing procedures
   - `IMPLEMENTATION-SUMMARY.md` - Overview and statistics
 
 ### Workshop Facilitation Materials ✨ NEW
@@ -115,7 +115,7 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
     - Top strengths and critical gaps
     - Strategic recommendations
     - Visual charts and metrics
-- **Red Hat Branding**: Professional logo integration throughout materials
+- **Vendor Branding**: Professional logo integration throughout materials
 - **Print-Optimized Design**: All templates formatted for professional printing
 
 ### Landing Page Dashboard ✨ NEW
@@ -140,7 +140,7 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
   - Supply chain dependency management
   - Regulatory navigation (GDPR, NIS2, etc.)
   - Open source principles for digital independence
-- **Facilitated Experience**: Guided by Red Hat Subject Matter Experts with optional hints
+- **Facilitated Experience**: Guided by Subject Matter Experts with optional hints
 - **Three-Phase Structure**:
   - Pre-briefing and mission objectives
   - 45-minute Executive Challenge (hands-on problem solving)
@@ -296,7 +296,7 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 
 ```bash
 # Clone the repository
-git clone https://github.com/redhat-cop/viewfinder.git
+git clone https://github.com/viewfinder-project/viewfinder.git
 cd viewfinder
 
 # Build with Podman (or Docker)
@@ -330,7 +330,7 @@ php -m | grep -E 'json|fileinfo|mbstring'
 
 1. **Clone and install dependencies**
 ```bash
-git clone https://github.com/redhat-cop/viewfinder.git
+git clone https://github.com/viewfinder-project/viewfinder.git
 cd viewfinder
 composer install
 ```
@@ -382,13 +382,13 @@ You'll see the **Landing Page Dashboard** with four main sections:
 
 **Frontend:**
 - HTML5, CSS3, JavaScript (jQuery 3.6.0)
-- PatternFly (Red Hat Design System)
+- PatternFly (PatternFly Design System)
 - Bootstrap for responsive grid
 - D3.js for data visualizations
 - Font Awesome icons
 
 **Container:**
-- Red Hat UBI 9 base image
+- UBI 9 base image
 - PHP 8.1 with required extensions
 - Apache web server
 
@@ -755,27 +755,27 @@ Profiles follow a standardized JSON structure with 7 domains and 8 capabilities 
 - `{n}-recommendation`: HTML-formatted recommendations (string, can contain HTML tags)
 
 ### Optional Fields per Capability ✨ NEW:
-- `{n}-redhat-solution`: Red Hat product/solution name (string)
-  - Example: `"Red Hat OpenShift Observability"`
+- `{n}-vendor-solution`: vendor product/solution name (string)
+  - Example: `"vendor solutions Observability"`
   - Displays in red-bordered box when capability needs improvement
   - Empty string (`""`) if no solution available - will not display
-- `{n}-redhat-description`: Solution description (string)
+- `{n}-vendor-description`: Solution description (string)
   - Example: `"Provides comprehensive monitoring, logging, and distributed tracing..."`
   - 1-2 sentences explaining how the solution addresses the capability
   - Empty string (`""`) if no solution available
 
-**Red Hat Solutions Structure:**
+**vendor Solutions Structure:**
 ```json
 "7": "Data Flow and Transfer Auditing",
 "7-summary": "...",
 "7-tier": "Advanced",
 "7-points": "7",
 "7-recommendation": "...",
-"7-redhat-solution": "Red Hat OpenShift Observability",
-"7-redhat-description": "Provides comprehensive monitoring, logging, and distributed tracing to track data flows across your sovereign infrastructure, ensuring complete visibility and audit trails for compliance."
+"7-vendor-solution": "vendor solutions Observability",
+"7-vendor-description": "Provides comprehensive monitoring, logging, and distributed tracing to track data flows across your sovereign infrastructure, ensuring complete visibility and audit trails for compliance."
 ```
 
-**Note:** All Digital Sovereignty and Security profile JSON files have been reorganized to group capability fields together for easier editing. Each capability's fields (name, summary, tier, points, recommendation, and Red Hat solution fields) are now consecutive in the JSON structure.
+**Note:** All Digital Sovereignty and Security profile JSON files have been reorganized to group capability fields together for easier editing. Each capability's fields (name, summary, tier, points, recommendation, and vendor solution fields) are now consecutive in the JSON structure.
 
 ### Validation Rules:
 - Must have exactly 7 domains (Domain-1 through Domain-7)
@@ -848,21 +848,21 @@ viewfinder/
 │   └── ...
 │
 ├── controls-*.json                    # Profile data files
-│   ├── controls-Security.json         # ✨ Security profile (reorganized, Red Hat solution placeholders)
-│   ├── controls-DigitalSovereignty.json # ✨ Digital Sovereignty (reorganized, 14 Red Hat solutions)
+│   ├── controls-Security.json         # ✨ Security profile (reorganized, vendor solution placeholders)
+│   ├── controls-DigitalSovereignty.json # ✨ Digital Sovereignty (reorganized, 14 vendor solutions)
 │   ├── controls-AI.json
 │   ├── controls-OpenShift.json
 │   ├── controls-RHEL.json
 │   └── controls-Template.json         # Template for new profiles
 │
-├── test-redhat-quick.php              # ✨ Quick test for Red Hat solutions (3 solutions)
-├── test-redhat-solutions.php          # ✨ Comprehensive test for Red Hat solutions (all 14)
+├── test-vendor-quick.php              # ✨ Quick test for vendor solutions (3 solutions)
+├── test-vendor-solutions.php          # ✨ Comprehensive test for vendor solutions (all 14)
 ├── test-random-results.php            # Random assessment generator for testing
 │
-├── HOW-TO-ADD-REDHAT-SOLUTIONS.md     # ✨ Team guide for adding Red Hat solutions
-├── REDHAT-SOLUTIONS.md                # ✨ Technical reference for Red Hat solutions
-├── TESTING-REDHAT-SOLUTIONS.md        # ✨ Testing guide and procedures
-├── IMPLEMENTATION-SUMMARY.md          # ✨ Red Hat solutions implementation overview
+├── HOW-TO-ADD-VENDOR-SOLUTIONS.md     # ✨ Team guide for adding vendor solutions
+├── VENDOR-SOLUTIONS.md                # ✨ Technical reference for vendor solutions
+├── TESTING-VENDOR-SOLUTIONS.md        # ✨ Testing guide and procedures
+├── IMPLEMENTATION-SUMMARY.md          # ✨ vendor solutions implementation overview
 ├── TEST-FILES-README.md               # ✨ Test file reference guide
 ├── QUICK-TEST-GUIDE.txt               # ✨ 30-second visual testing guide
 ├── BUGFIX-EMPTY-ACCORDION.md          # Bug fix documentation
@@ -1062,26 +1062,26 @@ tail -f /var/log/nginx/error.log  # Nginx
   - UI/UX changes to results page
   - Results import/export workflows
 
-**Red Hat Solutions Quick Test** ✨ NEW (`test-redhat-quick.php`):
-- Fastest way to test Red Hat solutions feature (30 seconds)
-- Displays 3 key Red Hat solutions for quick verification
+**vendor Solutions Quick Test** ✨ NEW (`test-vendor-quick.php`):
+- Fastest way to test vendor solutions feature (30 seconds)
+- Displays 3 key vendor solutions for quick verification
 - Solutions included:
-  - Data Sovereignty: Red Hat OpenShift Observability
-  - Technical Sovereignty: Red Hat Trusted Software Supply Chain
-  - Managed Services: Red Hat OpenShift Service Mesh
-- Usage: Visit `http://your-server/test-redhat-quick.php` in browser
+  - Data Sovereignty: vendor solutions Observability
+  - Technical Sovereignty: vendor Trusted Software Supply Chain
+  - Managed Services: vendor solutions Service Mesh
+- Usage: Visit `http://your-server/test-vendor-quick.php` in browser
 - Perfect for:
-  - Quick verification that Red Hat solutions are displaying correctly
+  - Quick verification that vendor solutions are displaying correctly
   - Demonstrating the feature to stakeholders
-  - Testing styling changes to Red Hat solution boxes
+  - Testing styling changes to vendor solution boxes
 
-**Red Hat Solutions Comprehensive Test** ✨ NEW (`test-redhat-solutions.php`):
-- Comprehensive test showing all 14 Red Hat solutions across all 7 domains
+**vendor Solutions Comprehensive Test** ✨ NEW (`test-vendor-solutions.php`):
+- Comprehensive test showing all 14 vendor solutions across all 7 domains
 - Strategically sets maturity levels to trigger solution recommendations
 - Includes workshop notes for realistic context
-- Usage: Visit `http://your-server/test-redhat-solutions.php` in browser
+- Usage: Visit `http://your-server/test-vendor-solutions.php` in browser
 - Perfect for:
-  - Testing all Red Hat solutions at once
+  - Testing all vendor solutions at once
   - Verifying consistent styling across domains
   - Validating solution display logic
   - Testing detailed report generation with solutions
@@ -1089,7 +1089,7 @@ tail -f /var/log/nginx/error.log  # Nginx
 **Testing Documentation**:
 - `QUICK-TEST-GUIDE.txt`: 30-second visual guide with ASCII art
 - `TEST-FILES-README.md`: Complete test file reference
-- `TESTING-REDHAT-SOLUTIONS.md`: Detailed testing procedures and troubleshooting
+- `TESTING-VENDOR-SOLUTIONS.md`: Detailed testing procedures and troubleshooting
 
 ### Adding a New Profile Manually
 
@@ -1150,7 +1150,7 @@ Extend `includes/ProfileExporter.php` with new export methods
   - 5 email templates for workshop communication lifecycle
   - Executive summary template for C-suite presentations
   - Templates hub with visual card navigation
-  - Red Hat branding integration throughout
+  - vendor branding integration throughout
   - Print-optimized design for professional materials
 - ✨ **NEW**: Enhanced Results Page with Actionable Insights
   - New **Strengths** tab showing domain strengths analysis
@@ -1164,7 +1164,7 @@ Extend `includes/ProfileExporter.php` with new export methods
   - Shortened tab names for better UX (Overview, Strengths, Gaps, Details, Table)
   - Enhanced visual hierarchy and spacing
 - ✨ **NEW**: Detailed Report Enhancements
-  - Red Hat logo integration in PDF reports (centered, professional)
+  - vendor logo integration in PDF reports (centered, professional)
   - Business impact analysis for critical gaps
   - First steps guidance for addressing gaps
   - Quick wins recommendations for leveraging strengths
@@ -1364,19 +1364,19 @@ This project is licensed under the terms specified in the [LICENSE](LICENSE) fil
 
 ## Support and Contact
 
-- **Repository**: https://github.com/redhat-cop/viewfinder
+- **Repository**: https://github.com/viewfinder-project/viewfinder
 - **Container Registry**: quay.io/rhn_gps_cjenkins/viewfinder
-- **Maintainer**: Chris Jenkins (chrisj@redhat.com)
+- **Maintainer**: Chris Jenkins (viewfinder-project@example.com)
 - **Issues**: Please report bugs and feature requests via GitHub Issues
 
 ## Acknowledgments
 
-- Red Hat for PatternFly design system
+- vendor for PatternFly design system
 - D3.js community for visualization libraries
 - jQuery and Bootstrap communities
 - OpenSSF for security scorecard
 - Community contributors and users
-- Red Hat Community of Practice
+- Open Source Community
 
 ## Disclaimer
 
@@ -1386,4 +1386,4 @@ This application is provided for informational purposes only. The information is
 
 **Viewfinder Maturity Assessment** - Empowering organizations to measure, visualize, and improve their technology maturity.
 
-Made with ❤️ by the Red Hat Community of Practice
+Made with ❤️ by the Open Source Community

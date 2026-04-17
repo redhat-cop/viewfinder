@@ -592,8 +592,8 @@
         <i class="fa-solid fa-graduation-cap"></i> LEVEL 201 - DOMAIN OVERVIEW & ASSESSMENT
       </div>
       <h1><i class="fa-solid fa-book-open"></i> Full Maturity Assessment Enablement Guide</h1>
-      <p class="subtitle">A comprehensive guide for conducting Digital Sovereignty and Security maturity assessments</p>
-      <span class="version"><i class="fa-solid fa-tag"></i> Version 1.1 - 7th March 2026</span>
+      <p class="subtitle">A comprehensive guide for conducting Digital Sovereignty, AI Sovereignty, and Security maturity assessments</p>
+      <span class="version"><i class="fa-solid fa-tag"></i> Version 1.2 - 10th April 2026</span>
     </div>
 
     <!-- Table of Contents -->
@@ -626,7 +626,7 @@
       </div>
 
       <h3>Purpose of This Guide</h3>
-      <p>This <strong>Level 201</strong> Enablement Guide provides comprehensive instructions for conducting Full Maturity Assessments with customers and partners. It is designed for technical managers, solution architects, and workshop facilitators who need to deliver consistent, high-quality assessments that provide valuable insights into an organization's Digital Sovereignty and Security maturity.</p>
+      <p>This <strong>Level 201</strong> Enablement Guide provides comprehensive instructions for conducting Full Maturity Assessments with customers and partners. It is designed for technical managers, solution architects, and workshop facilitators who need to deliver consistent, high-quality assessments that provide valuable insights into an organization's Digital Sovereignty, AI Sovereignty, and Security maturity.</p>
 
       <p>This guide assumes familiarity with basic Digital Sovereignty concepts. If you or your audience are new to Digital Sovereignty, consider starting with the <a href="facilitator-guide-101.php" style="color: #12bbd4;">101 - Introduction guide</a>.</p>
 
@@ -677,13 +677,19 @@
       </table>
 
       <h3>Assessment Profiles</h3>
-      <p>We offer two primary assessment profiles, each focused on different organizational priorities:</p>
+      <p>We offer three primary assessment profiles, each focused on different organizational priorities:</p>
 
       <div class="domain-grid">
         <div class="domain-card">
           <h4><i class="fa-solid fa-shield-halved"></i> Digital Sovereignty</h4>
           <p><strong>7 Domains:</strong> Data Sovereignty, Technical Sovereignty, Operational Sovereignty, Assurance Sovereignty, Open Source, Executive Oversight, Managed Services</p>
           <p><strong>Focus:</strong> Organizational control and independence from external dependencies, particularly important for government, healthcare, finance, and organizations with strict data residency requirements.</p>
+        </div>
+
+        <div class="domain-card">
+          <h4><i class="fa-solid fa-brain"></i> AI Sovereignty</h4>
+          <p><strong>7 Domains:</strong> AI Data Sovereignty, AI Model Sovereignty, AI Infrastructure Sovereignty, AI Supply Chain Sovereignty, AI Governance & Compliance, AI Operations Sovereignty, AI Innovation Sovereignty</p>
+          <p><strong>Focus:</strong> Control over AI/ML systems, models, training data, and infrastructure. Essential for organizations deploying AI at scale, subject to AI regulations (EU AI Act), or requiring explainable and sovereign AI solutions.</p>
         </div>
 
         <div class="domain-card">
@@ -695,7 +701,7 @@
 
       <div class="info-box tip">
         <h4><i class="fa-solid fa-lightbulb"></i> Tip</h4>
-        <p>Most organizations benefit from starting with <strong>Digital Sovereignty</strong> as it addresses strategic independence concerns. Security assessments can follow to provide deeper technical security insights.</p>
+        <p>Most organizations benefit from starting with <strong>Digital Sovereignty</strong> to address strategic independence concerns. Organizations deploying AI/ML workloads should also consider the <strong>AI Sovereignty</strong> profile to ensure control over AI systems and compliance with emerging AI regulations. Security assessments can follow to provide deeper technical security insights.</p>
       </div>
     </div>
 
@@ -1011,18 +1017,29 @@
     <div id="domains" class="guide-section">
       <h2><i class="fa-solid fa-layer-group"></i> Domain Deep-Dives</h2>
 
-      <p>This section provides detailed guidance for each Digital Sovereignty domain. Each domain contains 8 questions organized into three tiers:</p>
+      <p>This section provides detailed guidance for each domain. Each domain contains 8 capabilities organized by importance tiers (this helps prioritize questions, but does not determine the final maturity rating):</p>
       <ul>
-        <li><strong>Foundation Tier (Questions 1-3):</strong> Basic capabilities and policies</li>
-        <li><strong>Strategic Tier (Questions 4-6):</strong> Advanced implementation and control</li>
-        <li><strong>Advanced Tier (Questions 7-8):</strong> Optimization and continuous improvement</li>
+        <li><strong>Foundation Tier (Capabilities 1-3):</strong> Basic capabilities and policies - essential starting points</li>
+        <li><strong>Strategic Tier (Capabilities 4-6):</strong> Advanced implementation and control - building on foundations</li>
+        <li><strong>Advanced Tier (Capabilities 7-8):</strong> Optimization and continuous improvement - achieving excellence</li>
       </ul>
 
       <div class="info-box">
-        <h4><i class="fa-solid fa-info-circle"></i> Understanding Points & Scoring</h4>
-        <p>Each capability is assigned points (1-8) reflecting its importance within the domain. Higher point values indicate more critical capabilities for achieving sovereignty.</p>
-        <p><strong>How scores are calculated:</strong> Each capability's slider value (0-3) is converted to a percentage (0%, 33%, 67%, or 100% of implementation), then multiplied by the capability's point value. For example, a 5-point capability rated "Work in Progress" (slider value 2) contributes 67% × 5 = 3.33 points.</p>
-        <p>The assessment automatically calculates domain scores by summing all capability contributions, then converts the total to an overall maturity level (Initial, Managed, Defined, Quantitatively Managed, or Optimizing).</p>
+        <h4><i class="fa-solid fa-info-circle"></i> Understanding the 5-Level Maturity Model</h4>
+        <p><strong>Important:</strong> The capability tiers above (Foundation/Strategic/Advanced) categorize <em>questions</em> by importance. The <strong>maturity levels</strong> below describe the <em>assessment outcome</em> based on total scores achieved.</p>
+
+        <p><strong>Maturity Levels (0-36 points per domain):</strong></p>
+        <ul style="margin: 0.5rem 0 0 1.5rem;">
+          <li><strong>Initial (0-7.2 points):</strong> Ad-hoc, unpredictable, reactive processes</li>
+          <li><strong>Managed (7.2-14.4 points):</strong> Processes planned and tracked, but still reactive</li>
+          <li><strong>Defined (14.4-21.6 points):</strong> Processes documented, standardized, and proactive</li>
+          <li><strong>Quantitatively Managed (21.6-28.8 points):</strong> Processes measured and controlled</li>
+          <li><strong>Optimizing (28.8-36 points):</strong> Focus on continuous improvement and innovation</li>
+        </ul>
+
+        <p><strong>How scores are calculated:</strong> For each capability, your implementation level (slider 0-3: No Capability, In Planning, Work in Progress, Fully Complete) is converted to a percentage (0%, 33%, 67%, or 100%), then multiplied by the capability's point value (1-8). The domain's total score (max 36) determines its maturity level.</p>
+
+        <p><em>Example:</em> A 5-point capability rated "Work in Progress" contributes 67% × 5 = 3.33 points to the domain total.</p>
       </div>
 
       <!-- Domain 1: Data Sovereignty -->
