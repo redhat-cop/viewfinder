@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Viewfinder Maturity Assessment</title>
+  <title>Maturity Assessment</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="alternate icon" href="favicon.ico">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
@@ -342,7 +342,7 @@
   <div class="container" style="max-width: 1200px; margin: 3rem auto;">
     <div style="text-align: center; margin-bottom: 3rem;">
       <h1 style="color: #9ec7fc; font-size: 2.5rem; margin-bottom: 1rem;">
-        <i class="fa-solid fa-compass"></i> Viewfinder Assessment Tools
+        <i class="fa-solid fa-compass"></i> Assessment Tools
       </h1>
       <p style="color: #ccc; font-size: 1.2rem; max-width: 800px; margin: 0 auto;">
         Red Hat technology maturity assessments and digital sovereignty qualification tools
@@ -594,9 +594,14 @@ body {
 <div class="container">
 <?php
 $controls = array();
+// Build controls array - filter out sub-domains from main navigation
 foreach($json as $key => $value) {
-	array_push($controls,$key);
+	// Only include domains that should display in main navigation
+	// Sub-domains (Domain-5, Domain-7) are integrated into their parent domains
+	if (!isset($value['display_in_main_nav']) || $value['display_in_main_nav'] !== false) {
+		array_push($controls,$key);
 	}
+}
 
 function getControls ($area,$json) {
 $i=1;
@@ -605,6 +610,19 @@ $infoId = $qnum . "-" . $i;
 $title = $json[$area]['title'];
 $control = $area;
 print "<div>" . $json[$area]['overview'] . "</div>";
+
+// Check if this domain includes sub-domains
+$hasSubdomains = isset($json[$area]['includes_subdomains']) && $json[$area]['includes_subdomains'] === true;
+
+// If domain has sub-domains, show section header for core capabilities
+if ($hasSubdomains && isset($json[$area]['section_1_label'])) {
+	print '<div style="margin: 1.5rem 0 1rem 0; padding: 0.75rem 1rem; background: linear-gradient(90deg, #0d60f8 0%, transparent 100%); border-left: 4px solid #0d60f8; border-radius: 4px;">';
+	print '<h3 style="color: #fff; margin: 0; font-size: 1.1rem; font-weight: 600;">';
+	print '<i class="fa-solid fa-layer-group" style="margin-right: 0.5rem;"></i>';
+	print $json[$area]['section_1_label'];
+	print '</h3>';
+	print '</div>';
+}
 
 // Create 2-column grid for sliders
 print "<div class='capability-slider-grid'>\n";
@@ -640,6 +658,58 @@ while( $i < 9) {
   $i++;
 }
 print "</div>"; // Close grid
+
+// If this domain includes sub-domains, render them now
+if ($hasSubdomains && isset($json[$area]['section_2_source'])) {
+	$subdomainKey = $json[$area]['section_2_source'];
+
+	// Section header for sub-domain
+	if (isset($json[$area]['section_2_label'])) {
+		print '<div style="margin: 2rem 0 1rem 0; padding: 0.75rem 1rem; background: linear-gradient(90deg, #12bbd4 0%, transparent 100%); border-left: 4px solid #12bbd4; border-radius: 4px;">';
+		print '<h3 style="color: #fff; margin: 0; font-size: 1.1rem; font-weight: 600;">';
+		print '<i class="fa-solid fa-puzzle-piece" style="margin-right: 0.5rem;"></i>';
+		print $json[$area]['section_2_label'];
+		print '</h3>';
+		print '</div>';
+	}
+
+	// Render sub-domain capabilities
+	if (isset($json[$subdomainKey])) {
+		$subQnum = $json[$subdomainKey]['qnum'];
+
+		print "<div class='capability-slider-grid'>\n";
+		$j = 1;
+		while ($j < 9) {
+			$summary = $j . '-summary';
+			if ($json[$subdomainKey][$summary] != "") {
+				$tooltipContent = htmlspecialchars($json[$subdomainKey][$summary], ENT_QUOTES, 'UTF-8');
+				$itemSummary = '&nbsp; <i class="fa-solid fa-circle-info tooltip-icon" style="cursor: help;" data-tooltip="' . $tooltipContent . '"></i>';
+			} else {
+				$itemSummary = "";
+			}
+
+			$points = $j . "-points";
+			$controlId = "control" . $subQnum . "-" . $j;
+
+			print '<div class="capability-slider-item">';
+			print '<div class="capability-name">' . $json[$subdomainKey][$j] . $itemSummary . '</div>';
+			print '<input type="range"
+				   min="0"
+				   max="3"
+				   value="0"
+				   step="1"
+				   class="maturity-slider"
+				   name="' . $controlId . '"
+				   id="' . $controlId . '"
+				   data-points="' . $json[$subdomainKey][$points] . '"
+				   oninput="updateSliderLabel(this)">';
+			print '<div class="slider-label" id="label-' . $controlId . '">No Capability (0)</div>';
+			print '</div>'. "\n";
+			$j++;
+		}
+		print "</div>"; // Close sub-domain grid
+	}
+}
 
 // Add facilitator notes textarea for this domain
 print '<div style="margin-top: 1.5rem; padding: 1rem; background: #1f1f1f; border-left: 3px solid #0d60f8; border-radius: 4px;">';
@@ -744,10 +814,23 @@ print '</div>';
 $first=0;
 foreach ($controls as $control) {
 	$title = $json[$control]['title'];
+	$badge = '';
+	$subtitle = '';
+
+	// Add cross-cutting badge for Executive Oversight
+	if (isset($json[$control]['group']) && $json[$control]['group'] === 'cross_cutting') {
+		$badge = ' <span style="font-size: 0.7rem; background: #f0ab00; color: #000; padding: 0.2rem 0.5rem; border-radius: 3px; margin-left: 0.5rem; font-weight: 600;">CROSS-CUTTING</span>';
+	}
+
+	// Add subtitle for domains with sub-pillars
+	if (isset($json[$control]['subtitle'])) {
+		$subtitle = '<br><span style="font-size: 0.75rem; font-weight: 400; color: #9ec7fc; opacity: 0.8;">' . $json[$control]['subtitle'] . '</span>';
+	}
+
   if ($first < 2) {
-	  print '<button class="tablinks" onclick="openCity(event, \'' . $control . '\')" id="defaultOpen">' . $title .'</button>';
+	  print '<button class="tablinks" onclick="openCity(event, \'' . $control . '\')" id="defaultOpen">' . $title . $badge . $subtitle .'</button>';
   } else {
-	  print '<button class="tablinks" onclick="openCity(event, \'' . $control . '\')">' . $title .'</button>';
+	  print '<button class="tablinks" onclick="openCity(event, \'' . $control . '\')">' . $title . $badge . $subtitle .'</button>';
 
   }
 $first++;

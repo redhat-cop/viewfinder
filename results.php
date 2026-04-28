@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us" class="pf-theme-dark">
   <head>
-  <title>Viewfinder - Results</title>
+  <title>Assessment Results</title>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -263,9 +263,14 @@ $nextSteps = array();
 $nextStepsHow = array();
 $nextDomain = array();
 $controls = array();
+// Build controls array - filter out sub-domains from main display
+// Sub-domains (Domain-5, Domain-7) are integrated into their parent domains
 foreach($json as $key => $value) {
-	array_push($controls,$key);
+	// Only include domains that should display in main navigation
+	if (!isset($value['display_in_main_nav']) || $value['display_in_main_nav'] !== false) {
+		array_push($controls,$key);
 	}
+}
 $controlTotal = array_fill(0,8,0);
 $controlDetails = array(array_fill(0,8,0));
 
@@ -326,26 +331,41 @@ $totalScore = array_sum($controlTotal);
 $weightedSum = 0;
 $totalWeight = 0;
 $maxPossiblePerDomain = 36; // Each domain has max 36 points (8 capabilities with varying point values)
+$totalMaxPoints = 0; // Track actual max points across all domains (including sub-domains)
 
 foreach ($controls as $control) {
     $title = $json[$control]['title'];
     $qnum = $json[$control]['qnum'];
     $domainScore = $controlTotal[$qnum];
+    $domainMaxPoints = $maxPossiblePerDomain;
+
+    // Check if this domain includes sub-domains and add their scores
+    if (isset($json[$control]['includes_subdomains']) && $json[$control]['includes_subdomains'] === true) {
+        if (isset($json[$control]['section_2_source'])) {
+            $subdomainKey = $json[$control]['section_2_source'];
+            if (isset($json[$subdomainKey])) {
+                $subQnum = $json[$subdomainKey]['qnum'];
+                $domainScore += $controlTotal[$subQnum];
+                $domainMaxPoints += $maxPossiblePerDomain; // Sub-domain also has 8 capabilities
+            }
+        }
+    }
 
     // Get weight for this domain (default 1.0 if not found)
     $weight = isset($domainWeights[$title]) ? $domainWeights[$title] : 1.0;
 
     // Calculate weighted contribution
     // Normalize domain score to 0-1 range, apply weight, then scale back
-    $domainPercentage = $domainScore / $maxPossiblePerDomain;
+    $domainPercentage = $domainScore / $domainMaxPoints;
     $weightedDomainScore = $domainPercentage * $weight;
 
     $weightedSum += $weightedDomainScore;
     $totalWeight += $weight;
+    $totalMaxPoints += $domainMaxPoints;
 }
 
-// Normalize weighted score to 0-252 scale (7 domains × 36 max points)
-$totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * (count($controls) * $maxPossiblePerDomain) : 0;
+// Normalize weighted score to 0-252 scale (total max points across all domains including sub-domains)
+$totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * $totalMaxPoints : 0;
 
 // Check if any workshop notes exist
 $hasNotes = false;
@@ -435,6 +455,19 @@ foreach ($controls as $control) {
 	$title = $json[$control]['title'];
 	$qnum = $json[$control]['qnum'];
 	$score = $controlTotal[$qnum];
+	$maxScore = 36; // Default for single domain (8 capabilities)
+
+	// Check if this domain includes sub-domains and add their scores
+	if (isset($json[$control]['includes_subdomains']) && $json[$control]['includes_subdomains'] === true) {
+		if (isset($json[$control]['section_2_source'])) {
+			$subdomainKey = $json[$control]['section_2_source'];
+			if (isset($json[$subdomainKey])) {
+				$subQnum = $json[$subdomainKey]['qnum'];
+				$score += $controlTotal[$subQnum];
+				$maxScore += 36; // Add max points for sub-domain (8 capabilities)
+			}
+		}
+	}
 
 	// Get weight for this domain
 	$weight = isset($domainWeights[$title]) ? $domainWeights[$title] : 1.0;
@@ -451,7 +484,13 @@ foreach ($controls as $control) {
 	    $displayTitle = str_replace(' ', '<br>', $title);
 	}
 
-	print "<td>" . $displayTitle . "</td>";
+	// Add subtitle for domains with sub-pillars
+	$subtitle = '';
+	if (isset($json[$control]['includes_subdomains']) && $json[$control]['includes_subdomains'] === true) {
+		$subtitle = '<br><span style="font-size: 0.75rem; color: #9ec7fc; font-style: italic;">incl. sub-pillar</span>';
+	}
+
+	print "<td>" . $displayTitle . $subtitle . "</td>";
 
 	// Weight column with badge
 	print "<td style='text-align: center;'>";
@@ -462,7 +501,7 @@ foreach ($controls as $control) {
 	$rating = MaturityRating::getRating($score);
 	$ratingClass = MaturityRating::getRatingClass($rating);
 	$displayScore = ceil($score); // Round up for display
-	print "<td class='" . $ratingClass . "'>" . $rating . " ($displayScore out of 36)</td>";
+	print "<td class='" . $ratingClass . "'>" . $rating . " ($displayScore out of $maxScore)</td>";
 	print "</tr>";
 }
 print '</table>';
@@ -482,6 +521,19 @@ foreach ($controls as $control) {
     $title = $json[$control]["title"];
     $score = $controlTotal[$qnum];
     $maxScore = 36;
+
+    // Check if this domain includes sub-domains and add their scores
+    if (isset($json[$control]['includes_subdomains']) && $json[$control]['includes_subdomains'] === true) {
+        if (isset($json[$control]['section_2_source'])) {
+            $subdomainKey = $json[$control]['section_2_source'];
+            if (isset($json[$subdomainKey])) {
+                $subQnum = $json[$subdomainKey]['qnum'];
+                $score += $controlTotal[$subQnum];
+                $maxScore += 36; // Add max points for sub-domain
+            }
+        }
+    }
+
     $percentage = round(($score / $maxScore) * 100);
     $rating = MaturityRating::getRating($score);
     $weight = isset($domainWeights[$title]) ? $domainWeights[$title] : 1.0;
@@ -1536,6 +1588,18 @@ foreach ($controls as $control) {
     $highest=0;
     $qnum = $json[$control]['qnum'];
 	$score = $controlTotal[$qnum];
+
+	// Check if this domain includes sub-domains and add their scores
+	if (isset($json[$control]['includes_subdomains']) && $json[$control]['includes_subdomains'] === true) {
+		if (isset($json[$control]['section_2_source'])) {
+			$subdomainKey = $json[$control]['section_2_source'];
+			if (isset($json[$subdomainKey])) {
+				$subQnum = $json[$subdomainKey]['qnum'];
+				$score += $controlTotal[$subQnum];
+			}
+		}
+	}
+
 	$title = $json[$control]['title'];
 	array_push($nextDomain, $title);
 	$rating = MaturityRating::getRating($score);
@@ -1548,8 +1612,11 @@ foreach ($controls as $control) {
     $qnum = $json[$control]['qnum'];
     $levelArray = array();
 
-    // Find the first capability that is not fully complete (value < 3)
+    // Find the first capability that is not fully complete (value < 3) in core domain
     $nextLevel = null;
+    $nextLevelSource = 'core'; // Track whether recommendation is from core or sub-domain
+    $nextLevelQnum = $qnum;
+
     for ($cap = 1; $cap <= 8; $cap++) {
         $controlId = "control{$qnum}-{$cap}";
         $capValue = isset($data[$controlId]) ? intval($data[$controlId]) : 0;
@@ -1564,39 +1631,70 @@ foreach ($controls as $control) {
         }
     }
 
+    // If core domain is complete and this domain has a sub-domain, check sub-domain capabilities
+    if ($nextLevel === null && isset($json[$control]['includes_subdomains']) && $json[$control]['includes_subdomains'] === true) {
+        if (isset($json[$control]['section_2_source'])) {
+            $subdomainKey = $json[$control]['section_2_source'];
+            if (isset($json[$subdomainKey])) {
+                $subQnum = $json[$subdomainKey]['qnum'];
+                $subdomainTitle = $json[$subdomainKey]['title'];
+
+                for ($cap = 1; $cap <= 8; $cap++) {
+                    $controlId = "control{$subQnum}-{$cap}";
+                    $capValue = isset($data[$controlId]) ? intval($data[$controlId]) : 0;
+
+                    if ($capValue > 0) {
+                        array_push($levelArray, $cap + 8); // Offset by 8 to avoid conflicts
+                    }
+
+                    // Find first incomplete capability in sub-domain
+                    if ($nextLevel === null && $capValue < 3) {
+                        $nextLevel = $cap;
+                        $nextLevelSource = 'subdomain';
+                        $nextLevelQnum = $subQnum;
+                    }
+                }
+            }
+        }
+    }
+
     if ($nextLevel !== null) {
+        // Determine which JSON object to use based on source
+        $sourceJson = $nextLevelSource === 'core' ? $json[$control] : $json[$json[$control]['section_2_source']];
+        $sourceDomainName = $nextLevelSource === 'core' ? '' : ' (' . $json[$json[$control]['section_2_source']]['title'] . ')';
+
         ## Check if there is a recommendation for the next level
         $nextRecommendation = $nextLevel . '-recommendation';
         $nextSummary = $nextLevel . '-summary';
         print "<h4 class=title-text>Recommendation</h4>";
-        print "<p>Start to work on preparing for actions concerning " . $json[$control][$nextLevel] . " (Level $nextLevel)<p>";
-        print "<br><p class=why-what>What is " . $json[$control][$nextLevel] . " ?</p><p>" . $json[$control][$nextSummary] . "</p>";
+        print "<p>Start to work on preparing for actions concerning " . $sourceJson[$nextLevel] . "$sourceDomainName (Level $nextLevel)<p>";
+        print "<br><p class=why-what>What is " . $sourceJson[$nextLevel] . " ?</p><p>" . $sourceJson[$nextSummary] . "</p>";
 
-        if ($json[$control][$nextRecommendation] != "") {
+        if ($sourceJson[$nextRecommendation] != "") {
             print "<br>";
-            print "<p>" . $json[$control][$nextRecommendation] . "<p>";
-			array_push($nextSteps,$json[$control][$nextLevel]);
-			array_push($nextStepsHow,$json[$control][$nextSummary]);
+            print "<p>" . $sourceJson[$nextRecommendation] . "<p>";
+			array_push($nextSteps,$sourceJson[$nextLevel]);
+			array_push($nextStepsHow,$sourceJson[$nextSummary]);
 
 			// Display Vendor Solution if available
 			$vendorSolutionField = $nextLevel . '-vendor-solution';
 			$vendorDescField = $nextLevel . '-vendor-description';
-			if (!empty($json[$control][$vendorSolutionField])) {
+			if (!empty($sourceJson[$vendorSolutionField])) {
 			    print '<div style="margin-top: 1.5rem; padding: 1.25rem; background: linear-gradient(135deg, rgba(13, 96, 248, 0.1) 0%, #2a2a2a 100%); border-left: 4px solid #0d60f8; border-radius: 6px;">';
 			    print '<h4 style="color: #9ec7fc; margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">';
 			    print '<i class="fa-solid fa-cube"></i> Vendor Solution';
 			    print '</h4>';
 			    print '<div style="font-weight: 600; color: #fff; font-size: 1.1rem; margin-bottom: 0.5rem;">' .
-			          Security::escape($json[$control][$vendorSolutionField]) . '</div>';
+			          Security::escape($sourceJson[$vendorSolutionField]) . '</div>';
 			    print '<p style="color: #e0e0e0; margin: 0; line-height: 1.6;">' .
-			          Security::escape($json[$control][$vendorDescField]) . '</p>';
+			          Security::escape($sourceJson[$vendorDescField]) . '</p>';
 			    print '</div>';
 			}
         } else {
         print "<p>You're doing great as you are!</p>";
     }
 } else {
-    // All capabilities in this domain are fully complete
+    // All capabilities in this domain are fully complete (including sub-domain if applicable)
     print "<h4 class=title-text>Excellent Work!</h4>";
     print "<p>All capabilities in this domain have reached full maturity (Fully Complete). Continue maintaining these capabilities and consider exploring advanced optimizations.</p>";
 }
@@ -1676,7 +1774,7 @@ print '<th class="table-header">' . $title .'</th>';
 <tr>
 <td class="optimizing"><strong>Optimizing</strong></td>
 <?php
-MaturityRating::putDomainStatus("8",$controlDetails,$json);
+MaturityRating::putDomainStatus("8",$controlDetails,$json,$controls);
 ?>
 </tr>
 
@@ -1684,49 +1782,49 @@ MaturityRating::putDomainStatus("8",$controlDetails,$json);
 <td class="quantitative"></td>
 
 <?php
-MaturityRating::putDomainStatus("7",$controlDetails,$json);
+MaturityRating::putDomainStatus("7",$controlDetails,$json,$controls);
 ?>
 </tr>
 
 <tr>
 <td class="quantitative"><strong>Quantitatively Managed</strong></td>
 <?php
-MaturityRating::putDomainStatus("6",$controlDetails,$json);
+MaturityRating::putDomainStatus("6",$controlDetails,$json,$controls);
 ?>
 </tr>
 
 <tr>
 <td class="defined"></td>
 <?php
-MaturityRating::putDomainStatus("5",$controlDetails,$json);
+MaturityRating::putDomainStatus("5",$controlDetails,$json,$controls);
 ?>
 </tr>
 
 <tr>
 <td class="defined"><strong>Defined</strong></td>
 <?php
-MaturityRating::putDomainStatus("4",$controlDetails,$json);
+MaturityRating::putDomainStatus("4",$controlDetails,$json,$controls);
 ?>
 </tr>
 
 <tr>
 <td class="managed"></td>
 <?php
-MaturityRating::putDomainStatus("3",$controlDetails,$json);
+MaturityRating::putDomainStatus("3",$controlDetails,$json,$controls);
 ?>
 </tr>
 
 <tr>
 <td class="managed"><strong>Managed</strong></td>
 <?php
-MaturityRating::putDomainStatus("2",$controlDetails,$json);
+MaturityRating::putDomainStatus("2",$controlDetails,$json,$controls);
 ?>
 </tr>
 
 <tr>
 <td class="initial"><strong>Initial</strong></td>
 <?php
-MaturityRating::putDomainStatus("1",$controlDetails,$json);
+MaturityRating::putDomainStatus("1",$controlDetails,$json,$controls);
 ?>
 
 </tr>
@@ -1851,11 +1949,29 @@ if (isset($_REQUEST['lob'])) {
 			var data = [
 					  [
 						<?php
-						$numControls = 1;
 						foreach ($controls as $control) {
 							$title = $json[$control]['title'];
-							print '{axis:"' . $title . '",value: ' . $controlTotal[$numControls]. '},';		
-							$numControls++;
+							$qnum = $json[$control]['qnum'];
+							$radarScore = $controlTotal[$qnum];
+							$radarMaxScore = 36;
+
+							// Check if this domain includes sub-domains and add their scores
+							if (isset($json[$control]['includes_subdomains']) && $json[$control]['includes_subdomains'] === true) {
+								if (isset($json[$control]['section_2_source'])) {
+									$subdomainKey = $json[$control]['section_2_source'];
+									if (isset($json[$subdomainKey])) {
+										$subQnum = $json[$subdomainKey]['qnum'];
+										$radarScore += $controlTotal[$subQnum];
+										$radarMaxScore += 36; // Add max for sub-domain
+									}
+								}
+							}
+
+							// Normalize all domains to 36-point scale for consistent radar chart display
+							// This ensures domains with sub-pillars (72 max) are comparable to single domains (36 max)
+							$normalizedScore = $radarMaxScore > 0 ? ($radarScore / $radarMaxScore) * 36 : 0;
+
+							print '{axis:"' . $title . '",value: ' . round($normalizedScore, 1) . '},';
 						}
 						?>
 
@@ -1872,7 +1988,7 @@ if (isset($_REQUEST['lob'])) {
 			  w: width,
 			  h: height,
 			  margin: margin,
-			  maxValue: 0.5,
+			  maxValue: 36,  // All domains normalized to 36-point scale for fair comparison
 			  roundStrokes: true,
 			  color: color,
 			};

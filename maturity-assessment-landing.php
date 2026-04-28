@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Full Maturity Assessment - Viewfinder</title>
+  <title>Full Maturity Assessment</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="alternate icon" href="favicon.ico">
   <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -353,8 +353,10 @@
     // Get domain names for each profile dynamically
     $profileDomains = [];
 
-    // Digital Sovereignty domains
-    $profileDomains['DigitalSovereignty'] = ['Data Sovereignty', 'Technical Sovereignty', 'Operational Sovereignty', 'Assurance Sovereignty', 'Open Source', 'Executive Oversight', 'Managed Services'];
+    // Digital Sovereignty domains (reorganized: 4 main + 1 cross-cutting)
+    // Note: Open Source is now a sub-pillar of Technical Sovereignty
+    // Note: Managed Services is now a sub-pillar of Operational Sovereignty
+    $profileDomains['DigitalSovereignty'] = ['Data Sovereignty', 'Technical Sovereignty', 'Operational Sovereignty', 'Assurance Sovereignty', 'Executive Oversight'];
 
     // AI Sovereignty domains
     $profileDomains['AISovereignty'] = ['AI Data Sovereignty', 'AI Model Sovereignty', 'AI Infrastructure Sovereignty', 'AI Supply Chain Sovereignty', 'AI Governance & Compliance', 'AI Operations Sovereignty', 'AI Innovation Sovereignty'];

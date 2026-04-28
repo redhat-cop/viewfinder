@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Import Assessment Results - Viewfinder</title>
+  <title>Import Assessment Results</title>
 
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/brands.css" />
@@ -221,7 +221,7 @@
 
     <div class="import-header">
       <h1><i class="fa-solid fa-upload"></i> Import Assessment Results</h1>
-      <p>Upload a previously exported Viewfinder assessment results file</p>
+      <p>Upload a previously exported assessment results file</p>
     </div>
 
     <?php if (isset($error)): ?>
@@ -238,7 +238,7 @@
         <li>Digital Sovereignty Readiness Assessment results (JSON format)</li>
       </ul>
       <p style="margin-top: 1rem; color: #999;">
-        Maximum file size: 5MB. Only files exported from Viewfinder are supported.
+        Maximum file size: 5MB. Only files exported from this assessment tool are supported.
       </p>
     </div>
 

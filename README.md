@@ -1,10 +1,10 @@
-# Viewfinder - Maturity Assessment Tool
+# Maturity Assessment Tool
 
 A comprehensive web-based assessment platform for evaluating organizational maturity across multiple domains including Security, Digital Sovereignty, AI Readiness, multiple technology and operational domains.
 
 ## Overview
 
-Viewfinder is a dynamic assessment tool designed to help organizations measure and visualize their maturity levels across various technology and operational domains. The platform provides interactive assessments, real-time scoring, visual analytics, and detailed recommendations for improvement based on industry best practices and regulatory requirements.
+This is a dynamic assessment tool designed to help organizations measure and visualize their maturity levels across various technology and operational domains. The platform provides interactive assessments, real-time scoring, visual analytics, and detailed recommendations for improvement based on industry best practices and regulatory requirements.
 
 ## Screenshots
 
@@ -28,7 +28,7 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 
 ### Assessment Capabilities
 - **Multi-Profile Assessments**: Security, Digital Sovereignty, AI Readiness, OpenShift, RHEL, and custom profiles
-- **Multi-Domain Evaluation**: 7 control domains per profile
+- **Multi-Domain Evaluation**: Multiple control domains per profile (e.g., Digital Sovereignty has 5 main domains with integrated sub-pillars)
 - **5-Level Maturity Model**: ✨ Initial, Managed, Defined, Quantitatively Managed, Optimizing (industry-standard progressive framework)
 - **8 Capability Levels**: Progressive maturity scoring from 1-8 points per domain
 - **Real-time Scoring**: Dynamic calculation of maturity scores as assessments are completed
@@ -175,11 +175,11 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 - **PDF Export**: Professional PDF report generation via Dompdf
 - **Auto-Save Progress**: Automatically saves form progress and current section in browser
 - **Keyboard Navigation**: Arrow keys to navigate between sections, Ctrl+S to save
-- **Full Assessment Link**: Easy transition to complete Viewfinder DS assessment
+- ****Full Assessment Link**: Easy transition to complete Digital Sovereignty assessment
 
 ### Digital Sovereignty Quiz ✨ NEW
 - **Interactive Knowledge Assessment**: Engaging True/False quiz format testing Digital Sovereignty understanding
-- **7 Domain Coverage**: Questions spanning all critical DS domains
+- ****5 Main Domains**: Questions spanning Data, Technical, Operational, Assurance, and Executive Oversight domains
   - Data Sovereignty (encryption, residency, metadata)
   - Technical Sovereignty (vendor lock-in, open standards, portability)
   - Operational Sovereignty (service independence, expertise, disaster recovery)
@@ -200,7 +200,7 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
   - Top 5 rankings displayed
   - Privacy-first design (opt-in only)
 - **Local Data Processing**: All quiz data processed locally, no external tracking
-- **PatternFly Dark Theme**: Consistent styling with main Viewfinder application
+- ****PatternFly Dark Theme**: Consistent styling with main application
 - **Responsive Design**: Mobile-friendly interface for all devices
 
 ### Profile Management System
@@ -237,17 +237,17 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 ### Assessment Results Export/Import ✨ NEW
 - **Export Assessment Results**: Save completed assessment results for record-keeping and sharing
   - **Security Assessments**: Export from results page after completing any Security assessment
-    - Filename format: `viewfinder-{Profile}-{YYYYMMDD}-{HHMM}.json`
-    - Example: `viewfinder-Security-20260224-1430.json`
+    - Filename format: `maturity-assessment-{Profile}-{YYYYMMDD}-{HHMM}.json`
+    - Example: `maturity-assessment-Security-20260224-1430.json`
     - Includes all assessment data (profile, LOB, frameworks, control responses)
     - Preserves calculated scores and maturity ratings
   - **DS Readiness Assessment**: Export from readiness assessment results page
-    - Filename format: `viewfinder-readiness-assessment-{YYYYMMDD}-{HHMM}.json`
-    - Example: `viewfinder-readiness-assessment-20260224-1430.json`
+    - Filename format: `maturity-assessment-readiness-assessment-{YYYYMMDD}-{HHMM}.json`
+    - Example: `maturity-assessment-readiness-assessment-20260224-1430.json`
     - Includes question responses and domain scores
     - Preserves maturity level and recommendations
   - One-click download with timestamped filenames
-  - JSON format compatible with any Viewfinder installation
+  - JSON format compatible with any installation
   - Works for ephemeral results (URL parameters, session data)
 
 - **Import Assessment Results**: Restore previously exported results for viewing
@@ -275,7 +275,7 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
   - **Sharing**: Share assessment results with stakeholders or consultants
   - **Comparison**: Compare assessments over time by importing historical results
   - **Backup**: Save results from URL-based assessments before losing the link
-  - **Migration**: Transfer results between Viewfinder installations
+  - **Migration**: Transfer results between installations
   - **Offline Analysis**: Download results for offline review and analysis
 
 ### Security & Reliability
@@ -296,22 +296,22 @@ Viewfinder is a dynamic assessment tool designed to help organizations measure a
 
 ```bash
 # Clone the repository
-git clone https://github.com/viewfinder-project/viewfinder.git
+git clone https://github.com/your-org/maturity-assessment.git
 cd viewfinder
 
 # Build with Podman (or Docker)
-podman build -t viewfinder:latest .
+podman build -t maturity-assessment:latest .
 
 # Run the container
-podman run -p 8080:8080 localhost/viewfinder
+podman run -p 8080:8080 localhost/maturity-assessment
 ```
 
 #### Option 2: Use Pre-built Image
 
 ```bash
 # Pull and run the pre-built image
-podman pull quay.io/rhn_gps_cjenkins/viewfinder
-podman run -p 8080:8080 quay.io/rhn_gps_cjenkins/viewfinder
+podman pull your-registry/maturity-assessment
+podman run -p 8080:8080 your-registry/maturity-assessment
 ```
 
 #### Option 3: Direct Installation
@@ -330,7 +330,7 @@ php -m | grep -E 'json|fileinfo|mbstring'
 
 1. **Clone and install dependencies**
 ```bash
-git clone https://github.com/viewfinder-project/viewfinder.git
+git clone https://github.com/your-org/maturity-assessment.git
 cd viewfinder
 composer install
 ```
@@ -499,7 +499,7 @@ You'll see the **Landing Page Dashboard** with four main sections:
 
 #### Scoring
 - Per domain: 36 points (9 capabilities × 0-4 points each)
-- Total assessment: 252 points (7 domains × 36 points)
+- Total assessment: 252 points (56 capabilities across 5 main domains)
 - ✨ Industry-weighted scoring adjusts final score based on domain importance for your sector
 
 #### Results Tabs
@@ -567,7 +567,7 @@ The DS Readiness Assessment is a lightweight tool designed for organizations to 
 
 **Results Include:**
 - **Score Card**: Visual maturity indicator with total score
-- **Domain Breakdown**: Maturity analysis across 7 domains (Data, Technical, Operational, Assurance, Open Source, Executive, Managed Services)
+- ****Domain Breakdown**: Maturity analysis across 5 main domains (Data, Technical with Open Source sub-pillar, Operational with Managed Services sub-pillar, Assurance, Executive Oversight)
 - **Improvement Actions**: Recommended next steps based on maturity level
 - **Domain Insights**: Detailed view of strengths and improvement areas
 - **PDF Report**: Professional downloadable report for stakeholders
@@ -576,24 +576,24 @@ The DS Readiness Assessment is a lightweight tool designed for organizations to 
 **Next Steps:**
 - **Download PDF**: Generate professional report for sharing with stakeholders
 - **New Assessment**: Start another assessment
-- **Full Assessment**: Run complete Viewfinder DS assessment for comprehensive analysis
+- **Full Assessment**: Run complete Digital Sovereignty assessment for comprehensive analysis
 
 ### Exporting and Importing Assessment Results
 
-Assessment results can be exported and imported to preserve completed assessments, share with stakeholders, or transfer between Viewfinder installations.
+Assessment results can be exported and imported to preserve completed assessments, share with stakeholders, or transfer between installations.
 
 #### Export Security Assessment Results
 1. Complete a Security assessment (any profile)
 2. View the results page
 3. Click the **Export Results** button in the header
-4. File downloads automatically with format: `viewfinder-{Profile}-{YYYYMMDD}-{HHMM}.json`
+4. File downloads automatically with format: `maturity-assessment-{Profile}-{YYYYMMDD}-{HHMM}.json`
 5. Save the file to your desired location
 
 #### Export DS Readiness Assessment Results
 1. Complete a Digital Sovereignty Readiness Assessment
 2. View the results page
 3. Click the **Export Results** button in the header
-4. File downloads automatically with format: `viewfinder-readiness-assessment-{YYYYMMDD}-{HHMM}.json`
+4. File downloads automatically with format: `maturity-assessment-readiness-assessment-{YYYYMMDD}-{HHMM}.json`
 5. Save the file to your desired location
 
 #### Import Assessment Results
@@ -634,7 +634,7 @@ Navigate to **Manage Profiles** button in the header to access the unified admin
 1. Click **Create New Profile** button
 2. Complete the 4-step wizard:
    - **Step 1 - Metadata**: Profile name, display name, enabled status
-   - **Step 2 - Domains**: Define 7 control domains with titles and descriptions
+   - **Step 2 - Domains**: Define control domains with titles and descriptions (5-7 domains typically)
    - **Step 3 - Capabilities**: Configure 8 capabilities per domain (names, tiers, recommendations)
    - **Step 4 - Review**: Preview JSON structure and confirm
 3. Click **Generate Profile** to create
@@ -713,7 +713,7 @@ The following profiles are **protected** from deletion and overwrite:
 
 ## Profile JSON Format
 
-Profiles follow a standardized JSON structure with 7 domains and 8 capabilities each:
+Profiles follow a standardized JSON structure with domains and 8 capabilities each:
 
 ```json
 {
@@ -778,7 +778,7 @@ Profiles follow a standardized JSON structure with 7 domains and 8 capabilities 
 **Note:** All Digital Sovereignty and Security profile JSON files have been reorganized to group capability fields together for easier editing. Each capability's fields (name, summary, tier, points, recommendation, and vendor solution fields) are now consecutive in the JSON structure.
 
 ### Validation Rules:
-- Must have exactly 7 domains (Domain-1 through Domain-7)
+- Must have domains (typically Domain-1 through Domain-7, with some marked as sub-domains)
 - Each domain must have exactly 8 capabilities (1 through 8)
 - Tier must be one of: Foundation, Strategic, Advanced
 - Points must match capability number (capability 1 = "1" points, capability 2 = "2" points, etc.)
@@ -946,8 +946,8 @@ class Config {
         Require all granted
     </Directory>
 
-    ErrorLog ${APACHE_LOG_DIR}/viewfinder-error.log
-    CustomLog ${APACHE_LOG_DIR}/viewfinder-access.log combined
+    ErrorLog ${APACHE_LOG_DIR}/maturity-assessment-error.log
+    CustomLog ${APACHE_LOG_DIR}/maturity-assessment-access.log combined
 </VirtualHost>
 ```
 
@@ -1001,7 +1001,7 @@ cat controls-{ProfileName}.json
 
 **Issue**: Validation fails on import
 **Solution**: Ensure JSON file has:
-- Exactly 7 domains (Domain-1 through Domain-7)
+- Domains defined in JSON (Domain-1 through Domain-7 for Digital Sovereignty)
 - Exactly 8 capabilities per domain (1 through 8)
 - All required fields for each domain and capability
 - Valid tier values (Foundation, Strategic, Advanced)
@@ -1076,7 +1076,7 @@ tail -f /var/log/nginx/error.log  # Nginx
   - Testing styling changes to vendor solution boxes
 
 **vendor Solutions Comprehensive Test** ✨ NEW (`test-vendor-solutions.php`):
-- Comprehensive test showing all 14 vendor solutions across all 7 domains
+- Comprehensive test showing vendor solutions across all domains
 - Strategically sets maturity levels to trigger solution recommendations
 - Includes workshop notes for realistic context
 - Usage: Visit `http://your-server/test-vendor-solutions.php` in browser
@@ -1234,8 +1234,8 @@ Extend `includes/ProfileExporter.php` with new export methods
 - ✨ **NEW**: ResultsImporter class with comprehensive validation
 - ✨ **NEW**: ResultsException for structured error handling
 - ✨ **NEW**: Session-based secure data transfer for imports
-- 🔧 **IMPROVED**: Filename format: `viewfinder-{Profile}-{YYYYMMDD}-{HHMM}.json` for Security
-- 🔧 **IMPROVED**: Filename format: `viewfinder-readiness-assessment-{YYYYMMDD}-{HHMM}.json` for DS
+- 🔧 **IMPROVED**: Filename format: `maturity-assessment-{Profile}-{YYYYMMDD}-{HHMM}.json` for Security
+- 🔧 **IMPROVED**: Filename format: `maturity-assessment-readiness-assessment-{YYYYMMDD}-{HHMM}.json` for DS
 - 🔧 **IMPROVED**: Export buttons added to all results pages
 - 🔧 **IMPROVED**: Import buttons added throughout application
 - 🔧 **IMPROVED**: All results tabs work correctly with imported data (Radar, Recommendations, etc.)
@@ -1364,9 +1364,9 @@ This project is licensed under the terms specified in the [LICENSE](LICENSE) fil
 
 ## Support and Contact
 
-- **Repository**: https://github.com/viewfinder-project/viewfinder
-- **Container Registry**: quay.io/rhn_gps_cjenkins/viewfinder
-- **Maintainer**: Chris Jenkins (viewfinder-project@example.com)
+- **Repository**: https://github.com/your-org/maturity-assessment
+- **Container Registry**: your-registry/maturity-assessment
+- **Maintainer**: Chris Jenkins (maintainer.com)
 - **Issues**: Please report bugs and feature requests via GitHub Issues
 
 ## Acknowledgments
@@ -1384,6 +1384,6 @@ This application is provided for informational purposes only. The information is
 
 ---
 
-**Viewfinder Maturity Assessment** - Empowering organizations to measure, visualize, and improve their technology maturity.
+**Maturity Assessment Tool** - Empowering organizations to measure, visualize, and improve their technology maturity.
 
 Made with ❤️ by the Open Source Community

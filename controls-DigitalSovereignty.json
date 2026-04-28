@@ -58,7 +58,10 @@
         "8-points": "8",
         "8-recommendation": "<h2 class='why-what'>What is Data Access by Third Parties?</h2><p>Third-Party Data Access regulates when and how external vendors, partners, or contractors can access organizational data. Vendors with privileged access can become vectors for foreign legal demands, state-sponsored espionage, or accidental data exposure across jurisdictions. Without strict controls, third-party access can undermine sovereignty protections—even sovereign-stored, encrypted data becomes vulnerable if vendor administrators can access it.</p><h2 class='why-what'>Executive Recommendations</h2><p>Develop and strictly enforce a <b>Third-Party Data Access Policy</b> that defines clear, time-limited thresholds for what data can be accessed, by whom, and under what circumstances (e.g., maintenance, support, legal request). Require a comprehensive annual re-vetting of all vendors that retain privileged access to sensitive data or systems.</p><p><strong>Key Actions:</strong> Develop and Board-approve comprehensive third-party access policy; implement formal vendor risk assessments evaluating personnel locations and legal jurisdictions; require contractual clauses specifying geographic restrictions and notification of foreign legal demands; mandate annual security re-assessments including background checks; require business justification and executive approval for privileged access; include vendor access scenarios in incident response plans; and ensure vendor contracts include liability clauses and indemnification.</p><h2 class='why-what'>Technical Recommendations</h2><p>Enforce <b>Just-in-Time (JIT) access</b> and <b>Ephemeral Credentials</b> for all third-party access, ensuring permissions automatically expire after a defined short period. Require all external administrative access to be channeled through a monitored and recorded <b>Jump Box</b> or privileged access management (PAM) solution to ensure full audibility of all vendor actions.</p><p><strong>Implementation Guidelines:</strong> Implement JIT access granting permissions only for approved time windows with automatic revocation; generate temporary, single-use ephemeral credentials; deploy PAM solutions with session recording and activity monitoring; require vendor access through hardened jump boxes in sovereign infrastructure; implement full session recording stored in immutable storage; mandate strong MFA using hardware tokens; isolate vendor access networks using strict segmentation; deploy UEBA to detect anomalous activities; implement automated access request workflows; establish automated revocation triggered by contract expiration or incidents; and provide masked or synthetic test data where possible.</p>",
         "8-vendor-solution": "",
-        "8-vendor-description": ""
+        "8-vendor-description": "",
+        "group": "main",
+        "display_order": 1,
+        "includes_subdomains": false
     },
     "Domain-2": {
         "overview": "This domain evaluates your control over foundational technology components—from hardware and firmware to application source code.<ul style='list-style: disc; margin-left: 1.5rem; margin-top: 0.5rem;'><li><b>Platform Control:</b> Reduces reliance on proprietary interfaces and single-vendor ecosystems.</li><li><b>Portability & Standards:</b> Prioritizes open standards enabling migration between platforms.</li><li><b>Vendor Independence:</b> Maintains ability to rebuild or migrate critical functions independently.</li><li><b>Lock-in Mitigation:</b> Minimizes technical dependencies that restrict future flexibility.</li></ul>",
@@ -119,7 +122,19 @@
         "8-points": "8",
         "8-recommendation": "<h2 class='why-what'>Executive </h2><p>Develop a proactive <b>3-5 year technology roadmap</b> that explicitly identifies and tracks dependencies on external technologies, with a goal of replacing high-risk proprietary components with sovereign-compliant alternatives. Budget for <b>sunset clauses</b> and associated migration costs for legacy, non-compliant systems.</p><h2 class='why-what'>Technical</h2><p>Adopt a <b>'Next-Gen' Architecture Review Board</b> composed of senior engineers and architects to vet all new technology choices against the long-term sovereignty roadmap. prioritise technologies that are <b>platform-neutral</b> and benefit from robust, continuous community support to ensure longevity and avoid future forced upgrades.</p>",
         "8-vendor-solution": "",
-        "8-vendor-description": ""
+        "8-vendor-description": "",
+        "group": "main",
+        "display_order": 2,
+        "includes_subdomains": true,
+        "subdomain_titles": [
+            "Domain-5"
+        ],
+        "subtitle": "Including Open Source & Vendor Independence",
+        "section_1_label": "Core Technical Sovereignty",
+        "section_1_capabilities": "Capabilities 1-8",
+        "section_2_label": "Open Source (Sub-Pillar)",
+        "section_2_capabilities": "Capabilities from Open Source domain",
+        "section_2_source": "Domain-5"
     },
     "Domain-3": {
         "overview": "This domain examines your autonomy and independence in executing critical business and IT operations without reliance on external expertise or infrastructure.<ul style='list-style: disc; margin-left: 1.5rem; margin-top: 0.5rem;'><li><b>Internal Capability:</b> Develops and maintains in-house skills for critical operations.</li><li><b>Operational Resilience:</b> Ensures business continuity through locally managed processes.</li><li><b>Independent Response:</b> Executes incident response and disaster recovery without external support.</li><li><b>Process Autonomy:</b> Operates systems free from external interference or vendor dependencies.</li></ul>",
@@ -180,7 +195,19 @@
         "8-points": "8",
         "8-recommendation": "<h2 class='why-what'>Executive </h2><p>Identify and formally list all <b>Critical Business Functions (CBFs)</b> and mandate a plan to achieve <b>Operational Autonomy</b> for each, ensuring they can operate for a defined period (e.g., 30 days) without external managed services or proprietary vendor inputs. This requires dedicated budget and executive oversight.</p><h2 class='why-what'>Technical</h2><p>Establish <b>Air-Gapped or Fully Isolated Network Segments</b> for hosting CBFs. Implement internal tooling and automation to manage and patch these environments independently, minimizing the need for external network connectivity or reliance on vendor-provided updates.</p>",
         "8-vendor-solution": "",
-        "8-vendor-description": ""
+        "8-vendor-description": "",
+        "group": "main",
+        "display_order": 3,
+        "includes_subdomains": true,
+        "subdomain_titles": [
+            "Domain-7"
+        ],
+        "subtitle": "Including Managed Services & Third Parties",
+        "section_1_label": "Core Operational Sovereignty",
+        "section_1_capabilities": "Capabilities 1-8",
+        "section_2_label": "Managed Services (Sub-Pillar)",
+        "section_2_capabilities": "Capabilities from Managed Services domain",
+        "section_2_source": "Domain-7"
     },
     "Domain-4": {
         "overview": "This domain addresses your ability to verify security and compliance claims—ensuring trust is verified, not assumed.<ul style='list-style: disc; margin-left: 1.5rem; margin-top: 0.5rem;'><li><b>Independent Verification:</b> Controls all audit and security monitoring data with local retention.</li><li><b>Audit Rights:</b> Maintains contractual authority to mandate independent inspections.</li><li><b>Continuous Validation:</b> Implements technical verification of security controls and claims.</li><li><b>Evidence Control:</b> Retains logs and monitoring data for independent forensic analysis.</li></ul>",
@@ -241,7 +268,10 @@
         "8-points": "8",
         "8-recommendation": "<h2 class='why-what'>Executive </h2><p>Implement a program for <b>Continuous Security Control Validation (CSCV)</b> to ensure that security measures are not only implemented but remain effective against current threats over time. Link CSCV results directly to the risk management framework to ensure high-risk control failures are immediately escalated to the executive level.</p><h2 class='why-what'>Technical</h2><p>Deploy <b>Breach and Attack Simulation (BAS)</b> tools to continuously test the efficacy of security controls against real-world threats. Use automated scanning tools to verify that security configurations (e.g., firewall rules, encryption settings) align with the documented sovereign policy baseline.</p>",
         "8-vendor-solution": "",
-        "8-vendor-description": ""
+        "8-vendor-description": "",
+        "group": "main",
+        "display_order": 4,
+        "includes_subdomains": false
     },
     "Domain-5": {
         "overview": "This domain focuses on strategic adoption of Open Source Software (OSS) to eliminate vendor dependency and strengthen technical control.<ul style='list-style: disc; margin-left: 1.5rem; margin-top: 0.5rem;'><li><b>Strategic OSS Use:</b> Goes beyond consumption to active assessment of stability and security.</li><li><b>Code Transparency:</b> Develops internal expertise to audit, modify, and understand source code.</li><li><b>Community Engagement:</b> Contributes to critical projects ensuring influence over direction.</li><li><b>Fork Capability:</b> Maintains viable contingency plans to fork and self-maintain if needed.</li></ul>",
@@ -302,7 +332,11 @@
         "8-points": "8",
         "8-recommendation": "<h2 class='why-what'>Executive </h2><p>Develop a structured approach to <b>Influence OSS Roadmaps</b> by sponsoring new features, providing detailed use cases, and establishing contractual relationships with companies that are major contributors to relevant projects. Use financial backing to steer development toward sovereign-compatible features.</p><h2 class='why-what'>Technical</h2><p>Assign lead architects to develop and submit <b>formal proposals and Requests for Comments (RFCs)</b> to the OSS communities, guiding the evolution of the software to meet the organisation's long-term autonomy and feature requirements.</p>",
         "8-vendor-solution": "",
-        "8-vendor-description": ""
+        "8-vendor-description": "",
+        "group": "subdomain",
+        "parent_domain": "Domain-2",
+        "display_in_main_nav": false,
+        "integrated_note": "This domain is now integrated as a sub-pillar of Technical Sovereignty"
     },
     "Domain-6": {
         "overview": "This domain assesses formal governance and strategic integration of Digital Sovereignty principles across your organisation.<ul style='list-style: disc; margin-left: 1.5rem; margin-top: 0.5rem;'><li><b>Board-Level Strategy:</b> Elevates sovereignty from IT concern to core business strategy.</li><li><b>Policy Framework:</b> Establishes organization-wide policies with dedicated budgets.</li><li><b>KPI Integration:</b> Tracks sovereignty metrics alongside other strategic performance indicators.</li><li><b>Executive Accountability:</b> Regular board reporting fostering organization-wide awareness.</li></ul>",
@@ -363,7 +397,12 @@
         "8-points": "8",
         "8-recommendation": "<h2 class='why-what'>Executive </h2><p>Define clear, quantifiable <b>Key Performance Indicators (KPIs)</b> for digital sovereignty, such as 'Percentage of Critical Data under Sovereign Key Control' or 'Time to Recover Critical Functions in an Autonomy Event'. These KPIs should be tracked monthly and ideally linked to executive compensation.</p><h2 class='why-what'>Technical</h2><p>Implement <b>automated measurement tools</b> and dashboards to gather data for these KPIs directly from the technical environment (e.g., cloud API calls, EKM system logs), ensuring objective, consistent, and low-latency reporting on maturity progress.</p>",
         "8-vendor-solution": "",
-        "8-vendor-description": ""
+        "8-vendor-description": "",
+        "group": "cross_cutting",
+        "display_order": 5,
+        "badge": "Cross-Cutting",
+        "icon": "fa-chess-king",
+        "description_short": "Foundational governance layer that applies across all sovereignty domains"
     },
     "Domain-7": {
         "overview": "This domain scrutinises control mechanisms within cloud environments, ensuring sovereignty within your rented infrastructure.<ul style='list-style: disc; margin-left: 1.5rem; margin-top: 0.5rem;'><li><b>Sovereign Placement:</b> Enforces strict local residency and jurisdictional control.</li><li><b>Key Independence:</b> Manages encryption keys separately from cloud provider control.</li><li><b>Provider Accountability:</b> Audits provider control planes and operational practices.</li><li><b>Exit Strategy:</b> Maintains fully tested multi-cloud migration preventing vendor lock-in.</li></ul>",
@@ -424,6 +463,10 @@
         "8-points": "8",
         "8-recommendation": "<h2 class='why-what'>Executive </h2><p>Develop and regularly <b>Test a Multi-Cloud Exit Strategy</b> that includes formal criteria for triggering a migration (e.g., major geopolitical event, vendor failure), a fully costed plan, and a dedicated executive team to manage the process.</p><h2 class='why-what'>Technical</h2><p>Perform <b>simulated migration exercises</b> on non-production environments annually. Maintain automated tools and playbooks that can efficiently package, transfer, and redeploy critical workloads and their data to an alternative sovereign-compliant target platform in a time-bound manner.</p>",
         "8-vendor-solution": "",
-        "8-vendor-description": ""
+        "8-vendor-description": "",
+        "group": "subdomain",
+        "parent_domain": "Domain-3",
+        "display_in_main_nav": false,
+        "integrated_note": "This domain is now integrated as a sub-pillar of Operational Sovereignty"
     }
 }

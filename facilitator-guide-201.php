@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Enablement Guide 201 - Domain Overview & Assessment - Viewfinder</title>
+  <title>Enablement Guide 201 - Domain Overview & Assessment</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/tab-dark.css">
@@ -849,7 +849,7 @@
       <h3>Technical Setup</h3>
       <p>Before the session, ensure:</p>
       <ul>
-        <li>Access to the Viewfinder assessment tool at the appropriate URL</li>
+        <li>Access to the assessment tool at the appropriate URL</li>
         <li>Screen sharing capability if conducting remotely</li>
         <li>Backup recording/note-taking method in case of technical issues</li>
         <li>Sample results ready to show (if first-time participants)</li>

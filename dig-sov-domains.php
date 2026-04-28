@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Digital Sovereignty Domains - Viewfinder</title>
+  <title>Digital Sovereignty Domains</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="alternate icon" href="favicon.ico">
   <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -431,56 +431,53 @@
     $controlsFile = __DIR__ . '/controls-DigitalSovereignty.json';
     $controlsData = json_decode(file_get_contents($controlsFile), true);
 
-    // Define domain information with icons
+    // Define main domain information with icons
+    // Note: Domain-5 (Open Source) is now integrated into Technical Sovereignty
+    // Note: Domain-7 (Managed Services) is now integrated into Operational Sovereignty
     $domains = [
       [
         'title' => 'Data Sovereignty',
         'slug' => 'data-sovereignty',
         'icon' => 'fa-database',
         'description' => 'Ultimate control over your data, independent of external jurisdictions or political influences. Ensures jurisdictional independence, active governance, and unilateral access.',
-        'domain_key' => 'Domain-1'
+        'domain_key' => 'Domain-1',
+        'is_main' => true
       ],
       [
         'title' => 'Technical Sovereignty',
         'slug' => 'technical-sovereignty',
         'icon' => 'fa-microchip',
-        'description' => 'Control over foundational technology components—from hardware and firmware to application source code. Reduces vendor lock-in and ensures platform independence.',
-        'domain_key' => 'Domain-2'
+        'description' => 'Control over foundational technology components—from hardware and firmware to application source code. Includes Open Source as a sub-pillar covering vendor independence and community-driven innovation.',
+        'domain_key' => 'Domain-2',
+        'is_main' => true,
+        'includes_subdomain' => true,
+        'subdomain_name' => 'Open Source'
       ],
       [
         'title' => 'Operational Sovereignty',
         'slug' => 'operational-sovereignty',
         'icon' => 'fa-gears',
-        'description' => 'Independence in day-to-day operations, incident response, and business continuity. Maintains operational capability even during vendor disruptions or geopolitical events.',
-        'domain_key' => 'Domain-3'
+        'description' => 'Independence in day-to-day operations, incident response, and business continuity. Includes Managed Services as a sub-pillar covering third-party provider oversight and contractual protections.',
+        'domain_key' => 'Domain-3',
+        'is_main' => true,
+        'includes_subdomain' => true,
+        'subdomain_name' => 'Managed Services'
       ],
       [
         'title' => 'Assurance Sovereignty',
         'slug' => 'assurance-sovereignty',
         'icon' => 'fa-shield-halved',
         'description' => 'Independent verification and validation of security controls, compliance, and risk management. Ensures trust through transparent auditing and certification.',
-        'domain_key' => 'Domain-4'
-      ],
-      [
-        'title' => 'Open Source',
-        'slug' => 'open-source',
-        'icon' => 'fa-code-branch',
-        'description' => 'Leveraging open-source software to maintain transparency, avoid vendor lock-in, and enable community-driven innovation while maintaining strategic control.',
-        'domain_key' => 'Domain-5'
+        'domain_key' => 'Domain-4',
+        'is_main' => true
       ],
       [
         'title' => 'Executive Oversight',
         'slug' => 'executive-oversight',
         'icon' => 'fa-chess-king',
-        'description' => 'Leadership accountability and governance structures ensuring sovereignty principles are embedded in strategic decisions, risk management, and organizational culture.',
-        'domain_key' => 'Domain-6'
-      ],
-      [
-        'title' => 'Managed Services',
-        'slug' => 'managed-services',
-        'icon' => 'fa-handshake',
-        'description' => 'Strategic oversight of third-party service providers, ensuring contractual protections, service continuity, and alignment with sovereignty requirements.',
-        'domain_key' => 'Domain-7'
+        'description' => 'Leadership accountability and governance structures ensuring sovereignty principles are embedded in strategic decisions, risk management, and organizational culture. This is a cross-cutting capability that applies across all sovereignty domains.',
+        'domain_key' => 'Domain-6',
+        'is_cross_cutting' => true
       ]
     ];
 
@@ -524,13 +521,34 @@
             }
           }
         }
+
+        // Add sub-domain capabilities if applicable
+        if (isset($domain['includes_subdomain']) && $domain['includes_subdomain']) {
+          $subdomainKey = $controlsData[$domain['domain_key']]['section_2_source'];
+          if (isset($controlsData[$subdomainKey])) {
+            foreach ($controlsData[$subdomainKey] as $key => $value) {
+              if (is_numeric($key)) {
+                $capabilityCount++;
+              }
+            }
+          }
+        }
+
+        // Prepare badges
+        $badges = '';
+        if (isset($domain['includes_subdomain']) && $domain['includes_subdomain']) {
+          $badges .= '<span style="font-size: 0.7rem; background: #12bbd4; color: #fff; padding: 0.2rem 0.5rem; border-radius: 3px; margin-left: 0.5rem;">Includes ' . $domain['subdomain_name'] . '</span>';
+        }
+        if (isset($domain['is_cross_cutting']) && $domain['is_cross_cutting']) {
+          $badges .= '<span style="font-size: 0.7rem; background: #f0ab00; color: #000; padding: 0.2rem 0.5rem; border-radius: 3px; margin-left: 0.5rem; font-weight: 600;">CROSS-CUTTING</span>';
+        }
       ?>
       <a href="dig-sov-<?php echo $domain['slug']; ?>.php" class="domain-card">
         <div class="domain-header">
           <div class="domain-icon">
             <i class="fa-solid <?php echo $domain['icon']; ?>"></i>
           </div>
-          <h3 class="domain-title"><?php echo htmlspecialchars($domain['title']); ?></h3>
+          <h3 class="domain-title"><?php echo htmlspecialchars($domain['title']); ?><?php echo $badges; ?></h3>
         </div>
         <p class="domain-description"><?php echo htmlspecialchars($domain['description']); ?></p>
         <div class="domain-meta">

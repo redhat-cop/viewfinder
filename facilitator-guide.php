@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Enablement Guides - Choose Your Level - Viewfinder</title>
+  <title>Enablement Guides - Choose Your Level</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/tab-dark.css">
@@ -396,7 +396,7 @@
   </div>
 
   <footer>
-    <p>&copy; 2026 Red Hat, Inc. | Viewfinder - Digital Sovereignty Assessment Platform</p>
+    <p>&copy; 2026 Red Hat, Inc. | Digital Sovereignty Assessment Platform</p>
   </footer>
 </body>
 </html>

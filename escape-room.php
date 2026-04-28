@@ -259,7 +259,7 @@
     <div class="pf-c-page__header-brand">
       <div class="pf-c-page__header-brand-toggle"></div>
       <a class="pf-c-page__header-brand-link" href="index.php">
-        <img class="pf-c-brand" src="images/viewfinder-logo.png" alt="Viewfinder logo" />
+        <!-- <img class="pf-c-brand" src="images/viewfinder-logo.png" alt="Viewfinder logo" /> -->
       </a>
     </div>
     <div class="pf-c-page__header-tools">

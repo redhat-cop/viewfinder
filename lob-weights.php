@@ -141,9 +141,7 @@ return [
                 'Technical Sovereignty' => 1.0,
                 'Operational Sovereignty' => 1.0,
                 'Assurance Sovereignty' => 1.0,
-                'Open Source' => 1.0,
-                'Executive Oversight' => 1.0,
-                'Managed Services' => 1.0
+                'Executive Oversight' => 1.0
             ]
         ],
         'General' => [
@@ -155,9 +153,7 @@ return [
                 'Technical Sovereignty' => 1.0,
                 'Operational Sovereignty' => 1.0,
                 'Assurance Sovereignty' => 1.0,
-                'Open Source' => 1.0,
-                'Executive Oversight' => 1.0,
-                'Managed Services' => 1.0
+                'Executive Oversight' => 1.0
             ]
         ],
         'Finance' => [
@@ -166,12 +162,10 @@ return [
             'icon' => 'fa-building-columns',
             'weights' => [
                 'Data Sovereignty' => 2.0,           // Critical: Data residency
-                'Technical Sovereignty' => 1.0,      // Standard
-                'Operational Sovereignty' => 1.5,    // Important: Business continuity
+                'Technical Sovereignty' => 1.0,      // Standard (includes Open Source sub-pillar)
+                'Operational Sovereignty' => 1.5,    // Important: Business continuity (includes Managed Services sub-pillar)
                 'Assurance Sovereignty' => 2.0,      // Critical: Audit requirements
-                'Open Source' => 1.0,                // Standard
-                'Executive Oversight' => 1.5,        // Important: Governance
-                'Managed Services' => 1.5            // Important: Third-party risk
+                'Executive Oversight' => 1.5         // Important: Governance
             ]
         ],
         'Healthcare' => [
@@ -180,12 +174,10 @@ return [
             'icon' => 'fa-heart-pulse',
             'weights' => [
                 'Data Sovereignty' => 2.0,           // Critical: Patient data
-                'Technical Sovereignty' => 1.0,      // Standard
-                'Operational Sovereignty' => 2.0,    // Critical: 24/7 operations
+                'Technical Sovereignty' => 1.0,      // Standard (includes Open Source sub-pillar)
+                'Operational Sovereignty' => 2.0,    // Critical: 24/7 operations (includes Managed Services sub-pillar)
                 'Assurance Sovereignty' => 1.5,      // Important: Compliance
-                'Open Source' => 1.0,                // Standard
-                'Executive Oversight' => 1.5,        // Important
-                'Managed Services' => 1.5            // Important
+                'Executive Oversight' => 1.5         // Important
             ]
         ],
         'Government' => [
@@ -194,12 +186,10 @@ return [
             'icon' => 'fa-landmark',
             'weights' => [
                 'Data Sovereignty' => 2.0,           // Critical: Citizen data
-                'Technical Sovereignty' => 1.5,      // Important: Independence
-                'Operational Sovereignty' => 1.5,    // Important: Continuity
+                'Technical Sovereignty' => 1.5,      // Important: Independence (includes Open Source sub-pillar for transparency)
+                'Operational Sovereignty' => 1.5,    // Important: Continuity (includes Managed Services sub-pillar for control)
                 'Assurance Sovereignty' => 2.0,      // Critical: National security
-                'Open Source' => 1.5,                // Important: Transparency
-                'Executive Oversight' => 2.0,        // Critical: Accountability
-                'Managed Services' => 1.5            // Important: Control
+                'Executive Oversight' => 2.0         // Critical: Accountability
             ]
         ],
         'Manufacturing' => [
@@ -208,12 +198,10 @@ return [
             'icon' => 'fa-industry',
             'weights' => [
                 'Data Sovereignty' => 1.5,           // Important: IP protection
-                'Technical Sovereignty' => 1.0,      // Standard
-                'Operational Sovereignty' => 2.0,    // Critical: Production uptime
+                'Technical Sovereignty' => 1.0,      // Standard (includes Open Source sub-pillar)
+                'Operational Sovereignty' => 2.0,    // Critical: Production uptime, OT/IT integration (includes Managed Services sub-pillar)
                 'Assurance Sovereignty' => 1.5,      // Important: Quality
-                'Open Source' => 1.0,                // Standard
-                'Executive Oversight' => 1.5,        // Important
-                'Managed Services' => 2.0            // Critical: OT/IT integration
+                'Executive Oversight' => 1.5         // Important
             ]
         ],
         'Telecommunications' => [
@@ -222,12 +210,10 @@ return [
             'icon' => 'fa-tower-cell',
             'weights' => [
                 'Data Sovereignty' => 2.0,           // Critical: Subscriber data
-                'Technical Sovereignty' => 1.5,      // Important: Network independence
-                'Operational Sovereignty' => 2.0,    // Critical: Service availability
+                'Technical Sovereignty' => 1.5,      // Important: Network independence (includes Open Source sub-pillar)
+                'Operational Sovereignty' => 2.0,    // Critical: Service availability (includes Managed Services sub-pillar)
                 'Assurance Sovereignty' => 2.0,      // Critical: NIS2 compliance
-                'Open Source' => 1.0,                // Standard
-                'Executive Oversight' => 1.5,        // Important
-                'Managed Services' => 1.5            // Important
+                'Executive Oversight' => 1.5         // Important
             ]
         ],
         'Other' => [
@@ -239,9 +225,7 @@ return [
                 'Technical Sovereignty' => 1.0,
                 'Operational Sovereignty' => 1.0,
                 'Assurance Sovereignty' => 1.0,
-                'Open Source' => 1.0,
-                'Executive Oversight' => 1.0,
-                'Managed Services' => 1.0
+                'Executive Oversight' => 1.0
             ]
         ]
     ],
