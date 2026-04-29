@@ -682,7 +682,7 @@
       <div class="domain-grid">
         <div class="domain-card">
           <h4><i class="fa-solid fa-shield-halved"></i> Digital Sovereignty</h4>
-          <p><strong>7 Domains:</strong> Data Sovereignty, Technical Sovereignty, Operational Sovereignty, Assurance Sovereignty, Open Source, Executive Oversight, Managed Services</p>
+          <p><strong>5 Main Domains:</strong> Data Sovereignty, Technical Sovereignty (includes Open Source sub-pillar), Operational Sovereignty (includes Managed Services sub-pillar), Assurance Sovereignty, Executive Oversight (cross-cutting)</p>
           <p><strong>Focus:</strong> Organizational control and independence from external dependencies, particularly important for government, healthcare, finance, and organizations with strict data residency requirements.</p>
         </div>
 
@@ -805,7 +805,7 @@
       </div>
       <div class="collapsible-content">
         <p><strong>Best for:</strong> Industrial manufacturing, automotive, aerospace, discrete manufacturing</p>
-        <p><strong>Emphasized domains:</strong> Operational Sovereignty (2.0×), Managed Services (2.0×)</p>
+        <p><strong>Emphasized domains:</strong> Operational Sovereignty (2.0× - includes Managed Services sub-pillar)</p>
         <p><strong>Rationale:</strong> Manufacturers prioritize production uptime, OT/IT integration, and IP protection for proprietary designs and processes.</p>
       </div>
 
@@ -874,7 +874,7 @@
         </div>
         <div class="timeline-item">
           <h5>0:25-2:25 - Domain Assessment (120 min)</h5>
-          <p>Work through each domain systematically (~17 min per domain for 7 domains)</p>
+          <p>Work through each domain systematically (~24 min per domain for 5 main domains)</p>
         </div>
         <div class="timeline-item">
           <h5>2:25-2:45 - Results Review (20 min)</h5>
@@ -1009,7 +1009,7 @@
         <li><strong>Park discussions</strong> - "That's an important topic; let's capture it for the roadmap discussion and continue"</li>
         <li><strong>Batch related questions</strong> - "These next 3 questions are all about encryption; let's discuss them together"</li>
         <li><strong>Take strategic breaks</strong> - Break between domains (5 min every 45 min)</li>
-        <li><strong>Show progress</strong> - "We're through 3 of 7 domains—great progress!"</li>
+        <li><strong>Show progress</strong> - "We're through 3 of 5 domains—great progress!"</li>
       </ul>
     </div>
 
@@ -1661,11 +1661,11 @@
       </div>
 
       <h3 style="border-top: 2px solid #0d60f8; padding-top: 2rem; margin-top: 2rem;">
-        <i class="fa-solid fa-code-branch"></i> Domain 5: Open Source
+        <i class="fa-solid fa-code-branch"></i> Domain 5: Open Source <span style="background: #12bbd4; color: #fff; padding: 0.25rem 0.75rem; border-radius: 3px; font-size: 0.85rem; margin-left: 0.5rem;">Sub-pillar of Technical Sovereignty</span>
       </h3>
       <div class="info-box tip">
         <h4><i class="fa-solid fa-quote-left"></i> Domain Overview</h4>
-        <p>This domain assesses the organization's strategic use of open-source software to reduce proprietary dependencies, increase transparency, and build internal capabilities. Mature organizations actively contribute to and influence open-source projects critical to their sovereignty goals.</p>
+        <p>This domain assesses the organization's strategic use of open-source software to reduce proprietary dependencies, increase transparency, and build internal capabilities. Mature organizations actively contribute to and influence open-source projects critical to their sovereignty goals. <strong>Note:</strong> Open Source capabilities are integrated as a sub-pillar within Technical Sovereignty domain in the assessment results.</p>
       </div>
       <p><strong>Key Focus Areas:</strong> Open source strategy, community participation, license compliance, vulnerability management, sovereign distributions, contribution policies, internal expertise, project governance</p>
       <p><strong>Common Discussion Topics:</strong> Red Hat Enterprise Linux, Kubernetes, Apache projects, InnerSource, security scanning, open source vs. commercial support</p>
@@ -1957,11 +1957,11 @@
       </div>
 
       <h3 style="border-top: 2px solid #0d60f8; padding-top: 2rem; margin-top: 2rem;">
-        <i class="fa-solid fa-handshake"></i> Domain 7: Managed Services
+        <i class="fa-solid fa-handshake"></i> Domain 7: Managed Services <span style="background: #12bbd4; color: #fff; padding: 0.25rem 0.75rem; border-radius: 3px; font-size: 0.85rem; margin-left: 0.5rem;">Sub-pillar of Operational Sovereignty</span>
       </h3>
       <div class="info-box tip">
         <h4><i class="fa-solid fa-quote-left"></i> Domain Overview</h4>
-        <p>This domain evaluates how the organization manages relationships with external managed service providers while maintaining sovereignty. It addresses vendor selection criteria, contractual controls, geographic restrictions, transition planning, and the balance between operational efficiency and sovereign control.</p>
+        <p>This domain evaluates how the organization manages relationships with external managed service providers while maintaining sovereignty. It addresses vendor selection criteria, contractual controls, geographic restrictions, transition planning, and the balance between operational efficiency and sovereign control. <strong>Note:</strong> Managed Services capabilities are integrated as a sub-pillar within Operational Sovereignty domain in the assessment results.</p>
       </div>
       <p><strong>Key Focus Areas:</strong> Vendor selection criteria, contractual controls, geographic restrictions, data access limitations, performance monitoring, transition planning, alternatives evaluation, insourcing capabilities</p>
       <p><strong>Common Discussion Topics:</strong> Domestic vs. foreign MSPs, data center locations, support personnel jurisdictions, exit strategies, dual-source strategies</p>

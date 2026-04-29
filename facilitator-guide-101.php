@@ -509,7 +509,7 @@
       <ul>
         <li>Understand what Digital Sovereignty means and why it matters to modern organizations</li>
         <li>Recognize the key business risks and regulatory drivers</li>
-        <li>Identify the seven domains of Digital Sovereignty at a high level</li>
+        <li>Identify the five main domains of Digital Sovereignty and their integrated sub-pillars</li>
         <li>Articulate the business value and competitive advantages of Digital Sovereignty</li>
         <li>Understand next steps for assessing and improving their organization's maturity</li>
       </ul>
@@ -519,9 +519,8 @@
         <li><strong>Introduction & Context</strong> (10 minutes) - Set the stage, explain why now</li>
         <li><strong>What is Digital Sovereignty?</strong> (15 minutes) - Core concepts and definitions</li>
         <li><strong>Business Drivers & Risks</strong> (15 minutes) - Why it matters to your organization</li>
-        <li><strong>The Seven Domains</strong> (25 minutes) - High-level overview of each domain</li>
-        <li><strong>Real-World Examples</strong> (10 minutes) - Success stories and cautionary tales</li>
-        <li><strong>Next Steps & Q&A</strong> (15 minutes) - Path forward and discussion</li>
+        <li><strong>The Five Domains</strong> (30 minutes) - High-level overview of each domain and sub-pillars</li>
+        <li><strong>Next Steps & Q&A</strong> (20 minutes) - Path forward and discussion</li>
       </ol>
     </div>
 
@@ -601,11 +600,11 @@
       </div>
     </div>
 
-    <!-- The Seven Domains -->
+    <!-- The Five Domains -->
     <div class="guide-section">
-      <h2><i class="fa-solid fa-layer-group"></i> The Seven Domains of Digital Sovereignty</h2>
+      <h2><i class="fa-solid fa-layer-group"></i> The Five Domains of Digital Sovereignty</h2>
 
-      <p>Digital Sovereignty is measured across seven interconnected domains. For this executive overview, focus on the <strong>business value and risks</strong> of each domain, not technical details:</p>
+      <p>Digital Sovereignty is measured across five main domains with integrated sub-pillars. For this executive overview, focus on the <strong>business value and risks</strong> of each domain, not technical details:</p>
 
       <div class="domain-grid">
         <div class="domain-card">
@@ -617,13 +616,15 @@
         <div class="domain-card">
           <h4><i class="fa-solid fa-microchip"></i> 2. Technical Sovereignty</h4>
           <p><strong>What it means:</strong> Freedom from vendor lock-in through open standards, APIs, and data portability.</p>
-          <p><strong>Business risk if lacking:</strong> Trapped with single vendor, escalating costs, inability to innovate independently.</p>
+          <p><strong>Includes:</strong> Open Source practices - leveraging transparent, community-driven software you can inspect, modify, and control.</p>
+          <p><strong>Business risk if lacking:</strong> Trapped with single vendor, escalating costs, inability to innovate independently, proprietary software "black boxes."</p>
         </div>
 
         <div class="domain-card">
           <h4><i class="fa-solid fa-gears"></i> 3. Operational Sovereignty</h4>
           <p><strong>What it means:</strong> Ability to operate systems and services independently without relying on single vendors or regions.</p>
-          <p><strong>Business risk if lacking:</strong> Business continuity threats, service outages beyond your control, operational blind spots.</p>
+          <p><strong>Includes:</strong> Managed Services controls - maintaining contractual protections and exit rights when outsourcing operations.</p>
+          <p><strong>Business risk if lacking:</strong> Business continuity threats, service outages beyond your control, losing control to service providers, difficult provider changes.</p>
         </div>
 
         <div class="domain-card">
@@ -633,127 +634,16 @@
         </div>
 
         <div class="domain-card">
-          <h4><i class="fa-brands fa-osi"></i> 5. Open Source Sovereignty</h4>
-          <p><strong>What it means:</strong> Leveraging transparent, community-driven software you can inspect, modify, and control.</p>
-          <p><strong>Business risk if lacking:</strong> Proprietary software "black boxes," forced upgrades, hidden security vulnerabilities.</p>
-        </div>
-
-        <div class="domain-card">
-          <h4><i class="fa-solid fa-users-gear"></i> 6. Executive Oversight</h4>
-          <p><strong>What it means:</strong> Leadership actively manages sovereignty risks and makes informed strategic decisions.</p>
+          <h4><i class="fa-solid fa-users-gear"></i> 5. Executive Oversight <span style="background: #f0ab00; color: #000; padding: 0.25rem 0.5rem; border-radius: 3px; font-size: 0.75rem; margin-left: 0.5rem;">CROSS-CUTTING</span></h4>
+          <p><strong>What it means:</strong> Leadership actively manages sovereignty risks across all domains and makes informed strategic decisions.</p>
           <p><strong>Business risk if lacking:</strong> Sovereignty risks not understood at board level, reactive rather than strategic approach.</p>
-        </div>
-
-        <div class="domain-card">
-          <h4><i class="fa-solid fa-handshake"></i> 7. Managed Services</h4>
-          <p><strong>What it means:</strong> When outsourcing, maintaining contractual controls and exit rights to protect sovereignty.</p>
-          <p><strong>Business risk if lacking:</strong> Losing control to service providers, difficult/impossible to change providers, hidden dependencies.</p>
         </div>
       </div>
 
       <div class="info-box tip">
         <h4><i class="fa-solid fa-comments"></i> Facilitation Tip</h4>
         <p>For each domain, ask: <strong>"Which of these domains do you think represents the biggest risk or opportunity for your organization?"</strong></p>
-        <p>This engages participants and helps them connect the concepts to their business context.</p>
-      </div>
-    </div>
-
-    <!-- Real-World Examples -->
-    <div class="guide-section">
-      <h2><i class="fa-solid fa-globe"></i> Real-World Examples</h2>
-
-      <h3>Success Stories</h3>
-
-      <div class="collapsible-header" onclick="toggleSection(this)">
-        <h4><i class="fa-solid fa-building-columns"></i> European Central Bank (ECB)</h4>
-        <span class="toggle-icon"><i class="fa-solid fa-chevron-down"></i></span>
-      </div>
-      <div class="collapsible-content">
-        <p><strong>Challenge:</strong> ECB needed to modernize IT infrastructure while maintaining strict data sovereignty and operational independence.</p>
-        <p><strong>Solution:</strong> Adopted hybrid cloud built on open-source technologies (Red Hat OpenShift) with data kept within EU jurisdiction and no single vendor dependency.</p>
-        <p><strong>Outcome:</strong> Full regulatory compliance, operational flexibility, and ability to innovate without vendor constraints.</p>
-      </div>
-
-      <div class="collapsible-header" onclick="toggleSection(this)">
-        <h4><i class="fa-solid fa-hospital"></i> Major Healthcare Provider</h4>
-        <span class="toggle-icon"><i class="fa-solid fa-chevron-down"></i></span>
-      </div>
-      <div class="collapsible-content">
-        <p><strong>Challenge:</strong> Patient data sovereignty requirements, HIPAA compliance, and vendor lock-in preventing innovation.</p>
-        <p><strong>Solution:</strong> Migrated from proprietary cloud to sovereign cloud infrastructure with bring-your-own-key (BYOK) encryption and regional data storage.</p>
-        <p><strong>Outcome:</strong> Met all regulatory requirements, reduced vendor dependency, 40% cost reduction over 3 years.</p>
-      </div>
-
-      <div class="collapsible-header" onclick="toggleSection(this)">
-        <h4><i class="fa-solid fa-university"></i> National Australia Bank</h4>
-        <span class="toggle-icon"><i class="fa-solid fa-chevron-down"></i></span>
-      </div>
-      <div class="collapsible-content">
-        <p><strong>Challenge:</strong> One of Australia's largest banks needed to modernize legacy infrastructure while meeting strict financial regulatory requirements and maintaining operational control.</p>
-        <p><strong>Solution:</strong> Deployed Red Hat OpenShift Container Platform to create a modern, open hybrid cloud foundation with full operational sovereignty and no vendor lock-in.</p>
-        <p><strong>Outcome:</strong> Accelerated application delivery from months to weeks, maintained full control over critical financial systems, and achieved regulatory compliance across all domains. Reduced infrastructure costs by 30%.</p>
-      </div>
-
-      <div class="collapsible-header" onclick="toggleSection(this)">
-        <h4><i class="fa-solid fa-building"></i> Deutsche Börse Group</h4>
-        <span class="toggle-icon"><i class="fa-solid fa-chevron-down"></i></span>
-      </div>
-      <div class="collapsible-content">
-        <p><strong>Challenge:</strong> Europe's largest stock exchange operator required sovereign infrastructure to handle mission-critical trading systems while meeting strict EU regulatory requirements.</p>
-        <p><strong>Solution:</strong> Built private cloud infrastructure using Red Hat OpenStack and OpenShift, keeping all data within EU jurisdiction with full operational independence.</p>
-        <p><strong>Outcome:</strong> Achieved 99.99% uptime for trading systems, complete data sovereignty compliance, and ability to rapidly innovate without external dependencies. Processes over €8 trillion in annual trading volume with full control.</p>
-      </div>
-
-      <div class="collapsible-header" onclick="toggleSection(this)">
-        <h4><i class="fa-solid fa-tower-cell"></i> Telefónica</h4>
-        <span class="toggle-icon"><i class="fa-solid fa-chevron-down"></i></span>
-      </div>
-      <div class="collapsible-content">
-        <p><strong>Challenge:</strong> One of the world's largest telecommunications providers needed to modernize infrastructure for 5G while maintaining sovereignty over critical network infrastructure and customer data.</p>
-        <p><strong>Solution:</strong> Deployed Red Hat OpenShift to build cloud-native 5G core network with open standards, avoiding vendor lock-in and maintaining full operational control.</p>
-        <p><strong>Outcome:</strong> Successfully deployed sovereign 5G infrastructure across Europe and Latin America, reduced vendor dependency, and accelerated service deployment by 60%. Full control over network operations and customer data.</p>
-      </div>
-
-      <div class="collapsible-header" onclick="toggleSection(this)">
-        <h4><i class="fa-solid fa-shield"></i> UK Ministry of Defence</h4>
-        <span class="toggle-icon"><i class="fa-solid fa-chevron-down"></i></span>
-      </div>
-      <div class="collapsible-content">
-        <p><strong>Challenge:</strong> Required sovereign cloud infrastructure for defense applications with absolute data sovereignty, no foreign dependencies, and complete operational control.</p>
-        <p><strong>Solution:</strong> Built secure private cloud using Red Hat Enterprise Linux and OpenShift, with all infrastructure UK-based and managed internally with open-source transparency.</p>
-        <p><strong>Outcome:</strong> Achieved complete digital sovereignty for defense operations, full security audit capability, and ability to rapidly deploy mission-critical applications without external vendor dependencies. Zero foreign government access risk.</p>
-      </div>
-
-      <div class="collapsible-header" onclick="toggleSection(this)">
-        <h4><i class="fa-solid fa-plane"></i> Lufthansa Group</h4>
-        <span class="toggle-icon"><i class="fa-solid fa-chevron-down"></i></span>
-      </div>
-      <div class="collapsible-content">
-        <p><strong>Challenge:</strong> Europe's largest airline group needed to modernize IT operations while maintaining sovereignty over passenger data and operational systems across multiple jurisdictions.</p>
-        <p><strong>Solution:</strong> Implemented Red Hat Ansible Automation Platform and OpenShift to create standardized, portable infrastructure with data kept in appropriate jurisdictions and no single cloud provider lock-in.</p>
-        <p><strong>Outcome:</strong> Reduced automation time by 90%, maintained full GDPR compliance with data sovereignty, and achieved operational flexibility to move workloads between cloud providers as needed. Saved €10+ million in infrastructure costs.</p>
-      </div>
-
-      <h3>Cautionary Tales</h3>
-
-      <div class="collapsible-header" onclick="toggleSection(this)">
-        <h4><i class="fa-solid fa-triangle-exclamation"></i> Privacy Shield Invalidation (2020)</h4>
-        <span class="toggle-icon"><i class="fa-solid fa-chevron-down"></i></span>
-      </div>
-      <div class="collapsible-content">
-        <p><strong>What happened:</strong> EU court invalidated EU-US Privacy Shield, leaving 5,300+ companies unable to legally transfer European customer data to US.</p>
-        <p><strong>Impact:</strong> Companies faced millions in legal fees, emergency infrastructure changes, potential GDPR fines up to 4% of global revenue.</p>
-        <p><strong>Lesson:</strong> Relying on single jurisdiction for data storage creates regulatory risk. Geographic data sovereignty essential.</p>
-      </div>
-
-      <div class="collapsible-header" onclick="toggleSection(this)">
-        <h4><i class="fa-solid fa-triangle-exclamation"></i> Major Vendor Service Outage</h4>
-        <span class="toggle-icon"><i class="fa-solid fa-chevron-down"></i></span>
-      </div>
-      <div class="collapsible-content">
-        <p><strong>What happened:</strong> Global cloud provider had 7-hour outage affecting thousands of businesses.</p>
-        <p><strong>Impact:</strong> Companies with no operational sovereignty couldn't access critical systems, losing millions in revenue.</p>
-        <p><strong>Lesson:</strong> Operational sovereignty (multi-cloud, hybrid strategies) provides resilience against single-vendor failures.</p>
+        <p>This engages participants and helps them connect the concepts to their business context. Note that Technical Sovereignty includes Open Source practices, and Operational Sovereignty includes Managed Services controls.</p>
       </div>
     </div>
 
@@ -799,7 +689,7 @@
       <div class="info-box">
         <h4><i class="fa-solid fa-lightbulb"></i> Assessment Recommendation</h4>
         <p>After this introduction, organizations typically benefit from a <strong>Full Maturity Assessment</strong> to understand their current state and prioritize improvements.</p>
-        <p>The assessment evaluates all seven domains and provides:</p>
+        <p>The assessment evaluates all five main domains (plus integrated sub-pillars) and provides:</p>
         <ul style="margin: 0.5rem 0 0 1.5rem;">
           <li>Current maturity level for each domain</li>
           <li>Specific gaps and risks</li>
@@ -816,7 +706,7 @@
       <h3>Immediate Actions</h3>
       <ol>
         <li><strong>Executive Alignment</strong> - Ensure leadership understands sovereignty risks and opportunities</li>
-        <li><strong>Current State Assessment</strong> - Conduct full maturity assessment across seven domains</li>
+        <li><strong>Current State Assessment</strong> - Conduct full maturity assessment across all five domains</li>
         <li><strong>Risk Prioritization</strong> - Identify highest-risk areas based on your industry and regulatory requirements</li>
         <li><strong>Roadmap Development</strong> - Create phased improvement plan with quick wins and strategic initiatives</li>
       </ol>
@@ -831,7 +721,7 @@
 
         <div class="domain-card">
           <h4><i class="fa-solid fa-clipboard-check"></i> Full Assessment</h4>
-          <p>2-4 hour facilitated workshop with deep-dive into all seven domains. Provides detailed roadmap and recommendations.</p>
+          <p>2-4 hour facilitated workshop with deep-dive into all five domains and integrated sub-pillars. Provides detailed roadmap and recommendations.</p>
           <p><a href="facilitator-guide-201.php" style="color: #12bbd4;">View 201 Guide →</a></p>
         </div>
       </div>
