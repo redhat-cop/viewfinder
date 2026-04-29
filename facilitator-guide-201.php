@@ -593,7 +593,7 @@
       </div>
       <h1><i class="fa-solid fa-book-open"></i> Full Maturity Assessment Enablement Guide</h1>
       <p class="subtitle">A comprehensive guide for conducting Digital Sovereignty, AI Sovereignty, and Security maturity assessments</p>
-      <span class="version"><i class="fa-solid fa-tag"></i> Version 1.2 - 10th April 2026</span>
+      <span class="version"><i class="fa-solid fa-tag"></i> Version 1.3 - 29th April 2026</span>
     </div>
 
     <!-- Table of Contents -->

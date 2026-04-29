@@ -486,7 +486,7 @@
       </div>
       <h1><i class="fa-solid fa-lightbulb"></i> Executive Enablement Guide</h1>
       <p class="subtitle">Understanding Digital Sovereignty: Concepts, Risks, and Business Value</p>
-      <span class="version"><i class="fa-solid fa-tag"></i> Version 1.1 - 7th March 2026</span>
+      <span class="version"><i class="fa-solid fa-tag"></i> Version 1.2 - 29th April 2026</span>
     </div>
 
     <!-- Level Navigation -->
