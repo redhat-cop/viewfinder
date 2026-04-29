@@ -471,6 +471,7 @@
       <div class="widget">
         <a href="maturity-assessment-landing.php"><button><i class="fa fa-home"></i> Home</button></a>
         <a href="facilitator-guide-201.php"><button><i class="fa-solid fa-graduation-cap"></i> 201 Guide</button></a>
+        <a href="facilitator-guide-301.php"><button><i class="fa-solid fa-rocket"></i> 301 Guide</button></a>
       </div>
     </div>
   </header>
@@ -496,7 +497,7 @@
       <ul style="margin: 0.5rem 0 0 1.5rem; color: #ccc;">
         <li><strong style="color: #2aaa04;">101 - Introduction to Digital Sovereignty</strong> - Executive overview (1-2 hours) [You are here]</li>
         <li><a href="facilitator-guide-201.php" style="color: #12bbd4;">201 - Domain Overview & Assessment</a> - Full assessment (2-4 hours)</li>
-        <li>301 - Deep Dive Implementation - Coming soon</li>
+        <li><a href="facilitator-guide-301.php" style="color: #12bbd4;">301 - Quick Wins & Remediation</a> - Post-assessment action planning</li>
       </ul>
     </div>
 
@@ -730,6 +731,7 @@
       <ul>
         <li><a href="templates/index.html" style="color: #12bbd4;">Workshop Templates & Materials</a> - Email templates, agendas, executive summaries</li>
         <li><a href="facilitator-guide-201.php" style="color: #12bbd4;">Facilitator Guide 201</a> - For conducting full maturity assessments</li>
+        <li><a href="facilitator-guide-301.php" style="color: #12bbd4;">Facilitator Guide 301</a> - For post-assessment action planning and remediation</li>
         <li><strong>Red Hat Consulting</strong> - Expert guidance on Digital Sovereignty implementation</li>
       </ul>
     </div>

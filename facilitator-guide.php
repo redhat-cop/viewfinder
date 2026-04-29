@@ -120,7 +120,7 @@
     }
 
     .guide-card .level-badge.level-301 {
-      background: #ec7a08;
+      background: #a855f7;
       color: #fff;
     }
 
@@ -288,7 +288,7 @@
       <ul style="margin: 0.75rem 0 0 1.5rem;">
         <li><strong>New to Digital Sovereignty?</strong> Start with the 101 guide</li>
         <li><strong>Conducting full assessment?</strong> Use the 201 guide</li>
-        <li><strong>Technical deep-dive implementation?</strong> 301 guide (coming soon)</li>
+        <li><strong>Ready to take action on results?</strong> Use the 301 guide for quick wins and remediation</li>
       </ul>
     </div>
 
@@ -307,9 +307,9 @@
         <ul>
           <li>What is Digital Sovereignty?</li>
           <li>Business drivers and regulatory landscape</li>
-          <li>High-level overview of 7 domains</li>
-          <li>Real-world examples and ROI</li>
+          <li>High-level overview of 5 domains</li>
           <li>Maturity model introduction</li>
+          <li>Assessment options and next steps</li>
         </ul>
 
         <p><strong>Best For:</strong> C-suite, Board members, business stakeholders, newcomers to Digital Sovereignty</p>
@@ -318,7 +318,7 @@
           <i class="fa-solid fa-book-open"></i> Open 101 Guide
         </a>
         <a href="Enablement-Guide-101.pdf" target="_blank" class="btn" style="background: #2a2a2a; margin-top: 0.5rem; border: 1px solid #444;">
-          <i class="fa-solid fa-file-pdf"></i> Download PDF (211 KB)
+          <i class="fa-solid fa-file-pdf"></i> Download PDF (167 KB)
         </a>
       </div>
 
@@ -335,7 +335,7 @@
         <ul>
           <li>Pre-assessment preparation</li>
           <li>Facilitation methodology</li>
-          <li>Deep-dive into all 7 domains</li>
+          <li>Deep-dive into all 5 domains</li>
           <li>Scoring and maturity calculations</li>
           <li>Results interpretation and roadmapping</li>
         </ul>
@@ -346,32 +346,35 @@
           <i class="fa-solid fa-book-open"></i> Open 201 Guide
         </a>
         <a href="Enablement-Guide-201.pdf" target="_blank" class="btn" style="background: #2a2a2a; margin-top: 0.5rem; border: 1px solid #444;">
-          <i class="fa-solid fa-file-pdf"></i> Download PDF (434 KB)
+          <i class="fa-solid fa-file-pdf"></i> Download PDF (739 KB)
         </a>
       </div>
 
-      <!-- 301 Guide (Coming Soon) -->
+      <!-- 301 Guide -->
       <div class="guide-card">
         <div class="level-badge level-301">
-          <i class="fa-solid fa-graduation-cap"></i> LEVEL 301
+          <i class="fa-solid fa-rocket"></i> LEVEL 301
         </div>
-        <h2>Deep Dive Implementation</h2>
-        <p class="subtitle-text">Technical Implementation Guidance</p>
-        <p>Advanced technical guide for implementing Digital Sovereignty controls and best practices. Includes detailed architecture patterns, tool recommendations, and hands-on implementation guidance for each domain.</p>
+        <h2>Quick Wins & Remediation</h2>
+        <p class="subtitle-text">Post-Assessment Action Planning</p>
+        <p>Practical guide for turning assessment results into action. Includes quick wins (30/60/90 days), level-by-level remediation roadmaps, and scenario-based guidance to help teams prioritize and execute sovereignty improvements.</p>
 
-        <p><strong>Topics Planned:</strong></p>
+        <p><strong>Topics Covered:</strong></p>
         <ul>
-          <li>Detailed implementation strategies</li>
-          <li>Technical architecture patterns</li>
-          <li>Tool selection and configuration</li>
-          <li>Hands-on labs and exercises</li>
-          <li>Advanced use cases and solutions</li>
+          <li>Quick wins by domain (30/60/90 day actions)</li>
+          <li>Remediation roadmaps for each maturity level</li>
+          <li>Common scenarios and action plans</li>
+          <li>Templates and resource library</li>
+          <li>Prioritization and roadmap planning</li>
         </ul>
 
-        <p><strong>Best For:</strong> Technical teams, security specialists, cloud architects implementing Digital Sovereignty</p>
+        <p><strong>Best For:</strong> Teams with completed assessments, project managers, technical leads executing improvements</p>
 
-        <a href="#" class="btn coming-soon">
-          <i class="fa-solid fa-clock"></i> Coming Soon
+        <a href="facilitator-guide-301.php" target="_blank" class="btn">
+          <i class="fa-solid fa-book-open"></i> Open 301 Guide
+        </a>
+        <a href="Enablement-Guide-301.pdf" target="_blank" class="btn" style="background: #2a2a2a; margin-top: 0.5rem; border: 1px solid #444;">
+          <i class="fa-solid fa-file-pdf"></i> Download PDF (302 KB)
         </a>
       </div>
     </div>

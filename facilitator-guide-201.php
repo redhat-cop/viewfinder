@@ -577,6 +577,7 @@
       <div class="widget">
         <a href="index.php"><button><i class="fa fa-home"></i> Home</button></a>
         <a href="maturity-assessment-landing.php"><button><i class="fa fa-chart-line"></i> Start Assessment</button></a>
+        <a href="facilitator-guide-301.php"><button><i class="fa-solid fa-rocket"></i> 301 Guide</button></a>
         <button onclick="window.print()"><i class="fa fa-print"></i> Print Guide</button>
       </div>
     </div>
@@ -621,7 +622,7 @@
         <ul style="margin: 0.5rem 0 0 1.5rem; color: #ccc;">
           <li><a href="facilitator-guide-101.php" style="color: #12bbd4;">101 - Introduction to Digital Sovereignty</a> - Executive overview (1-2 hours)</li>
           <li><strong style="color: #0d60f8;">201 - Domain Overview & Assessment</strong> - Full assessment (2-4 hours) [You are here]</li>
-          <li>301 - Deep Dive Implementation - Coming soon</li>
+          <li><a href="facilitator-guide-301.php" style="color: #12bbd4;">301 - Quick Wins & Remediation</a> - Post-assessment action planning</li>
         </ul>
       </div>
 
