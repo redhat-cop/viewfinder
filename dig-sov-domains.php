@@ -411,7 +411,7 @@
       <h1>
         <i class="fa-solid fa-shield-halved"></i> Digital Sovereignty Domains
       </h1>
-      <p>Explore the seven key domains that define comprehensive digital sovereignty</p>
+      <p>Explore the five key domains that define comprehensive digital sovereignty—including specialized sub-pillars for Open Source and Managed Services</p>
     </div>
 
     <div class="intro-section">
@@ -419,8 +419,10 @@
       <p>
         Digital sovereignty encompasses an organization's ability to maintain ultimate control over its data,
         technology, operations, and strategic decisions—independent of external jurisdictions, vendors, or
-        political influences. Each domain below represents a critical pillar of sovereignty, with specific
-        capabilities designed to assess and strengthen your organization's independence and resilience.
+        political influences. The framework comprises five main domains, with Technical Sovereignty and
+        Operational Sovereignty each including dedicated sub-pillars (Open Source and Managed Services respectively)
+        that address specialized aspects of sovereignty. Each domain contains specific capabilities designed to
+        assess and strengthen your organization's independence and resilience.
       </p>
     </div>
 
@@ -432,8 +434,8 @@
     $controlsData = json_decode(file_get_contents($controlsFile), true);
 
     // Define main domain information with icons
-    // Note: Domain-5 (Open Source) is now integrated into Technical Sovereignty
-    // Note: Domain-7 (Managed Services) is now integrated into Operational Sovereignty
+    // Note: Domain-5 (Open Source) is now integrated into Technical Sovereignty as a sub-pillar
+    // Note: Domain-7 (Managed Services) is now integrated into Operational Sovereignty as a sub-pillar
     $domains = [
       [
         'title' => 'Data Sovereignty',
@@ -447,21 +449,25 @@
         'title' => 'Technical Sovereignty',
         'slug' => 'technical-sovereignty',
         'icon' => 'fa-microchip',
-        'description' => 'Control over foundational technology components—from hardware and firmware to application source code. Includes Open Source as a sub-pillar covering vendor independence and community-driven innovation.',
+        'description' => 'Control over foundational technology components—from hardware and firmware to application source code. Structured in two parts: Core Technical Sovereignty (platform control, vendor independence) and Open Source Sub-Pillar (transparency, community-driven innovation).',
         'domain_key' => 'Domain-2',
         'is_main' => true,
         'includes_subdomain' => true,
-        'subdomain_name' => 'Open Source'
+        'subdomain_name' => 'Open Source',
+        'section_1_label' => 'Core Technical Sovereignty',
+        'section_2_label' => 'Open Source (Sub-Pillar)'
       ],
       [
         'title' => 'Operational Sovereignty',
         'slug' => 'operational-sovereignty',
         'icon' => 'fa-gears',
-        'description' => 'Independence in day-to-day operations, incident response, and business continuity. Includes Managed Services as a sub-pillar covering third-party provider oversight and contractual protections.',
+        'description' => 'Independence in day-to-day operations, incident response, and business continuity. Structured in two parts: Core Operational Sovereignty (internal capabilities, operational resilience) and Managed Services Sub-Pillar (third-party oversight, contractual protections).',
         'domain_key' => 'Domain-3',
         'is_main' => true,
         'includes_subdomain' => true,
-        'subdomain_name' => 'Managed Services'
+        'subdomain_name' => 'Managed Services',
+        'section_1_label' => 'Core Operational Sovereignty',
+        'section_2_label' => 'Managed Services (Sub-Pillar)'
       ],
       [
         'title' => 'Assurance Sovereignty',
@@ -537,10 +543,10 @@
         // Prepare badges
         $badges = '';
         if (isset($domain['includes_subdomain']) && $domain['includes_subdomain']) {
-          $badges .= '<span style="font-size: 0.7rem; background: #12bbd4; color: #fff; padding: 0.2rem 0.5rem; border-radius: 3px; margin-left: 0.5rem;">Includes ' . $domain['subdomain_name'] . '</span>';
+          $badges .= '<span style="font-size: 0.7rem; background: #12bbd4; color: #fff; padding: 0.2rem 0.5rem; border-radius: 3px; margin-top: 0.5rem; display: inline-block;">+ ' . $domain['subdomain_name'] . ' Sub-Pillar</span>';
         }
         if (isset($domain['is_cross_cutting']) && $domain['is_cross_cutting']) {
-          $badges .= '<span style="font-size: 0.7rem; background: #f0ab00; color: #000; padding: 0.2rem 0.5rem; border-radius: 3px; margin-left: 0.5rem; font-weight: 600;">CROSS-CUTTING</span>';
+          $badges .= '<span style="font-size: 0.7rem; background: #f0ab00; color: #000; padding: 0.2rem 0.5rem; border-radius: 3px; margin-top: 0.5rem; display: inline-block; font-weight: 600;">CROSS-CUTTING</span>';
         }
       ?>
       <a href="dig-sov-<?php echo $domain['slug']; ?>.php" class="domain-card">
@@ -548,7 +554,12 @@
           <div class="domain-icon">
             <i class="fa-solid <?php echo $domain['icon']; ?>"></i>
           </div>
-          <h3 class="domain-title"><?php echo htmlspecialchars($domain['title']); ?><?php echo $badges; ?></h3>
+          <div style="flex: 1;">
+            <h3 class="domain-title"><?php echo htmlspecialchars($domain['title']); ?></h3>
+            <?php if ($badges): ?>
+              <div style="margin-top: 0.5rem;"><?php echo $badges; ?></div>
+            <?php endif; ?>
+          </div>
         </div>
         <p class="domain-description"><?php echo htmlspecialchars($domain['description']); ?></p>
         <div class="domain-meta">

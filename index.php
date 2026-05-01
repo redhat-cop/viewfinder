@@ -738,8 +738,8 @@ print '</div>';
 
   if ($isLocalhost) {
     // Running on localhost - use external public URL
-    $qrCodeUrl = 'http://chrisj.co.uk/viewfinder/dig-sov-domains.php';
-    $qrCodeDisplayUrl = 'chrisj.co.uk/viewfinder/dig-sov-domains.php';
+    $qrCodeUrl = 'http://www.chrisj.co.uk/viewfinder/dig-sov-domains.php';
+    $qrCodeDisplayUrl = 'www.chrisj.co.uk/viewfinder/dig-sov-domains.php';
   } else {
     // Running on public server - use current domain
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';

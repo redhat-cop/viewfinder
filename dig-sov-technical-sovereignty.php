@@ -388,106 +388,132 @@
       </a>
     </div>
 
+    <?php
+    require_once __DIR__ . '/includes/Security.php';
+
+    // Load Digital Sovereignty controls
+    $controlsFile = __DIR__ . '/controls-DigitalSovereignty.json';
+    $controlsData = json_decode(file_get_contents($controlsFile), true);
+
+    $domainKey = 'Domain-2';
+    $domain = $controlsData[$domainKey];
+
+    // Get sub-pillar information if exists
+    $hasSubPillar = isset($domain['section_2_source']);
+    $subPillarKey = $hasSubPillar ? $domain['section_2_source'] : null;
+    $subPillar = $hasSubPillar ? $controlsData[$subPillarKey] : null;
+    ?>
+
     <div class="page-title">
       <h1>
-        <i class="fa-solid fa-shield-halved"></i> Technical Sovereignty
+        <i class="fa-solid fa-microchip"></i> Technical Sovereignty
       </h1>
       <div class="domain-overview">
-        This domain evaluates your control over foundational technology components—from hardware and firmware to application source code.<ul style='list-style: disc; margin-left: 1.5rem; margin-top: 0.5rem;'><li><b>Platform Control:</b> Reduces reliance on proprietary interfaces and single-vendor ecosystems.</li><li><b>Portability & Standards:</b> Prioritizes open standards enabling migration between platforms.</li><li><b>Vendor Independence:</b> Maintains ability to rebuild or migrate critical functions independently.</li><li><b>Lock-in Mitigation:</b> Minimizes technical dependencies that restrict future flexibility.</li></ul>
+        <?php echo $domain['overview']; ?>
       </div>
     </div>
 
-    <div class="capabilities-grid">
-      <div class="capability-card">
-        <div class="capability-header">
-          <div class="capability-number">1</div>
-          <h2 class="capability-title">Technology Stack Ownership & Control</h2>
-          <span class="capability-badge badge-foundation">Foundation</span>
-        </div>
-        <div class="capability-content">
-          <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
-          <strong>Points to consider:</strong><ul style='margin: 0.5rem 0; padding-left: 1.5rem; text-align: left;'><li>What percentage of your technology stack is open source vs. proprietary?</li><li>Can you independently operate and troubleshoot your core systems without vendor support?</li><li>Do you have internal expertise in the technologies running your critical infrastructure?</li><li>Could you rebuild your infrastructure from scratch if needed?</li></ul>
-        </div>
+    <?php if ($hasSubPillar): ?>
+      <div style="background: #1f1f1f; border: 1px solid #444; border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem; border-left: 4px solid #12bbd4;">
+        <h2 style="color: #9ec7fc; font-size: 1.3rem; margin: 0 0 0.5rem 0;">
+          <i class="fa-solid fa-layer-group"></i> Two-Part Structure
+        </h2>
+        <p style="color: #ccc; margin: 0; line-height: 1.6;">
+          This domain is organized into <strong><?php echo $domain['section_1_label']; ?></strong> (capabilities 1-<?php
+          $coreCount = 0;
+          foreach ($domain as $key => $value) {
+            if (is_numeric($key)) $coreCount++;
+          }
+          echo $coreCount;
+          ?>) covering platform control and vendor independence, and the <strong><?php echo $domain['section_2_label']; ?></strong> addressing transparency and community-driven innovation.
+        </p>
       </div>
-      <div class="capability-card">
-        <div class="capability-header">
-          <div class="capability-number">2</div>
-          <h2 class="capability-title">Vendor Lock-in Risk Mitigation</h2>
-          <span class="capability-badge badge-foundation">Foundation</span>
-        </div>
-        <div class="capability-content">
-          <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
-          <strong>Points to consider:</strong><ul style='margin: 0.5rem 0; padding-left: 1.5rem; text-align: left;'><li>Have you assessed the effort required to switch to a different cloud provider?</li><li>Do your contracts include data portability and exit assistance clauses?</li><li>Are you using vendor-specific features that would be difficult to replace?</li><li>Have you calculated the total cost of vendor lock-in?</li></ul>
-        </div>
-      </div>
-      <div class="capability-card">
-        <div class="capability-header">
-          <div class="capability-number">3</div>
-          <h2 class="capability-title">Standardised Technical Framework Adoption</h2>
-          <span class="capability-badge badge-foundation">Foundation</span>
-        </div>
-        <div class="capability-content">
-          <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
-          <strong>Points to consider:</strong><ul style='margin: 0.5rem 0; padding-left: 1.5rem; text-align: left;'><li>Do you have a list of approved technical standards for new projects?</li><li>Are you using industry-standard APIs and protocols?</li><li>How do you ensure new systems follow non-proprietary standards?</li><li>Can your systems interoperate with multiple vendors' products?</li></ul>
-        </div>
-      </div>
-      <div class="capability-card">
-        <div class="capability-header">
-          <div class="capability-number">4</div>
-          <h2 class="capability-title">Interoperability and Portability Strategy</h2>
-          <span class="capability-badge badge-strategic">Strategic</span>
-        </div>
-        <div class="capability-content">
-          <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
-          <strong>Points to consider:</strong><ul style='margin: 0.5rem 0; padding-left: 1.5rem; text-align: left;'><li>Can you migrate a workload between cloud providers within a defined timeframe?</li><li>Are your applications containerized for portability?</li><li>Do you use Infrastructure-as-Code for reproducible deployments?</li><li>Have you tested migration procedures in a non-production environment?</li></ul>
-        </div>
-      </div>
-      <div class="capability-card">
-        <div class="capability-header">
-          <div class="capability-number">5</div>
-          <h2 class="capability-title">Hardware and Infrastructure Source Verification</h2>
-          <span class="capability-badge badge-strategic">Strategic</span>
-        </div>
-        <div class="capability-content">
-          <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
-          <strong>Points to consider:</strong><ul style='margin: 0.5rem 0; padding-left: 1.5rem; text-align: left;'><li>Do you know the origin and manufacturing location of your critical hardware?</li><li>Do you verify hardware integrity before deployment (TPM, secure boot)?</li><li>How do you validate firmware and hardware updates?</li><li>Do you have supply chain attestation for critical components?</li></ul>
-        </div>
-      </div>
-      <div class="capability-card">
-        <div class="capability-header">
-          <div class="capability-number">6</div>
-          <h2 class="capability-title">Self-Hosted Application Runtime Control</h2>
-          <span class="capability-badge badge-strategic">Strategic</span>
-        </div>
-        <div class="capability-content">
-          <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
-          <strong>Points to consider:</strong><ul style='margin: 0.5rem 0; padding-left: 1.5rem; text-align: left;'><li>Where are your critical applications hosted?</li><li>Do you have direct administrative control over the runtime environment?</li><li>Are you using self-hosted or sovereign-partner-hosted application servers?</li><li>Can the cloud provider access or modify your application runtime?</li></ul>
-        </div>
-      </div>
-      <div class="capability-card">
-        <div class="capability-header">
-          <div class="capability-number">7</div>
-          <h2 class="capability-title">Code and Intellectual Property Control</h2>
-          <span class="capability-badge badge-advanced">Advanced</span>
-        </div>
-        <div class="capability-content">
-          <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
-          <strong>Points to consider:</strong><ul style='margin: 0.5rem 0; padding-left: 1.5rem; text-align: left;'><li>Do you own all custom application source code?</li><li>Where is your source code version control system hosted?</li><li>Do you have code escrow arrangements for vendor-developed software?</li><li>Are IP ownership rights clearly defined in all development contracts?</li></ul>
-        </div>
-      </div>
-      <div class="capability-card">
-        <div class="capability-header">
-          <div class="capability-number">8</div>
-          <h2 class="capability-title">Future-Proofing Technology Roadmaps</h2>
-          <span class="capability-badge badge-advanced">Advanced</span>
-        </div>
-        <div class="capability-content">
-          <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
-          <strong>Points to consider:</strong><ul style='margin: 0.5rem 0; padding-left: 1.5rem; text-align: left;'><li>Do you have a 3-5 year technology roadmap addressing sovereignty risks?</li><li>Have you identified high-risk technology dependencies?</li><li>Are you planning to replace proprietary components with sovereign alternatives?</li><li>How do you evaluate new technologies for sovereignty compliance?</li></ul>
-        </div>
-      </div>
+    <?php endif; ?>
 
+    <!-- Core Technical Sovereignty Section -->
+    <div style="margin-bottom: 3rem;">
+      <h2 style="color: #9ec7fc; font-size: 1.8rem; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid #0d60f8;">
+        <i class="fa-solid fa-microchip"></i> <?php echo isset($domain['section_1_label']) ? $domain['section_1_label'] : 'Core Capabilities'; ?>
+      </h2>
+      <div class="capabilities-grid">
+        <?php
+        // Display core domain capabilities
+        $capabilityNum = 1;
+        foreach ($domain as $key => $value) {
+          if (!is_numeric($key)) continue;
+
+          $capabilityTitle = $domain[$key];
+          $capabilitySummary = $domain[$key . '-summary'];
+          $capabilityTier = strtolower($domain[$key . '-tier']);
+
+          $badgeClass = 'badge-foundation';
+          if ($capabilityTier === 'strategic') $badgeClass = 'badge-strategic';
+          elseif ($capabilityTier === 'advanced') $badgeClass = 'badge-advanced';
+        ?>
+        <div class="capability-card">
+          <div class="capability-header">
+            <div class="capability-number"><?php echo $capabilityNum; ?></div>
+            <h2 class="capability-title"><?php echo htmlspecialchars($capabilityTitle); ?></h2>
+            <span class="capability-badge <?php echo $badgeClass; ?>"><?php echo ucfirst($capabilityTier); ?></span>
+          </div>
+          <div class="capability-content">
+            <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
+            <?php echo $capabilitySummary; ?>
+          </div>
+        </div>
+        <?php
+          $capabilityNum++;
+        }
+        ?>
+      </div>
     </div>
+
+    <?php if ($hasSubPillar && $subPillar): ?>
+    <!-- Sub-Pillar Section -->
+    <div style="margin-bottom: 3rem;">
+      <h2 style="color: #9ec7fc; font-size: 1.8rem; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid #12bbd4;">
+        <i class="fa-solid fa-code-branch"></i> <?php echo $domain['section_2_label']; ?>
+      </h2>
+      <div style="background: #1f1f1f; border: 1px solid #444; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid #12bbd4;">
+        <div style="color: #ccc; line-height: 1.6;">
+          <?php echo $subPillar['overview']; ?>
+        </div>
+      </div>
+      <div class="capabilities-grid">
+        <?php
+        // Display sub-pillar capabilities
+        $subCapNum = 1;
+        foreach ($subPillar as $key => $value) {
+          if (!is_numeric($key)) continue;
+
+          $capabilityTitle = $subPillar[$key];
+          $capabilitySummary = $subPillar[$key . '-summary'];
+          $capabilityTier = strtolower($subPillar[$key . '-tier']);
+
+          $badgeClass = 'badge-foundation';
+          if ($capabilityTier === 'strategic') $badgeClass = 'badge-strategic';
+          elseif ($capabilityTier === 'advanced') $badgeClass = 'badge-advanced';
+        ?>
+        <div class="capability-card">
+          <div class="capability-header">
+            <div class="capability-number"><?php echo $subCapNum; ?></div>
+            <h2 class="capability-title"><?php echo htmlspecialchars($capabilityTitle); ?></h2>
+            <span class="capability-badge <?php echo $badgeClass; ?>"><?php echo ucfirst($capabilityTier); ?></span>
+          </div>
+          <div class="capability-content">
+            <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
+            <?php echo $capabilitySummary; ?>
+          </div>
+        </div>
+        <?php
+          $subCapNum++;
+        }
+        ?>
+      </div>
+    </div>
+    <?php endif; ?>
+
+  </div>
   </div>
 </body>
 </html>

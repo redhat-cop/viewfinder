@@ -388,106 +388,132 @@
       </a>
     </div>
 
+    <?php
+    require_once __DIR__ . '/includes/Security.php';
+
+    // Load Digital Sovereignty controls
+    $controlsFile = __DIR__ . '/controls-DigitalSovereignty.json';
+    $controlsData = json_decode(file_get_contents($controlsFile), true);
+
+    $domainKey = 'Domain-3';
+    $domain = $controlsData[$domainKey];
+
+    // Get sub-pillar information if exists
+    $hasSubPillar = isset($domain['section_2_source']);
+    $subPillarKey = $hasSubPillar ? $domain['section_2_source'] : null;
+    $subPillar = $hasSubPillar ? $controlsData[$subPillarKey] : null;
+    ?>
+
     <div class="page-title">
       <h1>
-        <i class="fa-solid fa-shield-halved"></i> Operational Sovereignty
+        <i class="fa-solid fa-gears"></i> Operational Sovereignty
       </h1>
       <div class="domain-overview">
-        This domain examines your autonomy and independence in executing critical business and IT operations without reliance on external expertise or infrastructure.<ul style='list-style: disc; margin-left: 1.5rem; margin-top: 0.5rem;'><li><b>Internal Capability:</b> Develops and maintains in-house skills for critical operations.</li><li><b>Operational Resilience:</b> Ensures business continuity through locally managed processes.</li><li><b>Independent Response:</b> Executes incident response and disaster recovery without external support.</li><li><b>Process Autonomy:</b> Operates systems free from external interference or vendor dependencies.</li></ul>
+        <?php echo $domain['overview']; ?>
       </div>
     </div>
 
-    <div class="capabilities-grid">
-      <div class="capability-card">
-        <div class="capability-header">
-          <div class="capability-number">1</div>
-          <h2 class="capability-title">Operational Process Documentation</h2>
-          <span class="capability-badge badge-foundation">Foundation</span>
-        </div>
-        <div class="capability-content">
-          <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
-          <strong>Points to consider:</strong><ul style='margin: 0.5rem 0; padding-left: 1.5rem; text-align: left;'><li>Are all critical operational procedures documented?</li><li>Can your team execute operations without vendor documentation?</li><li>Where are operational runbooks stored?</li><li>How often are operational procedures reviewed and updated?</li></ul>
-        </div>
+    <?php if ($hasSubPillar): ?>
+      <div style="background: #1f1f1f; border: 1px solid #444; border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem; border-left: 4px solid #12bbd4;">
+        <h2 style="color: #9ec7fc; font-size: 1.3rem; margin: 0 0 0.5rem 0;">
+          <i class="fa-solid fa-layer-group"></i> Two-Part Structure
+        </h2>
+        <p style="color: #ccc; margin: 0; line-height: 1.6;">
+          This domain is organized into <strong><?php echo $domain['section_1_label']; ?></strong> (capabilities 1-<?php
+          $coreCount = 0;
+          foreach ($domain as $key => $value) {
+            if (is_numeric($key)) $coreCount++;
+          }
+          echo $coreCount;
+          ?>) covering internal capabilities and operational resilience, and the <strong><?php echo $domain['section_2_label']; ?></strong> addressing third-party provider oversight and contractual protections.
+        </p>
       </div>
-      <div class="capability-card">
-        <div class="capability-header">
-          <div class="capability-number">2</div>
-          <h2 class="capability-title">Dependency on External Managed Services</h2>
-          <span class="capability-badge badge-foundation">Foundation</span>
-        </div>
-        <div class="capability-content">
-          <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
-          <strong>Points to consider:</strong><ul style='margin: 0.5rem 0; padding-left: 1.5rem; text-align: left;'><li>Do you have internal staff capable of performing all critical operations?</li><li>What percentage of operations require vendor involvement?</li><li>Have you identified skills gaps in your operations team?</li><li>Do you have training programs for sovereign operations?</li></ul>
-        </div>
-      </div>
-      <div class="capability-card">
-        <div class="capability-header">
-          <div class="capability-number">3</div>
-          <h2 class="capability-title">Access Control and Identity Management</h2>
-          <span class="capability-badge badge-foundation">Foundation</span>
-        </div>
-        <div class="capability-content">
-          <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
-          <strong>Points to consider:</strong><ul style='margin: 0.5rem 0; padding-left: 1.5rem; text-align: left;'><li>Can you recover operations without vendor assistance?</li><li>Are disaster recovery plans tested regularly?</li><li>Do backup systems reside in sovereign infrastructure?</li><li>Can you maintain operations during a vendor outage?</li></ul>
-        </div>
-      </div>
-      <div class="capability-card">
-        <div class="capability-header">
-          <div class="capability-number">4</div>
-          <h2 class="capability-title">Internal Skills and Competency Development</h2>
-          <span class="capability-badge badge-strategic">Strategic</span>
-        </div>
-        <div class="capability-content">
-          <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
-          <strong>Points to consider:</strong><ul style='margin: 0.5rem 0; padding-left: 1.5rem; text-align: left;'><li>Do you control incident response processes end-to-end?</li><li>Can you investigate security incidents without vendor access to logs?</li><li>Where are security logs stored?</li><li>Do you have an internal Security Operations Center (SOC)?</li></ul>
-        </div>
-      </div>
-      <div class="capability-card">
-        <div class="capability-header">
-          <div class="capability-number">5</div>
-          <h2 class="capability-title">Disaster Recovery and Business Continuity</h2>
-          <span class="capability-badge badge-strategic">Strategic</span>
-        </div>
-        <div class="capability-content">
-          <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
-          <strong>Points to consider:</strong><ul style='margin: 0.5rem 0; padding-left: 1.5rem; text-align: left;'><li>Who manages your production deployment processes?</li><li>Can you deploy updates without vendor involvement?</li><li>Do you control CI/CD pipelines independently?</li><li>Where are deployment automation tools hosted?</li></ul>
-        </div>
-      </div>
-      <div class="capability-card">
-        <div class="capability-header">
-          <div class="capability-number">6</div>
-          <h2 class="capability-title">Supply Chain Transparency and Vetting</h2>
-          <span class="capability-badge badge-strategic">Strategic</span>
-        </div>
-        <div class="capability-content">
-          <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
-          <strong>Points to consider:</strong><ul style='margin: 0.5rem 0; padding-left: 1.5rem; text-align: left;'><li>How quickly can you onboard new operational staff?</li><li>Do you have succession planning for critical operational roles?</li><li>Are operational skills concentrated with specific individuals?</li><li>Do you cross-train team members on critical functions?</li></ul>
-        </div>
-      </div>
-      <div class="capability-card">
-        <div class="capability-header">
-          <div class="capability-number">7</div>
-          <h2 class="capability-title">Sovereign Incident Response Plan</h2>
-          <span class="capability-badge badge-advanced">Advanced</span>
-        </div>
-        <div class="capability-content">
-          <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
-          <strong>Points to consider:</strong><ul style='margin: 0.5rem 0; padding-left: 1.5rem; text-align: left;'><li>Do you control infrastructure monitoring tools?</li><li>Where is operational telemetry data stored?</li><li>Can you detect anomalies without vendor-provided tools?</li><li>Do you have independent visibility into infrastructure health?</li></ul>
-        </div>
-      </div>
-      <div class="capability-card">
-        <div class="capability-header">
-          <div class="capability-number">8</div>
-          <h2 class="capability-title">Operational Autonomy in Critical Functions</h2>
-          <span class="capability-badge badge-advanced">Advanced</span>
-        </div>
-        <div class="capability-content">
-          <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
-          <strong>Points to consider:</strong><ul style='margin: 0.5rem 0; padding-left: 1.5rem; text-align: left;'><li>Can you exit your current infrastructure within a defined timeframe?</li><li>Have you tested workload migration to alternative platforms?</li><li>Do you have automated tools for infrastructure migration?</li><li>What is your RTO (Recovery Time Objective) for a forced migration?</li></ul>
-        </div>
-      </div>
+    <?php endif; ?>
 
+    <!-- Core Operational Sovereignty Section -->
+    <div style="margin-bottom: 3rem;">
+      <h2 style="color: #9ec7fc; font-size: 1.8rem; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid #0d60f8;">
+        <i class="fa-solid fa-gears"></i> <?php echo isset($domain['section_1_label']) ? $domain['section_1_label'] : 'Core Capabilities'; ?>
+      </h2>
+      <div class="capabilities-grid">
+        <?php
+        // Display core domain capabilities
+        $capabilityNum = 1;
+        foreach ($domain as $key => $value) {
+          if (!is_numeric($key)) continue;
+
+          $capabilityTitle = $domain[$key];
+          $capabilitySummary = $domain[$key . '-summary'];
+          $capabilityTier = strtolower($domain[$key . '-tier']);
+
+          $badgeClass = 'badge-foundation';
+          if ($capabilityTier === 'strategic') $badgeClass = 'badge-strategic';
+          elseif ($capabilityTier === 'advanced') $badgeClass = 'badge-advanced';
+        ?>
+        <div class="capability-card">
+          <div class="capability-header">
+            <div class="capability-number"><?php echo $capabilityNum; ?></div>
+            <h2 class="capability-title"><?php echo htmlspecialchars($capabilityTitle); ?></h2>
+            <span class="capability-badge <?php echo $badgeClass; ?>"><?php echo ucfirst($capabilityTier); ?></span>
+          </div>
+          <div class="capability-content">
+            <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
+            <?php echo $capabilitySummary; ?>
+          </div>
+        </div>
+        <?php
+          $capabilityNum++;
+        }
+        ?>
+      </div>
     </div>
+
+    <?php if ($hasSubPillar && $subPillar): ?>
+    <!-- Sub-Pillar Section -->
+    <div style="margin-bottom: 3rem;">
+      <h2 style="color: #9ec7fc; font-size: 1.8rem; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid #12bbd4;">
+        <i class="fa-solid fa-handshake"></i> <?php echo $domain['section_2_label']; ?>
+      </h2>
+      <div style="background: #1f1f1f; border: 1px solid #444; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid #12bbd4;">
+        <div style="color: #ccc; line-height: 1.6;">
+          <?php echo $subPillar['overview']; ?>
+        </div>
+      </div>
+      <div class="capabilities-grid">
+        <?php
+        // Display sub-pillar capabilities
+        $subCapNum = 1;
+        foreach ($subPillar as $key => $value) {
+          if (!is_numeric($key)) continue;
+
+          $capabilityTitle = $subPillar[$key];
+          $capabilitySummary = $subPillar[$key . '-summary'];
+          $capabilityTier = strtolower($subPillar[$key . '-tier']);
+
+          $badgeClass = 'badge-foundation';
+          if ($capabilityTier === 'strategic') $badgeClass = 'badge-strategic';
+          elseif ($capabilityTier === 'advanced') $badgeClass = 'badge-advanced';
+        ?>
+        <div class="capability-card">
+          <div class="capability-header">
+            <div class="capability-number"><?php echo $subCapNum; ?></div>
+            <h2 class="capability-title"><?php echo htmlspecialchars($capabilityTitle); ?></h2>
+            <span class="capability-badge <?php echo $badgeClass; ?>"><?php echo ucfirst($capabilityTier); ?></span>
+          </div>
+          <div class="capability-content">
+            <h3><i class="fa-solid fa-lightbulb"></i> Points to Consider</h3>
+            <?php echo $capabilitySummary; ?>
+          </div>
+        </div>
+        <?php
+          $subCapNum++;
+        }
+        ?>
+      </div>
+    </div>
+    <?php endif; ?>
+
+  </div>
   </div>
 </body>
 </html>
