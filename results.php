@@ -1363,10 +1363,12 @@ if ($profile === 'Security') {
     ];
 }
 
-// Map domain names to qnum
+// Map domain names to qnum (include all domains, not just those in main nav)
 $domainNameToQnum = [];
-foreach ($controls as $control) {
-    $domainNameToQnum[$json[$control]['title']] = $json[$control]['qnum'];
+foreach ($json as $key => $value) {
+    if (isset($value['title']) && isset($value['qnum'])) {
+        $domainNameToQnum[$value['title']] = $value['qnum'];
+    }
 }
 
 $statusLabels = ['No Capability', 'In Planning', 'Work in Progress', 'Fully Complete'];
