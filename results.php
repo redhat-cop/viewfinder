@@ -153,8 +153,10 @@ use Endroid\QrCode\Writer\PngWriter;
 ErrorHandler::register();
 
 try {
-    // Start session for import handling
-    session_start();
+    // Start session for import handling (suppress warning if headers already sent from test scripts)
+    if (session_status() === PHP_SESSION_NONE) {
+        @session_start();
+    }
 
     Logger::info('Results page loaded', ['page' => 'results.php']);
 
@@ -708,28 +710,35 @@ if ($profile === 'Security') {
 <p style="color: #ccc; margin-bottom: 1.5rem; font-size: 1.1rem;">The assessment identified the following areas of strong maturity. These strengths can be leveraged to build momentum and accelerate improvements in other domains.</p>
 
 <?php
-foreach ($strengths as $strength) {
-    $quickWin = isset($quickWins[$strength["title"]]) ? $quickWins[$strength["title"]] : 'Continue to refine and optimize processes, and consider sharing best practices with other domains.';
+if (empty($strengths)) {
+    print '<div style="padding: 2rem; background: #2a2a2a; border: 1px solid #444; border-radius: 6px; text-align: center;">';
+    print '<i class="fa-solid fa-info-circle" style="color: #0d60f8; font-size: 2rem; margin-bottom: 1rem;"></i>';
+    print '<p style="color: #ccc; margin: 0; font-size: 1.1rem;">No strength data available. Complete the assessment with higher maturity scores to identify your strongest domains.</p>';
+    print '</div>';
+} else {
+    foreach ($strengths as $strength) {
+        $quickWin = isset($quickWins[$strength["title"]]) ? $quickWins[$strength["title"]] : 'Continue to refine and optimize processes, and consider sharing best practices with other domains.';
 
-    print '<div style="margin-bottom: 2rem; padding: 1.5rem; background: #2a2a2a; border-left: 4px solid #2aaa04; border-radius: 6px;">';
-    print '<h3 style="color: #fff; margin-top: 0; font-size: 1.4rem;">' . Security::escape($strength["title"]) . '</h3>';
-    print '<div style="margin-bottom: 1rem;">';
-    print '<span style="color: #2aaa04; font-weight: 600; font-size: 1.1rem;">' . Security::escape($strength["rating"]) . ' Level</span>';
-    print ' <span style="color: #999;">(' . $strength["percentage"] . '%)</span>';
-    if (isset($strength["maturityLevel"])) {
-        print ' <span style="color: #12bbd4; margin-left: 0.5rem;">• ' . Security::escape($strength["maturityLevel"]) . '</span>';
+        print '<div style="margin-bottom: 2rem; padding: 1.5rem; background: #2a2a2a; border-left: 4px solid #2aaa04; border-radius: 6px;">';
+        print '<h3 style="color: #fff; margin-top: 0; font-size: 1.4rem;">' . Security::escape($strength["title"]) . '</h3>';
+        print '<div style="margin-bottom: 1rem;">';
+        print '<span style="color: #2aaa04; font-weight: 600; font-size: 1.1rem;">' . Security::escape($strength["rating"]) . ' Level</span>';
+        print ' <span style="color: #999;">(' . $strength["percentage"] . '%)</span>';
+        if (isset($strength["maturityLevel"])) {
+            print ' <span style="color: #12bbd4; margin-left: 0.5rem;">• ' . Security::escape($strength["maturityLevel"]) . '</span>';
+        }
+        print '</div>';
+        print '<p style="color: #ccc; margin-bottom: 1rem;">Demonstrating well-established capabilities in this domain.</p>';
+
+        print '<div style="margin-top: 1rem; padding: 1rem; background: #1a1a1a; border: 1px solid #444; border-radius: 4px;">';
+        print '<div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">';
+        print '<i class="fa-solid fa-lightbulb" style="color: #12bbd4; font-size: 1.2rem;"></i>';
+        print '<strong style="color: #12bbd4; font-size: 1.1rem;">Quick Win to Advance Further</strong>';
+        print '</div>';
+        print '<p style="color: #ccc; margin: 0;">' . Security::escape($quickWin) . '</p>';
+        print '</div>';
+        print '</div>';
     }
-    print '</div>';
-    print '<p style="color: #ccc; margin-bottom: 1rem;">Demonstrating well-established capabilities in this domain.</p>';
-
-    print '<div style="margin-top: 1rem; padding: 1rem; background: #1a1a1a; border: 1px solid #444; border-radius: 4px;">';
-    print '<div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">';
-    print '<i class="fa-solid fa-lightbulb" style="color: #12bbd4; font-size: 1.2rem;"></i>';
-    print '<strong style="color: #12bbd4; font-size: 1.1rem;">Quick Win to Advance Further</strong>';
-    print '</div>';
-    print '<p style="color: #ccc; margin: 0;">' . Security::escape($quickWin) . '</p>';
-    print '</div>';
-    print '</div>';
 }
 ?>
 
@@ -751,54 +760,62 @@ foreach ($strengths as $strength) {
 <p style="color: #999; font-size: 0.95rem; margin-bottom: 1.5rem;">Each gap includes business impact analysis and concrete first steps to begin addressing the deficiency.</p>
 
 <?php
-foreach ($gaps as $gap) {
-    $priorityBadge = "";
-    if ($gap["weight"] >= 1.5) {
-        $priorityBadge = '<span style="background: #f0ab00; color: #000; padding: 0.25rem 0.75rem; border-radius: 3px; font-size: 0.85rem; font-weight: 600; margin-left: 0.75rem;">HIGH PRIORITY</span>';
+if (empty($gaps)) {
+    print '<div style="padding: 2rem; background: #2a2a2a; border: 1px solid #444; border-radius: 6px; text-align: center;">';
+    print '<i class="fa-solid fa-info-circle" style="color: #0d60f8; font-size: 2rem; margin-bottom: 1rem;"></i>';
+    print '<p style="color: #ccc; margin: 0; font-size: 1.1rem;">No gap data available. Complete the assessment to identify areas that need improvement.</p>';
+    print '</div>';
+} else {
+    foreach ($gaps as $gap) {
+        $priorityBadge = "";
+        if ($gap["weight"] >= 1.5) {
+            $priorityBadge = '<span style="background: #f0ab00; color: #000; padding: 0.25rem 0.75rem; border-radius: 3px; font-size: 0.85rem; font-weight: 600; margin-left: 0.75rem;">HIGH PRIORITY</span>';
+        }
+
+        $impact = isset($businessImpacts[$gap["title"]]) ? $businessImpacts[$gap["title"]] : 'Reduces overall sovereignty maturity and organizational resilience.';
+        $steps = isset($firstSteps[$gap["title"]]) ? $firstSteps[$gap["title"]] : ['Review domain-specific recommendations in detailed assessment.'];
+
+        print '<div style="margin-bottom: 2.5rem; padding: 1.5rem; background: #2a2a2a; border-left: 4px solid #c9190b; border-radius: 6px;">';
+
+        print '<h3 style="color: #fff; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; flex-wrap: wrap;">';
+        print Security::escape($gap["title"]);
+        print $priorityBadge;
+        print '</h3>';
+
+        print '<div style="margin-bottom: 1.5rem;">';
+        print '<span style="color: #c9190b; font-weight: 600; font-size: 1.1rem;">' . Security::escape($gap["rating"]) . ' Level</span>';
+        print ' <span style="color: #999;">(' . $gap["percentage"] . '%)</span>';
+        if (isset($gap["maturityLevel"])) {
+            print ' <span style="color: #f0ab00; margin-left: 0.5rem;">• ' . Security::escape($gap["maturityLevel"]) . '</span>';
+        }
+        print '</div>';
+
+        // Business Impact
+        print '<div style="margin-bottom: 1.5rem; padding: 1.25rem; background: #1a1a1a; border: 1px solid #f0ab00; border-radius: 4px;">';
+        print '<div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">';
+        print '<i class="fa-solid fa-exclamation-circle" style="color: #f0ab00; font-size: 1.2rem;"></i>';
+        print '<strong style="color: #f0ab00; font-size: 1.1rem;">Business Impact</strong>';
+        print '</div>';
+        print '<p style="color: #ccc; margin: 0; line-height: 1.6;">' . Security::escape($impact) . '</p>';
+        print '</div>';
+
+        // First Steps
+        print '<div style="padding: 1.25rem; background: #1a1a1a; border: 1px solid #12bbd4; border-radius: 4px;">';
+        print '<div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">';
+        print '<i class="fa-solid fa-list-check" style="color: #12bbd4; font-size: 1.2rem;"></i>';
+        print '<strong style="color: #12bbd4; font-size: 1.1rem;">First Steps</strong>';
+        print '</div>';
+        print '<ol style="margin: 0; padding-left: 1.5rem; color: #ccc; line-height: 1.8;">';
+        foreach ($steps as $step) {
+            print '<li style="margin-bottom: 0.5rem;">' . Security::escape($step) . '</li>';
+        }
+        print '</ol>';
+        print '</div>';
+
+        print '</div>';
     }
-
-    $impact = isset($businessImpacts[$gap["title"]]) ? $businessImpacts[$gap["title"]] : 'Reduces overall sovereignty maturity and organizational resilience.';
-    $steps = isset($firstSteps[$gap["title"]]) ? $firstSteps[$gap["title"]] : ['Review domain-specific recommendations in detailed assessment.'];
-
-    print '<div style="margin-bottom: 2.5rem; padding: 1.5rem; background: #2a2a2a; border-left: 4px solid #c9190b; border-radius: 6px;">';
-
-    print '<h3 style="color: #fff; margin-top: 0; font-size: 1.4rem; display: flex; align-items: center; flex-wrap: wrap;">';
-    print Security::escape($gap["title"]);
-    print $priorityBadge;
-    print '</h3>';
-
-    print '<div style="margin-bottom: 1.5rem;">';
-    print '<span style="color: #c9190b; font-weight: 600; font-size: 1.1rem;">' . Security::escape($gap["rating"]) . ' Level</span>';
-    print ' <span style="color: #999;">(' . $gap["percentage"] . '%)</span>';
-    if (isset($gap["maturityLevel"])) {
-        print ' <span style="color: #f0ab00; margin-left: 0.5rem;">• ' . Security::escape($gap["maturityLevel"]) . '</span>';
-    }
-    print '</div>';
-
-    // Business Impact
-    print '<div style="margin-bottom: 1.5rem; padding: 1.25rem; background: #1a1a1a; border: 1px solid #f0ab00; border-radius: 4px;">';
-    print '<div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">';
-    print '<i class="fa-solid fa-exclamation-circle" style="color: #f0ab00; font-size: 1.2rem;"></i>';
-    print '<strong style="color: #f0ab00; font-size: 1.1rem;">Business Impact</strong>';
-    print '</div>';
-    print '<p style="color: #ccc; margin: 0; line-height: 1.6;">' . Security::escape($impact) . '</p>';
-    print '</div>';
-
-    // First Steps
-    print '<div style="padding: 1.25rem; background: #1a1a1a; border: 1px solid #12bbd4; border-radius: 4px;">';
-    print '<div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">';
-    print '<i class="fa-solid fa-list-check" style="color: #12bbd4; font-size: 1.2rem;"></i>';
-    print '<strong style="color: #12bbd4; font-size: 1.1rem;">First Steps</strong>';
-    print '</div>';
-    print '<ol style="margin: 0; padding-left: 1.5rem; color: #ccc; line-height: 1.8;">';
-    foreach ($steps as $step) {
-        print '<li style="margin-bottom: 0.5rem;">' . Security::escape($step) . '</li>';
-    }
-    print '</ol>';
-    print '</div>';
-
-    print '</div>';
 }
+
 ?>
 
 <div style="margin-top: 2rem; padding: 1.5rem; background: #c9190b; border-radius: 6px;">
@@ -816,6 +833,15 @@ foreach ($gaps as $gap) {
 
 <div style="padding: 1.5rem; background: #1a1a1a; border: 1px solid #444; border-radius: 8px;">
 <p style="color: #ccc; margin-bottom: 1.5rem; font-size: 1.1rem;">Overview of all capabilities grouped by their current status.</p>
+
+<?php
+if (empty($controls)) {
+    print '<div style="padding: 2rem; background: #2a2a2a; border: 1px solid #444; border-radius: 6px; text-align: center;">';
+    print '<i class="fa-solid fa-info-circle" style="color: #0d60f8; font-size: 2rem; margin-bottom: 1rem;"></i>';
+    print '<p style="color: #ccc; margin: 0; font-size: 1.1rem;">No status data available. Complete the assessment to view capability status distribution.</p>';
+    print '</div>';
+} else {
+?>
 
 <!-- Pie Chart -->
 <div style="background: #2a2a2a; border-radius: 8px; padding: 2rem; margin-bottom: 2rem;">
@@ -916,6 +942,10 @@ foreach ($statusGroups as $level => $group) {
 <div style="margin-top: 2rem; padding: 1.5rem; background: #0d60f8; border-radius: 6px;">
 <p style="color: #fff; margin: 0; font-size: 1rem;"><i class="fa-solid fa-info-circle"></i> <strong>Tip:</strong> Focus on moving "In Planning" capabilities to "Work in Progress" and completing "Work in Progress" items to improve overall maturity.</p>
 </div>
+
+<?php
+}
+?>
 
 </div>
 </div>
@@ -1371,6 +1401,14 @@ foreach ($json as $key => $value) {
     }
 }
 
+// Check if we have sufficient data to display themes
+if (empty($domainNameToQnum) || empty($thematicGroups)) {
+    print '<div style="padding: 2rem; background: #2a2a2a; border: 1px solid #444; border-radius: 6px; text-align: center;">';
+    print '<i class="fa-solid fa-info-circle" style="color: #0d60f8; font-size: 2rem; margin-bottom: 1rem;"></i>';
+    print '<p style="color: #ccc; margin: 0; font-size: 1.1rem;">No thematic data available. Complete the assessment to view capabilities organized by theme.</p>';
+    print '</div>';
+} else {
+
 $statusLabels = ['No Capability', 'In Planning', 'Work in Progress', 'Fully Complete'];
 $statusColors = ['#6a6e73', '#f0ab00', '#ec7a08', '#2aaa04'];
 
@@ -1536,6 +1574,10 @@ foreach ($thematicGroups as $themeName => $themeData) {
     print '</div>';
 
     print '</div>';
+}
+?>
+
+<?php
 }
 ?>
 

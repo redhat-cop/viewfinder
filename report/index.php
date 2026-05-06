@@ -140,7 +140,7 @@ foreach($json as $key => $value) {
 		array_push($controls,$key);
 	}
 }
-	
+
 $controlTotal = array_fill(0,8,0);
 $controlDetails = array(array_fill(0,8,0));
 
@@ -336,8 +336,8 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * $totalMaxPoints
       <!-- end banner -->
       <!-- business -->
       <div class="business">
-                                       <?php if ($profile == "DigitalSovereignty") {
-                              // Generate dynamic executive summary based on assessment results
+                                       <?php
+                              // Generate dynamic executive summary based on assessment results (all profiles)
                               $totalMaturityScore = array_sum($controlTotal);
                               $maxPossible = 252; // 7 domains × 36 points each
                               $overallPercentage = round(($totalMaturityScore / $maxPossible) * 100);
@@ -476,16 +476,21 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * $totalMaxPoints
                                       ];
                                   }
 
-                                  foreach ($strengths as $strength):
-                                      $quickWin = isset($quickWins[$strength["title"]]) ? $quickWins[$strength["title"]] : 'Continue to refine and optimize processes, and consider sharing best practices with other domains.';
+                                  if (empty($strengths)) {
+                                      echo '<p style="color: #999; font-style: italic;">No strength data available. This may indicate all domains are at similar maturity levels, or no assessment data was provided.</p>';
+                                  } else {
+                                      foreach ($strengths as $strength):
+                                          $quickWin = isset($quickWins[$strength["title"]]) ? $quickWins[$strength["title"]] : 'Continue to refine and optimize processes, and consider sharing best practices with other domains.';
+                                      ?>
+                                          <li style="margin-bottom: 1.5rem;">
+                                              <strong><?php echo Security::escape($strength["title"]); ?></strong>: <?php echo Security::escape($strength["rating"]); ?> level (<?php echo $strength["percentage"]; ?>%)<?php if (isset($strength["maturityLevel"])): ?> • <span style="color: #2aaa04;"><?php echo Security::escape($strength["maturityLevel"]); ?></span><?php endif; ?> - demonstrating well-established capabilities in this domain.
+                                              <div style="margin-top: 0.5rem; padding-left: 1.5rem; color: #0d60f8;">
+                                                  <strong>Quick Win:</strong> <?php echo Security::escape($quickWin); ?>
+                                              </div>
+                                          </li>
+                                      <?php endforeach;
+                                  }
                                   ?>
-                                      <li style="margin-bottom: 1.5rem;">
-                                          <strong><?php echo Security::escape($strength["title"]); ?></strong>: <?php echo Security::escape($strength["rating"]); ?> level (<?php echo $strength["percentage"]; ?>%)<?php if (isset($strength["maturityLevel"])): ?> • <span style="color: #2aaa04;"><?php echo Security::escape($strength["maturityLevel"]); ?></span><?php endif; ?> - demonstrating well-established capabilities in this domain.
-                                          <div style="margin-top: 0.5rem; padding-left: 1.5rem; color: #0d60f8;">
-                                              <strong>Quick Win:</strong> <?php echo Security::escape($quickWin); ?>
-                                          </div>
-                                      </li>
-                                  <?php endforeach; ?>
                               </div>
 
                               <div class="section-header">
@@ -580,35 +585,40 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * $totalMaxPoints
                                       ];
                                   }
 
-                                  foreach ($gaps as $gap):
-                                      $priorityNote = "";
-                                      if ($gap["weight"] >= 1.5) {
-                                          $priorityNote = " <strong>(High Priority for " . Security::escape($assessmentLob) . ")</strong>";
-                                      }
+                                  if (empty($gaps)) {
+                                      echo '<p style="color: #999; font-style: italic;">No gap data available. This may indicate all domains are at similar maturity levels, or no assessment data was provided.</p>';
+                                  } else {
+                                      foreach ($gaps as $gap):
+                                          $priorityNote = "";
+                                          if ($gap["weight"] >= 1.5) {
+                                              $priorityNote = " <strong>(High Priority for " . Security::escape($assessmentLob) . ")</strong>";
+                                          }
 
-                                      $impact = isset($businessImpacts[$gap["title"]]) ? $businessImpacts[$gap["title"]] : 'Reduces overall sovereignty maturity and organizational resilience.';
-                                      $steps = isset($firstSteps[$gap["title"]]) ? $firstSteps[$gap["title"]] : ['Review domain-specific recommendations in detailed assessment.'];
+                                          $impact = isset($businessImpacts[$gap["title"]]) ? $businessImpacts[$gap["title"]] : 'Reduces overall sovereignty maturity and organizational resilience.';
+                                          $steps = isset($firstSteps[$gap["title"]]) ? $firstSteps[$gap["title"]] : ['Review domain-specific recommendations in detailed assessment.'];
+                                      ?>
+                                          <li style="margin-bottom: 2rem;">
+                                              <strong><?php echo Security::escape($gap["title"]); ?></strong>: <?php echo Security::escape($gap["rating"]); ?> level (<?php echo $gap["percentage"]; ?>%)<?php if (isset($gap["maturityLevel"])): ?> • <span style="color: #f0ab00;"><?php echo Security::escape($gap["maturityLevel"]); ?></span><?php endif; ?><?php echo $priorityNote; ?>
+
+                                              <div style="margin-top: 0.75rem; padding: 1rem; background: #fff3cd; border-left: 3px solid #ffc107; border-radius: 4px;">
+                                                  <div style="margin-bottom: 0.75rem;">
+                                                      <strong style="color: #856404;"><i class="fa-solid fa-exclamation-circle"></i> Business Impact:</strong>
+                                                      <div style="margin-top: 0.25rem; color: #333;"><?php echo Security::escape($impact); ?></div>
+                                                  </div>
+
+                                                  <div>
+                                                      <strong style="color: #0d60f8;"><i class="fa-solid fa-list-check"></i> First Steps:</strong>
+                                                      <ol style="margin: 0.5rem 0 0 1.5rem; padding: 0; color: #333;">
+                                                          <?php foreach ($steps as $step): ?>
+                                                              <li style="margin-bottom: 0.25rem;"><?php echo Security::escape($step); ?></li>
+                                                          <?php endforeach; ?>
+                                                      </ol>
+                                                  </div>
+                                              </div>
+                                          </li>
+                                      <?php endforeach;
+                                  }
                                   ?>
-                                      <li style="margin-bottom: 2rem;">
-                                          <strong><?php echo Security::escape($gap["title"]); ?></strong>: <?php echo Security::escape($gap["rating"]); ?> level (<?php echo $gap["percentage"]; ?>%)<?php if (isset($gap["maturityLevel"])): ?> • <span style="color: #f0ab00;"><?php echo Security::escape($gap["maturityLevel"]); ?></span><?php endif; ?><?php echo $priorityNote; ?>
-
-                                          <div style="margin-top: 0.75rem; padding: 1rem; background: #fff3cd; border-left: 3px solid #ffc107; border-radius: 4px;">
-                                              <div style="margin-bottom: 0.75rem;">
-                                                  <strong style="color: #856404;"><i class="fa-solid fa-exclamation-circle"></i> Business Impact:</strong>
-                                                  <div style="margin-top: 0.25rem; color: #333;"><?php echo Security::escape($impact); ?></div>
-                                              </div>
-
-                                              <div>
-                                                  <strong style="color: #0d60f8;"><i class="fa-solid fa-list-check"></i> First Steps:</strong>
-                                                  <ol style="margin: 0.5rem 0 0 1.5rem; padding: 0; color: #333;">
-                                                      <?php foreach ($steps as $step): ?>
-                                                          <li style="margin-bottom: 0.25rem;"><?php echo Security::escape($step); ?></li>
-                                                      <?php endforeach; ?>
-                                                  </ol>
-                                              </div>
-                                          </div>
-                                      </li>
-                                  <?php endforeach; ?>
                               </div>
 
                               <div class="section-header" style="page-break-before: always;">
@@ -616,6 +626,9 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * $totalMaxPoints
                                   <p>Distribution of all capabilities across maturity levels:</p>
 
                                   <?php
+                                  if (empty($controls)) {
+                                      echo '<p style="color: #999; font-style: italic;">No status data available. No assessment data was provided.</p>';
+                                  } else {
                                   // Group capabilities by maturity level, then by domain
                                   $statusGroups = [
                                       '3' => ['label' => 'Fully Complete', 'color' => '#2aaa04', 'icon' => 'check-circle', 'domains' => []],
@@ -691,6 +704,7 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * $totalMaxPoints
                                           }
                                           echo '</div>';
                                       }
+                                  }
                                   }
                                   ?>
                               </div>
@@ -995,6 +1009,9 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * $totalMaxPoints
                                   </div>
 
                                   <?php
+                                  if (empty($thematicGroups) || empty($themeStatistics)) {
+                                      echo '<p style="color: #999; font-style: italic;">No thematic analysis data available. No assessment data was provided.</p>';
+                                  } else {
                                   // Identify highest and lowest scoring themes for insights
                                   $themeScores = [];
                                   foreach ($thematicGroups as $themeName => $themeData) {
@@ -1042,25 +1059,27 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * $totalMaxPoints
                                       ?>
                                       </p>
                                   </div>
+                                  <?php
+                                  }
+                                  ?>
                               </div>
 
                               <div class="section-header">
                                   <h3><i class="fa-solid fa-route"></i> Strategic Recommendations</h3>
-                                  <p class="imperative">To advance digital sovereignty maturity, executive leadership should:</p>
+                                  <p class="imperative">To advance maturity, executive leadership should:</p>
                                   <ul class="action-list">
                                       <li><strong>Prioritize foundational capabilities</strong> in the identified gap areas before pursuing advanced maturity levels</li>
                                       <li><strong>Align investment decisions</strong> with <?php echo Security::escape($assessmentLob); ?> industry requirements and regulatory obligations</li>
-                                      <li><strong>Establish executive sponsorship</strong> for sovereignty initiatives with dedicated budget allocation</li>
+                                      <li><strong>Establish executive sponsorship</strong> for improvement initiatives with dedicated budget allocation</li>
+                                      <?php if (!empty($strengths)): ?>
                                       <li><strong>Leverage existing strengths</strong> in <?php echo Security::escape($strengths[0]["title"]); ?> to build momentum and demonstrate value</li>
+                                      <?php endif; ?>
                                       <li><strong>Review detailed domain analysis</strong> (following pages) for specific technical and operational recommendations</li>
                                   </ul>
 
                                   <div class="result">The detailed assessment report that follows provides actionable recommendations for each domain, prioritized by maturity gap and industry relevance.</div>
                               </div>
                               </div>
-                              <?php
-                           }
-                           ?>
             <div class="row">
                <div class="col-md-12">
                   <div class="titlepage">
