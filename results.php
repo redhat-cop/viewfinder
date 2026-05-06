@@ -1418,6 +1418,11 @@ foreach ($thematicGroups as $themeName => $themeData) {
     $themeStats = ['total' => 0, 'complete' => 0, 'inprogress' => 0, 'planning' => 0, 'none' => 0, 'maturityScore' => 0];
 
     foreach ($themeData['capabilities'] as $capInfo) {
+        // Skip if domain doesn't exist in current profile
+        if (!isset($domainNameToQnum[$capInfo['domain']])) {
+            continue;
+        }
+
         $qnum = $domainNameToQnum[$capInfo['domain']];
         $capNum = $capInfo['capability'];
         $controlId = "control{$qnum}-{$capNum}";
@@ -1533,6 +1538,11 @@ foreach ($thematicGroups as $themeName => $themeData) {
     print '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0.5rem; margin-bottom: 1rem;">';
 
     foreach ($themeData['capabilities'] as $capInfo) {
+        // Skip if domain doesn't exist in current profile
+        if (!isset($domainNameToQnum[$capInfo['domain']])) {
+            continue;
+        }
+
         $qnum = $domainNameToQnum[$capInfo['domain']];
         $capNum = $capInfo['capability'];
         $controlId = "control{$qnum}-{$capNum}";

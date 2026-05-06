@@ -947,10 +947,12 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * $totalMaxPoints
                                       ];
                                   }
 
-                                  // Map domain names to qnum
+                                  // Map domain names to qnum (include all domains, not just those in main nav)
                                   $domainNameToQnum = [];
-                                  foreach ($controls as $control) {
-                                      $domainNameToQnum[$json[$control]['title']] = $json[$control]['qnum'];
+                                  foreach ($json as $key => $value) {
+                                      if (isset($value['title']) && isset($value['qnum'])) {
+                                          $domainNameToQnum[$value['title']] = $value['qnum'];
+                                      }
                                   }
 
                                   // Calculate statistics for each theme
@@ -959,6 +961,11 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * $totalMaxPoints
                                       $themeStats = ['total' => 0, 'maturityScore' => 0, 'complete' => 0, 'inprogress' => 0, 'planning' => 0, 'none' => 0];
 
                                       foreach ($themeData['capabilities'] as $capInfo) {
+                                          // Skip if domain doesn't exist in current profile
+                                          if (!isset($domainNameToQnum[$capInfo['domain']])) {
+                                              continue;
+                                          }
+
                                           $qnum = $domainNameToQnum[$capInfo['domain']];
                                           $capNum = $capInfo['capability'];
                                           $controlId = "control{$qnum}-{$capNum}";
