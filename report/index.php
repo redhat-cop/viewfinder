@@ -449,6 +449,218 @@ $totalScore = $totalWeight > 0 ? ($weightedSum / $totalWeight) * $totalMaxPoints
                                   </table>
                               </div>
 
+                              <?php
+                              // Categorize domains for At-a-Glance Performance
+                              $strongDomains = [];
+                              $developingDomains = [];
+                              $needsAttentionDomains = [];
+
+                              foreach ($domainAnalysis as $domain) {
+                                  if ($domain["percentage"] >= 60) {
+                                      $strongDomains[] = $domain;
+                                  } elseif ($domain["percentage"] >= 40) {
+                                      $developingDomains[] = $domain;
+                                  } else {
+                                      $needsAttentionDomains[] = $domain;
+                                  }
+                              }
+
+                              // Calculate insights
+                              $totalDomains = count($domainAnalysis);
+                              $avgScore = $totalDomains > 0 ? array_sum(array_column($domainAnalysis, 'percentage')) / $totalDomains : 0;
+
+                              // Find critical gap (lowest score with high weight)
+                              $criticalGap = null;
+                              $criticalGapScore = 100;
+                              foreach ($gaps as $gap) {
+                                  if ($gap["percentage"] < $criticalGapScore && $gap["weight"] >= 1.5) {
+                                      $criticalGap = $gap;
+                                      $criticalGapScore = $gap["percentage"];
+                                  }
+                              }
+                              if (!$criticalGap && !empty($gaps)) {
+                                  $criticalGap = $gaps[0];
+                              }
+
+                              // Find quick win
+                              $quickWinDomain = null;
+                              foreach ($strengths as $strength) {
+                                  if ($strength["percentage"] >= 70 && $strength["percentage"] < 85) {
+                                      $quickWinDomain = $strength;
+                                      break;
+                                  }
+                              }
+                              if (!$quickWinDomain && !empty($strengths)) {
+                                  $quickWinDomain = $strengths[0];
+                              }
+                              ?>
+
+                              <!-- At-a-Glance Performance -->
+                              <div class="section-header" style="page-break-before: auto; margin-top: 2rem;">
+                                  <h3><i class="fa-solid fa-gauge-high"></i> At-a-Glance Performance</h3>
+                                  <p>Domain maturity distribution across three performance tiers:</p>
+                              </div>
+
+                              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                                  <!-- Strong Domains -->
+                                  <div style="background: #e8f5e9; border: 2px solid #2aaa04; border-radius: 6px; padding: 1rem;">
+                                      <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                          <i class="fa-solid fa-circle-check" style="color: #2aaa04; font-size: 1.5rem;"></i>
+                                          <div>
+                                              <h4 style="color: #2aaa04; margin: 0; font-size: 1.1rem;">Strong</h4>
+                                              <p style="color: #666; margin: 0; font-size: 0.85rem;"><?php echo count($strongDomains); ?> domain<?php echo count($strongDomains) != 1 ? 's' : ''; ?> ≥ 60%</p>
+                                          </div>
+                                      </div>
+                                      <?php if (!empty($strongDomains)): ?>
+                                          <ul style="margin: 0; padding-left: 1.2rem; color: #333; line-height: 1.6; font-size: 0.9rem;">
+                                              <?php foreach ($strongDomains as $domain): ?>
+                                                  <li><strong><?php echo Security::escape($domain["title"]); ?></strong>: <?php echo $domain["percentage"]; ?>%</li>
+                                              <?php endforeach; ?>
+                                          </ul>
+                                      <?php else: ?>
+                                          <p style="color: #999; margin: 0; font-style: italic; font-size: 0.9rem;">None</p>
+                                      <?php endif; ?>
+                                  </div>
+
+                                  <!-- Developing Domains -->
+                                  <div style="background: #fff3e0; border: 2px solid #ec7a08; border-radius: 6px; padding: 1rem;">
+                                      <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                          <i class="fa-solid fa-circle-half-stroke" style="color: #ec7a08; font-size: 1.5rem;"></i>
+                                          <div>
+                                              <h4 style="color: #ec7a08; margin: 0; font-size: 1.1rem;">Developing</h4>
+                                              <p style="color: #666; margin: 0; font-size: 0.85rem;"><?php echo count($developingDomains); ?> domain<?php echo count($developingDomains) != 1 ? 's' : ''; ?> 40-59%</p>
+                                          </div>
+                                      </div>
+                                      <?php if (!empty($developingDomains)): ?>
+                                          <ul style="margin: 0; padding-left: 1.2rem; color: #333; line-height: 1.6; font-size: 0.9rem;">
+                                              <?php foreach ($developingDomains as $domain): ?>
+                                                  <li><strong><?php echo Security::escape($domain["title"]); ?></strong>: <?php echo $domain["percentage"]; ?>%</li>
+                                              <?php endforeach; ?>
+                                          </ul>
+                                      <?php else: ?>
+                                          <p style="color: #999; margin: 0; font-style: italic; font-size: 0.9rem;">None</p>
+                                      <?php endif; ?>
+                                  </div>
+
+                                  <!-- Needs Attention Domains -->
+                                  <div style="background: #fdecea; border: 2px solid #c9190b; border-radius: 6px; padding: 1rem;">
+                                      <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                          <i class="fa-solid fa-circle-exclamation" style="color: #c9190b; font-size: 1.5rem;"></i>
+                                          <div>
+                                              <h4 style="color: #c9190b; margin: 0; font-size: 1.1rem;">Needs Attention</h4>
+                                              <p style="color: #666; margin: 0; font-size: 0.85rem;"><?php echo count($needsAttentionDomains); ?> domain<?php echo count($needsAttentionDomains) != 1 ? 's' : ''; ?> < 40%</p>
+                                          </div>
+                                      </div>
+                                      <?php if (!empty($needsAttentionDomains)): ?>
+                                          <ul style="margin: 0; padding-left: 1.2rem; color: #333; line-height: 1.6; font-size: 0.9rem;">
+                                              <?php foreach ($needsAttentionDomains as $domain): ?>
+                                                  <li><strong><?php echo Security::escape($domain["title"]); ?></strong>: <?php echo $domain["percentage"]; ?>%</li>
+                                              <?php endforeach; ?>
+                                          </ul>
+                                      <?php else: ?>
+                                          <p style="color: #999; margin: 0; font-style: italic; font-size: 0.9rem;">None</p>
+                                      <?php endif; ?>
+                                  </div>
+                              </div>
+
+                              <!-- Critical Insights -->
+                              <div class="section-header">
+                                  <h3><i class="fa-solid fa-lightbulb"></i> Critical Insights</h3>
+                                  <p>Data-driven analysis highlighting key findings and recommended actions:</p>
+                              </div>
+
+                              <?php
+                              $insightCount = 0;
+
+                              // Insight 1: Critical Gap
+                              if ($criticalGap):
+                                  $insightCount++;
+                                  $impact = isset($businessImpacts[$criticalGap["title"]]) ? $businessImpacts[$criticalGap["title"]] : 'Creates significant organizational risk and limits strategic flexibility.';
+                              ?>
+                              <div style="margin-bottom: 1.5rem; padding: 1.25rem; background: #fdecea; border-left: 4px solid #c9190b; border-radius: 4px;">
+                                  <h4 style="color: #c9190b; margin: 0 0 0.5rem 0; font-size: 1.1rem;"><i class="fa-solid fa-triangle-exclamation"></i> CRITICAL GAP: <?php echo Security::escape($criticalGap["title"]); ?> at <?php echo $criticalGap["percentage"]; ?>%</h4>
+                                  <p style="color: #333; margin: 0 0 0.75rem 0; line-height: 1.6;"><strong>Business Impact:</strong> <?php echo Security::escape($impact); ?></p>
+                                  <div style="background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 1rem;">
+                                      <p style="color: #0d60f8; margin: 0 0 0.5rem 0; font-weight: 600;"><i class="fa-solid fa-arrow-right"></i> Recommendation:</p>
+                                      <p style="color: #333; margin: 0; font-size: 0.95rem;">Prioritize this domain for immediate investment. Current maturity of <?php echo $criticalGap["percentage"]; ?>% leaves significant exposure.<?php if ($criticalGap["weight"] >= 1.5) echo ' High priority for ' . Security::escape($assessmentLob) . ' industry.'; ?></p>
+                                  </div>
+                              </div>
+                              <?php endif; ?>
+
+                              <?php
+                              // Insight 2: Quick Win
+                              if ($quickWinDomain):
+                                  $insightCount++;
+                                  $quickWinText = isset($quickWins[$quickWinDomain["title"]]) ? $quickWins[$quickWinDomain["title"]] : 'Continue to refine and optimize processes to advance to the next maturity level.';
+                              ?>
+                              <div style="margin-bottom: 1.5rem; padding: 1.25rem; background: #e8f5e9; border-left: 4px solid #2aaa04; border-radius: 4px;">
+                                  <h4 style="color: #2aaa04; margin: 0 0 0.5rem 0; font-size: 1.1rem;"><i class="fa-solid fa-rocket"></i> QUICK WIN: <?php echo Security::escape($quickWinDomain["title"]); ?> already at <?php echo $quickWinDomain["percentage"]; ?>%</h4>
+                                  <p style="color: #333; margin: 0 0 0.75rem 0; line-height: 1.6;"><strong>Opportunity:</strong> This domain is performing well. With focused effort, you can reach the next maturity level and demonstrate measurable progress.</p>
+                                  <div style="background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 1rem;">
+                                      <p style="color: #0d60f8; margin: 0 0 0.5rem 0; font-weight: 600;"><i class="fa-solid fa-arrow-right"></i> Next Step:</p>
+                                      <p style="color: #333; margin: 0; font-size: 0.95rem;"><?php echo Security::escape($quickWinText); ?></p>
+                                  </div>
+                              </div>
+                              <?php endif; ?>
+
+                              <?php
+                              // Insight 3: Strategic Recommendations
+                              if (count($domainAnalysis) > 0):
+                                  $insightCount++;
+
+                                  // Generate strategic recommendations based on assessment
+                                  $recommendations = [];
+
+                                  // Recommendation 1: Address critical gaps
+                                  if (!empty($needsAttentionDomains)) {
+                                      $gapCount = count($needsAttentionDomains);
+                                      $gapNames = array_slice(array_column($needsAttentionDomains, 'title'), 0, 2);
+                                      $recommendations[] = [
+                                          'priority' => 'IMMEDIATE',
+                                          'action' => 'Address critical gaps in ' . implode(' and ', array_map(['Security', 'escape'], $gapNames)) . ($gapCount > 2 ? ' (+ ' . ($gapCount - 2) . ' more)' : ''),
+                                          'details' => 'These low-maturity domains create significant risk. Review detailed domain analysis for specific first steps and business impact.'
+                                      ];
+                                  }
+
+                                  // Recommendation 2: Build on strengths
+                                  if (!empty($strongDomains)) {
+                                      $strongCount = count($strongDomains);
+                                      $recommendations[] = [
+                                          'priority' => 'SHORT-TERM',
+                                          'action' => 'Leverage your ' . $strongCount . ' strong domain' . ($strongCount > 1 ? 's' : '') . ' as templates for improvement',
+                                          'details' => 'Share processes, tools, and lessons learned from high-performing domains to accelerate maturity in weaker areas.'
+                                      ];
+                                  }
+
+                                  // Recommendation 3: Executive sponsorship
+                                  $recommendations[] = [
+                                      'priority' => 'STRATEGIC',
+                                      'action' => 'Establish executive sponsorship with dedicated budget allocation',
+                                      'details' => 'Assign clear ownership for each domain and create quarterly progress reviews with leadership to maintain momentum.'
+                                  ];
+                              ?>
+                              <div style="margin-bottom: 1.5rem; padding: 1.25rem; background: #e8f4fd; border-left: 4px solid #0d60f8; border-radius: 4px;">
+                                  <h4 style="color: #0d60f8; margin: 0 0 0.5rem 0; font-size: 1.1rem;"><i class="fa-solid fa-list-check"></i> STRATEGIC RECOMMENDATIONS</h4>
+                                  <p style="color: #333; margin: 0 0 1rem 0; line-height: 1.6;"><strong>Priority Actions:</strong> Based on your assessment results, focus on these key initiatives to advance maturity.</p>
+
+                                  <?php foreach ($recommendations as $idx => $rec): ?>
+                                      <div style="background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 1rem; margin-bottom: <?php echo ($idx < count($recommendations) - 1) ? '0.75rem' : '0'; ?>;">
+                                          <div style="margin-bottom: 0.5rem;">
+                                              <span style="display: inline-block; background: <?php
+                                                  echo $rec['priority'] === 'IMMEDIATE' ? '#c9190b' : ($rec['priority'] === 'SHORT-TERM' ? '#ec7a08' : '#0d60f8');
+                                              ?>; color: #fff; padding: 0.25rem 0.75rem; border-radius: 3px; font-size: 0.75rem; font-weight: 700; margin-right: 0.5rem;"><?php echo $rec['priority']; ?></span>
+                                              <strong style="color: #333;"><?php echo $rec['action']; ?></strong>
+                                          </div>
+                                          <p style="color: #666; margin: 0; font-size: 0.9rem; line-height: 1.5; padding-left: 1rem;"><?php echo $rec['details']; ?></p>
+                                      </div>
+                                  <?php endforeach; ?>
+                              </div>
+                              <?php endif; ?>
+
+                              <?php if ($insightCount == 0): ?>
+                                  <p style="color: #999; font-style: italic;">Complete the assessment to generate critical insights.</p>
+                              <?php endif; ?>
+
                               <div class="section-header">
                                   <h3><i class="fa-solid fa-chart-line"></i> Key Strengths</h3>
                                   <p>The assessment identified the following areas of strong maturity:</p>
