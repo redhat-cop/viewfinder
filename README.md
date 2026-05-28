@@ -498,8 +498,8 @@ You'll see the **Landing Page Dashboard** with four main sections:
 - **Level 5 - Optimizing (81-100%)**: Continuous improvement, innovation focus
 
 #### Scoring
-- Per domain: 36 points (9 capabilities × 0-4 points each)
-- Total assessment: 252 points (56 capabilities across 5 main domains)
+- Per domain: 36 points maximum (8 capabilities with weighted points: 1+2+3+4+5+6+7+8)
+- Total assessment: 252 points (56 capabilities across 7 domains: 5 main + 2 sub-pillars)
 - ✨ Industry-weighted scoring adjusts final score based on domain importance for your sector
 
 #### Results Tabs

@@ -632,7 +632,7 @@
       <p>This guide assumes familiarity with basic Digital Sovereignty concepts. If you or your audience are new to Digital Sovereignty, consider starting with the <a href="facilitator-guide-101.php" style="color: #12bbd4;">101 - Introduction guide</a>.</p>
 
       <h3>What is a Full Maturity Assessment?</h3>
-      <p>The Full Maturity Assessment is a structured evaluation tool that measures an organization's capabilities across multiple domains using a proven 5-level maturity model based on the CMMI (Capability Maturity Model Integration) framework:</p>
+      <p>The Full Maturity Assessment is a structured evaluation tool that measures an organization's capabilities across multiple domains using an industry-standard 5-level maturity model:</p>
 
       <table class="maturity-table">
         <thead>
@@ -1010,7 +1010,7 @@
         <li><strong>Park discussions</strong> - "That's an important topic; let's capture it for the roadmap discussion and continue"</li>
         <li><strong>Batch related questions</strong> - "These next 3 questions are all about encryption; let's discuss them together"</li>
         <li><strong>Take strategic breaks</strong> - Break between domains (5 min every 45 min)</li>
-        <li><strong>Show progress</strong> - "We're through 3 of 5 domains—great progress!"</li>
+        <li><strong>Show progress</strong> - "We're through 3 of 7 domains—great progress!"</li>
       </ul>
     </div>
 
@@ -2416,7 +2416,6 @@
 
       <h3>Reference Materials</h3>
       <ul>
-        <li><strong>CMMI Framework:</strong> https://cmmiinstitute.com/</li>
         <li><strong>GDPR:</strong> General Data Protection Regulation (EU)</li>
         <li><strong>NIS2 Directive:</strong> Network and Information Security Directive (EU)</li>
         <li><strong>DORA:</strong> Digital Operational Resilience Act (EU)</li>

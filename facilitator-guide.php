@@ -307,7 +307,7 @@
         <ul>
           <li>What is Digital Sovereignty?</li>
           <li>Business drivers and regulatory landscape</li>
-          <li>High-level overview of 5 domains</li>
+          <li>High-level overview of 7 domains (5 main + 2 sub-pillars)</li>
           <li>Maturity model introduction</li>
           <li>Assessment options and next steps</li>
         </ul>
@@ -335,7 +335,7 @@
         <ul>
           <li>Pre-assessment preparation</li>
           <li>Facilitation methodology</li>
-          <li>Deep-dive into all 5 domains</li>
+          <li>Deep-dive into all 7 domains (5 main + 2 sub-pillars)</li>
           <li>Scoring and maturity calculations</li>
           <li>Results interpretation and roadmapping</li>
         </ul>
