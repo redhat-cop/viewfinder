@@ -1,0 +1,407 @@
+/**
+ * Domain Pages Stylesheet
+ * Shared styling for all Digital Sovereignty domain pages
+ * Used by: dig-sov-*.php files
+ */
+
+body {
+  background-color: #151515 !important;
+  color: #ccc !important;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.pf-c-page__header {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  background: #1a1a1a;
+  border-bottom: 1px solid #444;
+}
+
+.pf-c-page__header-tools button {
+  margin-right: 1rem;
+  background: #0d60f8;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.pf-c-page__header-tools button:hover {
+  background: #0a4fc5;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(13, 96, 248, 0.3);
+}
+
+.domain-page {
+  flex: 1;
+  padding: 2rem;
+}
+
+.domain-header {
+  margin-bottom: 3rem;
+}
+
+.domain-icon {
+  font-size: 3rem;
+  color: #0d60f8;
+  margin-bottom: 1rem;
+}
+
+.domain-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 1rem 0;
+}
+
+.domain-subtitle {
+  font-size: 1.2rem;
+  color: #999;
+  margin: 0;
+}
+
+.domain-overview {
+  background: #1e1e1e;
+  border-left: 4px solid #0d60f8;
+  padding: 1.5rem;
+  margin-bottom: 3rem;
+  border-radius: 4px;
+}
+
+.domain-overview h2 {
+  color: #fff;
+  font-size: 1.5rem;
+  margin-top: 0;
+}
+
+.domain-overview p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.capabilities-section {
+  margin-bottom: 3rem;
+}
+
+.capabilities-section h2 {
+  color: #fff;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #333;
+}
+
+.capability-card {
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.capability-card:hover {
+  border-color: #0d60f8;
+  box-shadow: 0 4px 12px rgba(13, 96, 248, 0.2);
+  transform: translateY(-2px);
+}
+
+.capability-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.capability-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.capability-tier {
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tier-foundation {
+  background: #1e3a5f;
+  color: #6eb3ff;
+}
+
+.tier-strategic {
+  background: #3d2d1f;
+  color: #ffb366;
+}
+
+.tier-advanced {
+  background: #1f3d2f;
+  color: #66ff99;
+}
+
+.capability-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ccc;
+  margin-bottom: 1rem;
+}
+
+.capability-points {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #333;
+}
+
+.points-label {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.points-value {
+  background: #0d60f8;
+  color: #fff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.key-questions {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #252525;
+  border-radius: 4px;
+}
+
+.key-questions h4 {
+  color: #0d60f8;
+  font-size: 1rem;
+  margin: 0 0 0.75rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.key-questions ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  color: #aaa;
+}
+
+.key-questions li {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.recommendations-section {
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.recommendations-section h4 {
+  color: #fff;
+  font-size: 1.2rem;
+  margin: 0 0 1rem 0;
+}
+
+.recommendation-item {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #333;
+}
+
+.recommendation-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.recommendation-item h5 {
+  color: #0d60f8;
+  font-size: 1.05rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.recommendation-item p {
+  color: #ccc;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.best-practices {
+  background: #252525;
+  border-left: 3px solid #ffc107;
+  padding: 1rem;
+  margin-top: 2rem;
+  border-radius: 4px;
+}
+
+.best-practices h3 {
+  color: #ffc107;
+  font-size: 1.2rem;
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.best-practices ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  color: #ccc;
+}
+
+.best-practices li {
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+}
+
+.vendor-solutions {
+  background: #2d1f1f;
+  border: 2px solid #ee0000;
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.vendor-solutions h3 {
+  color: #ee0000;
+  font-size: 1.3rem;
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.vendor-solutions .vendor-icon {
+  font-size: 1.5rem;
+}
+
+.vendor-solution-item {
+  background: #1e1e1e;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.vendor-solution-item:last-child {
+  margin-bottom: 0;
+}
+
+.vendor-solution-item h4 {
+  color: #fff;
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.vendor-solution-item p {
+  color: #ccc;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.related-domains {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: #1e1e1e;
+  border-radius: 6px;
+}
+
+.related-domains h2 {
+  color: #fff;
+  font-size: 1.5rem;
+  margin: 0 0 1.5rem 0;
+}
+
+.domain-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.domain-link-card {
+  background: #252525;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 1rem;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.domain-link-card:hover {
+  border-color: #0d60f8;
+  background: #2a2a2a;
+  transform: translateX(5px);
+}
+
+.domain-link-icon {
+  font-size: 2rem;
+  color: #0d60f8;
+}
+
+.domain-link-info h3 {
+  color: #fff;
+  font-size: 1rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.domain-link-info p {
+  color: #999;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.footer {
+  margin-top: auto;
+  padding: 2rem;
+  background: #1a1a1a;
+  border-top: 1px solid #444;
+  text-align: center;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .domain-title {
+    font-size: 2rem;
+  }
+
+  .domain-subtitle {
+    font-size: 1rem;
+  }
+
+  .capability-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .domain-links {
+    grid-template-columns: 1fr;
+  }
+
+  .domain-page {
+    padding: 1rem;
+  }
+}

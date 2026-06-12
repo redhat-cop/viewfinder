@@ -330,6 +330,7 @@
         <a href="index.php"><button><i class="fa fa-home"></i> Home</button></a>
         <a href="facilitator-guide.php" target="_blank"><button><i class="fa fa-book-open"></i> Enablement Guides</button></a>
         <a href="import-results.php"><button><i class="fa fa-upload"></i> Import Results</button></a>
+        <a href="profile-admin.php"><button><i class="fa fa-cog"></i> Manage Profiles</button></a>
       </div>
     </div>
   </header>
