@@ -296,7 +296,7 @@ This is a dynamic assessment tool designed to help organizations measure and vis
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/maturity-assessment.git
+git clone https://github.com/redhat-cop/viewfinder.git
 cd viewfinder
 
 # Build with Podman (or Docker)
@@ -310,8 +310,8 @@ podman run -p 8080:8080 localhost/maturity-assessment
 
 ```bash
 # Pull and run the pre-built image
-podman pull your-registry/maturity-assessment
-podman run -p 8080:8080 your-registry/maturity-assessment
+podman pull quay.io/redhat-cop/viewfinder:latest
+podman run -p 8080:8080 quay.io/redhat-cop/viewfinder:latest
 ```
 
 #### Option 3: Direct Installation
@@ -330,7 +330,7 @@ php -m | grep -E 'json|fileinfo|mbstring'
 
 1. **Clone and install dependencies**
 ```bash
-git clone https://github.com/your-org/maturity-assessment.git
+git clone https://github.com/redhat-cop/viewfinder.git
 cd viewfinder
 composer install
 ```
@@ -1383,9 +1383,9 @@ This project is licensed under the terms specified in the [LICENSE](LICENSE) fil
 
 ## Support and Contact
 
-- **Repository**: https://github.com/your-org/maturity-assessment
-- **Container Registry**: your-registry/maturity-assessment
-- **Maintainer**: Chris Jenkins (maintainer.com)
+- **Repository**: https://github.com/redhat-cop/viewfinder
+- **Container Registry**: quay.io/redhat-cop/viewfinder
+- **Maintainer**: Chris Jenkins
 - **Issues**: Please report bugs and feature requests via GitHub Issues
 
 ## Acknowledgments
