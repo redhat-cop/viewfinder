@@ -490,7 +490,13 @@ foreach ($controls as $control) {
 	// Add subtitle for domains with sub-pillars
 	$subtitle = '';
 	if (isset($json[$control]['includes_subdomains']) && $json[$control]['includes_subdomains'] === true) {
-		$subtitle = '<br><span style="font-size: 0.75rem; color: #9ec7fc; font-style: italic;">incl. sub-pillar</span>';
+		if (isset($json[$control]['section_2_source'])) {
+			$subdomainKey = $json[$control]['section_2_source'];
+			if (isset($json[$subdomainKey]['title'])) {
+				$subPillarName = $json[$subdomainKey]['title'];
+				$subtitle = '<br><span style="font-size: 0.75rem; color: #9ec7fc; font-style: italic;">incl. ' . htmlspecialchars($subPillarName) . '</span>';
+			}
+		}
 	}
 
 	print "<td>" . $displayTitle . $subtitle . "</td>";

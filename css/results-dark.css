@@ -322,7 +322,7 @@ tr:hover {
 .spacedTable td:first-child {
   width: 35% !important;
   max-width: 35% !important;
-  text-align: left;
+  text-align: center;
   line-height: 1.2;
   padding: 0.4rem 0.3rem !important;
   font-size: 0.85rem;
