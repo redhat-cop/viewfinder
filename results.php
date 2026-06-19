@@ -1444,6 +1444,115 @@ if ($profile === 'Security') {
             ]
         ],
     ];
+} elseif ($profile === 'SecureDefault') {
+    // Secure by Design & Secure by Default profile thematic groups
+    $thematicGroups = [
+        'Development Security' => [
+            'icon' => 'code',
+            'color' => '#0d60f8',
+            'overview' => 'This theme focuses on embedding security throughout the software development lifecycle—from initial design through deployment. It encompasses secure coding practices, developer training, threat modeling, static and dynamic testing, and establishing security as a first-class requirement rather than an afterthought. The goal is to eliminate entire classes of vulnerabilities before code reaches production.',
+            'capabilities' => [
+                ['domain' => 'Development Security', 'capability' => 1, 'name' => 'Secure-by-Design Product Requirements'],
+                ['domain' => 'Development Security', 'capability' => 2, 'name' => 'Integrated Developer Security Training'],
+                ['domain' => 'Development Security', 'capability' => 3, 'name' => 'Static Application Security Testing (SAST)'],
+                ['domain' => 'Development Security', 'capability' => 4, 'name' => 'Dynamic Application Security Testing (DAST)'],
+                ['domain' => 'Development Security', 'capability' => 5, 'name' => 'Threat Modeling Integration'],
+                ['domain' => 'Development Security', 'capability' => 6, 'name' => 'Safe Language Selection & Compiler Flags'],
+                ['domain' => 'Development Security', 'capability' => 7, 'name' => 'Secure-by-Design Key Performance Indicators'],
+                ['domain' => 'Development Security', 'capability' => 8, 'name' => 'Independent Application Pen-Testing Audits'],
+            ]
+        ],
+        'Hardened Infrastructure' => [
+            'icon' => 'shield-halved',
+            'color' => '#2aaa04',
+            'overview' => 'This theme addresses the principle of Secure by Default—ensuring systems deploy in their most secure configuration without requiring manual hardening. It covers baseline hardened OS templates, disabling legacy protocols by default, removing default credentials, immutable container architectures, automated configuration auditing, and dynamic remediation of configuration drift.',
+            'capabilities' => [
+                ['domain' => 'Configuration Security', 'capability' => 1, 'name' => 'Baseline Hardened Operating System Templates'],
+                ['domain' => 'Configuration Security', 'capability' => 2, 'name' => 'Default-Off Legacy Network Protocols'],
+                ['domain' => 'Configuration Security', 'capability' => 3, 'name' => 'Removal of Default Credentials and Test Accounts'],
+                ['domain' => 'Configuration Security', 'capability' => 4, 'name' => 'Immutable Container Stance & Distroless Images'],
+                ['domain' => 'Configuration Security', 'capability' => 5, 'name' => 'Automated Configuration Audit and Enforcement'],
+                ['domain' => 'Configuration Security', 'capability' => 6, 'name' => 'Dynamic Configuration Remediation Engine'],
+                ['domain' => 'Configuration Security', 'capability' => 7, 'name' => 'Firmware & Hypervisor Hardening Protocols'],
+                ['domain' => 'Configuration Security', 'capability' => 8, 'name' => 'Self-Destructing & Zero-State Compute Execution'],
+            ]
+        ],
+        'Attack Surface Reduction' => [
+            'icon' => 'compress',
+            'color' => '#ec7a08',
+            'overview' => 'This theme focuses on minimizing the digital attack surface through network segmentation, API boundary controls, least privilege access, and eliminating unnecessary features. It encompasses zero-trust microsegmentation, service mesh encryption, data tier isolation, attack surface mapping, and kernel-level feature deprecation to reduce exploitable pathways.',
+            'capabilities' => [
+                ['domain' => 'Attack Surface Control', 'capability' => 1, 'name' => 'Strict Network Zero-Trust Micro-Segmentation'],
+                ['domain' => 'Attack Surface Control', 'capability' => 2, 'name' => 'API Boundary Minimization & Gateway Routing'],
+                ['domain' => 'Attack Surface Control', 'capability' => 3, 'name' => 'Least Privilege Ingress Filtering'],
+                ['domain' => 'Attack Surface Control', 'capability' => 4, 'name' => 'Service Mesh Isolation and Encrypted Transit'],
+                ['domain' => 'Attack Surface Control', 'capability' => 5, 'name' => 'Data Tier Separation & Multi-Tenant Isolation'],
+                ['domain' => 'Attack Surface Control', 'capability' => 6, 'name' => 'Attack Surface Mapping Automation'],
+                ['domain' => 'Attack Surface Control', 'capability' => 7, 'name' => 'Hardware-Enforced Enclave Segmentation'],
+                ['domain' => 'Attack Surface Control', 'capability' => 8, 'name' => 'Unused Feature Deprecation & Kernel Hardening'],
+            ]
+        ],
+        'Supply Chain Integrity' => [
+            'icon' => 'link',
+            'color' => '#12bbd4',
+            'overview' => 'This theme addresses the security and transparency of the software supply chain—from dependencies and third-party libraries through build pipelines and artifact registries. It covers SBOM generation, build provenance verification, dependency vulnerability scanning, artifact signing, and continuous supply chain monitoring to prevent compromised components from entering production.',
+            'capabilities' => [
+                ['domain' => 'Supply Chain Security', 'capability' => 1, 'name' => 'Comprehensive Software Bill of Materials (SBOM)'],
+                ['domain' => 'Supply Chain Security', 'capability' => 2, 'name' => 'Build Provenance & Reproducibility Verification'],
+                ['domain' => 'Supply Chain Security', 'capability' => 3, 'name' => 'Software Composition Analysis (SCA)'],
+                ['domain' => 'Supply Chain Security', 'capability' => 4, 'name' => 'Internal Curated Package Repositories'],
+                ['domain' => 'Supply Chain Security', 'capability' => 5, 'name' => 'Signed Artifact & Image Verification'],
+                ['domain' => 'Supply Chain Security', 'capability' => 6, 'name' => 'Third-Party Code Vetting & Approval'],
+                ['domain' => 'Supply Chain Security', 'capability' => 7, 'name' => 'Secure Build Pipeline Hardening'],
+                ['domain' => 'Supply Chain Security', 'capability' => 8, 'name' => 'Continuous Supply Chain Threat Monitoring'],
+            ]
+        ],
+        'Cryptography & Identity' => [
+            'icon' => 'key',
+            'color' => '#f0ab00',
+            'overview' => 'This theme ensures robust cryptographic controls and identity sovereignty throughout your infrastructure. It covers cryptographic key lifecycle management, quantum-safe algorithms, certificate authority control, hardware security modules, encrypted secrets management, and identity federation—ensuring cryptographic operations remain under sovereign control.',
+            'capabilities' => [
+                ['domain' => 'Cryptography & Identity', 'capability' => 1, 'name' => 'Cryptographic Key Lifecycle Management'],
+                ['domain' => 'Cryptography & Identity', 'capability' => 2, 'name' => 'Post-Quantum Safe Cryptographic Algorithms'],
+                ['domain' => 'Cryptography & Identity', 'capability' => 3, 'name' => 'Certificate Authority (CA) Sovereignty'],
+                ['domain' => 'Cryptography & Identity', 'capability' => 4, 'name' => 'Hardware Security Module (HSM) Integration'],
+                ['domain' => 'Cryptography & Identity', 'capability' => 5, 'name' => 'Encrypted Secrets Management & Vaulting'],
+                ['domain' => 'Cryptography & Identity', 'capability' => 6, 'name' => 'Mutual TLS (mTLS) Service Authentication'],
+                ['domain' => 'Cryptography & Identity', 'capability' => 7, 'name' => 'Identity Federation & Provider Independence'],
+                ['domain' => 'Cryptography & Identity', 'capability' => 8, 'name' => 'Cryptographic Algorithm Agility & Standards'],
+            ]
+        ],
+        'Continuous Assurance' => [
+            'icon' => 'clipboard-check',
+            'color' => '#c9190b',
+            'overview' => 'This theme focuses on automated, continuous validation of security controls through policy-as-code, runtime enforcement, admission controls, and compliance scanning. It encompasses automated guardrails that prevent misconfigurations, continuous compliance validation, and integration of security checks directly into CI/CD pipelines for real-time assurance.',
+            'capabilities' => [
+                ['domain' => 'Automated Assurance', 'capability' => 1, 'name' => 'Policy-as-Code Framework Integration'],
+                ['domain' => 'Automated Assurance', 'capability' => 2, 'name' => 'Runtime Security Policy Enforcement'],
+                ['domain' => 'Automated Assurance', 'capability' => 3, 'name' => 'Admission Control & Validation Gates'],
+                ['domain' => 'Automated Assurance', 'capability' => 4, 'name' => 'Image & Artifact Compliance Scanning'],
+                ['domain' => 'Automated Assurance', 'capability' => 5, 'name' => 'Infrastructure-as-Code (IaC) Security Scanning'],
+                ['domain' => 'Automated Assurance', 'capability' => 6, 'name' => 'Continuous Compliance Monitoring & Reporting'],
+                ['domain' => 'Automated Assurance', 'capability' => 7, 'name' => 'Security Control Effectiveness Testing'],
+                ['domain' => 'Automated Assurance', 'capability' => 8, 'name' => 'Automated Security Remediation Workflows'],
+            ]
+        ],
+        'Resilience & Recovery' => [
+            'icon' => 'shield-virus',
+            'color' => '#a18fff',
+            'overview' => 'This theme addresses organizational resilience through threat modeling, blast radius containment, graceful degradation, and rapid recovery capabilities. It encompasses automated breach isolation, multi-zone redundancy, circuit breaker patterns, chaos engineering, and immutable infrastructure reconstruction to ensure systems can withstand and recover from attacks.',
+            'capabilities' => [
+                ['domain' => 'Resilience & Threat Modeling', 'capability' => 1, 'name' => 'Workload Resource Isolation & Limits'],
+                ['domain' => 'Resilience & Threat Modeling', 'capability' => 2, 'name' => 'Graceful Application Degradation Designs'],
+                ['domain' => 'Resilience & Threat Modeling', 'capability' => 3, 'name' => 'Multi-Zone Infrastructure Redundancy models'],
+                ['domain' => 'Resilience & Threat Modeling', 'capability' => 4, 'name' => 'Network Circuit Breaker Policy Enforcement'],
+                ['domain' => 'Resilience & Threat Modeling', 'capability' => 5, 'name' => 'Automated Breach Blast Radius Isolation'],
+                ['domain' => 'Resilience & Threat Modeling', 'capability' => 6, 'name' => 'Sovereign Air-Gapped Failover Processing'],
+                ['domain' => 'Resilience & Threat Modeling', 'capability' => 7, 'name' => 'Automated Chaos Engineering Fault Injection'],
+                ['domain' => 'Resilience & Threat Modeling', 'capability' => 8, 'name' => 'Immutable System State Reconstruction Protocols'],
+            ]
+        ],
+    ];
 } elseif ($profile === 'AISovereignty') {
     // AI Sovereignty profile thematic groups
     $thematicGroups = [

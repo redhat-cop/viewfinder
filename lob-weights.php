@@ -346,5 +346,123 @@ return [
                 'AI Innovation Sovereignty' => 1.0
             ]
         ]
+    ],
+
+    // ============================================
+    // SECURE BY DESIGN & SECURE BY DEFAULT PROFILE WEIGHTS
+    // ============================================
+    'SecureDefault' => [
+        'Balanced' => [
+            'name' => 'Balanced',
+            'description' => 'Equal weighting across all Secure by Design & Secure by Default domains',
+            'icon' => 'fa-balance-scale',
+            'weights' => [
+                'Development Security' =>1.0,
+                'Configuration Security' =>1.0,
+                'Attack Surface Control' => 1.0,
+                'Supply Chain Security' => 1.0,
+                'Cryptography & Identity' => 1.0,
+                'Automated Assurance' => 1.0,
+                'Resilience & Threat Modeling' => 1.0
+            ]
+        ],
+        'General' => [
+            'name' => 'General',
+            'description' => 'Balanced approach suitable for general organizations without specific industry focus',
+            'icon' => 'fa-building',
+            'weights' => [
+                'Development Security' =>1.0,
+                'Configuration Security' =>1.0,
+                'Attack Surface Control' => 1.0,
+                'Supply Chain Security' => 1.0,
+                'Cryptography & Identity' => 1.0,
+                'Automated Assurance' => 1.0,
+                'Resilience & Threat Modeling' => 1.0
+            ]
+        ],
+        'Finance' => [
+            'name' => 'Finance',
+            'description' => 'Emphasizes cryptographic rigor, supply chain integrity, and continuous assurance for regulatory compliance',
+            'icon' => 'fa-building-columns',
+            'weights' => [
+                'Secure Development Lifecycle (SDLC) Governance' => 1.5,
+                'Secure Default Configurations & Hardening' => 1.5,
+                'Architecture & Attack Surface Minimization' => 1.5,
+                'Dependency & Supply Chain Integrity' => 2.0,
+                'Cryptographic Rigor & Identity Sovereignty' => 2.0,
+                'Continuous Automated Assurance & Guardrails' => 2.0,
+                'Resilience, Threat Modeling & Blast Radius Control' => 1.5
+            ]
+        ],
+        'Healthcare' => [
+            'name' => 'Healthcare',
+            'description' => 'Focuses on secure configurations, data protection, and resilience for patient safety',
+            'icon' => 'fa-heart-pulse',
+            'weights' => [
+                'Secure Development Lifecycle (SDLC) Governance' => 1.5,
+                'Secure Default Configurations & Hardening' => 2.0,
+                'Architecture & Attack Surface Minimization' => 1.5,
+                'Dependency & Supply Chain Integrity' => 1.5,
+                'Cryptographic Rigor & Identity Sovereignty' => 2.0,
+                'Continuous Automated Assurance & Guardrails' => 1.5,
+                'Resilience, Threat Modeling & Blast Radius Control' => 2.0
+            ]
+        ],
+        'Government' => [
+            'name' => 'Government',
+            'description' => 'Comprehensive security across all domains for public sector organizations',
+            'icon' => 'fa-landmark',
+            'weights' => [
+                'Secure Development Lifecycle (SDLC) Governance' => 2.0,
+                'Secure Default Configurations & Hardening' => 2.0,
+                'Architecture & Attack Surface Minimization' => 2.0,
+                'Dependency & Supply Chain Integrity' => 2.0,
+                'Cryptographic Rigor & Identity Sovereignty' => 2.0,
+                'Continuous Automated Assurance & Guardrails' => 2.0,
+                'Resilience, Threat Modeling & Blast Radius Control' => 2.0
+            ]
+        ],
+        'Manufacturing' => [
+            'name' => 'Manufacturing',
+            'description' => 'Emphasizes secure defaults, resilience, and supply chain integrity for operational technology',
+            'icon' => 'fa-industry',
+            'weights' => [
+                'Secure Development Lifecycle (SDLC) Governance' => 1.5,
+                'Secure Default Configurations & Hardening' => 2.0,
+                'Architecture & Attack Surface Minimization' => 1.5,
+                'Dependency & Supply Chain Integrity' => 2.0,
+                'Cryptographic Rigor & Identity Sovereignty' => 1.5,
+                'Continuous Automated Assurance & Guardrails' => 1.5,
+                'Resilience, Threat Modeling & Blast Radius Control' => 2.0
+            ]
+        ],
+        'Telecommunications' => [
+            'name' => 'Telecommunications',
+            'description' => 'Focuses on network security, attack surface minimization, and resilience for critical infrastructure',
+            'icon' => 'fa-tower-cell',
+            'weights' => [
+                'Secure Development Lifecycle (SDLC) Governance' => 1.5,
+                'Secure Default Configurations & Hardening' => 2.0,
+                'Architecture & Attack Surface Minimization' => 2.0,
+                'Dependency & Supply Chain Integrity' => 1.5,
+                'Cryptographic Rigor & Identity Sovereignty' => 1.5,
+                'Continuous Automated Assurance & Guardrails' => 1.5,
+                'Resilience, Threat Modeling & Blast Radius Control' => 2.0
+            ]
+        ],
+        'Other' => [
+            'name' => 'Other',
+            'description' => 'Balanced approach suitable for general organizations without specific regulatory constraints',
+            'icon' => 'fa-building',
+            'weights' => [
+                'Development Security' =>1.0,
+                'Configuration Security' =>1.0,
+                'Attack Surface Control' => 1.0,
+                'Supply Chain Security' => 1.0,
+                'Cryptography & Identity' => 1.0,
+                'Automated Assurance' => 1.0,
+                'Resilience & Threat Modeling' => 1.0
+            ]
+        ]
     ]
 ];

@@ -3,8 +3,8 @@ FROM registry.access.redhat.com/ubi9/php-83:latest
 
 # Metadata
 LABEL maintainer="Maturity Assessment Tool" \
-      version="3.0.0" \
-      description="Maturity Assessment Tool - Production Ready with Landing Page, Profile Management, DS Readiness Assessment with PDF Export, Operation Sovereign Shield Escape Room, Digital Sovereignty Quiz, Assessment Results Export/Import, Workshop Enablement Guides (101/201), Templates Library"
+      version="3.1.0" \
+      description="Maturity Assessment Tool - Production Ready with Landing Page, Profile Management, Secure by Design & Secure by Default Assessment, DS Readiness Assessment with PDF Export, Operation Sovereign Shield Escape Room, Digital Sovereignty Quiz, Assessment Results Export/Import, Workshop Enablement Guides (101/201), Templates Library"
 
 # Set working directory
 WORKDIR /opt/app-root/src

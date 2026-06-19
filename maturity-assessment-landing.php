@@ -374,6 +374,18 @@
         }
     }
 
+    // Secure by Design & Secure by Default domains - load from controls file
+    $secureDefaultControlsFile = Security::getControlsFilePath('SecureDefault');
+    $secureDefaultJson = Security::loadJSON($secureDefaultControlsFile);
+    if ($secureDefaultJson !== null) {
+        $profileDomains['SecureDefault'] = [];
+        foreach ($secureDefaultJson as $key => $value) {
+            if (strpos($key, 'Domain-') === 0 && isset($value['title'])) {
+                $profileDomains['SecureDefault'][] = $value['title'];
+            }
+        }
+    }
+
     // Use Digital Sovereignty as default for initial page load
     $domainNames = $profileDomains['DigitalSovereignty'];
     ?>
@@ -388,8 +400,8 @@
             </label>
             <select id="maturity-profile-select" class="profile-dropdown">
               <?php
-              // Display in specific order: Digital Sovereignty first, AI Sovereignty, then Security
-              $profileOrder = ['DigitalSovereignty', 'AISovereignty', 'Security'];
+              // Display in specific order: Digital Sovereignty first, AI Sovereignty, Secure by Design & Default, then Security
+              $profileOrder = ['DigitalSovereignty', 'AISovereignty', 'SecureDefault', 'Security'];
               foreach ($profileOrder as $profileKey):
                 if (isset($enabledProfiles[$profileKey])):
                   $profileData = $enabledProfiles[$profileKey];

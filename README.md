@@ -27,7 +27,7 @@ This is a dynamic assessment tool designed to help organizations measure and vis
 ## Key Features
 
 ### Assessment Capabilities
-- **Multi-Profile Assessments**: Security, Digital Sovereignty, AI Readiness, OpenShift, RHEL, and custom profiles
+- **Multi-Profile Assessments**: Security, Digital Sovereignty, Secure by Design & Secure by Default, AI Readiness, OpenShift, RHEL, and custom profiles
 - **Multi-Domain Evaluation**: Multiple control domains per profile (e.g., Digital Sovereignty has 5 main domains with integrated sub-pillars)
 - **5-Level Maturity Model**: ✨ Initial, Managed, Defined, Quantitatively Managed, Optimizing (industry-standard progressive framework)
 - **8 Capability Levels**: Progressive maturity scoring from 1-8 points per domain
@@ -697,6 +697,7 @@ The following profiles are **protected** from deletion and overwrite:
 - Template
 - Security
 - DigitalSovereignty
+- SecureDefault
 - AI
 - OpenShift
 - RHEL
@@ -850,6 +851,7 @@ viewfinder/
 ├── controls-*.json                    # Profile data files
 │   ├── controls-Security.json         # ✨ Security profile (reorganized, vendor solution placeholders)
 │   ├── controls-DigitalSovereignty.json # ✨ Digital Sovereignty (reorganized, 14 vendor solutions)
+│   ├── controls-SecureDefault.json    # ✨ Secure by Design & Secure by Default profile (7 domains)
 │   ├── controls-AI.json
 │   ├── controls-OpenShift.json
 │   ├── controls-RHEL.json
@@ -1136,7 +1138,24 @@ Extend `includes/ProfileExporter.php` with new export methods
 
 ## Version History
 
-### Version 3.0.0 (March 2026) ✨ LATEST
+### Version 3.1.0 (June 2026) ✨ LATEST
+- ✨ **NEW**: Secure by Design & Secure by Default Assessment Profile
+  - Comprehensive 7-domain security framework aligned with CISA Secure by Design principles
+  - **Domain 1 - Development Security**: SDLC governance, secure coding, SAST/DAST, threat modeling
+  - **Domain 2 - Configuration Security**: Hardened OS templates, default-off legacy protocols, immutable containers
+  - **Domain 3 - Attack Surface Control**: Zero-trust microsegmentation, API boundaries, service mesh isolation
+  - **Domain 4 - Supply Chain Security**: SBOM generation, provenance verification, SCA, signed artifacts
+  - **Domain 5 - Cryptography & Identity**: Key lifecycle management, quantum-safe algorithms, HSM integration
+  - **Domain 6 - Automated Assurance**: Policy-as-code, runtime enforcement, continuous compliance monitoring
+  - **Domain 7 - Resilience & Threat Modeling**: Blast radius isolation, chaos engineering, immutable reconstruction
+  - Industry-specific weightings for Finance, Healthcare, Government, Manufacturing, Telecommunications
+  - 7 thematic capability groupings for cross-cutting security analysis
+  - Full integration with maturity scoring, radar charts, and detailed reporting
+- 🔧 **IMPROVED**: Profile administration UI - added gap between "Enabled" label and action buttons
+- 📖 **DOCS**: Updated README with SecureDefault profile documentation
+- 📖 **DOCS**: Updated Dockerfile to reflect new profile availability
+
+### Version 3.0.0 (March 2026)
 - ✨ **NEW**: Comprehensive Facilitator Guide for Workshop Delivery
   - Interactive web version (`facilitator-guide.php`) with collapsible sections
   - Downloadable PDF version (`Facilitator-Guide.pdf`) - 8 pages, 252KB

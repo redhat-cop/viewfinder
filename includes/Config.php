@@ -25,10 +25,15 @@ class Config {
             'display_name' => 'Digital Sovereignty',
             'enabled' => true
         ],
+        'SecureDefault' => [
+            'name' => 'SecureDefault',
+            'display_name' => 'Secure by Design & Secure by Default',
+            'enabled' => true
+        ],
         'AISovereignty' => [
             'name' => 'AISovereignty',
             'display_name' => 'AI Sovereignty',
-            'enabled' => true
+            'enabled' => false
         ],
         'AI' => [
             'name' => 'AI',
