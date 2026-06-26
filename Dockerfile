@@ -71,6 +71,11 @@ RUN chown -R 1001:0 /opt/app-root/src && \
 # Switch back to non-root user
 USER 1001
 
+# Environment variables
+# VIEWFINDER_PUBLIC_URL: Set public URL for QR code generation when running on localhost
+# Example: docker run -e VIEWFINDER_PUBLIC_URL="https://viewfinder.example.com" ...
+ENV VIEWFINDER_PUBLIC_URL=""
+
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:8080/ || exit 1
