@@ -316,7 +316,27 @@ if ($selectedLob === null) {
 
 // Get weights for this profile and LOB
 $domainWeights = [];
-if (isset($lobWeights[$profile]) && isset($lobWeights[$profile][$selectedLob])) {
+
+// Check for custom weights first
+if ($selectedLob === 'Custom' && isset($_REQUEST['weight']) && is_array($_REQUEST['weight'])) {
+    // Use custom weights from form data
+    foreach ($_REQUEST['weight'] as $domain => $weight) {
+        $cleanDomain = $domain;
+        $cleanWeight = floatval($weight);
+        // Validate weight is between 1.0 and 2.0
+        if ($cleanWeight >= 1.0 && $cleanWeight <= 2.0) {
+            $domainWeights[$cleanDomain] = $cleanWeight;
+        }
+    }
+    // Fill in any missing domains with 1.0
+    foreach ($controls as $control) {
+        $title = $json[$control]['title'];
+        if (!isset($domainWeights[$title])) {
+            $domainWeights[$title] = 1.0;
+        }
+    }
+} elseif (isset($lobWeights[$profile]) && isset($lobWeights[$profile][$selectedLob])) {
+    // Use predefined LOB weights
     $domainWeights = $lobWeights[$profile][$selectedLob]['weights'];
 } else {
     // Fallback to balanced weights (all 1.0)

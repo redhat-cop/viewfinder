@@ -865,8 +865,26 @@ if ($selectedLobFromUrl === 'Balanced') {
         $selectedLob = 'General';
     }
 }
+
+// Handle custom weights from URL parameters
+$customWeights = [];
+if ($selectedLobFromUrl === 'Custom' && isset($_GET['weight']) && is_array($_GET['weight'])) {
+    foreach ($_GET['weight'] as $domain => $weight) {
+        $cleanDomain = Security::escape($domain);
+        $cleanWeight = floatval($weight);
+        // Validate weight is between 1.0 and 2.0
+        if ($cleanWeight >= 1.0 && $cleanWeight <= 2.0) {
+            $customWeights[$cleanDomain] = $cleanWeight;
+        }
+    }
+}
 ?>
 <input type="hidden" name="lob" value="<?php echo Security::escape($selectedLob); ?>">
+<?php if (!empty($customWeights)): ?>
+  <?php foreach ($customWeights as $domain => $weight): ?>
+    <input type="hidden" name="weight[<?php echo Security::escape($domain); ?>]" value="<?php echo $weight; ?>">
+  <?php endforeach; ?>
+<?php endif; ?>
 
 <div class="container">
 

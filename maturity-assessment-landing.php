@@ -218,6 +218,54 @@
       color: #f0ab00;
     }
 
+    /* Custom weight slider */
+    .weight-slider {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: #1a1a1a;
+      outline: none;
+      margin-top: 0.25rem;
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .weight-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #0d60f8;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .weight-slider::-webkit-slider-thumb:hover {
+      background: #0a4fc5;
+      transform: scale(1.1);
+    }
+
+    .weight-slider::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #0d60f8;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .weight-slider::-moz-range-thumb:hover {
+      background: #0a4fc5;
+      transform: scale(1.1);
+    }
+
+    .weight-item {
+      position: relative;
+    }
+
     .maturity-level-item {
       padding: 0.75rem;
       margin-bottom: 0.75rem;
@@ -430,6 +478,7 @@
                 <?php endif; ?>
               <?php endforeach; ?>
               <option value="Other">Other</option>
+              <option value="Custom">Custom Weighting</option>
             </select>
           </div>
 
@@ -476,12 +525,22 @@
             </h3>
             <div id="maturity-weights-container">
               <?php foreach ($domainNames as $domain): ?>
-                <div class="weight-item">
+                <div class="weight-item" data-domain="<?php echo htmlspecialchars($domain); ?>">
                   <span class="weight-domain"><?php echo htmlspecialchars($domain); ?></span>
                   <div class="weight-bar-container">
                     <div class="weight-bar" id="maturity-weight-bar-<?php echo htmlspecialchars(str_replace(' ', '-', $domain)); ?>" style="width: 50%;"></div>
                   </div>
                   <span class="weight-value" id="maturity-weight-value-<?php echo htmlspecialchars(str_replace(' ', '-', $domain)); ?>">1.0×</span>
+                  <!-- Custom weight slider (hidden by default) -->
+                  <input type="range"
+                         class="weight-slider"
+                         id="maturity-weight-slider-<?php echo htmlspecialchars(str_replace(' ', '-', $domain)); ?>"
+                         min="1.0"
+                         max="2.0"
+                         step="0.1"
+                         value="1.0"
+                         style="display: none;"
+                         data-domain="<?php echo htmlspecialchars($domain); ?>">
                 </div>
               <?php endforeach; ?>
             </div>
@@ -566,8 +625,12 @@
       'Government': 'fa-landmark',
       'Manufacturing': 'fa-industry',
       'Telecommunications': 'fa-tower-cell',
-      'Other': 'fa-building'
+      'Other': 'fa-building',
+      'Custom': 'fa-sliders'
     };
+
+    // Store custom weights
+    let customWeights = {};
 
     // Update weights display based on selected profile and LOB
     function updateMaturityWeights() {
@@ -580,6 +643,42 @@
 
       const selectedProfile = profileSelect.value;
       const selectedLob = lobSelect.value;
+
+      // Handle custom weighting mode
+      if (selectedLob === 'Custom') {
+        descriptionContainer.innerHTML = '<i class="fa-solid fa-sliders"></i><span id="maturity-profile-description-text">Adjust domain weights below using the sliders. Higher weights indicate greater priority.</span>';
+
+        // Show sliders, hide normal display
+        const domainNames = profileControlsMap[selectedProfile] || [];
+        domainNames.forEach(function(domain) {
+          const domainId = domain.replace(/\s+/g, '-');
+          const sliderId = 'maturity-weight-slider-' + domainId;
+          const slider = document.getElementById(sliderId);
+
+          if (slider) {
+            slider.style.display = 'block';
+
+            // Initialize custom weight if not set
+            if (!customWeights[selectedProfile]) {
+              customWeights[selectedProfile] = {};
+            }
+            if (!customWeights[selectedProfile][domain]) {
+              customWeights[selectedProfile][domain] = 1.0;
+            }
+
+            slider.value = customWeights[selectedProfile][domain];
+            updateWeightDisplay(domain, customWeights[selectedProfile][domain]);
+          }
+        });
+
+        return;
+      }
+
+      // Hide all sliders for non-custom modes
+      const allSliders = document.querySelectorAll('.weight-slider');
+      allSliders.forEach(function(slider) {
+        slider.style.display = 'none';
+      });
 
       // Get weights for this profile and LOB
       const profileWeights = lobWeightsData[selectedProfile];
@@ -602,30 +701,35 @@
       // Update weight bars
       domainNames.forEach(function(domain) {
         const weight = weights[domain] || 1.0;
-        const barId = 'maturity-weight-bar-' + domain.replace(/\s+/g, '-');
-        const valueId = 'maturity-weight-value-' + domain.replace(/\s+/g, '-');
-
-        const barElement = document.getElementById(barId);
-        const valueElement = document.getElementById(valueId);
-
-        if (barElement && valueElement) {
-          // Calculate width percentage (1.0 = 50%, 2.0 = 100%)
-          const widthPercent = ((weight - 1.0) / 1.0) * 50 + 50;
-          barElement.style.width = widthPercent + '%';
-
-          // Add/remove high weight class
-          if (weight >= 1.5) {
-            barElement.classList.add('weight-high');
-            valueElement.classList.add('weight-high');
-          } else {
-            barElement.classList.remove('weight-high');
-            valueElement.classList.remove('weight-high');
-          }
-
-          // Update weight value text
-          valueElement.textContent = weight.toFixed(1) + '×';
-        }
+        updateWeightDisplay(domain, weight);
       });
+    }
+
+    // Helper function to update weight display
+    function updateWeightDisplay(domain, weight) {
+      const barId = 'maturity-weight-bar-' + domain.replace(/\s+/g, '-');
+      const valueId = 'maturity-weight-value-' + domain.replace(/\s+/g, '-');
+
+      const barElement = document.getElementById(barId);
+      const valueElement = document.getElementById(valueId);
+
+      if (barElement && valueElement) {
+        // Calculate width percentage (1.0 = 50%, 2.0 = 100%)
+        const widthPercent = ((weight - 1.0) / 1.0) * 50 + 50;
+        barElement.style.width = widthPercent + '%';
+
+        // Add/remove high weight class
+        if (weight >= 1.5) {
+          barElement.classList.add('weight-high');
+          valueElement.classList.add('weight-high');
+        } else {
+          barElement.classList.remove('weight-high');
+          valueElement.classList.remove('weight-high');
+        }
+
+        // Update weight value text
+        valueElement.textContent = weight.toFixed(1) + '×';
+      }
     }
 
     // Rebuild weight display when profile changes (domains differ between profiles)
@@ -655,15 +759,53 @@
 
         const weightItem = document.createElement('div');
         weightItem.className = 'weight-item';
+        weightItem.setAttribute('data-domain', domain);
         weightItem.innerHTML = `
           <span class="weight-domain">${domain}</span>
           <div class="weight-bar-container">
             <div class="weight-bar ${highWeightClass}" id="maturity-weight-bar-${domainId}" style="width: ${widthPercent}%;"></div>
           </div>
           <span class="weight-value ${highWeightClass}" id="maturity-weight-value-${domainId}">${weight.toFixed(1)}×</span>
+          <input type="range"
+                 class="weight-slider"
+                 id="maturity-weight-slider-${domainId}"
+                 min="1.0"
+                 max="2.0"
+                 step="0.1"
+                 value="1.0"
+                 style="display: none;"
+                 data-domain="${domain}">
         `;
 
         container.appendChild(weightItem);
+      });
+
+      // Attach slider event listeners
+      attachSliderListeners();
+
+      // Update the display
+      updateMaturityWeights();
+    }
+
+    // Attach event listeners to sliders
+    function attachSliderListeners() {
+      const sliders = document.querySelectorAll('.weight-slider');
+      sliders.forEach(function(slider) {
+        slider.addEventListener('input', function() {
+          const domain = this.getAttribute('data-domain');
+          const weight = parseFloat(this.value);
+          const profileSelect = document.getElementById('maturity-profile-select');
+          const selectedProfile = profileSelect.value;
+
+          // Store custom weight
+          if (!customWeights[selectedProfile]) {
+            customWeights[selectedProfile] = {};
+          }
+          customWeights[selectedProfile][domain] = weight;
+
+          // Update display
+          updateWeightDisplay(domain, weight);
+        });
       });
     }
 
@@ -689,6 +831,15 @@
       selectedFrameworks.forEach(function(framework) {
         url += '&framework[]=' + encodeURIComponent(framework);
       });
+
+      // If custom weights, pass them as URL parameters
+      if (selectedLob === 'Custom' && customWeights[selectedProfile]) {
+        const domainNames = profileControlsMap[selectedProfile] || [];
+        domainNames.forEach(function(domain) {
+          const weight = customWeights[selectedProfile][domain] || 1.0;
+          url += '&weight[' + encodeURIComponent(domain) + ']=' + weight.toFixed(1);
+        });
+      }
 
       // Navigate to assessment
       window.location.href = url;
