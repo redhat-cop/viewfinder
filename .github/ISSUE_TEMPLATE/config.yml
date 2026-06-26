@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: GitHub Discussions
+    url: https://github.com/redhat-cop/viewfinder/discussions
+    about: Ask questions, share ideas, or discuss features with the community
+  - name: Security Vulnerability
+    url: https://github.com/redhat-cop/viewfinder/security/advisories/new
+    about: Report security vulnerabilities privately (DO NOT use public issues)
+  - name: Documentation
+    url: https://github.com/redhat-cop/viewfinder/blob/main/README.md
+    about: Read the comprehensive documentation and user guides

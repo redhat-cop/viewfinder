@@ -1,4 +1,11 @@
-# Maturity Assessment Tool
+# Viewfinder - Maturity Assessment Tool
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/version-3.1.0-brightgreen.svg)](https://github.com/redhat-cop/viewfinder/releases)
+[![PHP Version](https://img.shields.io/badge/php-%3E%3D8.1-8892BF.svg)](https://www.php.net/)
+[![Container](https://img.shields.io/badge/container-quay.io-red.svg)](https://quay.io/repository/redhat-cop/viewfinder)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 A comprehensive web-based assessment platform for evaluating organizational maturity across multiple domains including Security, Digital Sovereignty, AI Readiness, multiple technology and operational domains.
 
@@ -933,6 +940,39 @@ class Config {
     // Check if profile exists and is valid
     public static function isValidProfile(string $name): bool
 }
+```
+
+### Environment Variables
+
+The application supports the following optional environment variables:
+
+| Variable | Description | Default | Example |
+|----------|-------------|---------|---------|
+| `VIEWFINDER_PUBLIC_URL` | Public URL for QR code generation when running on localhost | localhost URL | `https://viewfinder.example.com` |
+
+**Setting Environment Variables:**
+
+**Apache (.htaccess or VirtualHost):**
+```apache
+SetEnv VIEWFINDER_PUBLIC_URL "https://viewfinder.example.com"
+```
+
+**Nginx (server block):**
+```nginx
+fastcgi_param VIEWFINDER_PUBLIC_URL "https://viewfinder.example.com";
+```
+
+**Container/Podman:**
+```bash
+podman run -p 8080:8080 \
+  -e VIEWFINDER_PUBLIC_URL="https://viewfinder.example.com" \
+  quay.io/redhat-cop/viewfinder:latest
+```
+
+**PHP Development Server:**
+```bash
+export VIEWFINDER_PUBLIC_URL="https://viewfinder.example.com"
+php -S localhost:8080
 ```
 
 ### Web Server Configuration

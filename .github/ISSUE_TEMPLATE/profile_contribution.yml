@@ -1,0 +1,156 @@
+name: Assessment Profile Contribution
+description: Submit a new assessment profile for Viewfinder
+title: "[Profile]: "
+labels: ["profile", "contribution"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing a new assessment profile!
+
+        Assessment profiles are a great way to extend Viewfinder's capabilities.
+
+  - type: input
+    id: profile-name
+    attributes:
+      label: Profile Name
+      description: What is the name of your profile?
+      placeholder: "e.g., Cloud Native Maturity, DevSecOps Readiness"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Profile Description
+      description: What does this profile assess? What is its purpose?
+      placeholder: |
+        Example: This profile evaluates an organization's cloud native maturity
+        across containerization, orchestration, observability, and automation.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: target-audience
+    attributes:
+      label: Target Audience
+      description: Who is this profile designed for?
+      options:
+        - General IT Organizations
+        - Financial Services
+        - Healthcare
+        - Government/Public Sector
+        - Manufacturing
+        - Technology Companies
+        - Multiple Industries
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: domains
+    attributes:
+      label: Domain Overview
+      description: |
+        List the domains (typically 7) that make up your profile.
+        Include a brief description of each.
+      placeholder: |
+        1. Container Strategy - Container adoption and management
+        2. Orchestration - Kubernetes/container orchestration
+        3. Microservices Architecture - Service decomposition
+        4. CI/CD Automation - Deployment pipelines
+        5. Observability - Monitoring and logging
+        6. Security & Compliance - Container and cloud security
+        7. Cloud Optimization - Resource management and cost
+    validations:
+      required: true
+
+  - type: dropdown
+    id: structure
+    attributes:
+      label: Profile Structure
+      description: How many capabilities per domain?
+      options:
+        - 8 capabilities per domain (standard)
+        - Custom structure
+    validations:
+      required: true
+
+  - type: textarea
+    id: framework-alignment
+    attributes:
+      label: Framework Alignment
+      description: |
+        (Optional) Does this profile align with any existing frameworks or standards?
+      placeholder: "e.g., CNCF Maturity Model, NIST CSF, ISO standards, industry best practices"
+
+  - type: dropdown
+    id: status
+    attributes:
+      label: Contribution Status
+      description: What is the current state of your profile?
+      options:
+        - Complete (JSON file ready to submit)
+        - In Progress (seeking feedback)
+        - Concept (gathering requirements)
+    validations:
+      required: true
+
+  - type: textarea
+    id: json-preview
+    attributes:
+      label: JSON File Preview
+      description: |
+        If available, paste a preview of your profile JSON structure (first domain is fine).
+        Or indicate that you'll attach the complete file to this issue.
+      placeholder: |
+        {
+          "Domain-1": {
+            "title": "Container Strategy",
+            "overview": "...",
+            ...
+          }
+        }
+
+  - type: textarea
+    id: lob-weights
+    attributes:
+      label: Industry Weightings
+      description: |
+        (Optional) Do you propose industry-specific weightings for this profile?
+      placeholder: |
+        Example:
+        - Technology companies: Higher weight on CI/CD and Observability
+        - Financial services: Higher weight on Security & Compliance
+
+  - type: textarea
+    id: testing
+    attributes:
+      label: Testing & Validation
+      description: Have you tested this profile? What was the result?
+      placeholder: |
+        Example:
+        - Completed 3 pilot assessments with tech companies
+        - Results showed good differentiation across maturity levels
+        - Recommendations were actionable and well-received
+
+  - type: checkboxes
+    id: requirements
+    attributes:
+      label: Profile Requirements
+      description: Please confirm your profile meets these requirements
+      options:
+        - label: Profile follows the standard JSON format (7 domains, 8 capabilities each)
+          required: true
+        - label: All recommendations are actionable and vendor-neutral
+          required: true
+        - label: Profile has been tested with at least one assessment
+          required: false
+        - label: I am willing to maintain and update this profile
+          required: true
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: Any other information you'd like to share about this profile?

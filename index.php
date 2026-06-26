@@ -737,9 +737,20 @@ print '</div>';
                   strpos($currentHost, '::1') !== false);
 
   if ($isLocalhost) {
-    // Running on localhost - use external public URL
-    $qrCodeUrl = 'http://www.chrisj.co.uk/viewfinder/dig-sov-domains.php';
-    $qrCodeDisplayUrl = 'www.chrisj.co.uk/viewfinder/dig-sov-domains.php';
+    // Running on localhost - use environment variable or fall back to current host
+    // Set VIEWFINDER_PUBLIC_URL environment variable for custom public URL
+    $publicUrl = getenv('VIEWFINDER_PUBLIC_URL');
+
+    if ($publicUrl) {
+      // Use configured public URL
+      $qrCodeUrl = rtrim($publicUrl, '/') . '/dig-sov-domains.php';
+      $qrCodeDisplayUrl = parse_url($publicUrl, PHP_URL_HOST) . '/dig-sov-domains.php';
+    } else {
+      // No public URL configured - use localhost (QR code will only work locally)
+      $protocol = 'http';
+      $qrCodeUrl = $protocol . '://' . $currentHost . '/dig-sov-domains.php';
+      $qrCodeDisplayUrl = $currentHost . '/dig-sov-domains.php';
+    }
   } else {
     // Running on public server - use current domain
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';

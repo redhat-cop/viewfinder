@@ -1,0 +1,147 @@
+name: Bug Report
+description: Report a bug or issue with Viewfinder
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this bug! Please fill out the information below to help us investigate.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: "Example: The radar chart doesn't display when viewing Digital Sovereignty results"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. Scroll down to '...'
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen
+      placeholder: "The radar chart should display with all 7 domains"
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened
+      placeholder: "The radar chart area is blank and shows no data"
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Viewfinder Version
+      description: What version of Viewfinder are you using?
+      placeholder: "e.g., 3.1.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: profile
+    attributes:
+      label: Assessment Profile
+      description: Which profile were you using when the bug occurred?
+      options:
+        - Security
+        - Digital Sovereignty
+        - Secure by Design & Secure by Default
+        - AI Sovereignty
+        - AI Readiness
+        - Other/Custom
+        - Not applicable
+    validations:
+      required: true
+
+  - type: input
+    id: php-version
+    attributes:
+      label: PHP Version
+      description: What version of PHP are you running?
+      placeholder: "e.g., 8.1.0"
+
+  - type: dropdown
+    id: deployment
+    attributes:
+      label: Deployment Method
+      description: How is Viewfinder deployed?
+      options:
+        - Container (Podman/Docker)
+        - Apache
+        - Nginx
+        - PHP Built-in Server
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      description: Which browser are you using?
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Edge
+        - Other
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      description: What OS are you running?
+      placeholder: "e.g., RHEL 9, Ubuntu 22.04, macOS 13"
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error Logs
+      description: |
+        If applicable, paste relevant error logs here.
+        Check browser console (F12) and server error logs.
+      render: shell
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain the problem
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Add any other context about the problem here
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Pre-submission Checklist
+      options:
+        - label: I have searched existing issues to avoid duplicates
+          required: true
+        - label: I have tested on the latest version
+          required: false
+        - label: I have checked the browser console for errors
+          required: false

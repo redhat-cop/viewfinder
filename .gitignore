@@ -16,6 +16,36 @@ composer.phar
 # OS
 .DS_Store
 Thumbs.db
+desktop.ini
 
 # PHPUnit
 .phpunit.result.cache
+
+# Backup files
+*.backup
+*.backup-*
+*.bak
+*.old
+*.orig
+
+# Development docs (optional)
+*-SUMMARY.md
+*-blog.md
+
+# Test results
+test-results/
+random-results/
+
+# Quiz data (user-generated)
+quiz/data/*.json
+!quiz/data/.gitkeep
+
+# Assessment results (if stored locally)
+results/
+assessments/
+*.assessment.json
+
+# Temporary files
+tmp/
+temp/
+cache/
